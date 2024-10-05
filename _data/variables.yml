@@ -1,16 +1,16 @@
 default:
   text_skin: default
-  highlight_theme: default
-  lang: en
+  highlight_theme: tomorrow-night-bright
+  lang: zh-CN
   paths:
     root: /
     home: /
     archive:  /archive.html
     rss:  /feed.xml
-  mathjax: false
-  mathjax_autoNumber: false
-  mermaid: false
-  chart: false
+  mathjax: true
+  mathjax_autoNumber: true
+  mermaid: true
+  chart: true
   toc:
     selectors: 'h1,h2,h3'
   sources: bootcdn
@@ -31,9 +31,9 @@ default:
     show_date: true
     show_tags: true
     show_author_profile: false
-    show_subscribe: false
+    show_subscribe: true
     full_width: false
-    sharing: false
+    sharing: true
     comment: true
     license: false
     pageview: false

@@ -2,7 +2,7 @@ header:
   - titles: 
       en      : Home
       zh-CN   : 家
-    url: /docs/zh/quick-start
+    url: /
   
   - titles:
       en      : About

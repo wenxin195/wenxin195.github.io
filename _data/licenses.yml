@@ -14,3 +14,6 @@ CC-BY-ND-4.0:
   name: Attribution-NoDerivatives 4.0 International
   url: https://creativecommons.org/licenses/by-nd/4.0/
   image: https://i.creativecommons.org/l/by-nd/4.0/88x31.png
+GPL:
+  name: GNU GENERAL PUBLIC LICENSE
+  url: https://www.gnu.org/gnu/gnu.en.html

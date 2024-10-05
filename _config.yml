@@ -184,7 +184,12 @@ analytics:
 
 ## => Build
 ##############################
-markdown    : kramdown
+markdown: kramdown
+kramdown:
+  input: GFM
+  math_engine: mathjax
+  syntax_highlighter: rouge
+
 highlighter : rouge
 permalink   : date
 
@@ -213,6 +218,11 @@ defaults:
       show_edit_on_github: true
       show_subscribe: true
       pageview: true
+
+
+sass:
+  style: compressed
+  sass_dir: _sass
 
 
 ## => Plugins

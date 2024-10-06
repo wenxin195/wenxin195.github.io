@@ -7,8 +7,8 @@
   outline: none;
   @include user-select(none);
   svg {
-    width: 1rem;
-    height: 1rem;
+    width: 20px;
+    height: 20px;
   }
   @include disabled() {
     cursor: not-allowed;

@@ -106,6 +106,14 @@
 }
 
 .navigation__item {
+  a {
+    display: flex;
+    align-items: center;  // Align icons and text vertically
+  }
+  i {
+    margin-right: 10px;    // Add space between icon and text
+    font-size: 1.2em;     // Adjust icon size as needed
+  }
   &::after {
     display: block;
     margin-bottom: -4px;
@@ -120,4 +128,8 @@
   &::after {
     @include split-line(bottom, 4px, $main-color-1);
   }
+}
+.navigation svg {
+  width: 24px; /* 或者你希望的大小 */
+  height: 24px; /* 或者你希望的大小 */
 }

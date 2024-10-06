@@ -127,7 +127,7 @@
     {%- if _author.red -%}
       <li title="{{ _locale_string_follow | replace: '[NAME]', '小红书' }}">
         <a class="button button--circle red-button" itemprop="sameAs" href="https://www.xiaohongshu.com/user/profile/{{ _author.red }}" target="_blank">
-          <div class="icon">{%- include svg/icon/social/red.svg -%}</div>
+          <div class="icon" style="width: 1000; height: auto;">{%- include svg/icon/social/red.svg -%}</div>
         </a>
       </li>
     {%- endif -%}

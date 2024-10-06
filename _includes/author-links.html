@@ -45,7 +45,7 @@
     {%- endif -%}
 
     {%- if _author.weibo -%}
-      <li title="{{ _locale_string_follow | replace: '[NAME]', 'Weibo' }}">
+      <li title="{{ _locale_string_follow | replace: '[NAME]', '微博' }}">
         <a class="button button--circle weibo-button" itemprop="sameAs" href="https://weibo.com/{{ _author.weibo }}" target="_blank">
           <div class="icon">{%- include svg/icon/social/weibo.svg -%}</div>
         </a>
@@ -77,7 +77,7 @@
     {%- endif -%}
 
     {%- if _author.zhihu -%}
-      <li title="{{ _locale_string_follow | replace: '[NAME]', 'Zhihu' }}">
+      <li title="{{ _locale_string_follow | replace: '[NAME]', '知乎' }}">
         <a class="button button--circle zhihu-button" itemprop="sameAs" href="https://www.zhihu.com/people/{{ _author.zhihu }}" target="_blank">
           <div class="icon">{%- include svg/icon/social/zhihu.svg -%}</div>
         </a>
@@ -85,7 +85,7 @@
     {%- endif -%}
 
     {%- if _author.douban -%}
-      <li title="{{ _locale_string_follow | replace: '[NAME]', 'Douban' }}">
+      <li title="{{ _locale_string_follow | replace: '[NAME]', '豆瓣' }}">
         <a class="button button--circle douban-button" itemprop="sameAs" href="https://www.douban.com/people/{{ _author.douban }}" target="_blank">
           <div class="icon">{%- include svg/icon/social/douban.svg -%}</div>
         </a>
@@ -116,5 +116,21 @@
       </li>
     {%- endif -%}
 
+    {%- if _author.bili -%}
+      <li title="{{ _locale_string_follow | replace: '[NAME]', 'Bilibili' }}">
+        <a class="button button--circle bili-button" itemprop="sameAs" href="https://space.Bilibili.com/{{ _author.bili }}" target="_blank">
+          <div class="icon">{%- include svg/icon/social/bili.svg -%}</div>
+        </a>
+      </li>
+    {%- endif -%}
+
+    {%- if _author.red -%}
+      <li title="{{ _locale_string_follow | replace: '[NAME]', '小红书' }}">
+        <a class="button button--circle red-button" itemprop="sameAs" href="https://www.xiaohongshu.com/user/profile/{{ _author.red }}" target="_blank">
+          <div class="icon">{%- include svg/icon/social/red.svg -%}</div>
+        </a>
+      </li>
+    {%- endif -%}
+    
   </ul>
 </div>

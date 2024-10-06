@@ -16,6 +16,11 @@ header:
     url: /archive.html
   
   - titles:
+      en      : Donate
+      zh-CN   : 捐赠
+    url: /donate.html
+  
+  - titles:
       en      : Contact
       zh-CN   : 联系我
     url : /contact.html

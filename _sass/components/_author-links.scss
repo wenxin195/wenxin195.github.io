@@ -38,6 +38,12 @@
       .npm-button {
         @include clickable($text-color-1, $npm-color);
       }
+      .bili-button {
+        @include clickable($text-color-1, $bili-color);
+      }
+      .red-button {
+        @include clickable($text-color-1, $red-color);
+      }
     }
   }
 }

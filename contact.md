@@ -7,7 +7,7 @@ permalink: /contact.html
 
 感谢您访问我的博客！如果您有任何问题、建议或合作意向，请随时通过以下方式与我联系。
 
-<form action="https://formspree.io/your-email" method="POST">
+<form action="https://formspree.io/f/mrbgzrdg" method="POST">
   <label for="name"><i class="fas fa-user"></i> 姓名</label>
   <input type="text" id="name" name="name" required>
 

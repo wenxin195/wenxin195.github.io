@@ -7,12 +7,17 @@
   outline: none;
   @include user-select(none);
   svg {
-    width: 20px;
-    height: 20px;
+    width: 1.1rem;
+    height: 1.1rem;
   }
   @include disabled() {
     cursor: not-allowed;
   }
+}
+
+.red-button .icon {
+  width: 1.6rem !important;
+  height: 1.6rem !important;
 }
 
 .button {

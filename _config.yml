@@ -114,7 +114,7 @@ sources: bootcdn # bootcdn (default), unpkg
 ## => Sharing
 ##############################
 sharing:
-  provider: addtoany # false (default), "addtoany", "addthis", "custom"
+  provider: custom # false (default), "addtoany", "addthis", "custom"
 
   ## AddThis
   addthis:
@@ -185,7 +185,8 @@ analytics:
 
 ## => Build
 ##############################
-markdown: kramdown
+# markdown: kramdown
+markdown: CommonMark
 kramdown:
   input: GFM
   math_engine: mathjax
@@ -213,10 +214,10 @@ defaults:
     values:
       layout: article
       sharing: true
-      license: true
+      license: false
       aside:
         toc: true
-      show_edit_on_github: true
+      show_edit_on_github: false
       show_subscribe: true
       pageview: true
 
@@ -233,3 +234,14 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-archives
+  - jekyll-minifier
+  - jekyll-assets
+  - jekyll-admin
+  - jekyll-github-metadata
+  - jekyll-sass-converter
+  - jekyll-mentions
+  - jekyll-commonmark
+  - jekyll-avatar

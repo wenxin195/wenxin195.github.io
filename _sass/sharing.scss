@@ -1,0 +1,36 @@
+.share-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.share-label {
+    font-size: 16px;
+    margin-right: 10px;
+    color: #333;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 15px; /* 调整按钮之间的间距 */
+    align-items: center;
+}
+
+.share-buttons a {
+    display: inline-block;
+    width: auto;
+    height: auto;
+}
+
+.share-section .share-buttons img {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.wechat-qrcode {
+    position: absolute;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    background: #fff;
+}

@@ -14,6 +14,7 @@
     display: flex;
     gap: 15px; /* 调整按钮之间的间距 */
     align-items: center;
+    position: relative; /* 使二维码相对于按钮容器进行绝对定位 */
 }
 
 .share-buttons a {
@@ -33,4 +34,10 @@
     padding: 5px;
     border: 1px solid #ddd;
     background: #fff;
+}
+
+
+/* 隐藏二维码时，确保提示文字正常显示 */
+.share-wechat:hover + .wechat-qrcode {
+    display: block;
 }

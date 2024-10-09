@@ -9,12 +9,14 @@
     </a>
 
     <!-- 微信分享按钮（使用二维码分享方式） -->
-    <a class="share-wechat" href="javascript:void(0);" title="分享到微信">
-        <img src="assets/images/icon/wechat.svg"  width="32px" height="32px" alt="微信">
-    </a>
-    <div class="wechat-qrcode" style="display:none;">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ page.url | absolute_url }}" alt="微信二维码">
-    </div>
+    <div class="share-wechat-container">
+        <a class="share-wechat" href="javascript:void(0);" title="分享到微信">
+          <img src="assets/images/icon/wechat.svg" width="32px" height="32px" alt="微信">
+        </a>
+        <div class="wechat-qrcode">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ page.url | absolute_url }}" alt="微信二维码">
+        </div>
+      </div>
 
     <!-- 微博分享按钮 -->
     <a class="share-weibo" href="https://service.weibo.com/share/share.php?url={{ page.url | absolute_url }}&title={{ page.title }}" target="_blank" title="分享到微博">

@@ -15,3 +15,10 @@
 {%- if __return == true -%}
   {%- include markdown-enhancements/mermaid.html -%}
 {%- endif -%}
+
+{%- include snippets/assign.html target=site.data.variables.default.katex
+  source0=site.katex source1=page.katex -%}
+{%- if __return == true -%}
+  {%- include markdown-enhancements/katex.html -%}
+{%- endif -%}
+

@@ -88,8 +88,10 @@ toc:
 ## => Markdown Enhancements
 ##############################
 ## Mathjax
-mathjax: true # false (default), true
-mathjax_autoNumber: true # false (default), true
+katex: true
+katex_autoNumber: true
+mathjax: false # false (default), true
+mathjax_autoNumber: false # false (default), true
 
 ## Mermaid
 mermaid: true # false (default), true
@@ -186,10 +188,10 @@ analytics:
 ## => Build
 ##############################
 # markdown: kramdown
-markdown: CommonMark
+markdown: kramdown
 kramdown:
   input: GFM
-  math_engine: mathjax
+  # math_engine: mathjax
   syntax_highlighter: rouge
 
 highlighter : rouge

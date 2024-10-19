@@ -6,28 +6,28 @@
 {%- assign _katex_autoNumber = __return -%}
 
 <!-- KaTeX 样式 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.css">
 
 <!-- KaTeX 核心脚本 -->
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.js"></script>
 
 <!-- 自动渲染插件 -->
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.js"></script>
 
 <!-- AMS 环境支持 -->
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/amscd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/amscd.js"></script>
 
 <!-- Copy-tex 插件支持复制 LaTeX 源代码 -->
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.js"></script>
 
 <!-- Font metrics 插件用于优化字体 -->
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/font-metrics.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/font-metrics.js"></script>
 
 <!-- SRE 插件用于无障碍设备 -->
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/render-a11y-string.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/render-a11y-string.js"></script>
 
-<!-- 自动编号插件（依赖于 KaTeX v0.10.0 以上的版本）-->
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script>
+<!-- math/tex自定义脚本类型扩展 -->
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mathtex-script-type.js"></script>
 
 <!-- 配置自动渲染并启用插件 -->
 <script defer>
@@ -38,8 +38,13 @@
         {left: "$$", right: "$$", display: true},   // 块级公式：$$...$$
         {left: "$", right: "$", display: false},    // 行内公式：$...$
         {left: "\\[", right: "\\]", display: true}, // 块级公式：\[…\]
-        {left: "\\(", right: "\\)", display: false} // 行内公式：\(\)
+        {left: "\\(", right: "\\)", display: false}, // 行内公式：\(\)
+        {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+        {left: "\\begin{align}", right: "\\end{align}", display: true},
+        {left: "\\begin{aligned}", right: "\\end{aligned}", display: true},
+        {left: "\\begin{gather}", right: "\\end{gather}", display: true},
       ],
+      displayMode: true,
       throwOnError: false, // 遇到错误时不抛出异常，避免阻塞页面渲染
       autoNumber: "AMS",
       macros: {

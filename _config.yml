@@ -188,11 +188,10 @@ analytics:
 
 ## => Build
 ##############################
-# markdown: kramdown
 markdown: kramdown
 kramdown:
   input: GFM
-  # math_engine: mathjax
+  math_engine: katex
   syntax_highlighter: rouge
 
 highlighter : rouge
@@ -221,7 +220,7 @@ defaults:
       aside:
         toc: true
       show_edit_on_github: false
-      show_subscribe: true
+      show_subscribe: false
       pageview: true
 
 

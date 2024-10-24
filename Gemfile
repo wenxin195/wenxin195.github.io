@@ -6,7 +6,6 @@ group :jekyll_plugins do
     gem "jekyll-sitemap"
     gem "jemoji"
     gem "jekyll-seo-tag"
-    gem "jekyll-sitemap"
     gem "jekyll-archives"
     gem "jekyll-minifier"
     gem "jekyll-assets"
@@ -16,6 +15,7 @@ group :jekyll_plugins do
     gem "jekyll-mentions"
     gem "jekyll-commonmark"
     gem "jekyll-avatar"
+    gem "kramdown-math-katex"
   end
 
 gemspec

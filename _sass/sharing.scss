@@ -12,7 +12,7 @@
 
 .share-buttons {
     display: flex;
-    gap: 15px !important; /* 调整按钮之间的间距 */
+    gap: 5px; /* 调整按钮之间的间距 */
     align-items: center;
 }
 
@@ -22,17 +22,11 @@
     height: auto;
 }
 
-.share-section .share-buttons img {
-    width: 32px !important;
-    height: 32px !important;
-    max-width: 100%;
-}
-
 
 .wechat-qrcode {
     display: none; /* 默认隐藏二维码 */
     position: absolute; /* 绝对定位 */
-    top: 50px; /* 控制二维码相对于图标的垂直位置 */
+    top: 50; /* 控制二维码相对于图标的垂直位置 */
     left: -40px; /* 控制二维码相对于图标的水平位置 */
     padding: 10px;
     border: 1px solid #ddd;

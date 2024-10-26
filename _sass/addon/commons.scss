@@ -11,8 +11,11 @@ blockquote {
     }
 
     &[class^='prompt-'] {
+<<<<<<< HEAD
         font-size: 1rem;
         line-height: 1.4rem; // 设置与图标相近的行高
+=======
+>>>>>>> eb39acd (update resources)
         border-left: 0;
         position: relative;
         padding: 1rem 1rem 1rem 3rem;
@@ -53,6 +56,7 @@ blockquote {
         width: 5rem;
         height: 5rem;
     }
+<<<<<<< HEAD
 }
 
 .box-info {
@@ -188,4 +192,6 @@ details[open]>summary {
         background-color: var(--prompt-info-bg);
         color: var(--prompt-info-icon-color);
     }
+=======
+>>>>>>> eb39acd (update resources)
 }

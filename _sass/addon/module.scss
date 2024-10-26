@@ -8,12 +8,9 @@
             content: $fa-content;
             color: var(--prompt-#{$type}-icon-color);
             font: var(--fa-font-#{$fa-style});
-<<<<<<< HEAD
             font-size: 1.5rem;
             vertical-align: middle; // 设置垂直对齐
             // margin-top: 0.2rem;
-=======
->>>>>>> eb39acd (update resources)
 
             @if $rotate !=0 {
                 transform: rotate(#{$rotate}deg);
@@ -29,7 +26,6 @@
 
 %rounded {
     border-radius: 10px;
-<<<<<<< HEAD
 }
 
 @mixin colorbox($border-color, $icon-color, $icon-content, $bg-color, $fa-style: 'solid') {
@@ -92,6 +88,4 @@
             -webkit-font-smoothing: antialiased;
         }
     }
-=======
->>>>>>> eb39acd (update resources)
 }

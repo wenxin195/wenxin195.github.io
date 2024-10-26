@@ -8,6 +8,9 @@
             content: $fa-content;
             color: var(--prompt-#{$type}-icon-color);
             font: var(--fa-font-#{$fa-style});
+            font-size: 1.5rem;
+            vertical-align: middle; // 设置垂直对齐
+            // margin-top: 0.2rem;
 
             @if $rotate !=0 {
                 transform: rotate(#{$rotate}deg);
@@ -23,4 +26,66 @@
 
 %rounded {
     border-radius: 10px;
+}
+
+@mixin colorbox($border-color, $icon-color, $icon-content, $bg-color, $fa-style: 'solid') {
+    border-left: .2rem solid $border-color;
+    border-radius: 0.25rem;
+    color: var(--text-color);
+    padding: .6rem 1rem .6rem 1.5rem;
+    box-shadow: var(--language-border-color) 1px 1px 2px 1px;
+    position: relative;
+    margin-bottom: 1rem;
+
+    >div.title {
+        background-color: $bg-color;
+        color: $icon-color;
+        padding: .5rem .6rem .5rem 3rem;
+        margin: -.6rem -1rem .6rem -1.5rem;
+        font-weight: 600;
+
+        &:empty {
+            display: none; // 隐藏空的 title
+            margin: 0; // 移除不必要的 margin
+            padding: 0; // 移除不必要的 padding
+        }
+
+        &::before {
+            content: $icon-content;
+            color: $icon-color;
+            font: var(--fa-font-#{$fa-style});
+            text-align: center;
+            width: 3rem;
+            position: absolute;
+            left: .2rem;
+            margin-top: .4rem;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+        }
+    }
+
+    >p:last-child {
+        margin-bottom: 0;
+        margin-top: 0px;
+    }
+
+    &.no-icon > div.title {
+        padding-left: .6rem; // 恢复为普通 padding
+        margin-left: -1rem;
+        background-color: $bg-color;
+        color: $icon-color;
+        font-weight: 600;
+
+        ::before {
+            content: none; // 不显示图标
+            font: var(--fa-font-#{$fa-style});
+            text-align: center;
+            width: 3rem;
+            position: absolute;
+            left: .2rem;
+            margin-top: .4rem;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+        }
+    }
 }

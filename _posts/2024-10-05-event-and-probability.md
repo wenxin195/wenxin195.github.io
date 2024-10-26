@@ -24,44 +24,36 @@ modify_date: "2024-10-05 18:18:00 +0000"
 
 样本点是抽样(Sample)的最基本单元，认识随机现象首先要列出它的样本空间。
 
-<div class="definition-box">
-  <div class="definition-title">
-      样本空间和样本点
-  </div>
-  <div class="definition-content">
-    随机现象的一切可能基本结果组成的集合称为样本空间(Sample space)，记为 ${\mit\Omega}=\{\omega\}$，其中 $\omega$ 表示基本结果，称为样本点(Sample point)。
-  </div>
-</div>
+<details class="details-definition" markdown="1" open>
+<summary>样本空间和样本点</summary>
+随机现象的一切可能基本结果组成的集合称为样本空间(Sample space)，记为 ${\mit\Omega}=\{\omega\}$，其中 $\omega$ 表示基本结果，称为样本点(Sample point)。
+</details>
 
 将样本点的个数为有限个或可列的情况归为一类，称为**离散样本空间**(Discrete sample space)；而将样本点的个数为不可列无限个的情况归为另一类，称为**连续样本空间**(Continuous sample space)。
 
-**例 1** 在研究英文字母的使用情况时，则可能出现的结果为 $A,B,\cdots,Z$和空格“$\lfloor\;\rceil$”，将样本空间选定为 ${\mit\Omega}=\\{\text{空格}, A,B,\cdots,Z\\}$ 是合适的，它是一个离散的样本空间；
+<div class="box-warning" markdown="1">
+<strong>例 $1$</strong> 在研究英文字母的使用情况时，则可能出现的结果为 $A,B,\cdots,Z$和空格“$\lfloor\;\rceil$”，将样本空间选定为 ${\mit\Omega}=\\{\text{空格}, A,B,\cdots,Z\\}$ 是合适的，它是一个离散的样本空间；
+</div>
 
-**例 2** 考察一晶体管的寿命，用变量 $t$ 来表示晶体管开始工作到首次发生故障的时间，那么“晶体管寿命”的样本空间就是所有的非负实数 ${\mit\Omega}=\\{ t\mid t\geqslant0\\}$，它是一个连续的样本空间。
+<div class="box-warning" markdown="1">
+<strong>例 $2$</strong> 考察一晶体管的寿命，用变量 $t$ 来表示晶体管开始工作到首次发生故障的时间，那么“晶体管寿命”的样本空间就是所有的非负实数 ${\mit\Omega}=\\{ t\mid t\geqslant0\\}$，它是一个连续的样本空间。
+</div>
 
 在确定样本空间的时候，不同的试验结果必须是**相互排斥的**，即在试验过程中只能产生**唯一**的一个结果。需要注意的是随机现象的样本空间要包含**至少两个样本点**，若将确定性现象也一并考虑，那么仅含有一个样本点的样本空间对应的确定性现象。
 
-<div class="definition-box">
-    <div class="definition-title">
-        随机事件
-    </div>
-    <div class="definition-content">
-        样本空间的一个子集称作随机事件，简称事件(Event)，通常用大写的英文字母 $A,B,C,\cdots$ 表示。
-    </div>
-</div>
+<details class="details-definition" markdown="1" open>
+<summary>随机事件</summary>
+样本空间的一个子集称作随机事件，简称事件(Event)，通常用大写的英文字母 $A,B,C,\cdots$ 表示。
+</details>
 
 例如掷骰子所出现点数的样本空间为 ${\mit\Omega}=\\{1,2,3,4,5,6\\}$，可以定义集合 $\\{1,3,5\\}$ 为事件“掷到奇数点”，定义集合 $\\{4,5,6\\}$ 为事件“掷到的点数大于 3”……
 
 当子集 $A$ 中某个样本点出现了，就说事件 $A$ 发生了，或者说：
 
-<div class="proposition-box">
-    <div class="proposition-title">
-        命题1
-    </div>
-    <div class="proposition-content">
-        事件 $A$ 发生当且仅当 $A$ 中某个样本点出现了。
-    </div>
-</div>
+<details class="details-proposition" markdown="1" open>
+<summary>命题 $1$</summary>
+事件 $A$ 发生当且仅当 $A$ 中某个样本点出现了。
+</details>
 
 由样本空间 $\mit\Omega$ 中的**单个元素**组成的子集称为**基本事件**(Elementary event)，而样本空间 $\mit\Omega$ 的最大子集(即 $\mit\Omega$ 本身)称为**必然事件**(Certain event)，样本空间 $\mit\Omega$ 的最小子集(即空集 $\varnothing$)称为**不可能事件**(Impossible event)。
 
@@ -170,16 +162,12 @@ $$
 
 注意，对立事件是相互的，即 $A$ 的对立事件是 $\bar{A}$，而 $\bar{A}$ 的对立事件是 $A$，即 $\bar{\bar{A}}=A$。**必然事件** ${\mit\Omega}$ **与不可能事件** $\boldsymbol{\varnothing}$ **互为对立事件**，即 $\bar{\mit\Omega}=\varnothing$，$\bar{\varnothing}={\mit\Omega}$。
 
-<div class="proposition-box">
-    <div class="proposition-title">
-        命题2
-    </div>
-    <div class="proposition-content">
-        $A$ 与 $B$ 互为对立事件的充分必要条件是：$A\cap B=\varnothing$，并且 $A\cup B={\mit\Omega}$。
-    </div>
-</div>
+<details class="details-proposition" markdown="1" open>
+<summary>命题 $2$</summary>
+$A$ 与 $B$ 互为对立事件的充分必要条件是：$A\cap B=\varnothing$，并且 $A\cup B={\mit\Omega}$。
+</details>
 
-命题 2 也可作为对立事件的另一种定义，即如果事件 $A$ 与 $B$ 满足：$A\cap B=\varnothing$，且 $A\cup B={\mit\Omega}$，则称 $A$ 与 $B$ 互为对立事件，记为 $\bar{A}=B$，$\bar{B}=A$。
+命题 $2$ 也可作为对立事件的另一种定义，即如果事件 $A$ 与 $B$ 满足：$A\cap B=\varnothing$，且 $A\cup B={\mit\Omega}$，则称 $A$ 与 $B$ 互为对立事件，记为 $\bar{A}=B$，$\bar{B}=A$。
 
 特别要指出的是，对立事件一定是互不相容事件，即 $A\cap\bar{A}=\varnothing$，但是互不相容事件不一定是对立事件。
 
@@ -274,20 +262,16 @@ Kolmogorov 的公理化体系使用了集合论的语言，将概率视为对一
 
 但在这之前，我们必须首先明确哪些集合可以被称为“事件”，并且构造一个包含在样本空间的“事件集合”。直觉上我们所构造的集合应该对事件的各种运算(即余集、交集和并集)封闭，并且样本空间 ${\mit\Omega}$ 本身和它的余集 $\varnothing$ 都应该在这个“事件集合”中。
 
-<div class="definition-box">
-    <div class="definition-title">
-        事件域
-    </div>
-    <div class="definition-content">
-        设 ${\mit\Omega}$ 为一个样本空间，$\mathscr{F}$ 是 ${\mit\Omega}$ 的子集所组成的集合类。若 $\mathscr{F}$ 满足：
-        <ol>
-           <li>${\mit\Omega}\in\mathscr{F}$；</li>
-           <li>若 $A\in\mathscr{F}$，则对立事件 $\bar{A}\in\mathscr{F}$；</li>
-           <li>若 $A_1,A_2,\cdots,A_n,\cdots\in\mathscr{F}$，则可列并 $\bigcup\limits_{i=1}^{\infty}A_i\in\mathscr{F}$。</li>
-        </ol>
-        则称 $\mathscr{F}$ 是一个事件域，或者 $\sigma-\text{域}$ 或者 $\sigma\ -$ 代数。
-    </div>
-</div>
+<details class="details-definition" markdown="1" open>
+<summary>事件域</summary>
+设 ${\mit\Omega}$ 为一个样本空间，$\mathscr{F}$ 是 ${\mit\Omega}$ 的子集所组成的集合类。若 $\mathscr{F}$ 满足：
+<ol>
+    <li>${\mit\Omega}\in\mathscr{F}$；</li>
+    <li>若 $A\in\mathscr{F}$，则对立事件 $\bar{A}\in\mathscr{F}$；</li>
+    <li>若 $A_1,A_2,\cdots,A_n,\cdots\in\mathscr{F}$，则可列并 $\bigcup\limits_{i=1}^{\infty}A_i\in\mathscr{F}$。</li>
+</ol>
+则称 $\mathscr{F}$ 是一个事件域，或者 $\sigma-\text{域}$ 或者 $\sigma\ -$ 代数。
+</details>
 
 在概率论中，称 $({\mit\Omega},\mathscr{F})$ 为**可测空间**(Measurable space)，**在可测空间上才能定义概率**，这时 $\mathscr{F}$ 上都是有概率可言的事件。
 
@@ -301,27 +285,23 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
 
 在实际中，那些无法精确测量、描述过于复杂或超出我们观察能力的事件，通常不属于 $\sigma\ -$ 代数，因此我们无法为它们赋予概率。这些事件往往涉及无限小的区间、无穷复杂的现象或超精确的测量，在实际概率分析中无法处理，属于不可测事件。例如一个颜色的 RGB 值精确为某个特定数值、在无穷多次抛硬币结果中，硬币的正反面组成某个非常特定的无穷序列。
 
-<div class="definition-box">
-    <div class="definition-title">
-        概率的公理化定义
-    </div>
-    <div class="definition-content">
-        设 $\mit\Omega$ 为一个样本空间，$\mathscr{F}$ 为 $\mit\Omega$ 上的事件域，$P(A)$ 为定义在 $\mathscr{F}$ 上的实值函数。若$P(A)$ 满足：
-        <ol>
-           <li>非负性：$\forall A\in\mathscr{F}$，$P(A)\geqslant0$；</li>
-           <li>正则性：$P({\mit\Omega})=1$；</li>
-           <li>
-            可列可加性：$\forall A_1,A_2,\cdots,A_n,\cdots\in\mathscr{F}$，且 $A_1,A_2,\cdots,A_n,\cdots$ 两两互不相容，则
-            $$
-            \begin{equation}
-                P\left(\bigcup_{i=1}^{\infty}A_i\right)=\sum_{i=1}^{\infty}P(A_i)
-            \end{equation}
-            $$
-           </li>
-        </ol>
-        则称 $P(A)$ 为事件 $A$ 的概率(Probability)。
-    </div>
-</div>
+<details class="details-definition" markdown="1" open>
+<summary>概率的公理化定义</summary>
+设 $\mit\Omega$ 为一个样本空间，$\mathscr{F}$ 为 $\mit\Omega$ 上的事件域，$P(A)$ 为定义在 $\mathscr{F}$ 上的实值函数。若$P(A)$ 满足：
+<ol>
+   <li>非负性：$\forall A\in\mathscr{F}$，$P(A)\geqslant0$；</li>
+   <li>正则性：$P({\mit\Omega})=1$；</li>
+   <li>
+    可列可加性：$\forall A_1,A_2,\cdots,A_n,\cdots\in\mathscr{F}$，且 $A_1,A_2,\cdots,A_n,\cdots$ 两两互不相容，则
+    $$
+    \begin{equation}
+        P\left(\bigcup_{i=1}^{\infty}A_i\right)=\sum_{i=1}^{\infty}P(A_i)
+    \end{equation}
+    $$
+   </li>
+</ol>
+则称 $P(A)$ 为事件 $A$ 的概率(Probability)。
+</details>
 
 称 $({\mit\Omega},\mathscr{F},P)$ 为**概率空间**(Probability space)，它为研究随机现象提供了一个严谨的数学框架，使我们能够合理地处理、计算和分析各种随机事件的概率。无论是处理简单的随机事件，还是处理复杂的随机变量，都可以在这个框架下进行。
 
@@ -329,19 +309,15 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
 
 这一公理化体系与**Lebesgue 测度**相结合，使得概率论的基础变得更加坚实，能够处理复杂的事件和连续概率空间问题。Kolmogorov 的公理化定义克服了以往各个学派的局限性，使得概率论从经验和直觉的框架走向了严谨的数学体系。
 
-<div class="definition-box">
-    <div class="definition-title">
-        概率的公理化定义
-    </div>
-    <div class="definition-content">
-        在样本空间 ${\mit\Omega}$ 中，若有 $n$ 个事件 $D_1,D_2,\cdots,D_n$，满足：
-        <ol>
-           <li>$D_1,D_2,\cdots,D_n$ 两两互不相容；</li>
-           <li>$\bigcup\limits_{i=1}^{n}D_i={\mit\Omega}$。</li>
-        </ol>
-        则称 $D_1,D_2,\cdots,D_n$ 为样本空间 ${\mit\Omega}$ 的一个分割(Division)。
-    </div>
-</div>
+<details class="details-definition" markdown="1" open>
+<summary>样本空间的分割</summary>
+在样本空间 ${\mit\Omega}$ 中，若有 $n$ 个事件 $D_1,D_2,\cdots,D_n$，满足：
+<ol>
+   <li>$D_1,D_2,\cdots,D_n$ 两两互不相容；</li>
+   <li>$\bigcup\limits_{i=1}^{n}D_i={\mit\Omega}$。</li>
+</ol>
+则称 $D_1,D_2,\cdots,D_n$ 为样本空间 ${\mit\Omega}$ 的一个分割(Division)。
+</details>
 
 可列个互不相容的事件 $D_1,D_2,\cdots,D_n,\cdots$ 若满足 $\bigcup\limits_{i=1}^{\infty}D_i={\mit\Omega}$，那么 $D_1,D_2,\cdots,D_n,\cdots$ 也可以成为样本空间 ${\mit\Omega}$ 的一个分割。
 
@@ -394,19 +370,33 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
 
 ### 事件的差的概率
 
-<div class="proposition-box">
-    <div class="proposition-title">
-        命题4
-    </div>
-    <div class="proposition-content">
-        对于任意两个事件 $A$ 与 $B$，其差 $A-B$ 的概率为
-        $$
-            \begin{equation}
-                P(A-B)=P(A)-P(AB)
-            \end{equation}
-        $$
-    </div>
-</div>
+<details class="details-proposition" markdown="1" open>
+<summary>命题 $4$</summary>
+对于任意两个事件 $A$ 与 $B$，其差 $A-B$ 的概率为
+
+$$
+   \begin{equation}
+       P(A-B)=P(A)-P(AB)
+   \end{equation}
+$$
+
+</details>
+<details class="details-proposition" markdown="1">
+<summary>证明</summary>
+由事件的结合律，有
+
+$$
+    A=A\cup(B\cap\bar{B})=AB\cup A\bar{B}=AB\cup(A-B)
+$$
+
+又由于 $AB$ 与 $A-B$ 互不相容，那么
+
+$$
+    P(A)=P(AB)+P(A-B)
+$$
+
+即 $P(A-B)=P(A)-P(AB)$，结论得证。
+</details>
 
 <div class="theorem-box">
     <div class="theorem-title">

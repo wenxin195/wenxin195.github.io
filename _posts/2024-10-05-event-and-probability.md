@@ -422,6 +422,17 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
     </div>
 </div>
 
+<div class="theorem-box">
+    <div class="theorem-title">
+        推论2
+    </div>
+    <div class="theorem-content">
+        对于任意两个事件 $A$ 与 $B$，若 $B\subset A$，则 $P(B)\leqslant P(A)$。
+    </div>
+</div>
+
+注意：推论 2 的逆命题不成立，即若 $P(B)\leqslant P(A)$ 无法推出 $B\subset A$。
+
 ### 加法公式
 
 <div class="theorem-box">
@@ -438,9 +449,84 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
     </div>
 </div>
 
+从几何直观上看，求事件 $A\cup B$ 的概率就是把事件 $A$ 的“面积”加事件 $B$ 的“面积，但是由于多加了一次事件 $AB$ (图中蓝色部分)的面积，因此必须再额外减去：
+
+<div class="theorem-box">
+    <div class="theorem-title">
+        推论3
+    </div>
+    <div class="theorem-content">
+        对于 $n$ 个任意事件 $A_1,A_2,\cdots,A_n$，其交事件的概率为 $\bigcup\limits_{i=1}^{n}A_i$ 的概率为
+        $$
+            \begin{equation}
+                \begin{aligned}
+                    P\left(\bigcup_{i=1}^{n}A_i\right)&=\sum_{i=1}^{n}P(A_i)-\sum_{1\leqslant i\leqslant j\leqslant n}P(A_iA_j)\\
+                    &+\sum_{1\leqslant i\leqslant j\leqslant k\leqslant n}P(A_iA_jA_k)+(-1)^{n-1}P(A_1A_2\cdots A_n)
+                \end{aligned}
+            \end{equation}
+        $$
+        其中一共包含 $\binom{n}{r}$ 个和项。
+    </div>
+</div>
+
+<div class="theorem-box">
+    <div class="theorem-title">
+        半可加性
+    </div>
+    <div class="theorem-content">
+        对于任意两个事件 $A$ 与 $B$，有
+        $$
+           \begin{equation}
+               P(A\cup B)\leqslant P(A)+P(B)
+           \end{equation}
+        $$
+        对于任意 $n$ 个事件 $A_1,A_2,\cdots,A_n$，有
+        $$
+           \begin{equation}
+               P\left(\bigcup_{i=1}^{n}A_i\right)\leqslant \sum_{i=1}^{n}P(A_i)
+           \end{equation}
+        $$
+    </div>
+</div>
+
 ## 确定概率的方法
 
 ### 频率的稳定性
+
+确定概率的频率方法是在**大量重复试验**中，用频率的稳定值去获得概率的一种方法，其基本思想是：
+
+<ol>
+    <li>
+        与考察事件 $A$ 有关的随机现象可大量重复进行。
+    </li>
+    <li>
+        在 $n$ 次重复试验中，记 $n(A) $为事件 $A$ 出现的次数，又称 $n(A)$ 为事件 $A$ 的<strong>频数</strong>，称
+        $$
+           \begin{equation}
+               f_n(A)=\frac{n(A)}{n}
+           \end{equation}
+        $$
+        为事件 $A$ 出现的<strong>频率</strong>。
+    </li>
+    <li>
+        人们的长期实践表明：随着试验重复次数 $n$ 的增加，频率 $f_n(A)$ 会稳定在某一常数 $a$ 附近，我们称这个常数为频率的稳定值，这个频率的稳定值就是我们所求的概率，这个性质被称为<strong>频率的稳定性</strong>。因此就可以用事件 $A$ 发生的频率来近似事件 $A$ 发生的概率：
+        $$
+           \begin{equation}
+               P(A)=\lim_{n\to\infty}f_n(A)=\lim_{n\to\infty}\frac{n(A)}{n}
+           \end{equation}
+        $$
+    </li>
+</ol>
+
+容易验证：由 $(20)$ 式定义的“概率”满足非负性与正则性；当事件 $A$ 与 $B$ 不相容时，$n(A\cup B)=n(A)+n(B)$，因此
+
+$$
+    P(A\cup B)=\lim_{n\to\infty}\frac{n(A\cup B)}{n}=\lim_{n\to\infty}\frac{n(A)}{n}+\lim_{n\to\infty}\frac{n(B)}{n}=P(A)+P(B)
+$$
+
+因此 $(20)$ 式定义的“概率”的确为可测概率。
+
+随机现象有其偶然性的一面，也有其必然性的一面。这种必然性表现为大量试验中随机事件出现的频率的稳定性，即一个随机事件出现的频率常在某个固定的常数附近摆动，这种规律性我们称之为**统计规律性**(Statistical regularity)。频率的稳定性说明随机事件发生的可能性大小是随机事件本身固有的、不随人们意志而改变的一种客观属性，因此可以对它进行度量。
 
 ### 确定概率的主观方法
 

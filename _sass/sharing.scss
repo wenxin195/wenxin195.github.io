@@ -1,7 +1,15 @@
+.post-options {
+    display: flex;
+    align-items: center; /* 垂直对齐 */
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
 .share-section {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    margin-right: 20px;
 }
 
 .share-label {
@@ -45,4 +53,27 @@
 
 .share-wechat-container:hover .wechat-qrcode {
     display: block;
+}
+
+
+.pdf-download-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
+.pdf-download {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+}
+
+.pdf-download:hover span {
+    color: #ff6600; /* 悬停时文字颜色 */
+}
+
+.pdf-download img {
+    margin-right: 5px;
 }

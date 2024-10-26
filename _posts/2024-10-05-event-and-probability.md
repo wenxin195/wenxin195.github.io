@@ -408,7 +408,35 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
     </div>
 </div>
 
+<div class="theorem-box">
+    <div class="theorem-title">
+        推论1
+    </div>
+    <div class="theorem-content">
+        对于任意两个事件 $A$ 与 $B$，若 $B\subset A$，则其差 $A-B$ 的概率为
+        $$
+            \begin{equation}
+                P(A-B)=P(A)-P(B)
+            \end{equation}
+        $$
+    </div>
+</div>
+
 ### 加法公式
+
+<div class="theorem-box">
+    <div class="theorem-title">
+    定理1
+    </div>
+    <div class="theorem-content">
+        对于任意的两个事件 $A$ 与 $B$，其交事件 $A\cup B$(即事件 $A$ 或 $B$ 至少发生一个) 的概率为
+        $$
+            \begin{equation}
+                P(A\cup B)=P(A)+P(B)-P(AB)
+            \end{equation}
+        $$
+    </div>
+</div>
 
 ## 确定概率的方法
 

@@ -1,20 +1,20 @@
 .definition-box {
-    border: 2px solid #228B22;   /* 定义框的边框颜色 */
-    background-color: #F5FFF5;  /* 定义框的背景颜色 */
-    padding: 15px;              /* 内边距 */
-    margin: 20px 0;             /* 外边距 */
-    border-radius: 5px;         /* 边框圆角 */
-    position: relative;         /* 相对定位 */
-  }
-  
-  .definition-title {
-    font-weight: bold;         /* 标题加粗 */
-    color: #3CB371;            /* 标题颜色 */
-    margin-bottom: 10px;       /* 标题与内容之间的间距 */
-    font-family: 'Arial', sans-serif;  /* 标题字体 */
-  }
-  
-  .definition-content {
-    font-style: normal;
-    font-family: 'Georgia', serif;
-  }
+  border: 2px solid #228b22; /* 定义框的边框颜色 */
+  background-color: #f5fff5; /* 定义框的背景颜色 */
+  padding: 15px; /* 内边距 */
+  margin: 20px 0; /* 外边距 */
+  border-radius: 5px; /* 边框圆角 */
+  position: relative; /* 相对定位 */
+}
+
+.definition-title {
+  font-weight: bold; /* 标题加粗 */
+  color: #3cb371; /* 标题颜色 */
+  margin-bottom: 10px; /* 标题与内容之间的间距 */
+  font-family: "Arial", sans-serif; /* 标题字体 */
+}
+
+.definition-content {
+  font-style: normal;
+  font-family: "Georgia", serif;
+}

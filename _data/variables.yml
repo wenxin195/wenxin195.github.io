@@ -39,7 +39,7 @@ default:
     sharing: true
     comment: true
     license: true
-    pageview: true
+    pageview: false
     search: default # algolia or lunr
 
 sources:

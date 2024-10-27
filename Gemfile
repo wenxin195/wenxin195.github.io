@@ -16,6 +16,7 @@ group :jekyll_plugins do
     gem "jekyll-commonmark"
     gem "jekyll-avatar"
     gem "kramdown-math-katex"
+    gem "jekyll-debug"
   end
 
 gemspec

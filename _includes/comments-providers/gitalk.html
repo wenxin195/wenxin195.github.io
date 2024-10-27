@@ -15,6 +15,8 @@ site.comments.gitalk.owner and site.comments.gitalk.admin -%}
 {%- assign _admin = _admin | append: ", '" | append: _admin_id | append: "'" -%}
 {%- endfor -%} {%- assign _last = _admin | size | minus: 1 -%} {%- assign _admin
 = _admin | slice: 2, _last -%}
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
 <script>
 	window.Lazyload.css('{{ _sources.gitalk.css }}');
 	window.Lazyload.js('{{ _sources.gitalk.js }}', function () {
@@ -23,7 +25,7 @@ site.comments.gitalk.owner and site.comments.gitalk.admin -%}
 			clientSecret: '{{ site.comments.gitalk.clientSecret }}',
 			repo: '{{ site.comments.gitalk.repository }}',
 			owner: '{{ site.comments.gitalk.owner }}',
-			admin: ['{{ _admin }}'],
+			admin: [{{ _admin }}],
 			id: '{{ page.key }}',
 			distractionFreeMode: false
    	});

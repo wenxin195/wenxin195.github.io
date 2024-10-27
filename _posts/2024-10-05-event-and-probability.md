@@ -7,7 +7,7 @@ tags:
 author: Zhong wenxin
 layout: article
 katex: True
-modify_date: "2024-10-05 18:18:00 +0000"
+modify_date: "2024-10-27 16:18:00 +0000"
 ---
 
 概率论与数理统计研究的对象是随机现象。概率论是研究随机现象的模型(即概率分布)，数理统计是研究随机现象的数据收集与处理。

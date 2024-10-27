@@ -78,7 +78,7 @@ excerpt_separator: <!--more-->
 excerpt_type: html # text (default), html
 
 ## license
-license: CC-BY-ND-4.0 # "CC-BY-4.0", "CC-BY-SA-4.0", "CC-BY-NC-4.0", "CC-BY-ND-4.0"
+license: CC-BY-NC-SA-4.0 # "CC-BY-4.0", "CC-BY-SA-4.0", "CC-BY-NC-4.0", "CC-BY-ND-4.0", "CC-BY-NC-SA-4.0", "CC-BY-NC-ND-4.0"
 
 ## TOC
 toc:
@@ -127,7 +127,7 @@ sharing:
 ## => Comments
 ##############################
 comments:
-  provider: false # false (default), "disqus", "gitalk", "valine", "custom"
+  provider: gitalk # false (default), "disqus", "gitalk", "valine", "custom"
 
   ## Disqus
   disqus:
@@ -136,11 +136,11 @@ comments:
   ## Gitalk
   # please refer to https://github.com/gitalk/gitalk for more info.
   gitalk:
-    clientID    : # GitHub Application Client ID
-    clientSecret: # GitHub Application Client Secret
-    repository  : # GitHub repo
-    owner       : # GitHub repo owner
-    admin: # GitHub repo owner and collaborators, only these guys can initialize GitHub issues, IT IS A LIST.
+    clientID    : "Ov23liGKqh8k0MetdOhc" # GitHub Application Client ID
+    clientSecret: "873bcb197618d190e3ecd5ff09fdfb1c02d9918f" # GitHub Application Client Secret
+    repository  : "blog-comments" # GitHub repo
+    owner       : "wenxin195" # GitHub repo owner
+    admin       :  ["wenxin195"] # GitHub repo owner and collaborators, only these guys can initialize GitHub issues, IT IS A LIST.
       # - your GitHub Id
 
   ## Valine
@@ -216,7 +216,7 @@ defaults:
     values:
       layout: article
       sharing: true
-      license: false
+      license: true
       aside:
         toc: true
       show_edit_on_github: false

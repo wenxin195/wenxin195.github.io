@@ -23,8 +23,9 @@ site.comments.gitalk.owner and site.comments.gitalk.admin -%}
 			clientSecret: '{{ site.comments.gitalk.clientSecret }}',
 			repo: '{{ site.comments.gitalk.repository }}',
 			owner: '{{ site.comments.gitalk.owner }}',
-			admin: [{{ _admin }}],
-			id: '{{ page.key }}'
+			admin: [{ _admin }],
+			id: '{{ page.key }}',
+			distractionFreeMode: false
    	});
 	gitalk.render('js-gitalk-container');
    });

@@ -10,7 +10,7 @@
             font: var(--fa-font-#{$fa-style});
             font-size: 1.5rem;
             vertical-align: middle; // 设置垂直对齐
-            // margin-top: 0.2rem;
+            margin-top: 0;
 
             @if $rotate !=0 {
                 transform: rotate(#{$rotate}deg);
@@ -67,25 +67,5 @@
     >p:last-child {
         margin-bottom: 0;
         margin-top: 0px;
-    }
-
-    &.no-icon > div.title {
-        padding-left: .6rem; // 恢复为普通 padding
-        margin-left: -1rem;
-        background-color: $bg-color;
-        color: $icon-color;
-        font-weight: 600;
-
-        ::before {
-            content: none; // 不显示图标
-            font: var(--fa-font-#{$fa-style});
-            text-align: center;
-            width: 3rem;
-            position: absolute;
-            left: .2rem;
-            margin-top: .4rem;
-            text-rendering: auto;
-            -webkit-font-smoothing: antialiased;
-        }
     }
 }

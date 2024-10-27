@@ -7,7 +7,7 @@ blockquote {
     margin-top: 0.5rem;
 
     >p:last-child {
-        margin-bottom: 0;
+        margin-top: 0;
     }
 
     &[class^='prompt-'] {
@@ -187,5 +187,15 @@ details[open]>summary {
     >summary {
         background-color: var(--prompt-info-bg);
         color: var(--prompt-info-icon-color);
+    }
+}
+
+.details-warning {
+    border-left: .2rem solid var(--prompt-warning-icon-color);
+
+    
+    >summary {
+        background-color: var(--prompt-warning-bg);
+        color: var(--prompt-warning-icon-color);
     }
 }

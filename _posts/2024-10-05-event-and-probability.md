@@ -1,4 +1,5 @@
 ---
+key: post
 title: "概率论基础(1) 随机事件与概率"
 permalink: "/概率论基础(1)-随机事件与概率.html"
 tags:
@@ -6,7 +7,8 @@ tags:
   - 概率论
 author: Zhong wenxin
 layout: article
-katex: True
+katex: true
+comment: true
 modify_date: "2024-10-27 16:18:00 +0000"
 ---
 

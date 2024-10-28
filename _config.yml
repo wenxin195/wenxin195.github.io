@@ -137,7 +137,8 @@ comments:
   # please refer to https://github.com/gitalk/gitalk for more info.
   gitalk:
     enable      : true
-    clientID    : Iv23li8wTaaop9cigLmK # GitHub Application Client ID
+    GithubID    : wenxin195
+    clientID    : Ov23liGKqh8k0MetdOhc # GitHub Application Client ID
     clientSecret: 6ec989f57a52648ec960f2cab82e2b2c0f4f8e6c # GitHub Application Client Secret
     repository  : blog-comments # GitHub repo
     owner       : wenxin195 # GitHub repo owner

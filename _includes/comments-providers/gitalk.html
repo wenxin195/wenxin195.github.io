@@ -26,7 +26,7 @@ site.comments.gitalk.owner and site.comments.gitalk.admin -%}
 			repo: '{{ site.comments.gitalk.repository }}',
 			owner: '{{ site.comments.gitalk.owner }}',
 			admin: [{{ _admin }}],
-			id: location.pathname,
+			id: '{{ page.key }}',
 			distractionFreeMode: false
    	});
 	gitalk.render('js-gitalk-container');

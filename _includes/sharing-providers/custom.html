@@ -5,11 +5,10 @@
   <!-- 分享功能 -->
   <div class="share-section">
     <span label="share-label">分享到：</span>
+
     <div class="share-buttons">
       <!-- QQ 空间分享按钮 -->
-      <a class="share-qqzone"
-        href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{ page.url | absolute_url }}&title={{ page.title }}"
-        target="_blank" title="分享到QQ空间">
+      <a class="share-qqzone" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{ page.url | absolute_url }}&title={{ page.title }}" target="_blank" title="分享到QQ空间">
         <img src="/assets/images/icon/qqzone.svg" width="32px" height="32px" alt="QQ空间" />
       </a>
 
@@ -19,15 +18,12 @@
           <img src="assets/images/icon/wechat.svg" width="32px" height="32px" alt="微信" />
         </a>
         <div class="wechat-qrcode">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ page.url | absolute_url }}"
-            alt="微信二维码" />
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ page.url | absolute_url }}" alt="微信二维码" />
         </div>
       </div>
 
       <!-- 微博分享按钮 -->
-      <a class="share-weibo"
-        href="https://service.weibo.com/share/share.php?url={{ page.url | absolute_url }}&title={{ page.title }}"
-        target="_blank" title="分享到微博">
+      <a class="share-weibo" href="https://service.weibo.com/share/share.php?url={{ page.url | absolute_url }}&title={{ page.title }}" target="_blank" title="分享到微博">
         <img src="/assets/images/icon/weibo.svg" width="32px" height="32px" alt="微博" />
       </a>
     </div>

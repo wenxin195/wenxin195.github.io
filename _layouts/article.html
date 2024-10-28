@@ -3,9 +3,7 @@ layout: page
 type: article
 ---
 
-{%- include snippets/assign.html
-  target = site.data.variables.default.page.sharing
-  source0=layout.sharing source1=page.sharing -%}
+{%- include snippets/assign.html target = site.data.variables.default.page.sharing source0=layout.sharing source1=page.sharing -%}
 {%- assign _sharing = __return -%}
 
 {%- if _sharing -%}
@@ -27,5 +25,4 @@ type: article
 <script>
   {%- include scripts/article.js -%}
   {%- include scripts/wechat-share.js -%}
-  {%- include scripts/download.js -%}
 </script>

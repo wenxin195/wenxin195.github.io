@@ -1,12 +1,19 @@
 ---
 layout: none
 ---
+
 <!DOCTYPE html>
+
+<!-- 获取语言 -->
 {%- include snippets/get-lang.html -%}
 <html lang="{{ __return }}">
   <head>
+    <!-- 网站分析工具，这里选择的是google analytics -->
     {%- include analytics.html -%}
+
+    <!-- 导入头文件 -->
     {%- include head.html -%}
+
     <script>
       {%- include scripts/utils/utils.js -%}
       {%- include scripts/lib/throttle.js -%}
@@ -14,10 +21,10 @@ layout: none
     </script>
     {%- include scripts/variables.html -%}
   </head>
+
   <body>
-    <div class="root" data-is-touch="false">
-      {{ content }}
-    </div>
+    <div class="root" data-is-touch="false">{{ content }}</div>
+    
     <script>
       {%- include scripts/common.js -%}
     </script>

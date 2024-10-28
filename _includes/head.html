@@ -1,26 +1,43 @@
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
+<!-- 动态标题 -->
 {%- include snippets/get-article-title.html article=page -%}
-<title>{%- if __return -%}{{ __return }} - {{ site.title }}{%- else -%}{{ site.title }}{%- endif -%}</title>
+<title>
+  {%- if __return -%}
+    {{ __return }} - {{ site.title }}
+  {%- else -%}
+    {{ site.title }}
+  {%- endif -%}
+</title>
 
-<meta name="description" content="{%- if page.excerpt -%}{{ page.excerpt | strip_html | strip_newlines | strip | truncate: 160 }}{%- else -%}{{ site.description }}{%- endif -%}">
-<link rel="canonical" href="{%- include snippets/page-url.html -%}">
+<!-- 用于 SEO 的页面描述，显示该页面的摘要信息(剔除html标签和换行符并截断至160字) -->
+<meta name="description" content="{%- if page.excerpt -%}{{ page.excerpt | strip_html | strip_newlines | strip | truncate: 160 }}{%- else -%}{{ site.description }}{%- endif -%}" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="canonical" href="{%- include snippets/page-url.html -%}" />
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
+<!-- 导入Katex配置 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.css" />
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.js"></script>
+
+<!-- RSS订阅连接 -->
 {%- assign _paths_rss = site.paths.rss | default: site.data.variables.default.paths.rss -%}
 {%- include snippets/get-nav-url.html path=_paths_rss -%}
-<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ __return }}">
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ __return }}" />
 
+<!-- 引入favicon和css样式 -->
 {%- include head/favicon.html -%}
-
 {%- include snippets/prepend-baseurl.html path='/assets/css/main.css' -%}
-<link rel="stylesheet" href="{{ __return }}">
+<link rel="stylesheet" href="{{ __return }}" />
 
+<!-- 导入各类资源(详见variables.sources) -->
 {%- include snippets/get-sources.html -%}
 {%- assign _sources = __return -%}
-<link rel="stylesheet" href="{{ _sources.font_awesome }}" >
+<link rel="stylesheet" href="{{ _sources.font_awesome }}" />
 
+<!-- 自定义头 -->
 {%- include head/custom.html -%}

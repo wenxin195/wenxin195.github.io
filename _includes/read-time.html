@@ -28,7 +28,7 @@
 {% endcapture %}
 
 {%- if include.layout == "article" -%}
-  {%- if include._return -%}
+  {%- if include.show_label -%}
     <!-- return element -->
     <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ words }} {{ _words  }}">
       {{ _prompt }}

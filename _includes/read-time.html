@@ -3,11 +3,21 @@
 <!-- strip_html是删除所有html标签的函数 -->
 {% assign words = include.content | strip_html | number_of_words: 'auto' %}
 
+{%- include snippets/get-locale-string.html key='PROMPT' -%}
+{%- assign _prompt = __return -%}
+
+{%- include snippets/get-locale-string.html key='UNIT' -%}
+{%- assign _unit = __return -%}
+
+{%- include snippets/get-locale-string.html key='WORDS' -%}
+{%- assign _words = __return -%}
+
 <!-- words per minute -->
 {% assign wpm = 321 %}
 {% assign min_time = 1 %}
 
 {% assign read_time = words | divided_by: wpm %}
+{% assign __return = read_time %}
 
 <!-- 等价于 if read_time <= 0 -->
 {% unless read_time > 0 %}
@@ -18,17 +28,21 @@
   {%- include snippets/get-locale-string.html key='PROMPT' -%}
 {% endcapture %}
 
-<!-- return element -->
-<span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom"
-  title="{{ words }} {%- include snippets/get-locale-string.html key='WORDS' -%}">
-  <em>
-    {{- read_time -}}
-    {{ ' ' }}
-    {%- include snippets/get-locale-string.html key='UNIT' -%}
-  </em>
-  {%- if include.prompt -%}
-    {%- assign _prompt_words = read_prompt | number_of_words: 'auto' -%}
-    {%- unless _prompt_words > 1 -%}{{ ' ' }}{%- endunless -%}
-    {{ read_prompt }}
+{%- if include.layout == "article" -%}
+  {%- if include._return -%}
+    <!-- return element -->
+    <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ words }} {{ _words  }}">
+      {{ _prompt }}
+      <em>
+        {{- read_time -}}
+        {{ ' ' }}
+        {{ _unit }}
+      </em>
+      {%- if include.prompt -%}
+        {%- assign _prompt_words = read_prompt | number_of_words: 'auto' -%}
+        {%- unless _prompt_words > 1 -%}{{ ' ' }}{%- endunless -%}
+        {{ read_prompt }}
+      {%- endif -%}
+  </span>
   {%- endif -%}
-</span>
+{%- endif -%}

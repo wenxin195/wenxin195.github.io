@@ -3,23 +3,30 @@ layout: base
 ---
 {%- assign _page_mode = page.mode | default: layout.mode | default: site.data.variables.default.page.mode -%}
 {%- assign _page_type = page.type | default: layout.type | default: site.data.variables.default.page.type -%}
+
+<!-- 标题样式 -->
 {%- assign _article_header_type = page.article_header.type | default: layout.article_header.type -%}
 
 {%- include snippets/assign.html target=layout.header source0=page.header -%}
 {%- assign _header = __return -%}
 
+<!-- 底部页脚 -->
 {%- include snippets/assign.html target=layout.footer source0=page.footer -%}
 {%- assign _footer = __return -%}
 
+<!-- 指示文章大图是否可预览 -->
 {%- include snippets/assign.html target=layout.lightbox source0=page.lightbox -%}
 {%- assign _lightbox = __return -%}
 
+<!-- 全宽度 -->
 {%- include snippets/assign.html target = site.data.variables.default.page.full_width source0=layout.full_width source1=page.full_width -%}
 {%- assign _full_width = __return -%}
 
+<!-- 评论功能 -->
 {%- include snippets/assign.html arget = site.data.variables.default.page.comment source0=layout.comment source1=page.comment -%}
 {%- assign _comment = __return -%}
 
+<!-- 文章摘要(默认前200字) -->
 {%- assign _article_header_excerpt_truncate = include.excerpt_truncate | default: 200 -%}
 
 <!-- 侧边栏 -->
@@ -84,6 +91,8 @@ layout: base
 
         <!-- 页面内容区域 -->
         <div class="page__content">
+          
+          <!--标题模式-->
           {%- if _article_header_type == 'overlay' or _article_header_type == 'cover' -%}
             {%- if _article_header_type == 'overlay' -%}
               {%- assign _article_header_height = page.article_header.height | default: layout.article_header.height -%}
@@ -96,6 +105,7 @@ layout: base
                 {%- assign _header_background_image_src = page.cover -%}
               {%- endif -%}
 
+              <!-- 渐变色 -->
               {%- if page.article_header.background_image.gradient -%}
                 {%- assign _header_background_image = page.article_header.background_image.gradient -%}
                   {%- if _header_background_image_src -%}
@@ -148,6 +158,7 @@ layout: base
                               {%- include article-info.html article=page semantic=false -%}
                               {%- include article-header.html article=page semantic=false -%}
 
+                              <!-- 摘要 -->
                               {%- if page.excerpt -%}
                                 <p class="overlay__excerpt">{{ page.excerpt | strip_html | strip_newlines | strip | truncate: _article_header_excerpt_truncate }}</p>
                               {%- endif -%}

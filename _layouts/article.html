@@ -6,17 +6,23 @@ type: article
 {%- include snippets/assign.html target = site.data.variables.default.page.sharing source0=layout.sharing source1=page.sharing -%}
 {%- assign _sharing = __return -%}
 
+<!-- 分享功能 -->
 {%- if _sharing -%}
-    <section class="article__sharing d-print-none">{%- include sharing.html -%}</section>
-  {%- endif -%}
+  <section class="article__sharing d-print-none">{%- include sharing.html -%}</section>
+{%- endif -%}
 
+<!-- article主体 -->
 <div class="layout--article">
   {%- include article/top/custom.html -%}
 
+  <!-- 正文 -->
   <div class="article__content" itemprop="articleBody">{{ content }}</div>
 
+  <!-- 页脚 -->
   <div class="d-print-none">
     {%- include article-footer.html -%}
+    
+    <!-- 侧边导航栏 -->
     {%- include article-section-navigator.html -%}
   </div>
 

@@ -1,6 +1,6 @@
-Zhong wenxin:
+Wenxin Zhong:
   type      : person # "person" (default), "organization"
-  name      : Zhong wenxin
+  name      : Wenxin Zhong
   url       : https://wenxin195.github.io
   avatar    : # path or url of avatar image (square)
   bio       : "打工人"

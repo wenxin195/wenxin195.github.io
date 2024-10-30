@@ -8,6 +8,7 @@
 {%- assign _license = __return -%}
 
 <footer class="article__footer">
+  <!-- 修改日期 -->
   {%- if page.modify_date -%}
     {%- include snippets/get-locale-string.html key='ARTICLE_DATE_FORMAT' -%}
     {%- assign _locale_date_format = __return -%}
@@ -23,6 +24,7 @@
 
   {%- include article/footer/custom.html -%}
 
+  <!-- 作者概括 -->
   {%- if _show_author_profile -%}
     {%- if page.author -%}
       {%- assign _author = site.data.authors[page.author] -%}
@@ -32,10 +34,12 @@
     {%- include article/footer/author-profile.html author=_author -%}
   {%- endif -%}
 
+  <!-- 订阅功能-->
   {%- if _show_subscribe -%}
     <div class="article__subscribe">{%- include article/footer/subscribe.html -%}</div>
   {%- endif -%}
 
+  <!-- 许可证 -->
   {%- if _license != false -%}
     {%- assign _data_license = site.data.licenses-%}
     {%- if site.license -%}

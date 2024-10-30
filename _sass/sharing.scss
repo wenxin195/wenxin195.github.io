@@ -1,79 +1,81 @@
 .post-options {
-    display: flex;
-    align-items: center; /* 垂直对齐 */
-    margin-bottom: 10px;
-    margin-right: 20px;
+  display: flex;
+  align-items: flex-start; // 上对齐
+  margin-right: 20px;
 }
 
 .share-section {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    margin-right: 20px;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
 }
 
 .share-label {
-    font-size: 16px;
-    margin-right: 10px;
-    color: #333;
+  font-size: 16px;
+  margin-right: 10px;
+  color: #333;
 }
 
 .share-buttons {
-    display: flex;
-    gap: 5px; /* 调整按钮之间的间距 */
-    align-items: center;
-}
+  display: flex;
+  gap: 5px; // 调整按钮之间的间距
+  align-items: center;
 
-.share-buttons a {
+  a {
     display: inline-block;
     width: auto;
     height: auto;
+
+    img {
+      width: 32px;
+      height: 32px;
+    }
+  }
 }
 
+.multimedia {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
 
+  img {
+    width: 32px;
+    margin-right: 5px;
+  }
+
+  &:hover span {
+    color: #ff6600; // 悬停时文字颜色
+  }
+}
+
+.multimedia-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+}
+
+/* 微信二维码 */
 .wechat-qrcode {
-    display: none; /* 默认隐藏二维码 */
-    position: absolute; /* 绝对定位 */
-    top: 50; /* 控制二维码相对于图标的垂直位置 */
-    left: -40px; /* 控制二维码相对于图标的水平位置 */
-    padding: 10px;
-    border: 1px solid #ddd;
-    background: #fff;
-    z-index: 100; /* 确保二维码位于图标上方 */
+  display: none; // 默认隐藏二维码
+  position: absolute; // 绝对定位
+  top: 50; // 控制二维码相对于图标的垂直位置
+  left: -40px; // 控制二维码相对于图标的水平位置
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  z-index: 100; // 确保二维码位于图标上方
 }
 
 .share-wechat-container {
-    position: relative; /* 使二维码的定位基于此容器 */
+  position: relative; // 使二维码的定位基于此容器
+
+  &:hover .wechat-qrcode {
+    display: block;
+  }
 }
 
 .share-wechat {
-    display: inline-block;
-    position: relative;
-}
-
-.share-wechat-container:hover .wechat-qrcode {
-    display: block;
-}
-
-
-.pdf-download-section {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    margin-right: 20px;
-}
-
-.pdf-download {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-    color: #333;
-}
-
-.pdf-download:hover span {
-    color: #ff6600; /* 悬停时文字颜色 */
-}
-
-.pdf-download img {
-    margin-right: 5px;
+  display: inline-block;
+  position: relative;
 }

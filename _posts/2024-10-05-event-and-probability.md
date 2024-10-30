@@ -1,14 +1,14 @@
 ---
-key: post
+key: post-event-and-probability
 title: "概率论基础(1) 随机事件与概率"
 permalink: "/event-and-probability.html"
 tags:
   - 统计学
   - 概率论
-author: Zhong wenxin
+author: Wenxin Zhong
 layout: article
-katex: true
-comment: true
+download: true
+videos: false
 modify_date: "2024-10-27 16:18:00 +0000"
 ---
 

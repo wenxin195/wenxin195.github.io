@@ -31,6 +31,9 @@
 
 {%- assign _paths_archive = site.paths.archive | default: site.data.variables.default.paths.archive -%}
 
+{%- include read-time.html content=include.article.content _return=false layout=include.article.layout -%}
+{%- assign read_time = __return -%}
+
 {%- include snippets/assign.html target=site.data.variables.default.page.read_time source0=layout.read_time source1=page.read_time -%}
 {%- assign _read_time = __return -%}
 {%- if _read_time -%}
@@ -40,30 +43,34 @@
 {%- endif -%}
 
 {%- if _show_tags or _show_author or _show_date or _pageview or _read_time -%}
+  
+  <!-- 文章标签、作者、日期 -->
   <div class="article__info clearfix">
     {%- if _show_tags -%}
+      <ul class="left-col menu">
+        {%- assign _tag_path = _paths_archive | append: '?tag=' -%}
+        {%- include snippets/prepend-baseurl.html path=_tag_path -%}
 
-    <ul class="left-col menu">
-      {%- assign _tag_path = _paths_archive | append: '?tag=' -%}
-      {%- include snippets/prepend-baseurl.html path=_tag_path -%}
-
-      {%- for _tag in include.article.tags -%}
-        {%- assign _tag_path = __return -%}
-        {%- assign _tag_encode = _tag | strip | url_encode -%}
-        <li>
-          <a class="button button--secondary button--pill button--sm"
-            href="{{ _tag_path | append: _tag_encode | replace: '//', '/' }}">{{ _tag }}</a>
-        </li>
-      {%- endfor -%}
-    </ul>
+        <!-- 标签 -->
+        {%- for _tag in include.article.tags -%}
+          {%- assign _tag_path = __return -%}
+          {%- assign _tag_encode = _tag | strip | url_encode -%}
+          <li>
+            <a class="button button--secondary button--pill button--sm" href="{{ _tag_path | append: _tag_encode | replace: '//', '/' }}">{{ _tag }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
     {%- endif -%}
 
     {%- if _show_author or _show_date or _pageview or _read_time -%}
       <ul class="right-col menu">
+
+        <!-- 作者 -->
         {%- if _show_author -%}
           <li><i class="fas fa-user"></i> <span>{{ _author.name }}</span></li>
         {%- endif -%}
 
+        <!-- 发表日期 -->
         {%- if _show_date -%}
           <li>
             {%- include snippets/get-locale-string.html key='ARTICLE_DATE_FORMAT' -%}
@@ -71,6 +78,7 @@
           </li>
         {%- endif -%}
 
+        <!-- 浏览次数 -->
         {%- if _pageview -%}
           {%- if site.pageview.provider -%}
             {%- include snippets/get-locale-string.html key='VIEWS' -%}
@@ -81,9 +89,10 @@
           {%- endif -%}
         {%- endif -%}
 
-        {%- if _read_time -%}
+        <!-- 阅读时间 -->
+        {%- if _read_time and include.article.layout == "article" -%}
           <li>
-            <i class="fa-regular fa-clock"></i> <span>{%- include read-time.html content=page.content prompt=true -%}</span>
+            <i class="fa-regular fa-clock"></i> <span>{%- include read-time.html content=include.article.content _return=true layout=include.article.layout -%}</span>
           </li>
         {%- endif -%}
       </ul>
@@ -92,16 +101,17 @@
   </div>
 {%- endif -%}
 
-
 {%- if include.semantic != false -%}
-{%- if _author -%}
-<meta itemprop="author" content="{{ _author.name }}" />
-{%- endif -%}
-{%- if include.article.date -%}
-<meta itemprop="datePublished" content="{{ include.article.date | date_to_xmlschema }}">
-{%- endif -%}
-{%- if include.article.tags[0] -%}
-{%- assign _keywords = include.article.tags | join: ',' %}
-<meta itemprop="keywords" content="{{ _keywords }}">
-{%- endif -%}
+  {%- if _author -%}
+    <meta itemprop="author" content="{{ _author.name }}" />
+  {%- endif -%}
+
+  {%- if include.article.date -%}
+    <meta itemprop="datePublished" content="{{ include.article.date | date_to_xmlschema }}">
+  {%- endif -%}
+
+  {%- if include.article.tags[0] -%}
+    {%- assign _keywords = include.article.tags | join: ',' %}
+    <meta itemprop="keywords" content="{{ _keywords }}">
+  {%- endif -%}
 {%- endif -%}

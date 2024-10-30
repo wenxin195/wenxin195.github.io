@@ -17,7 +17,6 @@
 {% assign min_time = 1 %}
 
 {% assign read_time = words | divided_by: wpm %}
-{% assign __return = read_time %}
 
 <!-- 等价于 if read_time <= 0 -->
 {% unless read_time > 0 %}

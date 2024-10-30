@@ -1,7 +1,7 @@
 <!-- Calculate the post's reading time, and display the word count in tooltip -->
 
 <!-- strip_html是删除所有html标签的函数 -->
-{% assign words = include.content | strip_html | number_of_words %}
+{% assign words = include.content | strip_html | number_of_words: 'auto' %}
 
 {%- include snippets/get-locale-string.html key='PROMPT' -%}
 {%- assign _prompt = __return -%}
@@ -38,7 +38,7 @@
         {{ _unit }}
       </em>
       {%- if include.prompt -%}
-        {% assign _prompt_words = read_prompt | number_of_words %}
+        {% assign _prompt_words = read_prompt | number_of_words: 'auto' %}
         {%- unless _prompt_words > 1 -%}{{ ' ' }}{%- endunless -%}
         {{ read_prompt }}
       {%- endif -%}

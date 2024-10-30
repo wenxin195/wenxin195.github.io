@@ -31,10 +31,7 @@
 
 {%- assign _paths_archive = site.paths.archive | default: site.data.variables.default.paths.archive -%}
 
-{%- include read-time.html content=include.article.content _return=false layout=include.article.layout -%}
-{%- assign read_time = __return -%}
-
-{%- include snippets/assign.html target=site.data.variables.default.page.read_time source0=layout.read_time source1=page.read_time -%}
+{%- include snippets/assign.html target=site.data.variables.default.page.read_time -%}
 {%- assign _read_time = __return -%}
 {%- if _read_time -%}
   {%- assign _read_time = true -%}

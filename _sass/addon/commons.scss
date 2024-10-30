@@ -190,12 +190,12 @@ details[open]>summary {
     }
 }
 
-.details-warning {
-    border-left: .2rem solid var(--prompt-warning-icon-color);
+.details-example {
+    border-left: .2rem solid var(--prompt-danger-icon-color);
 
     
     >summary {
-        background-color: var(--prompt-warning-bg);
-        color: var(--prompt-warning-icon-color);
+        background-color: var(--prompt-danger-bg);
+        color: var(--prompt-danger-icon-color);
     }
 }

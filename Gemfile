@@ -17,6 +17,7 @@ group :jekyll_plugins do
     gem "jekyll-avatar"
     gem "kramdown-math-katex"
     gem "jekyll-debug"
+    gem "octopress-debugger"
   end
 
 gemspec

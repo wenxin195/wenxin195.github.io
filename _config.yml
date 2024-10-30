@@ -250,3 +250,6 @@ plugins:
   - jekyll-mentions
   - jekyll-commonmark
   - jekyll-avatar
+  - kramdown-math-katex
+  - jekyll-debug
+  - octopress-debugger

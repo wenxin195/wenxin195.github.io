@@ -235,21 +235,8 @@ sass:
 ## => Plugins
 ##############################
 plugins:
-  - jekyll-feed
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jemoji
-  - jekyll-seo-tag
-  - jekyll-sitemap
+  - github-pages
   - jekyll-archives
   - jekyll-minifier
-  - jekyll-assets
   - jekyll-admin
-  - jekyll-github-metadata
-  - jekyll-sass-converter
-  - jekyll-mentions
-  - jekyll-commonmark
-  - jekyll-avatar
   - kramdown-math-katex
-  - jekyll-debug
-  - octopress-debugger

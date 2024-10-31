@@ -34,9 +34,9 @@
       {{ _prompt }}
       <em>
         {{- read_time -}}
-        {{ ' ' }}
-        {{ _unit }}
+        {{ ' ' }}  
       </em>
+      {{ _unit }}
       {%- if include.prompt -%}
         {% assign _prompt_words = read_prompt | strip_newlines | split: "" | size %}
         {%- unless _prompt_words > 1 -%}{{ ' ' }}{%- endunless -%}

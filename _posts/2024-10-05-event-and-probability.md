@@ -9,7 +9,7 @@ author: Wenxin Zhong
 layout: article
 download: true
 videos: false
-modify_date: "2024-10-31 14:10:00"
+modify_date: "2024-11-05 14:10:00"
 ---
 
 概率论与数理统计研究的对象是随机现象。概率论是研究随机现象的模型(即概率分布)，数理统计是研究随机现象的数据收集与处理。
@@ -1575,9 +1575,9 @@ $$
 
 ## 参考文献
 
-[1] 茆诗松.概率论与数理统计教程[M]. 北京:高等教育出版社, 2019.\\
-[2] Sheldon M. Ross, *A First Course in Probability 9th edition* (Pearson Education, 2012).\\
-[3] 李贤平.概率论基础[M]. 北京:高等教育出版社, 2010.\\
-[4] Dimitri P. Bertsekas and John N. Tsitsiklis, *Introduction to Probability 2th edtion* (Athena Scientific, 2008).
+1. 茆诗松.概率论与数理统计教程[M]. 北京:高等教育出版社, 2019.
+2. Sheldon M. Ross, *A First Course in Probability 9th edition* (Pearson Education, 2012).
+3. 李贤平.概率论基础[M]. 北京:高等教育出版社, 2010.
+4. Dimitri P. Bertsekas and John N. Tsitsiklis, *Introduction to Probability 2th edtion* (Athena Scientific, 2008).
 
 [^likelihood]: 概率(Probability)与似然概率(Likelihood)的区别在于：Probability是给定参数的情况下预测某个事件发生的可能性；而Likelihood是给定数据推测参数的可能性。

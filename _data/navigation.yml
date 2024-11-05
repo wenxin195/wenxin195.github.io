@@ -1,13 +1,13 @@
 header:
   - titles:
       en      : Home
-    url: /
+    url : /
     icon: home
 
   - titles:
       en      : About
       zh-CN   : 关于我
-    url: /about.html
+    url : /about.html
     icon: person
 
   - titles:
@@ -15,13 +15,13 @@ header:
       en      : Archive
       zh-CN   : 归档
       # @end locale config
-    url: /archive.html
+    url : /archive.html
     icon: article
   
   - titles:
       en      : Donate
       zh-CN   : 捐赠
-    url: /donate.html
+    url : /donate.html
     icon: donate
   
   - titles:

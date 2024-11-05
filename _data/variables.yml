@@ -7,10 +7,8 @@ default:
     home: /
     archive: /archive.html
     rss: /feed.xml
-  katex: true
-  katex_autoNumber: true
-  mathjax: false
-  mathjax_autoNumber: false
+  mathjax: true
+  mathjax_autoNumber: true
   mermaid: true
   chart: true
   toc:
@@ -53,7 +51,7 @@ sources:
       css: "https://cdn.bootcss.com/gitalk/1.8.0/gitalk.min.css"
     valine: "https://unpkg.com/valine/dist/Valine.min.js" # bootcdn not available
     katex: "https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"
-    mathjax: "https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"
+    mathjax: https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js
     mermaid: "https://cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.min.js"
   unpkg:
     font_awesome: "https://use.fontawesome.com/releases/v5.15.1/css/all.css"

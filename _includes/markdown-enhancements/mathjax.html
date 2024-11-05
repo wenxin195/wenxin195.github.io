@@ -1,17 +1,129 @@
 {%- include snippets/get-sources.html -%}
 {%- assign _sources = __return -%}
 
-{%- include snippets/assign.html target=site.data.variables.default.mathjax_autoNumber
-source0=site.mathjax_autoNumber source1=page.mathjax_autoNumber -%}
+{%- include snippets/assign.html target=site.data.variables.default.mathjax_autoNumber source0=site.mathjax_autoNumber
+source1=page.mathjax_autoNumber -%}
 {%- assign _mathjax_autoNumber = __return -%}
 
-<script type="text/x-mathjax-config">
-	var _config = { tex2jax: {
-		inlineMath: [['$','$'], ['\\(','\\)']]
-	}};
-	{%- if _mathjax_autoNumber == true -%}
-		_config.TeX = { equationNumbers: { autoNumber: "all" } };
-	{%- endif -%}
-	MathJax.Hub.Config(_config);
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [
+        ['$', '$'],
+        ['\\(', '\\)']
+      ],
+      displayMath: [
+        ['$$', '$$'],
+        ['\\[', '\\]']
+      ],
+      processEscapes: true,
+      processEnvironments: true,
+      processRefs: true,
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '0.8em',
+      useLabelIds: true,
+      maxMacros: 10000,
+      maxBuffer: 5 * 1024,
+    },
+    loader: {
+      load: ['a11y/explorer', 'ui/safe', 'ui/menu']
+    },
+    options: {
+      enableExplorer: true,                // set to false to disable the explorer
+      a11y: {
+        speech: true,                      // switch on speech output
+        braille: true,                     // switch on Braille output
+        subtitles: true,                   // show speech as a subtitle
+        viewBraille: false,                // display Braille output as subtitles
+
+        backgroundColor: 'Blue',           // color for background of selected sub-expression
+        backgroundOpacity: .2,             // opacity for background of selected sub-expression
+        foregroundColor: 'Black',          // color to use for text of selected sub-expression
+        foregroundOpacity: 1,              // opacity for text of selected sub-expression
+
+        highlight: 'None',                 // type of highlighting for collapsible sub-expressions
+        flame: false,                      // color collapsible sub-expressions
+        hover: false,                      // show collapsible sub-expression on mouse hovering
+
+        treeColoring: false,               // tree color expression
+
+        magnification: 'None',             // type of magnification
+        magnify: '400%',                   // percentage of magnification of zoomed expressions
+        keyMagnifier: false,               // switch on magnification via key exploration
+        mouseMagnifier: false,             // switch on magnification via mouse hovering
+        align: 'top',                      // placement of magnified expression
+
+        infoType: false,                   // show semantic type on mouse hovering
+        infoRole: false,                   // show semantic role on mouse hovering
+        infoPrefix: false,                 // show speech prefixes on mouse hovering
+      },
+
+      enableMenu: true,          // set to false to disable the menu
+      menuOptions: {
+        settings: {
+          texHints: true,        // put TeX-related attributes on MathML
+          semantics: false,      // put original format in <semantic> tag in MathML
+          zoom: 'NoZoom',        // or 'Click' or 'DoubleClick' as zoom trigger
+          zscale: '200%',        // zoom scaling factor
+          renderer: 'CHTML',     // or 'SVG'
+          alt: false,            // true if ALT required for zooming
+          cmd: false,            // true if CMD required for zooming
+          ctrl: false,           // true if CTRL required for zooming
+          shift: false,          // true if SHIFT required for zooming
+          scale: 1,              // scaling factor for all math
+          inTabOrder: true,      // true if tabbing includes math
+
+          assistiveMml: true,    // true if hidden assistive MathML should be generated for screen readers
+          collapsible: false,    // true if complex math should be collapsible
+          explorer: false,       // true if the expression explorer should be active
+        },
+        annotationTypes: {
+          TeX: ['TeX', 'LaTeX', 'application/x-tex'],
+          StarMath: ['StarMath 5.0'],
+          Maple: ['Maple'],
+          ContentMathML: ['MathML-Content', 'application/mathml-content+xml'],
+          OpenMath: ['OpenMath']
+        }
+      },
+      
+      safeOptions: {
+        allow: {
+          URLs: 'safe',   // safe are in safeProtocols below
+          classes: 'safe',   // safe start with mjx- (can be set by pattern below)
+          cssIDs: 'safe',   // safe start with mjx- (can be set by pattern below)
+          styles: 'safe'    // safe are in safeStyles below
+        },
+        safeProtocols: {
+          http: true,
+          https: true,
+          file: true,
+          javascript: false,
+          data: false
+        },
+        safeStyles: {
+          color: true,
+          backgroundColor: true,
+          border: true,
+          cursor: true,
+          margin: true,
+          padding: true,
+          textShadow: true,
+          fontFamily: true,
+          fontSize: true,
+          fontStyle: true,
+          fontWeight: true,
+          opacity: true,
+          outline: true
+        },
+        lengthMax: 3,                           // Largest padding/border/margin, etc. in em's
+        scriptsizemultiplierRange: [.6, 1],     // Valid range for scriptsizemultiplier
+        scriptlevelRange: [-2, 2],              // Valid range for scriptlevel
+        classPattern: /^mjx-[-a-zA-Z0-9_.]+$/,  // Pattern for allowed class names
+        idPattern: /^mjx-[-a-zA-Z0-9_.]+$/,     // Pattern for allowed ids
+        dataPattern: /^data-mjx-/               // Pattern for data attributes
+      }
+    },
+  };
 </script>
-<script type="text/javascript" src="{{ _sources.mathjax }}" async></script>
+<script type="text/javascript" id="MathJax-script" async src="{{ _sources.mathjax }}"></script>

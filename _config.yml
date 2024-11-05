@@ -88,11 +88,8 @@ toc:
 ## => Markdown Enhancements
 ##############################
 ## Mathjax
-katex: true
-katex_autoNumber: true
-
-mathjax: false # false (default), true
-mathjax_autoNumber: false # false (default), true
+mathjax: true # false (default), true
+mathjax_autoNumber: true # false (default), true
 
 ## Mermaid
 mermaid: true # false (default), true
@@ -194,7 +191,7 @@ analytics:
 markdown: kramdown
 kramdown:
   input: GFM
-  math_engine: katex
+  math_engine: mathjax
   syntax_highlighter: rouge
 
 highlighter : rouge
@@ -239,4 +236,3 @@ plugins:
   - jekyll-archives
   - jekyll-minifier
   - jekyll-admin
-  - kramdown-math-katex

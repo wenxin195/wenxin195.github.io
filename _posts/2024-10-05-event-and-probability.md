@@ -177,7 +177,7 @@ $A$ 与 $B$ 互为对立事件的充分必要条件是：$A\cap B=\varnothing$�
         交换律：
         $$
         \begin{equation}
-            A\cup B=B\cup A, \quad AB=BA
+            A \cup B = B \cup A, \quad AB = BA
         \end{equation}
         $$
     </li>
@@ -269,7 +269,7 @@ Kolmogorov 的公理化体系使用了集合论的语言，将概率视为对一
     <li>若 $A\in\mathscr{F}$，则对立事件 $\bar{A}\in\mathscr{F}$；</li>
     <li>若 $A_1,A_2,\cdots,A_n,\cdots\in\mathscr{F}$，则可列并 $\bigcup\limits_{i=1}^{\infty}A_i\in\mathscr{F}$。</li>
 </ol>
-则称 $\mathscr{F}$ 是一个事件域，或者 $\sigma-\text{域}$ 或者 $\sigma\ -$ 代数。
+则称 $\mathscr{F}$ 是一个事件域，或者 $\sigma\ -$ 域或者 $\sigma\ -$ 代数。
 </details>
 
 在概率论中，称 $({\mit\Omega},\mathscr{F})$ 为**可测空间**(Measurable space)，**在可测空间上才能定义概率**，这时 $\mathscr{F}$ 上都是有概率可言的事件。
@@ -337,7 +337,7 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
 
 <ol>
     <li>
-        不可能事件 $\varnothing$ 的概率为 $0$：即 $P(\varnothing)=0$；
+        不可能事件 $\varnothing$ 的概率为 0：即 $P(\varnothing)=0$；
 <details class="details-theorem" markdown="1">
 <summary>证明</summary>
 由于
@@ -380,8 +380,10 @@ $$
 因此由可列可加性，有
 
 $$
-      P\left(\bigcup_{i=1}^{n}A_i\right)&=P(A_1)+P(A_2)+\cdots+P(A_n)+P(\varnothing)+\cdots+P(\varnothing)+\cdots\\
-      &=P(A_1)+P(A_2)+\cdots+P(A_n)
+    \begin{aligned}
+        P\left(\bigcup_{i=1}^{n}A_i\right)&=P(A_1)+P(A_2)+\cdots+P(A_n)+P(\varnothing)+\cdots+P(\varnothing)+\cdots\\
+        &=P(A_1)+P(A_2)+\cdots+P(A_n)
+    \end{aligned}
 $$
 
 </details>
@@ -602,7 +604,7 @@ $$
     <li>
         在 $n$ 次重复试验中，记 $n(A) $为事件 $A$ 出现的次数，又称 $n(A)$ 为事件 $A$ 的<strong>频数</strong>，称
         $$
-           \begin{equation}
+           \begin{equation}\label{eq:极限频率}
                f_n(A)=\frac{n(A)}{n}
            \end{equation}
         $$
@@ -618,13 +620,13 @@ $$
     </li>
 </ol>
 
-容易验证：由 $(19)$ 式定义的“概率”满足非负性与正则性；当事件 $A$ 与 $B$ 不相容时，$n(A\cup B)=n(A)+n(B)$，因此
+容易验证：由\eqref{eq:极限频率}式定义的“概率”满足非负性与正则性；当事件 $A$ 与 $B$ 不相容时，$n(A\cup B)=n(A)+n(B)$，因此
 
 $$
     P(A\cup B)=\lim_{n\to\infty}\frac{n(A\cup B)}{n}=\lim_{n\to\infty}\frac{n(A)}{n}+\lim_{n\to\infty}\frac{n(B)}{n}=P(A)+P(B)
 $$
 
-因此 $(19)$ 式定义的“概率”的确为可测概率。
+因此\eqref{eq:极限频率}式定义的“概率”的确为可测概率。
 
 随机现象有其偶然性的一面，也有其必然性的一面。这种必然性表现为大量试验中随机事件出现的频率的稳定性，即一个随机事件出现的频率常在某个固定的常数附近摆动，这种规律性我们称之为**统计规律性**(Statistical regularity)。频率的稳定性说明随机事件发生的可能性大小是随机事件本身固有的、不随人们意志而改变的一种客观属性，因此可以对它进行度量。
 
@@ -650,7 +652,7 @@ $$
     <li>
         若事件 $A$ 含有 $k$ 个样本点，则事件 $A$ 的概率为
         $$
-            \begin{equation}
+            \begin{equation}\label{eq:古典概型}
             P(A)=\frac{\text{事件}A\text{所含样本点的个数}}{\mit\Omega\text{中所有样本点的个数}}=\frac{k}{n}
             \end{equation}
         $$
@@ -673,7 +675,7 @@ $$
 
 所以在古典概型中，事件 $A$ 的概率的分母是样本点的总数 $n$，而分子是事件 $A$ 中所包含的样本点的个数。由于 $\omega_{i_1},\omega_{i_2},\cdots,\omega_{i_m}$ 的出现必导致 $A$ 的出现，即它们的出现对 $A$ 的出现“有利”，因此习惯上常称 $\omega_{i_1},\omega_{i_2},\cdots,\omega_{i_m}$ 是 $A$ 的“有利场合”。
 
-容易验证：$(21)$ 式所定义的“概率”满足非负性与正则性，上面也证明了 $(21)$ 式的可加性，因此 $(21)$ 式所定义的“概率”的确为可测概率。
+容易验证：\eqref{eq:古典概型}式所定义的“概率”满足非负性与正则性，上面也证明了\eqref{eq:古典概型}式的可加性，因此\eqref{eq:古典概型}式所定义的“概率”的确为可测概率。
 
 在古典概型中，求事件 $A$ 的概率归结为计算 $A$ 中含有的样本点的个数和中含有的样本点的总数，所以在计算中经常用到排列组合工具。
 
@@ -747,7 +749,7 @@ $$
 <summary>生日问题</summary>
 $n$ 个人的生日全不相同的概率 $p_n$ 是多少。
 
-由 $(2)$ 易知
+由盒子模型 $(2)$ 易知
 
 $$
   p_n=\frac{365!}{365^n(365-n)!}=\left(1-\frac{1}{365}\right)\left(1-\frac{2}{365}\right)\cdots\left(1-\frac{n-1}{365}\right)
@@ -781,20 +783,20 @@ $$
     <li>
         若事件 $A$ 为 $\mit\Omega$ 中的某个子区域，且其度量大小可用 $S_A$ 表示，则事件 $A$ 的概率为
         $$
-            \begin{equation}
+            \begin{equation}\label{eq:几何概型}
                 P(A)=\frac{S_A}{S_\mit\Omega}
             \end{equation}
         $$
     </li>
 </ol>
 
-容易验证，$(23)$ 式所定义的“概率”满足非负性和正则性；当事件 $A$ 与 $B$ 互不相容时，显然有 $S_{A\cup B}=S_A+S_B$，于是
+容易验证，\eqref{eq:几何概型}式所定义的“概率”满足非负性和正则性；当事件 $A$ 与 $B$ 互不相容时，显然有 $S_{A\cup B}=S_A+S_B$，于是
 
 $$
     P(A\cup B)=\frac{S_{A\cup B}}{S_{\mathit\Omega}}=\frac{S_A}{S_{\mathit\Omega}}+\frac{S_B}{S_{\mathit\Omega}}=P(A)+P(B)
 $$
 
-因此 $(23)$ 式所定义的“概率”的确为可测概率。
+因此\eqref{eq:几何概型}式所定义的“概率”的确为可测概率。
 
 求几何概率的关键是对样本空间和所求事件 $A$ 用图形描述清楚(一般用平面或空间图形)，然后计算出相关图形的度量(一般为面积或体积)。
 
@@ -1218,7 +1220,7 @@ $$
 
 </details>
 
-事件 $A$ 的优势比告诉我们事件 $A$ 发生的可能性是不发生时的可能性的倍数，如果 $P(A)=\frac{2}{3}$，那么 $P(A)=2P(\bar{A})$。如果某事件的优势比等于 $\alpha$，那么通常称支持假设(事件)成立的优势比为“$\alpha:1$”。
+事件 $A$ 的优势比告诉我们事件 $A$ 发生的可能性是不发生时的可能性的倍数，若 $P(A)=\frac{2}{3}$，那么 $P(A)=2P(\bar{A})$。如果某事件的优势比等于 $\alpha$，那么通常称支持假设(事件)成立的优势比为“$\alpha:1$”。
 
 考虑假设(事件) $H$ 以概率 $P(H)$ 成立，如果我们发现了新的证据 $E$ (假设 $H$ 发生所依赖的辅助事件)，那么在 $E$ 成立的条件下，$H$ 成立和 $H$ 不成立的条件概率分别为
 
@@ -1260,7 +1262,7 @@ $$
 下面考虑新的证据如何影响某个特定假设成立的概率的问题，令事件 $H$ 表示“某个特定假设”，而事件 $E$ 表示“新的证据”，那么
 
 $$
-\begin{equation}
+\begin{equation}\label{eq:两个对立事件的Bayes公式}
     P(H\mid E)=\frac{P(E\mid H)P(H)}{P(H)P(E\mid H)+P(E\mid \bar{H})[1-P(H)]}
 \end{equation}
 $$
@@ -1289,7 +1291,7 @@ $$
 \end{equation}
 $$
 
-$(34)$ 式的分母实际上为 $P(E)=P(H)P(E\mid H)+P(\bar{H})P(E\mid\bar{H})$，只包含了事件 $H$ 与其对立事件 $\bar{H}$，分子实际上为 $P(HE)=P(H)P(E\mid H)$。可以将其推而广之，于是就有下面的 Bayes 公式(定理)：
+\eqref{eq:两个对立事件的Bayes公式}式的分母实际上为 $P(E)=P(H)P(E\mid H)+P(\bar{H})P(E\mid\bar{H})$，只包含了事件 $H$ 与其对立事件 $\bar{H}$，分子实际上为 $P(HE)=P(H)P(E\mid H)$。可以将其推而广之，于是就有下面的 Bayes 公式(定理)：
 
 <details class="details-theorem" markdown="1" open>
 <summary>Bayes 公式</summary>

@@ -1,7 +1,6 @@
-{%- include snippets/get-sources.html -%} {%- assign _sources = __return -%} {%-
-include snippets/assign.html target=site.data.variables.default.katex_autoNumber
-source0=site.katex_autoNumber source1=page.katex_autoNumber -%} {%- assign
-_katex_autoNumber = __return -%}
+{%- include snippets/get-sources.html -%} {%- assign _sources = __return -%}
+{%- include snippets/assign.html target=site.data.variables.default.katex_autoNumber source0=site.katex_autoNumber source1=page.katex_autoNumber -%}
+{%- assign _katex_autoNumber = __return -%}
 
 <!-- KaTeX 样式 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.css" />

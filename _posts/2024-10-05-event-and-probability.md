@@ -1571,4 +1571,11 @@ $$
 
 如果这几个独立试验还是相同的，则称其为 $n$ 重独立重复试验。如果在 $n$ 重独立重复试验中，每次试验的可能结果为两个：$A$ 或者 $\bar{A}$，则称这种试验为 $n$ 重 Bernoulli 试验。
 
+## 参考文献
+
+[1] 茆诗松.概率论与数理统计教程[M]. 北京:高等教育出版社, 2019.\\
+[2] Sheldon M. Ross, *A First Course in Probability 9th edition* (Pearson Education, 2012).\\
+[3] 李贤平.概率论基础[M]. 北京:高等教育出版社, 2010.\\
+[4] Dimitri P. Bertsekas and John N. Tsitsiklis, *Introduction to Probability 2th edtion* (Athena Scientific, 2008).
+
 [^likelihood]: 概率(Probability)与似然概率(Likelihood)的区别在于：Probability是给定参数的情况下预测某个事件发生的可能性；而Likelihood是给定数据推测参数的可能性。

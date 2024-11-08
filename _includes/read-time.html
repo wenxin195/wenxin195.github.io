@@ -13,30 +13,26 @@
 {%- assign _words = __return -%}
 
 <!-- words per minute -->
-{% assign wpm = 500 %}
-{% assign min_time = 1 %}
+{%- assign wpm = 500 -%}
+{%- assign min_time = 1 -%}
 
-{% assign read_time = words | divided_by: wpm %}
+{%- assign read_time = words | divided_by: wpm -%}
 
 <!-- 等价于 if read_time <= 0 -->
-{% unless read_time > 0 %}
-  {% assign read_time = min_time %}
-{% endunless %}
+{%- unless read_time > 0 -%}
+  {%- assign read_time = min_time -%}
+{%- endunless -%}
 
-{% capture read_prompt %}
+{%- capture read_prompt -%}
   {%- include snippets/get-locale-string.html key='PROMPT' -%}
-{% endcapture %}
+{%- endcapture -%}
 
 {%- if include.layout == "article" -%}
   {%- if include.show_label -%}
     <!-- return element -->
     <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ words }} {{ _words  }}">
-      {{ _prompt }}
-      <em>
-        {{- read_time -}}
-        {{ ' ' }}  
-      </em>
-      {{ _unit }}
+      {{ _prompt }}<em>{{- read_time -}}{{ ' ' }}</em>{{ _unit }}
+      
       {%- if include.prompt -%}
         {% assign _prompt_words = read_prompt | strip_newlines | split: "" | size %}
         {%- unless _prompt_words > 1 -%}{{ ' ' }}{%- endunless -%}

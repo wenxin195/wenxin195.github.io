@@ -1,3 +1,5 @@
+# 存放文章许可证，严格程度：
+# CC-BY > CC-BY-SA > CC-BY-NC > CC-BY-NC-SA > CC-BY-ND > CC-BY-NC-ND
 CC-BY-4.0:
   name: Attribution 4.0 International
   url: https://creativecommons.org/licenses/by/4.0/
@@ -10,14 +12,14 @@ CC-BY-NC-4.0:
   name: Attribution-NonCommercial 4.0 International
   url: https://creativecommons.org/licenses/by-nc/4.0/
   image: https://i.creativecommons.org/l/by-nc/4.0/88x31.png
-CC-BY-ND-4.0:
-  name: Attribution-NoDerivatives 4.0 International
-  url: https://creativecommons.org/licenses/by-nd/4.0/
-  image: https://i.creativecommons.org/l/by-nd/4.0/88x31.png
 CC-BY-NC-SA-4.0:
   name: Attribution-NonCommercial-ShareAlike 4.0 International
   url: https://creativecommons.org/licenses/by-nc-sa/4.0/
   image: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
+CC-BY-ND-4.0:
+  name: Attribution-NoDerivatives 4.0 International
+  url: https://creativecommons.org/licenses/by-nd/4.0/
+  image: https://i.creativecommons.org/l/by-nd/4.0/88x31.png
 CC-BY-NC-ND-4.0:
   name: Attribution-NonCommercial-NoDerivatives 4.0 International
   url: https://creativecommons.org/licenses/by-nc-nd/4.0/

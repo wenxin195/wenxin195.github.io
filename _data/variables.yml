@@ -1,3 +1,4 @@
+# jekyll静态变量
 default:
   text_skin: default
   highlight_theme: tomorrow-night-bright

@@ -3,11 +3,11 @@ window.TEXT_SEARCH_DATA={
     {%- unless forloop.first -%},{%- endunless -%}
     '{{ _collection.label }}':[
       {%- for _article in _collection.docs -%}
-      {%- unless forloop.first -%},{%- endunless -%}
-      {'title':{{ _article.title | jsonify }},
-      {%- include snippets/prepend-baseurl.html path=_article.url -%}
-      {%- assign _url = __return -%}
-      'url':{{ _url | jsonify }}}
+        {%- unless forloop.first -%},{%- endunless -%}
+        {'title':{{ _article.title | jsonify }},
+        {%- include snippets/prepend-baseurl.html path=_article.url -%}
+        {%- assign _url = __return -%}
+        'url':{{ _url | jsonify }}}
       {%- endfor -%}
     ]
   {%- endfor -%}

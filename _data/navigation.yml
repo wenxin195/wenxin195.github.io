@@ -1,6 +1,8 @@
+# 头部导航栏
 header:
   - titles:
       en      : Home
+      zh-CN   : 首页
     url : /
     icon: home
 

@@ -1,4 +1,10 @@
-:root {
+@mixin light-scheme {
+    --text-muted-highlight-color: inherit;
+    --blockquote-border-color: #eeeeee;
+    --blockquote-text-color: #757575;
+    --tb-odd-bg: #fbfcfd;
+    --tb-border-color: #eaeaea;
+    --tb-even-bg: rgb(31, 31, 34);
     --prompt-text-color: rgb(46, 46, 46, 0.77);
     --prompt-tip-bg: rgb(123, 247, 144, 0.2);
     --prompt-tip-icon-color: #03b303;
@@ -9,10 +15,11 @@
     --prompt-danger-bg: rgb(248, 215, 218, 0.56);
     --prompt-danger-icon-color: #df3c30;
 
-    --language-border-color: #ececec;
-    --text-color: #34343c;
-
     [class^='prompt-'] {
         --link-underline-color: rgb(219, 216, 216);
+    }
+
+    .dark {
+        display: none;
     }
 }

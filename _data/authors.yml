@@ -1,3 +1,4 @@
+# 存放作者信息
 Wenxin Zhong:
   type      : person # "person" (default), "organization"
   name      : Wenxin Zhong
@@ -18,3 +19,4 @@ Wenxin Zhong:
   npm       : # "user_name" the last part of your profile url, e.g. https://www.npmjs.com/~user_name
   bili      : 10738871
   red       : 624e669e0000000010006940
+  csdn      : weixin_46784010

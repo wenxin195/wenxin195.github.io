@@ -71,15 +71,6 @@
       margin-top: map-get($spacers, 2) * 2;
     }
   }
-  code {
-    padding: map-get($spacers, 1) map-get($spacers, 2);
-    background-color: $text-background-color;
-    border-radius: map-get($base, border-radius);
-    span {
-      padding: 0;
-      margin: 0;
-    }
-  }
   pre {
     @include overflow(auto);
     & > code {
@@ -212,7 +203,7 @@
     }
     th, td {
       padding: map-get($spacers, 2);
-      border: 1px solid $border-color-l;
+      // border: 1px solid $border-color-l;
     }
     th {
       font-weight: map-get($base, font-weight-bold);

@@ -10,11 +10,13 @@
     {%- if _author.type == 'organization' -%}
       {%- include snippets/get-locale-string.html key='EMAIL_US' -%}
       {%- assign _locale_string_email = __return -%}
+
       {%- include snippets/get-locale-string.html key='FOLLOW_US' -%}
       {%- assign _locale_string_follow = __return -%}
     {%- else -%}
       {%- include snippets/get-locale-string.html key='EMAIL_ME' -%}
       {%- assign _locale_string_email = __return -%}
+
       {%- include snippets/get-locale-string.html key='FOLLOW_ME' -%}
       {%- assign _locale_string_follow = __return -%}
     {%- endif -%}
@@ -22,9 +24,10 @@
     {%- include snippets/get-locale-string.html key='EMAIL_ME' -%}
     {%- if _author.email -%}
       <li title="{{ _locale_string_email }}">
-      <a class="button button--circle mail-button" itemprop="email" href="mailto:{{ _author.email }}" target="_blank">
-        <i class="fas fa-envelope"></i>
-      </a>
+        <a class="button button--circle mail-button" itemprop="email" href="mailto:{{ _author.email }}" target="_blank">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
     {%- endif -%}
 
 
@@ -132,5 +135,12 @@
       </li>
     {%- endif -%}
     
+    {%- if _author.csdn -%}
+      <li title="{{ _locale_string_follow | replace: '[NAME]', 'CSDN' }}">
+        <a class="button button--circle csdn-button" itemprop="sameAs" href="https://blog.csdn.net/{{ _author.csdn }}" target="_blank">
+          <div class="icon">{%- include svg/icon/social/csdn.svg -%}</div>
+        </a>
+      </li>
+    {%- endif -%}
   </ul>
 </div>

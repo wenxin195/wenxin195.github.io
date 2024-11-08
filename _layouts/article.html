@@ -16,7 +16,13 @@ type: article
   {%- include article/top/custom.html -%}
 
   <!-- 正文 -->
-  <div class="article__content" itemprop="articleBody">{{ content }}</div>
+  <div class="article__content" itemprop="articleBody">
+    {%- if page.refactor -%}
+      {% include refactor-content.html content=content %}
+    {%- else-%}
+      {{ content }}
+    {%- endif -%}
+  </div>
 
   <!-- 页脚 -->
   <div class="d-print-none">

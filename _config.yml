@@ -54,6 +54,7 @@ author:
   npm       : # "user_name" the last part of your profile url, e.g. https://www.npmjs.com/~user_name
   bili      : 10738871
   red       : 624e669e0000000010006940
+  csdn      : weixin_46784010
 
 
 ## => GitHub Repository (if the site is hosted by GitHub)
@@ -192,7 +193,15 @@ markdown: kramdown
 kramdown:
   input: GFM
   math_engine: mathjax
+  footnote_backlink: "&#8617;&#xfe0e;"
   syntax_highlighter: rouge
+  syntax_highlighter_opts: # Rouge Options › https://github.com/jneen/rouge#full-options
+    css_class: highlight
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
 
 highlighter : rouge
 permalink   : date

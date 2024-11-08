@@ -29,4 +29,5 @@ permalink: /contact.html
   <li><i class="fab fa-github"></i> <a href="https://github.com/wenxin195" target="_blank">GitHub</a></li>
   <li><img src="assets/images/icon/bili.svg" alt="bili" style="width: 18px; height: 18px; vertical-align: -3px;" /> <a href="https://space.bilibili.com/10738871" target="_blank">Bilibili</a></li>
   <li><img src="assets/images/icon/red.svg" alt="red" style="width: 26px; height: 26px; vertical-align: -8px;" /> <a href="https://www.xiaohongshu.com/user/profile/624e669e0000000010006940" target="_blank">小红书</a></li>
+  <li><img src="assets/images/icon/csdn.svg" alt="csdn" style="width: 16px; height: 16px; vertical-align: -2px;" /> <a href="https://blog.csdn.net/weixin_46784010" target="_blank">CSDN</a></li>
 </ul>

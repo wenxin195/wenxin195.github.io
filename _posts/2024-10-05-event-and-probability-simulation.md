@@ -1,6 +1,6 @@
 ---
 key: post-event-and-probability-simulation
-title: "用计算机模拟Buffon投针和三门问题"
+title: "用计算机模拟 Buffon 投针和三门问题"
 permalink: "/event-and-probability-simulation.html"
 tags:
   - 概率论
@@ -21,7 +21,7 @@ modify_date: "2024-11-06 17:51:00"
 
 $$
   \begin{equation}
-    \pi=\frac{2lN}{dn}
+    \pi\approx\frac{2lN}{dn}
   \end{equation}
 $$
 
@@ -37,6 +37,11 @@ $$
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
        <img src="/assets/images/picture/event_and_probabity/needle.png" alt="needle" style="width: 300px;">
+       <figcaption>(a) Buffon 投针问题</figcaption>
+     </figure>
+     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
+       <img src="/assets/images/picture/event_and_probabity/intersect.png" alt="相交的充要条件" style="width: 300px; margin-top: 68px;">
+       <figcaption>(b) 针与平行线相交的充分必要条件</figcaption>
      </figure>
    </div>
    <p style="margin-top: 0;">图 $1$: 比丰投针</p>

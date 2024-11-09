@@ -841,7 +841,9 @@ $$
 易知针与平行线相交的充分必要条件是：
 
 $$
-  x\leqslant\frac{l}{2}\sin{\varphi}
+  \begin{equation}
+    x\leqslant\frac{l}{2}\sin{\varphi}
+  \end{equation}
 $$
 
 于是由几何概型可知
@@ -852,20 +854,6 @@ $$
 
 </details>
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/picture/event_and_probabity/needle.png" alt="比丰投针问题" style="width: 300px; margin-top: 63px;">
-            <figcaption>(a) 比丰投针问题</figcaption>
-            </figure>
-            <figure style="text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/picture/event_and_probabity/needle_space.png" alt="比丰投针的样本空间" style="width: 300px;">
-         <figcaption>(b) 比丰投针的样本空间</figcaption>
-      </figure>
-   </div>
-   <p style="margin-top: 0;">图 $8$: 比丰投针</p>
-</div>
-
 其中 $l,d$ 为已知量，只需将 $\pi$ 代入即可计算出 $P(A)$ 的值；反过来若已经用事件 $A$ 发生的频率 $\frac{n}{N}$ 估计出了 $P(A)$ 的值，则可以反解出 $\pi$ 来，即
 
 $$
@@ -873,6 +861,24 @@ $$
     \pi\approx\frac{2lN}{dn}
 \end{equation}
 $$
+
+<div style="text-align: center;">
+   <div style="display: flex; justify-content: center;">
+      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
+        <img src="/assets/images/picture/event_and_probabity/needle.png" alt="比丰投针问题" style="width: 300px; margin-top: 56px;">
+        <figcaption>(a) 比丰投针问题</figcaption>
+      </figure>
+      <figure style="text-align: center; margin-bottom: 0;">
+        <img src="/assets/images/picture/event_and_probabity/needle_space.png" alt="比丰投针的样本空间" style="width: 300px;">
+        <figcaption>(b) 比丰投针的样本空间</figcaption>
+      </figure>
+      <figure style="text-align: center; margin-bottom: 0;">
+        <img src="/assets/images/picture/event_and_probabity/intersect.png" alt="相交的充要条件" style="width: 300px; margin-top: 116px;">
+        <figcaption>(c) 针与平行线相交的充分必要条件</figcaption>
+      </figure>
+   </div>
+   <p style="margin-top: 0;">图 $8$: 比丰投针</p>
+</div>
 
 这是一个颇为奇妙的方法：只要设计一个随机试验，使一个事件的概率与某个未知数有关，然后通过重复试验，以频率估计概率，即可求得未知数的近似解。
 
@@ -1133,9 +1139,9 @@ $$
    <div style="display: flex; justify-content: center;">
       <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
          <img src="/assets/images/picture/event_and_probabity/full.png" alt="对立事件分割样本" style="width: 300px;">
-            <figcaption>(a) 用 $B$ 与 $\bar{B}$ 来分割样本空间</figcaption>
-            </figure>
-            <figure style="text-align: center; margin-bottom: 0;">
+         <figcaption>(a) 用 $B$ 与 $\bar{B}$ 来分割样本空间</figcaption>
+      </figure>
+      <figure style="text-align: center; margin-bottom: 0;">
          <img src="/assets/images/picture/event_and_probabity/full_condition.png" alt="互不相容事件分割样本" style="width: 300px;">
          <figcaption>(b) $A\subset \bigcup\limits_{i=1}^{6}B_i$</figcaption>
       </figure>
@@ -1585,9 +1591,14 @@ $$
 
 ## 参考文献
 
-1. 茆诗松.概率论与数理统计教程[M]. 北京:高等教育出版社, 2019.
-2. Sheldon M. Ross, *A First Course in Probability 9th edition* (Pearson Education, 2012).
-3. 李贤平.概率论基础[M]. 北京:高等教育出版社, 2010.
-4. Dimitri P. Bertsekas and John N. Tsitsiklis, *Introduction to Probability 2th edtion* (Athena Scientific, 2008).
+1. 茆诗松, 程依明, 濮晓龙. 概率论与数理统计教程[M]. 第 3 版. 北京: 高等教育出版社, 2019.
+2. 李贤平. 概率论基础[M]. 第 3 版. 北京: 高等教育出版社, 2010.
+3. 王梓坤. 概率论基础及其应用[M]. 北京: 北京师范大学出版社, 2018.
+4. 盛骤, 谢式千, 潘承毅. 概率论与数理统计[M]. 第 5 版. 北京: 高等教育出版社, 2019.
+5. Ross S. *A First Course in Probability*. 9th. Pearson, 2012.
+6. Feller W. *An Introduction to Probability Theory and Its Applications*. 3rd. Wiley, 1968.
+7. Bertsekas D, Tsitsiklis J. *Introduction to Probability*. 2nd. Athena Scientific, 2008.
+8. Miller S. *The Probability Lifesaver: All the Tools You Need to Understand Chance*. Princeton University Press, 2017.
+9. DeGroot M, Schervish M. *Probability and Statistics*. 3rd. Addison Wesley, 1975.
 
 [^likelihood]: 概率(Probability)与似然概率(Likelihood)的区别在于：Probability是给定参数的情况下预测某个事件发生的可能性；而Likelihood是给定数据推测参数的可能性。

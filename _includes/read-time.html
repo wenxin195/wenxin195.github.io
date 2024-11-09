@@ -31,7 +31,7 @@
   {%- if include.show_label -%}
     <!-- return element -->
     <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ words }} {{ _words  }}">
-      {{ _prompt }}<em>{{- read_time -}}{{ ' ' }}</em>{{ _unit }}
+      {{ _prompt }}<em>{{- read_time -}}</em>{{ _unit }}
       
       {%- if include.prompt -%}
         {% assign _prompt_words = read_prompt | strip_newlines | split: "" | size %}

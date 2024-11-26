@@ -1,6 +1,7 @@
 <footer class="footer py-4 js-page-footer">
   <div class="main">
     {%- assign _site_author = site.author -%}
+
     {%- if _site_author.type == 'organization' -%}
       {%- assign _site_author_itemtype = 'http://schema.org/Organization' -%}
     {%- else -%}
@@ -38,7 +39,8 @@
         title="TeXt is a super customizable Jekyll theme." href="https://github.com/kitian616/jekyll-TeXt-theme" target="_blank">TeXt Theme</a>.
       </div>
     </div>
-
+    
+    <!-- 站点统计 -->
     <div class="site-info site-statics">
       <div>
         <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

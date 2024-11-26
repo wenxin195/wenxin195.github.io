@@ -14,6 +14,7 @@
         {%- for _child in _item.children -%}
           {%- include snippets/get-nav-url.html path=_child.url -%}
           {%- assign _nav_url = __return -%}
+
           {%- include snippets/get-nav-url.html path=page.url -%}
           {%- assign _page_url = __return -%}
 
@@ -45,9 +46,7 @@
       {%- assign _locale_previous = __return -%}
 
       <div class="previous">
-        <span>
-          {{ _locale_previous }}
-        </span>
+        <span>{{ _locale_previous }}</span>
         <a href="{{ _href }}">{{ _previous.title }}</a>
       </div>
     {%- endif -%}
@@ -60,9 +59,7 @@
       {%- assign _locale_next = __return -%}
 
       <div class="next">
-        <span>
-          {{ _locale_next }}
-        </span>
+        <span>{{ _locale_next }}</span>
         <a href="{{ _href }}">{{ _next.title }}</a>
       </div>
     {%- endif -%}

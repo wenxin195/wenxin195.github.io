@@ -1614,6 +1614,6 @@ $$
 6. Feller W. *An Introduction to Probability Theory and Its Applications*. 3rd. Wiley, 1968.
 7. Bertsekas D, Tsitsiklis J. *Introduction to Probability*. 2nd. Athena Scientific, 2008.
 8. Miller S. *The Probability Lifesaver: All the Tools You Need to Understand Chance*. Princeton University Press, 2017.
-9. DeGroot M, Schervish M. *Probability and Statistics*. 3rd. Addison Wesley, 1975.
+9. DeGroot M, Schervish M. *Probability and Statistics*. 3rd. Addison Wesley, 2001.
 
 [^likelihood]: 概率(Probability)与似然概率(Likelihood)的区别在于：Probability是给定参数的情况下预测某个事件发生的可能性；而Likelihood是给定数据推测参数的可能性。

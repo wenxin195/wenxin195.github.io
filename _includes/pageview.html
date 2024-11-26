@@ -12,8 +12,7 @@
   {%- endif -%}
 {%- elsif page.layout == "article" -%}
   {%- if _pageview -%}
-    {%- if jekyll.environment != "development" and
-      jekyll.environment != "beta" -%}
+    {%- if jekyll.environment != "development" and jekyll.environment != "beta" -%}
       {%- if site.pageview.provider == 'leancloud' -%}
         {%- include pageview-providers/leancloud/post.html -%}
       {%- elsif site.pageview.provider == 'custom' -%}

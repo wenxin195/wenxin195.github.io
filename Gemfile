@@ -5,7 +5,6 @@ group :jekyll_plugins do
     gem "jekyll-archives"
     gem "jekyll-minifier"
     gem "jekyll-admin"
-    gem "kramdown-math-katex"
   end
 
 platforms :mingw, :x64_mingw, :mswin, :jruby do

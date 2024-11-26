@@ -30,10 +30,9 @@
       </li>
     {%- endif -%}
 
-
     {%- if _author.facebook -%}
       <li title="{{ _locale_string_follow | replace: '[NAME]', 'Facebook' }}">
-        <a class="button button--circle facebook-button" itemprop="sameAs" href="https://www.facebook.com/{{ _author.facebook }}" target="_blank">
+        <a class="button button--circle facebook-button" itemprop="sameAs" href="https://www.facebook.com/profile.php?id={{ _author.facebook }}" target="_blank">
           <div class="icon">{%- include svg/icon/social/facebook.svg -%}</div>
         </a>
       </li>

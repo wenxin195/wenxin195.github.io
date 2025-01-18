@@ -29,6 +29,17 @@
   %}
 {% endif %}
 
+<!-- Change the icon of checkbox -->
+
+{% if _content contains '<input type="checkbox"' %}
+  {% assign _content = _content
+    | replace: '<input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />',
+      '<i class="fas fa-check-circle fa-fw checked"></i>'
+    | replace: '<input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />',
+      '<i class="far fa-circle fa-fw"></i>'
+  %}
+{% endif %}
+
 <!-- Add header for code snippets -->
 
 {% if _content contains '<div class="highlight"><code>' %}
@@ -60,8 +71,8 @@
         | append: '<div class="code-header">'
         | append: _label
         | append: '<button aria-label="copy" data-title-succeed="'
-        | append: 'Copied!'
-        | append: '" onclick="copyToClipboard(this)"><i class="far fa-clipboard"></i></button></div>'
+        | append: site.data.locales[include.lang].post.button.copy_code.succeed
+        | append: '"><i class="far fa-clipboard"></i></button></div>'
         | append: '<div class="highlight"><code>'
       %}
     {% endif %}

@@ -1,34 +1,54 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // 获取所有的复制按钮
-    const copyButtons = document.querySelectorAll('.code-header button');
+// 常量定义
+const SELECTORS = {
+  BUTTON: '.code-header button',
+  CODE_BLOCK: '.rouge-code pre',
+  SUCCESS_ICON: 'fas fa-check'
+};
 
-    copyButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // 找到按钮对应的代码块
-            const codeBlock = button.closest('.code-header').nextElementSibling.querySelector('.rouge-code pre');
+// 复制文本到剪贴板
+const copyToClipboard = async (text) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (err) {
+    console.error('Failed to copy:', err);
+    return false;
+  }
+};
 
-            // 提取代码文本，保留格式
-            const codeText = codeBlock.innerText;
+// 更新按钮状态
+const updateButtonState = (button, success) => {
+  const icon = button.querySelector('i');
+  const originalIcon = icon.className;
+  const originalTitle = button.getAttribute('data-title-succeed') || 'copy';
 
-            // 创建一个临时的textarea元素用于复制
-            const tempTextArea = document.createElement('textarea');
-            tempTextArea.value = codeText;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempTextArea);
+  if (success) {
+    icon.className = SELECTORS.SUCCESS_ICON;
+    button.setAttribute('aria-label', originalTitle);
+    button.classList.add('copy-success');
+    
+    setTimeout(() => {
+      icon.className = originalIcon;
+      button.setAttribute('aria-label', 'copy');
+      button.classList.remove('copy-success');
+    }, 2000);
+  }
+};
 
-            // 显示复制成功的提示
-            const originalTitle = button.getAttribute('data-title-succeed');
-            const originalIcon = button.querySelector('i').className;
-            button.querySelector('i').className = 'fas fa-check';
-            button.setAttribute('aria-label', originalTitle);
-
-            // 2秒后恢复原始状态
-            setTimeout(() => {
-                button.querySelector('i').className = originalIcon;
-                button.setAttribute('aria-label', 'copy');
-            }, 2000);
-        });
+// 初始化复制功能
+const initCopyButtons = () => {
+  document.querySelectorAll(SELECTORS.BUTTON).forEach(button => {
+    button.addEventListener('click', async () => {
+      const codeBlock = button.closest('.code-header')
+        .nextElementSibling
+        .querySelector(SELECTORS.CODE_BLOCK);
+      
+      if (codeBlock) {
+        const success = await copyToClipboard(codeBlock.innerText);
+        updateButtonState(button, success);
+      }
     });
-});
+  });
+};
+
+document.addEventListener('DOMContentLoaded', initCopyButtons);

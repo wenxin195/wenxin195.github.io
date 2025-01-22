@@ -1,7 +1,8 @@
 source "https://mirrors.tuna.tsinghua.edu.cn/rubygems"
 
+gem 'jekyll'
 group :jekyll_plugins do
-    gem "github-pages", '~> 232'
+    gem "github-pages"
     gem "jekyll-archives"
     gem "jekyll-minifier"
     gem "jekyll-admin"

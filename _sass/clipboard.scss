@@ -1,19 +1,42 @@
-.copy-tooltip {
+.copy-success {
+  background-color: #4CAF50;
+  transition: background-color 1s ease-out;
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
     position: absolute;
-    background-color: #333;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: none;
-    /* 防止遮挡点击 */
-    white-space: nowrap;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    animation: fadeOut 1s forwards;
+  }
+
+  animation: backgroundFadeOut 2s forwards;
 }
 
-.copy-tooltip.show {
+@keyframes fadeOut {
+  from {
     opacity: 1;
-    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes backgroundFadeOut {
+  from {
+    background-color: #4CAF50;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+.code-header button {
+  transition: background-color 0.3s ease;
+  position: relative;
 }

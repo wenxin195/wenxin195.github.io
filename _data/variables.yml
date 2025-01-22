@@ -51,8 +51,7 @@ sources:
       js: "https://cdn.bootcss.com/gitalk/1.8.0/gitalk.min.js"
       css: "https://cdn.bootcss.com/gitalk/1.8.0/gitalk.min.css"
     valine: "https://unpkg.com/valine/dist/Valine.min.js" # bootcdn not available
-    katex: "https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"
-    mathjax: https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js
+    mathjax: https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js  # 除了用mathjax，还可以用katex
     mermaid: "https://cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.min.js"
   unpkg:
     font_awesome: "https://use.fontawesome.com/releases/v5.15.1/css/all.css"
@@ -63,6 +62,5 @@ sources:
       js: "https://unpkg.com/gitalk/dist/gitalk.min.js"
       css: "https://unpkg.com/gitalk/dist/gitalk.css"
     valine: "https//unpkg.com/valine/dist/Valine.min.js"
-    katex: "https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"
     mathjax: "https://unpkg.com/mathjax@2.7.4/unpacked/MathJax.js?config=TeX-MML-AM_CHTML"
     mermaid: "https://unpkg.com/mermaid@8.0.0-rc.8/dist/mermaid.min.js"

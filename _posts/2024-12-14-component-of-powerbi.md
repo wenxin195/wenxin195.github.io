@@ -9,7 +9,8 @@ layout: article
 download: false
 videos: false
 refactor: true
-modify_date: "2024-12-14 23:04:00"
+mathjax: false
+modify_date: "2025-01-20 00:40:00"
 ---
 
 Power BI 是一款功能强大的商业智能软件，在当下的数据分析领域占据着重要地位。它就像是 Excel 的升级版，不过功能更为全面且强大，已然成为数据处理与分析方面的得力助手。Power BI 由三部分组成：Power Query、Power Pivot 和 Power View。
@@ -24,7 +25,7 @@ Power View 则是 Power BI 强大的可视化模块，内置条形图、直方�
 
 ## Power Query
 
-Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load) 的重要工具，它使得用户能够轻松地从各种数据源提取数据，并对其进行转换和清洗，最终加载到 Power BI 中进行分析和可视化。通过 Power Query，用户可以执行数据合并、过滤、格式转换、分列等操作，支持对多个数据源的连接和处理。
+Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具，它使得用户能够轻松地从各种数据源提取数据，并对其进行转换和清洗，最终加载到 Power BI 中进行分析和可视化。通过 Power Query，用户可以执行数据合并、过滤、格式转换、分列等操作，支持对多个数据源的连接和处理。
 
 ### 数据规范化
 
@@ -257,7 +258,7 @@ Power View 是 Power BI 中的一项强大的数据可视化功能，它为用�
 
 Power View 允许用户与报告进行深度交互，包括：
 
-- 筛选与切片：用户可以通过筛选器和切片器选择数据的不同子集，动态更新视图；
+- 筛选与切片：用户可以通过筛选条件和切片器选择数据的不同子集，动态更新视图；
 - 钻取(Drillthrough)：通过点击图表或表格中的特定数据点，用户可以进一步查看该数据点的详细信息；
 - 联动视图：不同的可视化组件之间会联动，用户与一个图表的互动会自动更新其他相关图表，帮助用户更深入地挖掘数据。
 
@@ -333,14 +334,47 @@ Power Pivot 将指标(Indicator)定义成**度量值**(Measures)，也被称作�
 
 它们二者的区别如下表所示：
 
-|           | **计算列**                                             | **度量值**                                              |
-|-----------|------------------------------------------------------|------------------------------------------------------|
-| **计算方式** | 按行计算数据。<br>每一行的数据都有一个计算结果，结果存储在模型中。 | 根据筛选器和聚合的 Context 动态计算结果。<br>计算结果不会存储，而是根据用户的筛选条件实时计算。 |
-| **存储位置** | 结果存储在数据模型中，作为表的一部分。                       | 结果不存储，而是在查询时动态计算，并且只在需要时进行计算。       |
-| **计算粒度** | 每行数据都有一个计算结果，通常是与其他列的值相关。               | 结果通常是聚合的，依赖于筛选器或透视表的 Context。 |
-| **使用场景** | 用于将每行的计算结果作为新列添加到数据模型中，<br>适用于每一行需要单独处理的计算。 | 用于聚合计算，<br>适用于需要在报表或透视表中显示的汇总数据。        |
-| **更新方式** | 计算列的值在数据加载时计算，并存储在数据模型中。                   | 度量值的计算是在查询时动态计算的，因此不会占用存储空间。           |
-| **性能**    | 对于大数据集，计算列可能会增加模型的大小，<br>它将结果存储在数据模型中。 | 度量值只在查询时计算，不增加存储大小。<br>对于较大的数据集，通常性能较好。 |
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th><strong>计算列</strong></th>
+      <th><strong>度量值</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>计算方式</strong></td>
+      <td>按行计算数据。<br>每一行的数据都有一个计算结果，结果存储在模型中。</td>
+      <td>根据筛选条件和聚合的 Context 动态计算结果。<br>计算结果不会存储，而是根据用户的筛选条件实时计算。</td>
+    </tr>
+    <tr>
+      <td><strong>存储位置</strong></td>
+      <td>结果存储在数据模型中，作为表的一部分。</td>
+      <td>结果不存储，而是在查询时动态计算，并且只在需要时进行计算。</td>
+    </tr>
+    <tr>
+      <td><strong>计算粒度</strong></td>
+      <td>每行数据都有一个计算结果，通常是与其他列的值相关。</td>
+      <td>结果通常是聚合的，依赖于筛选条件或透视表的 Context。</td>
+    </tr>
+    <tr>
+      <td><strong>使用场景</strong></td>
+      <td>用于将每行的计算结果作为新列添加到数据模型中，<br>适用于每一行需要单独处理的计算。</td>
+      <td>用于聚合计算，<br>适用于需要在报表或透视表中显示的汇总数据。</td>
+    </tr>
+    <tr>
+      <td><strong>更新方式</strong></td>
+      <td>计算列的值在数据加载时计算，并存储在数据模型中。</td>
+      <td>度量值的计算是在查询时动态计算的，因此不会占用存储空间。</td>
+    </tr>
+    <tr>
+      <td><strong>性能</strong></td>
+      <td>对于大数据集，计算列可能会增加模型的大小，<br>它将结果存储在数据模型中。</td>
+      <td>度量值只在查询时计算，不增加存储大小。<br>对于较大的数据集，通常性能较好。</td>
+    </tr>
+  </tbody>
+</table>
 
 总之，计算列适用于按行计算的场景，通常用于为数据表添加新的列，计算过程在数据加载时完成，并且结果被存储；度量值适用于需要聚合和根据 Context 动态计算的场景，通常用于报告和透视表中进行汇总计算，计算过程在查询时按需进行。
 
@@ -348,7 +382,7 @@ Power Pivot 将指标(Indicator)定义成**度量值**(Measures)，也被称作�
 
 上下文(Context)是理解 DAX 的核心概念，它直接影响着数据的计算、呈现以及交互方式。简单来说 Context 就是 DAX 所处的外部环境，它又分为筛选上下文和行上下文。
 
-筛选上下文(Filter context)是指对数据集应用的筛选条件或上下文。它通常由切片器(Slicers)、行/列维度、度量值、以及其他视觉对象(如表格或图表)中的选择所决定。简单来说 Filter context 就是对字段进行筛选。
+筛选上下文(Filter context)是指对数据集应用的筛选条件或上下文。它通常由切片器(Slicers)、行/列维度、度量值、以及其他视觉对象(包括 Visual Level Filters、Page Level Filters 和 Report Level Filters)中的选择所决定。简单来说 Filter context 就是对字段进行筛选。
 
 在 Power BI 中，度量值是最常依赖 Filter context 的元素。当你选择报表中的某个筛选条件或维度时，这些筛选条件会影响度量值的计算，进而改变报表中的结果。
 
@@ -394,98 +428,787 @@ RETURN
 
 ### 聚合函数
 
-| **函数**                 | **解释**                         |
-|--------------------------|---------------------------------|
-| `SUM`/`AVERAGE`/`MEDIAN` | 计算列或度量值的和/平均数/中位数。 |
-| `COUNT`                  | 计算列或度量值的计数。            |
-| `MAX`/`MIN`              | 计算列或度量值的最大/小值。       |
-| `PERCENTILEX.INC`        | 计算列或度量值的百分位数。        |
-| `VAR.P(VAR.S)`           | 计算列或度量值的(样本)方差。      |
-| `STDEV.P(STDEV.S)`       | 计算列或度量值的(样本)标准差。     |
-| `COUNTROWS`              | 计算列或度量值的行数。            |
-| `COUNTA`                 | 计算列或度量值的非空值的个数。     |
-| `DISTINCTCOUNT`          | 计算列或度量值的唯一值的个数。     |
-| `DISTINCTCOUNTA`         | 计算列或度量值的非空唯一值的个数。 |
-| `PRODUCT`                | 计算列或度量值的乘积。            |
+<table>
+  <thead>
+    <tr>
+      <th><strong>函数</strong></th>
+      <th><strong>解释</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/approximate-distinctcount-function-dax" target="_blank"><strong>APPROXIMATEDISTINCTCOUNT</strong></a>
+      </td>
+      <td>返回列中唯一值的估计值。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/average-function-dax" target="_blank"><strong>AVERAGE</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/averagea-function-dax" target="_blank"><strong>AVERAGEA</strong></a>
+      </td>
+      <td>返回一列中所有数字的算术平均值，后者能够处理文本和非数字值。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/count-function-dax" target="_blank"><strong>COUNT</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/counta-function-dax" target="_blank"><strong>COUNTA</strong></a>
+      </td>
+      <td>计算指定列中包含非空值的行数，后者能够处理文本和非数字值。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/countblank-function-dax" target="_blank"><strong>COUNTBLANK</strong></a>
+      </td>
+      <td>计算列中空白单元格的数量。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/countrows-function-dax" target="_blank"><strong>COUNTROWS</strong></a>
+      </td>
+      <td>计算指定表或表达式定义的表中的行数。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/distinctcount-function-dax" target="_blank"><strong>DISTINCTCOUNT</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/distinctcountnoblank-function-dax" target="_blank"><strong>DISTINCTCOUNTNOBLANK</strong></a>
+      </td>
+      <td>计算列中不同值的数量，后者不包括空白单元格。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/max-function-dax" target="_blank"><strong>MAX</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/maxa-function-dax" target="_blank"><strong>MAXA</strong></a><br>
+        <a href="https://learn.microsoft.com/en-us/dax/min-function-dax" target="_blank"><strong>MIN</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/mina-function-dax" target="_blank"><strong>MINA</strong></a>
+      </td>
+      <td>返回一列中或两个标量表达式之间的最大/小值，后者能够处理文本和非数字值。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/product-function-dax" target="_blank"><strong>PRODUCT</strong></a>
+      </td>
+      <td>返回某列中数字的乘积。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/sum-function-dax" target="_blank"><strong>SUM</strong></a>
+      </td>
+      <td>将一列中的所有数字相加。</td>
+    </tr>
+  </tbody>
+</table>
+
+### 日期与时间函数
+
+<table>
+  <thead>
+    <tr>
+      <th>函数</th>
+      <th>解释</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/calendar-function-dax" target="_blank"><strong>CALENDAR</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/calendarauto-function-dax" target="_blank"><strong>CALENDARAUTO</strong></a>
+      </td>
+      <td>返回一个名为“Date”的单列表，该列包含一个连续的日期集。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/date-function-dax" target="_blank"><strong>DATE</strong></a>
+      </td>
+      <td>返回指定的日期。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/datediff-function-dax" target="_blank"><strong>DATEDIFF</strong></a>
+      </td>
+      <td>返回两个日期之间的间隔天数。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/datevalue-function-dax" target="_blank"><strong>DATEVALUE</strong></a>
+      </td>
+      <td>将文本格式的日期转换为日期时间格式的日期。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/year-function-dax" target="_blank"><strong>YEAR</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/quarter-function-dax" target="_blank"><strong>QUARTER</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/month-function-dax" target="_blank"><strong>MONTH</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/weekday-function-dax" target="_blank"><strong>WEEKDAY</strong></a>/<br>
+        <a href="https://learn.microsoft.com/en-us/dax/day-function-dax" target="_blank"><strong>DAY</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/hour-function-dax" target="_blank"><strong>HOUR</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/minute-function-dax" target="_blank"><strong>MINUTE</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/second-function-dax" target="_blank"><strong>SECOND</strong></a>
+      </td>
+      <td>返回月份中的年份/季度/月份/星期数/天数/小时数/分钟数/秒数。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/edate-function-dax" target="_blank"><strong>EDATE</strong></a>
+      </td>
+      <td>返回距离起始日期指定月数之前或之后的日期。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/eomonth-function-dax" target="_blank"><strong>EOMONTH</strong></a>
+      </td>
+      <td>返回指定月份之前或之后的最后一天。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/networkdays-function-dax" target="_blank"><strong>NETWORKDAYS</strong></a>
+      </td>
+      <td>返回两个日期之间的完整工作日数量。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/now-function-dax" target="_blank"><strong>NOW</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/today-function-dax" target="_blank"><strong>TODAY</strong></a>
+      </td>
+      <td>返回当前日期和时间。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/time-function-dax" target="_blank"><strong>TIME</strong></a>
+      </td>
+      <td>将给定的小时、分钟和秒数转换为日期时间格式的时间。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/timevalue-function-dax" target="_blank"><strong>TIMEVALUE</strong></a>
+      </td>
+      <td>将文本格式的时间转换为日期时间格式的时间。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/utcnow-function-dax" target="_blank"><strong>UTCNOW</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/utctoday-function-dax" target="_blank"><strong>UTCTODAY</strong></a>
+      </td>
+      <td>返回当前 UTC 日期和时间。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/weeknum-function-dax" target="_blank"><strong>WEEKNUM</strong></a>
+      </td>
+      <td>根据返回类型的值，返回给定日期和年份的周数。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/yearfrac-function-dax" target="_blank"><strong>YEARFRAC</strong></a>
+      </td>
+      <td>计算两个日期之间的完整天数所代表的年份的分数。</td>
+    </tr>
+  </tbody>
+</table>
+
+### 过滤函数
+
+<table>
+  <thead>
+    <tr>
+      <th>函数</th>
+      <th>解释</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/all-function-dax" target="_blank"><strong>ALL</strong></a>
+      </td>
+      <td>返回表中的所有行或者列中的所有值，忽略可能已应用的任何筛选条件。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/allcrossfiltered-function-dax" target="_blank"><strong>ALLCROSSFILTERED</strong></a>
+      </td>
+      <td>清除应用于表的所有筛选条件。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/allexcept-function-dax" target="_blank"><strong>ALLEXCEPT</strong></a>
+      </td>
+      <td>删除表中的所有 Context，除了应用于指定列的筛选条件。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/allnoblankrow-function-dax" target="_blank"><strong>ALLNOBLANKROW</strong></a>
+      </td>
+      <td>返回所有行或者返回列中所有不同的值(不包括空行)，并忽略可能存在的任何 Context。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/allselected-function-dax" target="_blank"><strong>ALLSELECTED</strong></a>
+      </td>
+      <td>从当前查询中的列和行中删除 Filter Context，同时保留所有其他 Filter Context 或者 Power View 中的筛选条件。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/calculate-function-dax" target="_blank"><strong>CALCULATE</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/calculatetable-function-dax" target="_blank"><strong>CALCULATETABLE</strong></a>
+      </td>
+      <td>在修改的 Filter Context 中计算表达式/表表达式。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/earlier-function-dax" target="_blank"><strong>EARLIER</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/earliest-function-dax" target="_blank"><strong>EARLIEST</strong></a>
+      </td>
+      <td>返回在外部评估过程中指定列的当前值。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/filter-function-dax" target="_blank"><strong>FILTER</strong></a>
+      </td>
+      <td>返回一个表示另一个表或表达式子集的表。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/first-function-dax" target="_blank"><strong>FIRST</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/last-function-dax" target="_blank"><strong>LAST</strong></a>
+      </td>
+      <td>仅用于视觉计算，从 Axis 的第一行/最后一行中检索视觉矩阵中的一个值。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/index-function-dax" target="_blank"><strong>INDEX</strong></a>
+      </td>
+      <td>返回指定分区内按指定顺序或指定 Axis 排序的绝对位置指定的行。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/keepfilters-function-dax" target="_blank"><strong>KEEPFILTERS</strong></a>
+      </td>
+      <td>修改在评估 CALCULATE 或 CALCULATETABLE 函数时应用筛选条件的方式。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/lookupvalue-function-dax" target="_blank"><strong>LOOKUPVALUE</strong></a>
+      </td>
+      <td>返回符合所有指定搜索条件的行的值，该函数可以应用一个或多个搜索条件。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/matchby-function-dax" target="_blank"><strong>MATCHBY</strong></a>
+      </td>
+      <td>在窗口函数中定义用于确定如何匹配数据并识别“当前行”的列。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/movingaverage-function-dax" target="_blank"><strong>MOVINGAVERAGE</strong></a>
+      </td>
+      <td>返回在给定 Axis 上计算的移动平均值。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/previous-function-dax" target="_blank"><strong>PREVIOUS</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/next-function-dax" target="_blank"><strong>NEXT</strong></a>
+      </td>
+      <td>仅用于视觉计算，从视觉矩阵中 Axis 的前一行/下一行中检索一个值。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/offset-function-dax" target="_blank"><strong>OFFSET</strong></a>
+      </td>
+      <td>返回一个单行，该行位于同一表中的“当前行”之前或之后，由给定的偏移量决定。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/orderby-function-dax" target="_blank"><strong>ORDERBY</strong></a>
+      </td>
+      <td>定义窗口函数的每个分区中的排序顺序列。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/partitionby-function-dax" target="_blank"><strong>PARTITIONBY</strong></a>
+      </td>
+      <td>定义用于分区窗口函数的`relation`参数的列。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/range-function-dax" target="_blank"><strong>RANGE</strong></a>
+      </td>
+      <td>返回相对于当前行的给定 Axis 中的行间隔。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/rank-function-dax" target="_blank"><strong>RANK</strong></a>
+      </td>
+      <td>返回给定间隔内行的排名。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/removefilters-function-dax" target="_blank"><strong>REMOVEFILTERS</strong></a>
+      </td>
+      <td>清除指定表或列上的筛选条件。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/rownumber-function-dax" target="_blank"><strong>ROWNUMBER</strong></a>
+      </td>
+      <td>返回给定间隔内行的唯一排名。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/runningsum-function-dax" target="_blank"><strong>RUNNINGSUM</strong></a>
+      </td>
+      <td>返回在给定 Axis 上计算的运行总和。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/selectedvalue-function-dax" target="_blank"><strong>SELECTEDVALUE</strong></a>
+      </td>
+      <td>当列名的 Context 被过滤为只有一个不同的值时返回该值，否则返回替代结果。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/window-function-dax" target="_blank"><strong>WINDOW</strong></a>
+      </td>
+      <td>返回多个行，这些行位于给定的间隔内。</td>
+    </tr>
+  </tbody>
+</table>
+
+### 表函数
+
+<table>
+  <thead>
+    <tr>
+      <th>函数</th>
+      <th>解释</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/addcolumns-function-dax" target="_blank"><strong>ADDCOLUMNS</strong></a>
+      </td>
+      <td>将计算列添加到给定的表或表表达式。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/addmissingitems-function-dax" target="_blank"><strong>ADDMISSINGITEMS</strong></a>
+      </td>
+      <td>将多个列的组合项添加到表中，如果这些组合项尚不存在。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/crossjoin-function-dax" target="_blank"><strong>CROSSJOIN</strong></a>
+      </td>
+      <td>返回一个表，其中包含所有表的笛卡尔积。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/currentgroup-function-dax" target="_blank"><strong>CURRENTGROUP</strong></a>
+      </td>
+      <td>返回 GROUPBY 表达式中表参数的行集。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/datatable-function-dax" target="_blank"><strong>DATATABLE</strong></a>
+      </td>
+      <td>提供声明内联数据值集合的机制。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/detailrows-function-dax" target="_blank"><strong>DETAILROWS</strong></a>
+      </td>
+      <td>评估为度量值定义的详细行表达式并返回数据。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/distinct-function-dax" target="_blank"><strong>DISTINCT column</strong></a>
+      </td>
+      <td>返回包含指定列的不同值的单列表。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/distinct-table-function-dax" target="_blank"><strong>DISTINCT table</strong></a>
+      </td>
+      <td>返回通过从另一个表或表达式中删除重复行得到的表。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/except-function-dax" target="_blank"><strong>EXCEPT</strong></a>
+      </td>
+      <td>返回在一个表中存在而另一个表中不存在的行。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/filters-function-dax" target="_blank"><strong>FILTERS</strong></a>
+      </td>
+      <td>返回直接应用为<code class="language-plaintext highlighter-rouge">columnName</code>filters 的值的表。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/generate-function-dax" target="_blank"><strong>GENERATE</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/generateall-function-dax" target="_blank"><strong>GENERATEALL</strong></a>
+      </td>
+      <td>返回一个表，该表是 <em>table1</em> 中每一行与评估 <em>table2</em> 结果的笛卡尔积，且结果是在 <em>table1</em> 的当前 Row Countext 中评估的。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/generateseries-function-dax" target="_blank"><strong>GENERATESERIES</strong></a>
+      </td>
+      <td>返回一个包含算术序列值的单列表。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/groupby-function-dax" target="_blank"><strong>GROUPBY</strong></a>
+      </td>
+      <td>与 SUMMARIZE 函数类似，GROUPBY 不会为其添加的任何扩展列执行隐式 CALCULATE。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/ignore-function-dax" target="_blank"><strong>IGNORE</strong></a>
+      </td>
+      <td>通过省略特定表达式来修改 SUMMARIZECOLUMNS，使其不执行 BLANK/NULL 评估。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/intersect-function-dax" target="_blank"><strong>INTERSECT</strong></a>
+      </td>
+      <td>返回两表的行交集，保留重复项。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/naturalinnerjoin-function-dax" target="_blank"><strong>NATURALINNERJOIN</strong></a>
+      </td>
+      <td>对表与另一表进行内连接。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/naturalleftouterjoin-function-dax" target="_blank"><strong>NATURALLEFTOUTERJOIN</strong></a>
+      </td>
+      <td>对左表和右表执行连接。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/rollup-function-dax" target="_blank"><strong>ROLLUP</strong></a>
+      </td>
+      <td>通过在 groupBy_columnName 参数定义的列上添加汇总行来修改 SUMMARIZE 的行为。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/rollupaddissubtotal-function-dax" target="_blank"><strong>ROLLUPADDISSUBTOTAL</strong></a>
+      </td>
+      <td>通过在 groupBy_columnName 列上添加汇总/小计行来修改 SUMMARIZECOLUMNS 的行为。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/rollupissubtotal-function-dax" target="_blank"><strong>ROLLUPISSUBTOTAL</strong></a>
+      </td>
+      <td>将 ROLLUPADDISSUBTOTAL 添加的列与 ROLLUP 组配对，位于 ADDMISSINGITEMS 表达式中。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/rollupgroup-function-dax" target="_blank"><strong>ROLLUPGROUP</strong></a>
+      </td>
+      <td>通过在 groupBy_columnName 参数定义的列上添加汇总行来修改 SUMMARIZE 和 SUMMARIZECOLUMNS 的行为。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/row-function-dax" target="_blank"><strong>ROW</strong></a>
+      </td>
+      <td>返回一个包含表达式结果的单行表。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/selectcolumns-function-dax" target="_blank"><strong>SELECTCOLUMNS</strong></a>
+      </td>
+      <td>将计算列添加到给定的表或表表达式。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/substitutewithindex-function-dax" target="_blank"><strong>SUBSTITUTEWITHINDEX</strong></a>
+      </td>
+      <td>返回表示两个表左半连接的表。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/summarize-function-dax" target="_blank"><strong>SUMMARIZE</strong></a>
+      </td>
+      <td>返回请求的总计的汇总表。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/summarizecolumns-function-dax" target="_blank"><strong>SUMMARIZECOLUMNS</strong></a>
+      </td>
+      <td>返回一组分组的汇总表。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/table-constructor" target="_blank"><strong>Table Constructor</strong></a>
+      </td>
+      <td>返回一个包含一列或多列的表。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/topn-function-dax" target="_blank"><strong>TOPN</strong></a>
+      </td>
+      <td>返回指定表的前 N 行。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/treatas-function-dax" target="_blank"><strong>TREATAS</strong></a>
+      </td>
+      <td>将表表达式的结果应用为对不相关表的列的 filters。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/union-function-dax" target="_blank"><strong>UNION</strong></a>
+      </td>
+      <td>创建一个由两个表组成的联合表。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/values-function-dax" target="_blank"><strong>VALUES</strong></a>
+      </td>
+      <td>返回一个包含指定表或列的不同值的单列表。</td>
+    </tr>
+  </tbody>
+</table>
 
 ### 文本函数
 
-| **函数**               | **解释**                                               |
-|------------------------|--------------------------------------------------------|
-| `CONCATENATE`          | 将两个或多个文本字符串连接在一起。                        |
-| `EXACT`                | 比较两个文本字符串，并返回一个布尔值，表示它们是否完全相同。|
-| `LEFT`/`RIGHT`/`MID`   | 返回文本字符串中从左边/右边/指定位置开始指定个数的字符。    |
-| `FIND`/`SEARCH`        | 返回文本字符串中指定字符或文本的起始位置。                 |
-| `LEN`                  | 返回文本字符串中的字符个数。                              |
-| `UPPER`/`LOWER`        | 将文本字符串转换为大/小写。                               |
-| `PROPER`               | 将文本字符串转换为标题格式。                              |
-| `TRIM`                 | 删除文本字符串中的前导空格和尾随空格。                     |
-| `REPLACE`/`SUBSTITUTE` | 将文本字符串中的指定字符或文本替换为新的字符或文本。        |
-| `TEXT`                 | 将数字转换为文本字符串，并指定格式。                       |
-| `VALUE`                | 将文本字符串转换为数字。                                  |
-| `REVERSE`              | 将文本字符串中的字符顺序反转。                            |
-| `REPT`                 | 将文本字符串重复指定次数。                                |
-
-### 日期和时间函数
-
-| **函数**                 | **解释**                       |
-|--------------------------|--------------------------------|
-| `NOW`                    | 返回当前日期和时间。            |
-| `TODAY`                  | 返回当前日期。                  |
-| `DATE`/`TIME`            | 将数字转换为日期时间。          |
-| `YEAR`/`MONTH`/`DAY`     | 返回日期中的年份/月份/天数。     |
-| `HOUR`/`MINUTE`/`SECOND` | 返回日期中的小时数/分钟数/秒数。 |
-| `DATEADD`                | 将日期添加到日期中。            |
-| `DATEDIFF`               | 返回两个日期之间的差值。         |
-| `EOMONTH`                | 返回指定月份的最后一天。         |
-
-### 关系函数
-
-| **函数**         | **解释**                                    |
-|-----------------|-------------------------------------------|
-| `RELATED`       | 返回与当前行相关的另一行中的值。                  |
-| `RELATEDTABLE`  | 返回与当前行相关的另一行中的值。                  |
-| `CROSSFILTER`   | 设置表之间的交叉筛选方向。                       |
-| `CROSSJOIN`     | 将两个表连接在一起。                             |
-
-### 逻辑函数
-
-| **函数**             | **解释**                                    |
-|----------------------|---------------------------------------------|
-| `IF`                 | 根据条件判断返回不同的结果。                  |
-| `IFERROR`            | 如果表达式的计算结果为错误，返回备用值。       |
-| `AND`                | 如果两个条件都为真，则返回真。                |
-| `OR`                 | 如果两个条件中至少有一个为真，则返回真。       |
-| `NOT`                | 反转条件的布尔值。                           |
-| `SWITCH`             | 根据给定的条件或表达式的不同返回不同的结果。    |
-| `ISBLANK`/`ISNUMBER` | 判断指定的值是否为空/数字。                      |
-| `ISODD`/`ISEVEN`     | 判断指定的数字是否为奇数/偶数。                     |
-| `ISLOGICAL`          | 判断指定的值是否为逻辑值(`TRUE` 或 `FALSE`)。  |
-| `IFNA`               | 如果表达式为错误类型(`NA`)，则返回指定的替代值。|
+<table>
+  <thead>
+    <tr>
+      <th>函数</th>
+      <th>解释</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/combinevalues-function-dax" target="_blank"><strong>COMBINEVALUES</strong></a>
+      </td>
+      <td>将两个或多个文本字符串合并成一个文本字符串。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/concatenate-function-dax" target="_blank"><strong>CONCATENATE</strong></a>
+      </td>
+      <td>将两个文本字符串合并成一个文本字符串。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/concatenatex-function-dax" target="_blank"><strong>CONCATENATEX</strong></a>
+      </td>
+      <td>将表达式在表中每行的结果连接起来。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/exact-function-dax" target="_blank"><strong>EXACT</strong></a>
+      </td>
+      <td>比较两个文本字符串，如果完全相同返回 <code class="language-plaintext highlighter-rouge">TRUE</code>，否则返回 <code class="language-plaintext highlighter-rouge">FALSE</code>。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/find-function-dax" target="_blank"><strong>FIND</strong></a>
+      </td>
+      <td>返回一个文本字符串在另一个文本字符串中的起始位置。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/fixed-function-dax" target="_blank"><strong>FIXED</strong></a>
+      </td>
+      <td>将数字四舍五入到指定的小数位数，并返回结果作为文本。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/format-function-dax" target="_blank"><strong>FORMAT</strong></a>
+      </td>
+      <td>根据指定的格式将值转换为文本。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/left-function-dax" target="_blank"><strong>LEFT</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/right-function-dax" target="_blank"><strong>RIGHT</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/mid-function-dax" target="_blank"><strong>MID</strong></a>
+      </td>
+      <td>从文本字符串的开始/结尾/指定位置处返回指定数量的字符。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/len-function-dax" target="_blank"><strong>LEN</strong></a>
+      </td>
+      <td>返回文本字符串中的字符数。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/upper-function-dax" target="_blank"><strong>UPPER</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/lower-function-dax" target="_blank"><strong>LOWER</strong></a>
+      </td>
+      <td>将文本字符串中的所有字母转换为大/小写字母。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/replace-function-dax" target="_blank"><strong>REPLACE</strong></a>
+      </td>
+      <td>根据指定的字符数，将文本字符串的部分替换为其他文本字符串。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/rept-function-dax" target="_blank"><strong>REPT</strong></a>
+      </td>
+      <td>将文本重复指定的次数。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/search-function-dax" target="_blank"><strong>SEARCH</strong></a>
+      </td>
+      <td>返回在从左到右的方向中，第一个找到特定字符或文本字符串的字符位置。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/substitute-function-dax" target="_blank"><strong>SUBSTITUTE</strong></a>
+      </td>
+      <td>在文本字符串中将现有文本替换为新的文本。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/trim-function-dax" target="_blank"><strong>TRIM</strong></a>
+      </td>
+      <td>移除文本中的所有空格，保留单词之间的单个空格。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/unichar-function-dax" target="_blank"><strong>UNICHAR</strong></a>
+      </td>
+      <td>返回由数字值引用的 Unicode 字符。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/unicode-function-dax" target="_blank"><strong>UNICODE</strong></a>
+      </td>
+      <td>返回文本字符串第一个字符的数字代码。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/value-function-dax" target="_blank"><strong>VALUE</strong></a>
+      </td>
+      <td>将表示数字的文本字符串转换为数字。</td>
+    </tr>
+  </tbody>
+</table>
 
 ### 时间智能函数
 
-| **函数**                    | **解释**                                            |
-|-----------------------------|---------------------------------------------------|
-| `DATEADD`                   | 返回一个日期表。 |
-| `DATESINPERIOD`             | 基于给定的日期列和时间段，返回一个连续的日期范围。  |
-| `DATESBETWEEN`              | 返回一个包含所有日期的表格。 |
-| `PARALLELPERIOD`            | 返回一个基于日期列的表格。 |
-| `SAMEPERIODLASTYEAR`        | 返回给定日期列的前一年同一时间段的日期。  |
-| `YTD`/`QTD`/`MTD`/`WTD`     | 用于计算从年初/当前季度/本月/本周到当前日期的累计值。|
-| `FIRSTDATE`/`LASTDATE`      | 返回指定日期列中的第一个/最后一个日期。  |
-| `PREVIOUSMONTH`/`NEXTMONTH` | 返回当前日期列的上/下一个月的第一个日期。      |
-| `DATERANGE`                 | 返回给定日期范围内的所有日期。    |
-| `ISLEAPYEAR`                | 判断给定年份是否为闰年。  |
-
-### DIVIDE 函数
-
-DIVIDE 函数是一个非常常用的函数，原因是我们做数据分析时很多指标都是相对值，例如环比增长率、利润率、存货周转率、离职率、借款逾期率……它们的数学表达式都是使用了除法。
-
-DIVIDE 函数可谓安全除法，它的好处是可以在分母为 0 时防止出现报错信息，比如无穷大的情况。其语法如下：
-
-```text
-DIVIDE(<numerator>, <denominator> [,<alternateresult>])
-```
-
-其中 `<alternateresult>` 是可选参数，用于指定当分母为 0 时的替代结果。
+<table>
+  <thead>
+    <tr>
+      <th>函数</th>
+      <th>解释</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/closingbalanceyear-function-dax" target="_blank"><strong>CLOSINGBALANCEYEAR</strong></a> /<br>
+        <a href="https://learn.microsoft.com/en-us/dax/closingbalancequarter-function-dax" target="_blank"><strong>CLOSINGBALANCEQUARTER</strong></a> /<br>
+        <a href="https://learn.microsoft.com/en-us/dax/closingbalancemonth-function-dax" target="_blank"><strong>CLOSINGBALANCEMONTH</strong></a>
+      </td>
+      <td>计算当前 Context 中每年/每季度/每月的最后日期的表达式。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/dateadd-function-dax" target="_blank"><strong>DATEADD</strong></a>
+      </td>
+      <td>返回一个表格，包含一个日期列，日期根据当前 Context 中的日期按指定的间隔向前或向后移动。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/datesbetween-function-dax" target="_blank"><strong>DATESBETWEEN</strong></a>
+      </td>
+      <td>返回一个表格，包含一个日期列，开始于指定的起始日期，直到指定的结束日期。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/datesinperiod-function-dax" target="_blank"><strong>DATESINPERIOD</strong></a>
+      </td>
+      <td>返回一个表格，包含一个日期列，开始于指定的起始日期，并持续指定数量和类型的日期间隔。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/datesytd-function-dax" target="_blank"><strong>DATESYTD</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/datesqtd-function-dax" target="_blank"><strong>DATESQTD</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/datesmtd-function-dax" target="_blank"><strong>DATESMTD</strong></a>
+      </td>
+      <td>返回一个表格，包含当前 Context 中年度/季度/月度至今的日期列。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/endofyear-function-dax" target="_blank"><strong>ENDOFYEAR</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/endofquarter-function-dax" target="_blank"><strong>ENDOFQUARTER</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/endofmonth-function-dax" target="_blank"><strong>ENDOFMONTH</strong></a>
+      </td>
+      <td>返回当前 Context 中指定日期列的年份/季度/月度的最后日期。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/firstdate-function-dax" target="_blank"><strong>FIRSTDATE</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/lastdate-function-dax" target="_blank"><strong>LASTDATE</strong></a>
+      </td>
+      <td>返回当前 Context 中指定日期列的第一个/最后一个日期。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/nextyear-function-dax" target="_blank"><strong>NEXTYEAR</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/nextquarter-function-dax" target="_blank"><strong>NEXTQUARTER</strong></a> /<br>
+        <a href="https://learn.microsoft.com/en-us/dax/nextmonth-function-dax" target="_blank"><strong>NEXTMONTH</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/nextday-function-dax" target="_blank"><strong>NEXTDAY</strong></a>
+      </td>
+      <td>返回一个表格，包含基于当前 Context 中日期列中指定日期的下一年/季度/月/天的所有日期。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/openingbalanceyear-function-dax" target="_blank"><strong>OPENINGBALANCEYEAR</strong></a> /<br>
+        <a href="https://learn.microsoft.com/en-us/dax/openingbalancequarter-function-dax" target="_blank"><strong>OPENINGBALANCEQUARTER</strong></a> /<br>
+        <a href="https://learn.microsoft.com/en-us/dax/openingbalancemonth-function-dax" target="_blank"><strong>OPENINGBALANCEMONTH</strong></a>
+      </td>
+      <td>计算当前 Context 中每年/季度/月的第一日期的表达式。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/parallelperiod-function-dax" target="_blank"><strong>PARALLELPERIOD</strong></a>
+      </td>
+      <td>返回一个表格，包含一个日期列，表示与指定日期列中日期平行的期间，日期可以根据指定的时间间隔向前或向后移动。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/previousyear-function-dax" target="_blank"><strong>PREVIOUSYEAR</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/previousquarter-function-dax" target="_blank"><strong>PREVIOUSQUARTER</strong></a> /<br>
+        <a href="https://learn.microsoft.com/en-us/dax/previousmonth-function-dax" target="_blank"><strong>PREVIOUSMONTH</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/previousday-function-dax" target="_blank"><strong>PREVIOUSDAY</strong></a>
+      </td>
+      <td>返回一个表格，包含基于当前 Context 中日期列中指定日期的上一年/季度/月/天的所有日期。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/sameperiodlastyear-function-dax" target="_blank"><strong>SAMEPERIODLASTYEAR</strong></a>
+      </td>
+      <td>返回一个表格，包含基于指定日期列中日期的前一年相同期间的日期。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/startofyear-function-dax" target="_blank"><strong>STARTOFYEAR</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/startofquarter-function-dax" target="_blank"><strong>STARTOFQUARTER</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/startofmonth-function-dax" target="_blank"><strong>STARTOFMONTH</strong></a>
+      </td>
+      <td>返回当前 Context 中指定日期列的年份/季度/月份的第一日期。</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://learn.microsoft.com/en-us/dax/totalytd-function-dax" target="_blank"><strong>TOTALYTD</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/totalqtd-function-dax" target="_blank"><strong>TOTALQTD</strong></a> /
+        <a href="https://learn.microsoft.com/en-us/dax/totalmtd-function-dax" target="_blank"><strong>TOTALMTD</strong></a>
+      </td>
+      <td>计算当前 Context 中的年度/季度/月份至今的表达式的值。</td>
+    </tr>
+  </tbody>
+</table>

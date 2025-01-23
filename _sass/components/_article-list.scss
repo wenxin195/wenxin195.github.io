@@ -5,6 +5,7 @@
     font-size: map-get($base, font-size-sm);
     white-space: nowrap;
   }
+
   &.grid--sm {
     .card__header {
       overflow: hidden;
@@ -13,6 +14,7 @@
     }
   }
 }
+
 .article-list__group-header {
   margin-top: map-get($spacers, 3);
 }

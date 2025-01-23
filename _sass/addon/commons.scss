@@ -230,9 +230,9 @@ details > summary::marker {
         //   background-color: var(--tb-even-bg);
         // }
 
-        &:nth-child(2n + 1) {
-          background-color: var(--tb-odd-bg);
-        }
+        // &:nth-child(2n + 1) {
+        //   background-color: var(--tb-odd-bg);
+        // }
 
         td {
           @extend %table-cell;

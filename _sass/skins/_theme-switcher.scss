@@ -1,0 +1,34 @@
+// Theme Switcher
+[data-theme="dark"] {
+  @import "dark";
+}
+
+[data-theme="light"] {
+  @import "default";
+}
+
+.theme-toggle {
+  position: relative;
+  width: 2.5rem;
+  height: 2.5rem;
+  
+  .fa-moon {
+    display: none;
+  }
+  
+  .fa-sun {
+    display: inline-block;
+  }
+}
+
+[data-theme="dark"] {
+  .theme-toggle {
+    .fa-moon {
+      display: inline-block;
+    }
+    
+    .fa-sun {
+      display: none;
+    }
+  }
+}

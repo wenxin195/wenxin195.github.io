@@ -18,31 +18,10 @@
       fontCache: 'global', // none or global or local
     },
     loader: {
-      load: ['a11y/explorer', 'ui/menu', 'ui/safe', '[mml]/mml3', 'ui/lazy'],
+      load: ['ui/lazy'],
     },
-    options: {
-      enableAssistiveMml: false, // 禁用辅助MathML(提升性能)
-
-      enableMenu: true, // 启用menu组件
-      menuOptions: {
-        settings: {
-          zoom: 'DoubleClick', // NoZoom or Click or DoubleClick
-
-          assistiveMml: false,
-          explorer: true,
-        },
-      },
-
-      enableExplorer: true, // 启用explorer
-      a11y: {
-        highlight: 'None', // 表达式的高亮方式，None or Flame or Hover
-        flame: false,
-        hover: false,
-
-        magnification: 'None', // 表达式的放大方式，None or Keyboard or Mouse
-        keyMagnifier: false,
-        mouseMagnifier: false,
-      },
+    output: {
+      font: 'mathjax-tex',
     },
   };
 </script>

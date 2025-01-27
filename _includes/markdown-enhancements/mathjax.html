@@ -8,7 +8,13 @@
         ['$', '$'],
         ['\\(', '\\)'],
       ],
+      macros: {
+        '\\mit': '\\mathit',
+      },
       tags: 'ams', // none or ams or all
+      packages: {
+        '[+]': ['mathtools'],
+      },
     },
     mml: {
       parseAs: 'xml', // html or xml
@@ -18,7 +24,7 @@
       fontCache: 'global', // none or global or local
     },
     loader: {
-      load: ['ui/lazy'],
+      load: ['ui/lazy', '[tex]/mathtools'],
     },
     output: {
       font: 'mathjax-tex',

@@ -21,9 +21,9 @@ highlight_theme: tomorrow-night-bright # "default" (default), "tomorrow", "tomor
 url     : # the base hostname & protocol for your site e.g. https://www.someone.com
 baseurl : # does not include hostname
 Encoding: utf-8
-title   : Wenxin's Blog
+title   : StatSphere
 description: > # this means to ignore newlines until "Language & timezone"
-  专注于数学与统计学
+  走进数据世界，领略数学风采
 
 
 ## => Language and Timezone

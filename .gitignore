@@ -25,3 +25,10 @@ Gemfile.lock
 _site/
 .jekyll-metadata
 .jekyll-cache/
+
+.editorconfig
+.eslintrc
+.prettierrc
+.stylelintignore
+.stylelintrc
+.travis.yml

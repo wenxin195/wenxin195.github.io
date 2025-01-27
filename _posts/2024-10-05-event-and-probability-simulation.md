@@ -44,7 +44,7 @@ $$
        <figcaption>(b) 针与平行线相交的充分必要条件</figcaption>
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $1$: 比丰投针</p>
+   <p style="margin-top: 0;">图 1: 比丰投针</p>
 </div>
 
 用 R 语言来模拟的示例如下：

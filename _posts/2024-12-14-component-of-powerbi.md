@@ -37,7 +37,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
        <img src="/assets/images/picture/DAX/title.png" alt="title" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $1$: 将第一行作为标题</p>
+   <p style="margin-top: 0;">图 1: 将第一行作为标题</p>
 </div>
 
 ### 格式转换
@@ -55,7 +55,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
        <figcaption>(b) 自动检测数据类型</figcaption>
      </figure>
    </div>
-   <p style="margin-top: -26px;">图 $2$: 修改数据类型</p>
+   <p style="margin-top: -26px;">图 2: 修改数据类型</p>
 </div>
 
 ### 数据清洗
@@ -72,7 +72,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
        <img src="/assets/images/picture/DAX/delete_row.png" alt="delete_row" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $3$: 删除重复值、空值和 Error 值</p>
+   <p style="margin-top: 0;">图 3: 删除重复值、空值和 Error 值</p>
 </div>
 
 对于缺失值的处理，可以选择“填充”命令，向上或者向下填充缺失值。Power Query 有着很强的扩展性，可以选择直接执行 Python/R 脚本选择符合我们需求的缺失值填充方式。
@@ -83,7 +83,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
        <img src="/assets/images/picture/DAX/null_values.png" alt="null_values" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $4$: 填充缺失值</p>
+   <p style="margin-top: 0;">图 4: 填充缺失值</p>
 </div>
 
 有时候我们需要替换数据集中的某些文本内容，这就可以使用“替换值”命令进行替换。
@@ -94,7 +94,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
        <img src="/assets/images/picture/DAX/alter.png" alt="alter" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $5$: 内容替换</p>
+   <p style="margin-top: 0;">图 5: 内容替换</p>
 </div>
 
 除此之外，我们还可以在“格式”命令中对字段中的英文进行转换。
@@ -105,7 +105,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
        <img src="/assets/images/picture/DAX/letter_operation.png" alt="letter_operation" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $6$: 对字段中的英文进行操作</p>
+   <p style="margin-top: 0;">图 6: 对字段中的英文进行操作</p>
 </div>
 
 ### 字段拆分合并
@@ -118,7 +118,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
        <img src="/assets/images/picture/DAX/split_merge.png" alt="split_merge" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $7$: 对字段进行拆分合并</p>
+   <p style="margin-top: 0;">图 7: 对字段进行拆分合并</p>
 </div>
 
 Power Query 还能够根据我们的需求提取字段的内容。
@@ -129,7 +129,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
        <img src="/assets/images/picture/DAX/extract.png" alt="extract" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $8$: 对字段的值进行提取</p>
+   <p style="margin-top: 0;">图 8: 对字段的值进行提取</p>
 </div>
 
 ### 统计聚合
@@ -142,7 +142,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
        <img src="/assets/images/picture/DAX/group.png" alt="group" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $9$: 分组聚合统计</p>
+   <p style="margin-top: 0;">图 9: 分组聚合统计</p>
 </div>
 
 另外在 Power Query 中，还可以制作透视表和逆透视表。透视表就是一张二维的列联表，而逆透视表就是将二维列联表转换成一维表。
@@ -155,7 +155,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
        <img src="/assets/images/picture/DAX/pivot.png" alt="pivot" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $10$: 透视表与逆透视表</p>
+   <p style="margin-top: 0;">图 10: 透视表与逆透视表</p>
 </div>
 
 若想制作一张“咖啡种类——杯型”的逆透视表，只需选中关于杯型字段的“大杯数量”、“中杯数量”和“小杯数量”，然后选择“逆透视列”即可；反过来若想制作“咖啡种类——杯型”的透视表，只需选中“杯型”字段，然后选中“透视列”即可。
@@ -172,7 +172,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
        <img src="/assets/images/picture/DAX/condition_column.png" alt="condition_column" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $11$: 条件列</p>
+   <p style="margin-top: 0;">图 11: 条件列</p>
 </div>
 
 “索引列”用于为数据集中的每一行分配一个唯一的编号，这个编号可以是从 0 开始、从 1 开始，也可以根据已有的列进行递增或递减。
@@ -183,7 +183,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
        <img src="/assets/images/picture/DAX/indicator_column.png" alt="indicator_column" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $12$: 索引列</p>
+   <p style="margin-top: 0;">图 12: 索引列</p>
 </div>
 
 “示例列”是是一个智能功能，只需输入满足需求的值，之后 Power Query 会解决后续的操作问题。例如在“城市”字段中想提取“市”之前的城市名，那么只需在第一行内输入“北京”，然后会看到整个列都出现了想要的结果了。
@@ -196,7 +196,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
        <img src="/assets/images/picture/DAX/custom_column.png" alt="custom_column" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $13$: 自定义列</p>
+   <p style="margin-top: 0;">图 13: 自定义列</p>
 </div>
 
 ### 日期/时间操作
@@ -209,7 +209,7 @@ Power Query 中的“日期”和“时间”命令可以设置“日期”/“�
        <img src="/assets/images/picture/DAX/time.png" alt="time" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $14$: 日期&时间列</p>
+   <p style="margin-top: 0;">图 14: 日期&时间列</p>
 </div>
 
 ### 数据合并
@@ -229,7 +229,7 @@ Power Query 中的“日期”和“时间”命令可以设置“日期”/“�
        <figcaption>(b) 设置连接方式</figcaption>
      </figure>
    </div>
-   <p style="margin-top: -25px;">图 $15$: 合并查询</p>
+   <p style="margin-top: -25px;">图 15: 合并查询</p>
 </div>
 
 除了合并查询之外，还能够想数据表的纵向追加数据行，这可以通过“追加查询”命令完成。注意，这需要两张表的字段完全相同！
@@ -245,7 +245,7 @@ Power Query 中的“日期”和“时间”命令可以设置“日期”/“�
        <figcaption>(b) 选择追加数据表</figcaption>
      </figure>
    </div>
-   <p style="margin-top: -16px;">图 $16$: 追加查询</p>
+   <p style="margin-top: -16px;">图 16: 追加查询</p>
 </div>
 
 ### 汇总数据集
@@ -280,7 +280,7 @@ Power Pivot 是 Power BI 中的核心组件之一。它是一种数据建模工�
        <img src="/assets/images/picture/DAX/data_model1.png" alt="data_model1" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $17$: 星型模型</p>
+   <p style="margin-top: 0;">图 17: 星型模型</p>
 </div>
 
 星型模型是最简单最常用的模型。星型模型本质是一张大表，相比于其他数据模型更合适于大数据处理。其他模型可以通过一定的转换，变为星型模型。
@@ -297,7 +297,7 @@ Power Pivot 是 Power BI 中的核心组件之一。它是一种数据建模工�
        <img src="/assets/images/picture/DAX/data_model2.png" alt="data_model2" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $18$: 雪花模型</p>
+   <p style="margin-top: 0;">图 18: 雪花模型</p>
 </div>
 
 其优点是通过最大限度地减少数据存储量以及联合较小的维表来改善查询性能，避免了数据冗余。其缺点是增加了主键-外键关联的几率，导致查询效率低于星型模型，并且不利于开发。
@@ -312,7 +312,7 @@ Power Pivot 是 Power BI 中的核心组件之一。它是一种数据建模工�
        <img src="/assets/images/picture/DAX/data_model3.png" alt="data_model3" style="width: 500px;">
      </figure>
    </div>
-   <p style="margin-top: 0;">图 $19$: 星座模型</p>
+   <p style="margin-top: 0;">图 19: 星座模型</p>
 </div>
 
 ### 数据分析表达式

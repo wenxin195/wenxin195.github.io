@@ -99,6 +99,11 @@
 .navigation {
   @include overflow(auto, "x");
 
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
   & > ul {
     height: map-get($layout, header-height);
     padding-bottom: 0;
@@ -151,11 +156,4 @@
   &::after {
     @include split-line(bottom, 4px, $main-color-1);
   }
-}
-
-.navigation svg {
-  width: 1.5rem;
-  /* 或者你希望的大小 */
-  height: 1.5rem;
-  /* 或者你希望的大小 */
 }

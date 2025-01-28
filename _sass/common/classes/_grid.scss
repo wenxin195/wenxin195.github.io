@@ -3,6 +3,7 @@ $grid-columns: 12;
 .grid-container {
   @include overflow(hidden);
 }
+
 .cell {
   min-width: 0;
 }
@@ -33,11 +34,13 @@ $grid-columns: 12;
 .grid {
   @include flexbox();
   @include flex-wrap(wrap);
+
   & > {
     @each $breakpoint in map-keys($responsive) {
       @for $i from 1 through $grid-columns {
         @include make-grid-cell($i, $breakpoint);
       }
+
       @include make-grid-cell("auto", $breakpoint);
       @include make-grid-cell("shrink", $breakpoint);
       @include make-grid-cell("stretch", $breakpoint);
@@ -60,6 +63,7 @@ $grid-columns: 12;
         @if $direction == "" {
           .grid--#{$type}-#{$spacer} {
             @include make-spacing("m", "", $spacer, true);
+
             .cell {
               @include make-spacing($type, "", $spacer);
             }
@@ -67,6 +71,7 @@ $grid-columns: 12;
         } @else {
           .grid--#{$type}#{$direction}-#{$spacer} {
             @include make-spacing("m", $direction, $spacer, true);
+
             .cell {
               @include make-spacing($type, $direction, $spacer);
             }

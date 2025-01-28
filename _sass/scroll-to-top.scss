@@ -1,3 +1,6 @@
+/* js 文件位于 _include/scripts/scroll-to-top.js */
+/* 被引用在 _layout/base.html 中 */
+
 #scroll-to-top {
   position: fixed;
   z-index: 1;
@@ -12,22 +15,22 @@
   line-height: 40px;
   font-size: 24px;
   color: #686868;
-  box-shadow: 0 4px 8px #00000033;
+  box-shadow: 0 4px 8px #f1f1f1;
   cursor: pointer;
   padding: 0;
   border: 1px solid #f1f1f1;
   transition: opacity 0.5s ease-in-out, transform 0.2s ease-out;
 
-  &:hover {
-    transform: translate3d(0, -5px, 0);
-    -webkit-transform: translate3d(0, -5px, 0);
-    background-color: #ddd;
-  }
-
   i {
     line-height: 2.75rem;
     position: relative;
     bottom: 2px;
+  }
+
+  &:hover {
+    transform: translate3d(0, -5px, 0);
+    -webkit-transform: translate3d(0, -5px, 0);
+    background-color: #ddd;
   }
 
   &.show {

@@ -1,17 +1,14 @@
 <!-- start custom sharing snippet -->
 
 <div class="post-options">
-  <!-- 分享功能 -->
   <div class="share-section">
     <span label="share-label">分享到：</span>
 
     <div class="share-buttons">
-      <!-- QQ 空间分享按钮 -->
       <a class="share-qqzone" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{ page.url | absolute_url }}&title={{ page.title }}" target="_blank" title="分享到QQ空间">
         <img src="/assets/images/icon/qqzone.svg" alt="QQ空间" />
       </a>
 
-      <!-- 微信分享按钮（使用二维码分享方式） -->
       <div class="share-wechat-container">
         <a class="share-wechat" href="javascript:void(0);" title="分享到微信">
           <img src="assets/images/icon/wechat.svg" alt="微信" />
@@ -21,7 +18,6 @@
         </div>
       </div>
 
-      <!-- 微博分享按钮 -->
       <a class="share-weibo" href="https://service.weibo.com/share/share.php?url={{ page.url | absolute_url }}&title={{ page.title }}" target="_blank" title="分享到微博">
         <img src="/assets/images/icon/weibo.svg" alt="微博" />
       </a>
@@ -29,7 +25,6 @@
   </div>
 
   {%- if page.download -%}
-    <!-- PDF 下载功能 -->
     <div class="multimedia">
       <a href="https://www.alipan.com/s/ZsWqn6uAr91" target="_blank" class="multimedia-link">
         <img src="/assets/images/icon/download.svg" alt="Download PDF" />
@@ -39,7 +34,6 @@
   {%- endif -%}
 
   {%- if page.videos -%}
-    <!-- 视频功能 -->
     <div class="multimedia">
       <a href="https://space.bilibili.com/10738871" target="_blank" class="multimedia-link">
         <img src="/assets/images/icon/video.svg" alt="video" />

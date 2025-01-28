@@ -4,17 +4,13 @@ layout: none
 
 <!DOCTYPE html>
 
-<!-- 获取语言 -->
 {%- include snippets/get-lang.html -%}
-
 {% seo %}
 
 <html lang="{{ __return }}">
   <head>
-    <!-- 网站分析工具，这里选择的是google analytics -->
     {%- include analytics.html -%}
 
-    <!-- 导入头文件 -->
     {%- include head.html -%}
 
     <script>
@@ -24,7 +20,6 @@ layout: none
     </script>
     {%- include scripts/variables.html -%}
 
-    <!-- Markdown 流程表、MathJax、可交互图标 -->
     {%- include markdown-enhancements.html -%}
   </head>
 
@@ -40,7 +35,6 @@ layout: none
 
     <script>
       {%- include scripts/common.js -%}
-      {%- include scripts/clipboard.js -%}
     </script>
   </body>
 </html>

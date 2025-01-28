@@ -15,15 +15,15 @@ permalink: /donate.html
 
 ## 捐赠方式
 
-<div style="display: flex; justify-content:  flex-start; align-items: center; gap: 20px;">
-  <div style="text-align: center; margin-right: 10px;">
+<div class="payment-container">
+  <div class="payment-item">
     <p>微信支付</p>
-    <img src="/assets/images/picture/donate/wechat.png" alt="微信支付二维码" style="height: 150px; width: auto;">
+    <img src="/assets/images/picture/donate/wechat.png" alt="微信支付二维码">
   </div>
 
-  <div style="text-align: center; margin-right: 10px;">
+  <div class="payment-item">
     <p>支付宝</p>
-    <img src="/assets/images/picture/donate/alipay.jpg" alt="支付宝二维码" style="height: 150px; width: auto;">
+    <img src="/assets/images/picture/donate/alipay.jpg" alt="支付宝二维码">
   </div>
 </div>
 
@@ -35,7 +35,9 @@ permalink: /donate.html
 
 最后，无论您是否选择捐赠，我都想对你说一声：谢谢！感谢你花时间阅读我的文章，感谢你陪伴我走过每一个日夜。让我们继续携手前行，在知识的道路上不断探索。
 
-<!-- ## 捐赠者名单
+{% comment %}
+
+## 捐赠者名单
 
 在此，我要特别感谢以下朋友的支持(排名不分先后)：
 
@@ -44,7 +46,9 @@ permalink: /donate.html
   <li>李四</li>
   <li>王五</li>
   <li>赵六</li>
-</ul> -->
+</ul>
+
+{% endcomment %}
 
 ---
 

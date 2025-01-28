@@ -1,24 +1,22 @@
+/* post 的“分享到”功能 */
+/* html 文件位于 _include/sharing-providers/custom.html */
+/* js 文件位于 _include/scripts/wechat-share.js */
+
 .post-options {
   display: flex;
-  align-items: flex-start; // 上对齐
+  align-items: flex-start;
   margin-right: 20px;
-}
 
-.share-section {
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-}
-
-.share-label {
-  font-size: 16px;
-  margin-right: 10px;
-  color: #333;
+  .share-section {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
 }
 
 .share-buttons {
   display: flex;
-  gap: 5px; // 调整按钮之间的间距
+  gap: 5px;
   align-items: center;
 
   a {
@@ -43,19 +41,31 @@
     margin-right: 5px;
   }
 
+  a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none; // 去除链接的下划线
+  }
+
   &:hover span {
-    color: #ff6600; // 悬停时文字颜色
+    color: #ff6600;
   }
 }
 
-.multimedia-link {
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  color: #333;
+/* 微信二维码 */
+.share-wechat-container {
+  position: relative; // 使二维码的定位基于此容器
+
+  .share-wechat {
+    display: inline-block;
+    position: relative;
+  }
+
+  &:hover .wechat-qrcode {
+    display: block;
+  }
 }
 
-/* 微信二维码 */
 .wechat-qrcode {
   display: none; // 默认隐藏二维码
   position: absolute; // 绝对定位
@@ -65,17 +75,4 @@
   border: 1px solid #ddd;
   background: #fff;
   z-index: 100; // 确保二维码位于图标上方
-}
-
-.share-wechat-container {
-  position: relative; // 使二维码的定位基于此容器
-
-  &:hover .wechat-qrcode {
-    display: block;
-  }
-}
-
-.share-wechat {
-  display: inline-block;
-  position: relative;
 }

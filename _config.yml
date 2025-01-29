@@ -44,14 +44,9 @@ author:
   facebook  : 61569485184749 # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
   twitter   : # "user_name" the last part of your profile url, e.g. https://twitter.com/user_name
   weibo     : 2943658367 # "user_id"   the last part of your profile url, e.g. https://www.weibo.com/user_id/profile?...
-  googleplus: # "user_id"   the last part of your profile url, e.g. https://plus.google.com/u/0/user_id
-  telegram  : # "user_name" the last part of your profile url, e.g. https://t.me/user_name
-  medium    : # "user_name" the last part of your profile url, e.g. https://medium.com/user_name
   zhihu     : # "user_name" the last part of your profile url, e.g. https://www.zhihu.com/people/user_name
-  douban    : # "user_name" the last part of your profile url, e.g. https://www.douban.com/people/user_name
   linkedin  : 钟文鑫 # "user_name" the last part of your profile url, e.g. https://www.linkedin.com/in/user_name
   github    : wenxin195 # "user_name" the last part of your profile url, e.g. https://github.com/user_name
-  npm       : # "user_name" the last part of your profile url, e.g. https://www.npmjs.com/~user_name
   bili      : 10738871
   red       : # "user_id" the last part of your profile url, e.g. https://www.xiaohongshu.com/user/profile/user_id
   csdn      : weixin_46784010
@@ -67,7 +62,7 @@ repository_tree: main
 ##############################
 paths:
   root    : # title link url, "/" (default)
-  home    : /about.html # home layout url, "/" (default)
+  home    : # home layout url, "/" (default)
   archive : # "/archive.html" (default)
   rss     : # "/feed.xml" (default)
 
@@ -93,10 +88,10 @@ mathjax: true # false (default), true
 mathjax_autoNumber: true # false (default), true
 
 ## Mermaid
-mermaid: true # false (default), true
+mermaid: false # false (default), true
 
 ## Chart
-chart: true # false (default), true
+chart: false # false (default), true
 
 
 ## => Paginate
@@ -207,7 +202,6 @@ highlighter : rouge
 permalink   : date
 
 exclude:
-  - HOW_TO_RELEASE.md
   - Gemfile
   - Gemfile.lock
   - LICENSE
@@ -237,11 +231,30 @@ sass:
   style: compressed
   sass_dir: _sass
 
+jekyll-minifier:
+  preserve_php: true
+  remove_spaces_inside_tags: true
+  remove_multi_spaces: true
+  remove_comments: true
+  remove_intertag_spaces: true
+  remove_quotes: false
+  compress_css: true
+  compress_javascript: true
+  compress_json: true
+  simple_doctype: false
+  remove_script_attributes: false
+  remove_style_attributes: false
+  remove_link_attributes: false
+  remove_form_attributes: false
+  remove_input_attributes: false
+  remove_javascript_protocol: false
+  remove_http_protocol: false
+  remove_https_protocol: false
+  preserve_line_breaks: false
+  simple_boolean_attributes: false
+  compress_js_templates: false
 
 ## => Plugins
 ##############################
 plugins:
-  - github-pages
-  - jekyll-archives
   - jekyll-minifier
-  - jekyll-admin

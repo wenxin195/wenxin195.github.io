@@ -21,6 +21,7 @@ node_modules/
 yarn.lock
 package-lock.json
 Gemfile.lock
+module_use.md
 
 _site/
 _drifts/

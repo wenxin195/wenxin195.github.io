@@ -1,7 +1,46 @@
 <!-- start custom article top snippet -->
 
-{% comment %}
-按理来说，pdf下载功能和视频功能应当放在这部分，但是考虑到美观性，故放在了分享功能部分
-{% endcomment %}
+<div class="post-options">
+  <div class="share-section">
+    <span label="share-label">分享到：</span>
+
+    <div class="share-buttons">
+      <a class="share-qqzone" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{ page.url | absolute_url }}&title={{ page.title }}" target="_blank" title="分享到QQ空间">
+        <img src="/assets/images/icon/qqzone.svg" alt="QQ空间" />
+      </a>
+
+      <div class="share-wechat-container">
+        <a class="share-wechat" href="javascript:void(0);" title="分享到微信">
+          <img src="assets/images/icon/wechat.svg" alt="微信" />
+        </a>
+        <div class="wechat-qrcode">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ page.url | absolute_url }}" alt="微信二维码" />
+        </div>
+      </div>
+
+      <a class="share-weibo" href="https://service.weibo.com/share/share.php?url={{ page.url | absolute_url }}&title={{ page.title }}" target="_blank" title="分享到微博">
+        <img src="/assets/images/icon/weibo.svg" alt="微博" />
+      </a>
+    </div>
+  </div>
+
+  {%- if page.download -%}
+    <div class="multimedia">
+      <a href="https://www.alipan.com/s/ZsWqn6uAr91" target="_blank" class="multimedia-link">
+        <img src="/assets/images/icon/download.svg" alt="Download PDF" />
+        <span>下载 PDF 版</span>
+      </a>
+    </div>
+  {%- endif -%}
+
+  {%- if page.videos -%}
+    <div class="multimedia">
+      <a href="https://space.bilibili.com/10738871" target="_blank" class="multimedia-link">
+        <img src="/assets/images/icon/video.svg" alt="video" />
+        <span>观看视频</span>
+      </a>
+    </div>
+  {%- endif -%}
+</div>
 
 <!-- end custom article top snippet -->

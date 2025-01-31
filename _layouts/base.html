@@ -10,7 +10,6 @@ layout: none
 <html lang="{{ __return }}">
   <head>
     {%- include analytics.html -%}
-
     {%- include head.html -%}
 
     <script>
@@ -18,20 +17,12 @@ layout: none
       {%- include scripts/lib/throttle.js -%}
       {%- include scripts/lib/lazyload.js -%}
     </script>
+    
     {%- include scripts/variables.html -%}
-
-    {%- include markdown-enhancements.html -%}
   </head>
 
   <body>
     <div class="root" data-is-touch="false">{{ content }}</div>
-    
-    {%- if page.layout == "article" -%}
-      <a href="#" id="scroll-to-top" title="Scroll to top">
-        <i class="fas fa-angle-up"></i>
-      </a>
-      <script>{%- include scripts/scroll-to-top.js -%}</script>
-    {%- endif -%}
 
     <script>
       {%- include scripts/common.js -%}

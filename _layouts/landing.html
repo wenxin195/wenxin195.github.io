@@ -9,75 +9,111 @@ article_header:
 ---
 <div class="layout--landing">
   <div class="heros">
-  {%- for _section in page.data.sections -%}
-    {%- include snippets/get-nav-url.html path=_section.background_image.src -%}
-    {%- assign _url = __return -%}
+    {%- comment -%} 遍历页面数据中的sections部分，每个section对应一个hero区块 {%- endcomment -%}
+    {%- for _section in page.data.sections -%}
+      {%- comment -%} 获取背景图片的URL {%- endcomment -%}
+      {%- include snippets/get-nav-url.html path=_section.background_image.src -%}
+      {%- assign _url = __return -%}
 
-    <section class="{% if _section.theme == 'light' %}hero hero--center hero--light{% elsif _section.theme == 'dark' %}hero hero--center hero--dark{% else %}hero hero--center{% endif %}" id="hero-{{ forloop.index }}" style="background-image: url({{ _url }});{% if _section.background_color %} background-color: {{ _section.background_color }};{% endif %}">
-        <div class="hero__content">
-          <div class="mb-5">
-            <h3>{{ _section.title }}</h3>
+      {%- comment -%} 根据主题设置不同的样式类：light/dark/default {%- endcomment -%}
+      {%- if _section.theme == 'light' -%}
+        <section class="hero hero--center hero--light" id="hero-{{ forloop.index }}" 
+      {%- elsif _section.theme == 'dark' -%}
+        <section class="hero hero--center hero--dark" id="hero-{{ forloop.index }}"
+      {%- else -%}
+        <section class="hero hero--center" id="hero-{{ forloop.index }}"
+      {%- endif -%}
+      
+      {%- if _section.background_color -%}
+          style="background-image: url({{ _url }}); background-color: {{ _section.background_color }};">{%- comment -%} 设置背景图片和背景颜色 {%- endcomment -%}
+      {%- else -%}
+          style="background-image: url({{ _url }});">
+      {%- endif -%}
 
-            {% if _section.excerpt %}
-              <p>{{ _section.excerpt }}</p>
-            {% endif %}
+      <div class="hero__content">
+        <div class="mb-5">
+          {%- comment -%} 显示section标题 {%- endcomment -%}
+          <h3>{{ _section.title }}</h3>
 
-            {% if _section.actions %}
-              <ul class="menu">
+          {%- comment -%} 如果有摘要则显示摘要 {%- endcomment -%}
+          {% if _section.excerpt %}
+            <p>{{ _section.excerpt }}</p>
+          {% endif %}
+
+          {%- comment -%} 如果有操作按钮则显示按钮列表 {%- endcomment -%}
+          {% if _section.actions %}
+            <ul class="menu">
               {% for _action in _section.actions %}
                 {%- include snippets/get-nav-url.html path=_action.url -%}
                 {%- assign _url = __return -%}
-                <li><a class="button button--{{ _action.type | default: 'outline-info' }} button--pill button--lg" href="{{ _url }}">{{ _action.text }}</a></li>
+
+                <li>
+                  <a class="button button--{{ _action.type | default: 'outline-info' }} button--pill button--lg" href="{{ _url }}">
+                    {{ _action.text }}
+                  </a>
+                </li>
               {% endfor %}
-              </ul>
-            {% endif %}
-          </div>
-
-          {% if _section.children %}
-            <div class="grid--container">
-              <div class="grid grid--p-3">
-                {% for child in _section.children %}
-                  <div class="cell cell--12 cell--md-{{ 12 | divided_by: [2, _section.children.size | default: 2] | last }} cell--lg-{{ 12 | divided_by: [4, _section.children.size | default: 4] | last }}">
-                    <div class="mb-5">
-                      <h4>{{ child.title }}</h4>
-
-                      {% if child.excerpt %}
-                        <p>{{ child.excerpt }}</p>
-                      {% endif %}
-
-                      {% if child.actions %}
-                        <ul class="menu">
-                          {% for _action in child.actions %}
-                            {%- include snippets/get-nav-url.html path=_action.url -%}
-                            {%- assign _url = __return -%}
-                            <li><a class="button button--{{ _action.type | default: 'outline-info' }} button--pill button--lg" href="{{ _url }}">{{ _action.text }}</a></li>
-                          {% endfor %}
-                        </ul>
-                      {% endif %}
-                    </div>
-
-                    {% if child.image and child.image.src %}
-                      <div class="{{ 'mb-5' if child.image.is_row }}">
-                        {%- include snippets/get-nav-url.html path=child.image.src -%}
-                        <div class="mx-auto" style="{{ child.image.style }}">
-                          <a href="{{ __return | default: '#' }}">
-                            <img src="{{ __return }}" alt="{{ child.title }}"/>
-                          </a>
-                        </div>
-                      </div>
-                    {% endif %}
-                    
-                    {% if child.content %}
-                      <p>{{ child.content }}</p>
-                    {% endif %}
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
+            </ul>
           {% endif %}
         </div>
-    </section>
-  {% endfor %}
+
+        {%- comment -%} 如果有子内容则显示网格布局 {%- endcomment -%}
+        {% if _section.children %}
+          <div class="grid--container">
+            <div class="grid grid--p-3">
+              {% for child in _section.children %}
+                {%- comment -%} 根据子内容数量动态设置网格列宽 {%- endcomment -%}
+                <div class="cell cell--12 cell--md-{{ 12 | divided_by: [2, _section.children.size | default: 2] | last }} cell--lg-{{ 12 | divided_by: [4, _section.children.size | default: 4] | last }}">
+                  <div class="mb-5">
+                    {%- comment -%} 显示子内容标题 {%- endcomment -%}
+                    <h4>{{ child.title }}</h4>
+
+                    {%- comment -%} 如果有子内容摘要则显示 {%- endcomment -%}
+                    {% if child.excerpt %}
+                      <p>{{ child.excerpt }}</p>
+                    {% endif %}
+
+                    {%- comment -%} 如果有子内容操作按钮则显示 {%- endcomment -%}
+                    {% if child.actions %}
+                      <ul class="menu">
+                        {% for _action in child.actions %}
+                          {%- include snippets/get-nav-url.html path=_action.url -%}
+                          {%- assign _url = __return -%}
+                          
+                          <li>
+                            <a class="button button--{{ _action.type | default: 'outline-info' }} button--pill button--lg" href="{{ _url }}">
+                              {{ _action.text }}
+                            </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+
+                  {%- comment -%} 如果有子内容图片则显示 {%- endcomment -%}
+                  {% if child.image and child.image.src %}
+                    <div class="{{ 'mb-5' if child.image.is_row }}">
+                      {%- include snippets/get-nav-url.html path=child.image.src -%}
+                      <div class="mx-auto" style="{{ child.image.style }}">
+                        <a href="{{ __return | default: '#' }}">
+                          <img src="{{ __return }}" alt="{{ child.title }}"/>
+                        </a>
+                      </div>
+                    </div>
+                  {% endif %}
+                  
+                  {%- comment -%} 如果有子内容正文则显示 {%- endcomment -%}
+                  {% if child.content %}
+                    <p>{{ child.content }}</p>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+      </section> {%- comment -%} 闭合 section 标签 {%- endcomment -%}
+    {% endfor %}
   </div>
 </div>
 

@@ -1,15 +1,18 @@
 ---
 layout: page
 ---
-
+{% comment %}获取文章数据源，优先使用页面配置，否则使用布局配置{% endcomment %}
 {%- assign _page_articles_data_source = page.articles.data_source | default: layout.articles.data_source -%}
 
+{% comment %}如果存在数据源配置，将其按点号分割为key数组{% endcomment %}
 {%- if _page_articles_data_source -%}
-{%- assign _keys = _page_articles_data_source | split: '.' -%}
+  {%- assign _keys = _page_articles_data_source | split: '.' -%}
 {%- endif -%}
 
+{% comment %}初始化文章变量{% endcomment %}
 {%- assign _articles = nil -%}
 
+{% comment %}根据keys数组逐级获取文章数据{% endcomment %}
 {%- for _key in _keys -%}
   {%- if forloop.first -%}
     {%- case _key -%}
@@ -23,30 +26,33 @@ layout: page
         {%- assign _articles = paginator -%}
       {%- else -%}
         {%- assign _articles = site[_key] -%}
-      {%- else -%}
     {%- endcase -%}
   {%- else -%}
     {%- assign _articles = _articles[_key] -%}
   {%- endif -%}
 {%- endfor -%}
 
+{% comment %}获取文章列表展示类型，优先使用页面配置，否则使用布局配置{% endcomment %}
 {%- assign _type = page.articles.type | default: layout.articles.type -%}
 
+{% comment %}如果存在文章数据，开始渲染文章列表{% endcomment %}
 {%- if _articles -%}
   <div class="layout--articles">
-
     {%- if _type == 'grid' -%}
+      {% comment %}网格布局模式{% endcomment %}
       {%- if page.articles.size == 'sm' -%}
         {%- include article-list.html articles=_articles type='grid' size='sm' -%}
       {%- else -%}
         {%- include article-list.html articles=_articles type='grid' -%}
       {%- endif -%}
     {%- elsif _type == 'brief' -%}
+      {% comment %}简洁布局模式{% endcomment %}
       {%- include snippets/assign.html target=site.data.variables.default.page.articles.show_info source0=layout.articles.show_info source1=page.articles.show_info -%}
       {%- assign _show_info = __return -%}
 
       {%- include article-list.html articles=_articles type='brief' show_info=_show_info -%}
     {%- else -%}
+      {% comment %}默认布局模式{% endcomment %}
       {%- include snippets/assign.html target=site.data.variables.default.page.articles.show_cover source0=layout.articles.show_cover source1=page.articles.show_cover -%}
       {%- assign _show_cover = __return -%}
 
@@ -64,9 +70,7 @@ layout: page
       {%- assign _excerpt_type = page.articles.excerpt_type | default: layout.articles.excerpt_type -%}
 
       {%- include article-list.html articles=_articles type='item' article_type=_article_type show_cover=_show_cover cover_size=_cover_size show_excerpt=_show_excerpt excerpt_type=_excerpt_type show_readmore=_show_readmore show_info=_show_info -%}
-
     {%- endif -%}
-
   </div>
 {%- endif -%}
 

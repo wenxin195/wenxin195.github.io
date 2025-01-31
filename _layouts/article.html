@@ -5,13 +5,10 @@ type: article
 {%- include snippets/assign.html target = site.data.variables.default.page.sharing source0=layout.sharing source1=page.sharing -%}
 {%- assign _sharing = __return -%}
 
-{%- if _sharing -%}
-  <section class="article__sharing d-print-none">{%- include sharing.html -%}</section>
-{%- endif -%}
-
 <div class="layout--article">
   {%- include article/top/custom.html -%}
-
+  
+  {% comment %}文章主体内容区域{% endcomment %}
   <div class="article__content" itemprop="articleBody">
     {%- if page.refactor -%}
       {% include refactor-content.html content=content %}
@@ -20,9 +17,14 @@ type: article
     {%- endif -%}
   </div>
 
+  {% comment %}如果启用了分享功能，显示分享区块{% endcomment %}
+  {%- if _sharing -%}
+    <section class="article__sharing d-print-none">{%- include sharing.html -%}</section>
+  {%- endif -%}
+
   <div class="d-print-none">
-    {%- include article-footer.html -%}
-    {%- include article-section-navigator.html -%}
+    {%- include article-footer.html -%} {% comment %}文章页脚内容{% endcomment %}
+    {%- include article-section-navigator.html -%} {% comment %}文章章节导航{% endcomment %}
   </div>
 </div>
 

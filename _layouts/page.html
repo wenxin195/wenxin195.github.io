@@ -1,35 +1,32 @@
 ---
 layout: base
 ---
+{% comment %} 设置页面模式、类型和文章头部类型 {% endcomment %}
 {%- assign _page_mode = page.mode | default: layout.mode | default: site.data.variables.default.page.mode -%}
 {%- assign _page_type = page.type | default: layout.type | default: site.data.variables.default.page.type -%}
-
-<!-- 标题样式 -->
 {%- assign _article_header_type = page.article_header.type | default: layout.article_header.type -%}
 
+{% comment %} 设置页面头部显示状态 {% endcomment %}
 {%- include snippets/assign.html target=layout.header source0=page.header -%}
 {%- assign _header = __return -%}
 
-<!-- 底部页脚 -->
 {%- include snippets/assign.html target=layout.footer source0=page.footer -%}
 {%- assign _footer = __return -%}
 
-<!-- 指示文章大图是否可预览 -->
+{% comment %} 设置页面图片是否可以放大 {% endcomment %}
 {%- include snippets/assign.html target=layout.lightbox source0=page.lightbox -%}
 {%- assign _lightbox = __return -%}
 
-<!-- 全宽度 -->
+{% comment %} 设置页面是否未全画幅 {% endcomment %}
 {%- include snippets/assign.html target=site.data.variables.default.page.full_width source0=layout.full_width source1=page.full_width -%}
 {%- assign _full_width = __return -%}
 
-<!-- 评论功能 -->
 {%- include snippets/assign.html target=site.data.variables.default.page.comment source0=layout.comment source1=page.comment -%}
 {%- assign _comment = __return -%}
 
-<!-- 文章摘要(默认前200字) -->
 {%- assign _article_header_excerpt_truncate = include.excerpt_truncate | default: 200 -%}
 
-<!-- 侧边栏 -->
+{% comment %} 如果页面有侧边栏导航栏，添加相应的布局类 {% endcomment %}
 {%- if page.sidebar -%}
   <div class="layout--page layout--page--sidebar clearfix js-page-root">
     <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
@@ -43,146 +40,147 @@ layout: base
         <div class="page__sidebar d-print-none">
           {%- include sidebar/toc.html -%}
         </div>
-<!-- 页面布局 & js入口 -->
 {%- else -%}
   <div class="layout--page js-page-root">
 {%- endif -%}
 
-    {%- assign _page_main_class = 'page__main js-page-main' -%}
+{%- assign _page_main_class = 'page__main js-page-main' -%}
 
-    {%- if _page_mode == 'immersive' -%}
-      {%- assign _page_main_class = _page_main_class | append: ' page__main--immersive' -%}
-    {%- endif -%}
+{% comment %} 根据页面模式添加相应的CSS类 {% endcomment %}
+{%- if _page_mode == 'immersive' -%}
+  {%- assign _page_main_class = _page_main_class | append: ' page__main--immersive' -%}
+{%- endif -%}
 
-    {%- unless page.sidebar -%}
-      {%- assign _page_main_class = _page_main_class | append: ' page__viewport' -%}
-    {%- endunless -%}
+{%- unless page.sidebar -%}
+  {%- assign _page_main_class = _page_main_class | append: ' page__viewport' -%}
+{%- endunless -%}
 
-    {%- if _footer == false -%}
-      {%- assign _page_main_class = _page_main_class | append: ' hide-footer' -%}
-    {%- endif -%}
+{%- if _footer == false -%}
+  {%- assign _page_main_class = _page_main_class | append: ' hide-footer' -%}
+{%- endif -%}
 
-    {%- if page.aside -%}
-      {%- assign _page_main_class = _page_main_class | append: ' has-aside' -%}
-    {%- elsif _full_width -%}
-      {%- assign _page_main_class = _page_main_class | append: ' full-width' -%}
-    {%- endif -%}
+{%- if page.aside -%}
+  {%- assign _page_main_class = _page_main_class | append: ' has-aside' -%}
+{%- elsif _full_width -%}
+  {%- assign _page_main_class = _page_main_class | append: ' full-width' -%}
+{%- endif -%}
 
-    <div class="{{ _page_main_class }} cell cell--auto">
-      <div class="page__main-inner">
-        <!-- 显示头部 -->
-        {%- if _header != false -%}
-          <div class="page__header d-print-none">
-            {%- assign _header_theme = page.header.theme | default: layout.header.theme -%}
-            {%- if _header_theme == 'dark'-%}
-              {%- include header.html theme='dark' background=page.header.background -%}
-            {%- elsif _header_theme == 'light' -%}
-              {%- include header.html theme='light' background=page.header.background -%}
-            {%- else -%}
-              {%- include header.html -%}
-            {%- endif -%}
-          </div>
+{% comment %} 页面主要内容区域 {% endcomment %}
+<div class="{{ _page_main_class }} cell cell--auto">
+  <div class="page__main-inner">
+    {%- if _header != false -%}
+      <div class="page__header d-print-none">
+        {%- assign _header_theme = page.header.theme | default: layout.header.theme -%}
+        {%- if _header_theme == 'dark'-%}
+          {%- include header.html theme='dark' background=page.header.background -%}
+        {%- elsif _header_theme == 'light' -%}
+          {%- include header.html theme='light' background=page.header.background -%}
+        {%- else -%}
+          {%- include header.html -%}
         {%- endif -%}
-
-        <!-- 页面内容区域 -->
-        <div class="page__content">
-          <!--标题模式-->
-          {%- if _article_header_type == 'overlay' or _article_header_type == 'cover' -%}
-            {%- if _article_header_type == 'overlay' -%}
-              <!-- Overlay Header -->
-              <div class="article__header--overlay">
-                <!-- additional overlay code -->
-              </div>
-            {%- elsif _article_header_type == 'cover' -%}
-              <!-- Cover Header -->
-              <div class="article__header--cover">
-                <!-- additional cover code -->
-              </div>
-            {%- endif -%}
-          {%- endif -%}
-          
-          {%- if _full_width == false -%}
-            <div class="main">
-          {%- endif -%}
-
-              <div class="grid grid--reverse">
-                <div class="col-aside d-print-none js-col-aside">
-                {%- if page.aside -%}
-                  <aside class="page__aside js-page-aside">
-                    {%- include aside/toc.html -%}
-                  </aside>
-                {%- endif -%}
-                </div>
-
-                <div class="col-main cell cell--auto">
-                  {%- include main/top/custom.html -%}
-
-                  {%- if _page_type == 'article' -%}
-                    <article itemscope itemtype="http://schema.org/Article">
-                  {%- elsif _page_type == 'webpage' -%}
-                    <article itemscope itemtype="http://schema.org/WebPage">
-                  {%- else -%}
-                    <article>
-                  {%- endif -%}
-
-                  {%- if _article_header_type == 'overlay' or page.article_header == false -%}
-                    {%- include article-header.html article=page html=false -%}
-                    {%- include article-info.html article=page html=false -%}
-                  {%- else -%}
-                    {%- include article-header.html article=page -%}
-                    {%- include article-info.html article=page -%}
-                  {%- endif -%}
-
-                  <div class="js-article-content">{{ content }}</div>
-                
-                  <!-- 评论和底部区域 -->
-                  {%- if _comment != false -%}
-                    <section class="page__comments d-print-none">{%- include comments.html -%}</section>
-                  {%- endif -%}
-                  </article>
-                  {%- include main/bottom/custom.html -%}
-                </div>
-              </div>
-
-          {%- if _full_width == false -%}
-            </div> <!-- Closing tag for the .main if not full-width -->
-          {%- endif -%}
-        </div> <!-- Closing tag for page__content -->
-
-        {%- if _footer != false -%}
-          <div class="page__footer d-print-none">{%- include footer.html -%}</div>
-        {%- endif -%}
-      </div> <!-- Closing tag for page__main-inner -->
-    </div> <!-- Closing tag for page__main js-page-main cell cell--auto -->
-
-    {%- if page.sidebar -%}
-      </div> <!-- Closing tag for grid -->
+      </div>
     {%- endif -%}
 
-    <script>
-      {%- include scripts/lib/scroll-to.js -%}
-      {%- include scripts/lib/affix.js -%}
-      {%- include scripts/lib/toc.js -%}
-
-      {%- if _lightbox == true -%}
-        {%- include scripts/lib/gallery.js -%}
-        {%- include scripts/components/lightbox.js -%}
+    <div class="page__content">
+      {% comment %} 根据文章头部类型渲染不同的头部样式 {% endcomment %}
+      {%- if _article_header_type == 'overlay' or _article_header_type == 'cover' -%}
+        {%- if _article_header_type == 'overlay' -%}
+          <div class="article__header--overlay"></div>
+        {%- elsif _article_header_type == 'cover' -%}
+          <div class="article__header--cover"></div>
+        {%- endif -%}
       {%- endif -%}
       
-      {%- include scripts/page.js -%}
-    </script>
+      {%- if _full_width == false -%}
+        <div class="main">
+      {%- endif -%}
 
-    {%- if page.sidebar -%}
-      <script>{%- include scripts/components/sidebar.js -%}</script>
+          <div class="grid grid--reverse">
+            <div class="col-aside d-print-none js-col-aside">
+              {%- if page.aside -%}
+                <aside class="page__aside js-page-aside">
+                  {%- include aside/toc.html -%}
+                </aside>
+              {%- endif -%}
+            </div>
+
+            <div class="col-main cell cell--auto">
+              {%- include main/top/custom.html -%}
+
+              {% comment %} 根据页面类型设置不同的 schema.org 微数据 {% endcomment %}
+              {%- if _page_type == 'article' -%}
+                <article itemscope itemtype="http://schema.org/Article">
+              {%- elsif _page_type == 'webpage' -%}
+                <article itemscope itemtype="http://schema.org/WebPage">
+              {%- else -%}
+                <article>
+              {%- endif -%}
+
+              {%- if _article_header_type == 'overlay' or page.article_header == false -%}
+                {%- include article-header.html article=page html=false -%}
+                {%- include article-info.html article=page html=false -%}
+              {%- else -%}
+                {%- include article-header.html article=page -%}
+                {%- include article-info.html article=page -%}
+              {%- endif -%}
+
+              {% comment %} 文章内容区域 {% endcomment %}
+              <div class="js-article-content">{{ content }}</div>
+            
+              {%- if _comment != false -%}
+                <section class="page__comments d-print-none">{%- include comments.html -%}</section>
+              {%- endif -%}
+              </article> {%- comment -%} 闭合 article 标签 {%- endcomment-%}
+
+              {%- include main/bottom/custom.html -%}
+            </div>
+            
+            {%- include scroll-to-top.html -%}
+          </div>
+
+      {%- if _full_width == false -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if _footer != false -%}
+      <div class="page__footer d-print-none">{%- include footer.html -%}</div>
     {%- endif -%}
+  </div>
+</div>
 
-    {%- if page.aside -%}
-      <script>
-        {%- if page.aside.toc -%}{%- include scripts/aside/toc.js -%}{%- endif -%}
-        {%- include scripts/aside/affix.js -%}
-      </script>
+{%- if page.sidebar -%}
+      </div> {%- comment -%} 闭合 grid page__grid 标签 {%- endcomment -%}
+    </div> {%- comment -%} 闭合 page__viewport 标签 {%- endcomment -%}
+{%- endif -%}
+</div> {%- comment -%} 闭合 layout--page 标签 {%- endcomment-%}
+
+<script>
+  {%- include scripts/lib/scroll-to.js -%}
+  {%- include scripts/lib/affix.js -%}
+  {%- include scripts/lib/toc.js -%}
+
+  {%- if _lightbox == true -%}
+    {%- include scripts/lib/gallery.js -%}
+    {%- include scripts/components/lightbox.js -%}
+  {%- endif -%}
+  
+  {%- include scripts/page.js -%}
+</script>
+
+{%- if page.sidebar -%}
+  <script>{%- include scripts/components/sidebar.js -%}</script>
+{%- endif -%}
+
+{%- if page.aside -%}
+  <script>
+    {%- if page.aside.toc -%}
+      {%- include scripts/aside/toc.js -%}
     {%- endif -%}
+    
+    {%- include scripts/aside/affix.js -%}
+  </script>
+{%- endif -%}
 
-    <!-- Markdown 内容增强功能和页面浏览量统计 -->
-    {%- include pageview.html -%}
-</div> <!-- Closing tag for layout--page or layout--page--sidebar -->
+{%- include markdown-enhancements.html -%}
+{%- include pageview.html -%}

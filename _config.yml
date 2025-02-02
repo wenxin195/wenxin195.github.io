@@ -104,7 +104,7 @@ Feature: true
 
 ## => Sources
 ##############################
-sources: bootcdn # bootcdn (default), unpkg
+sources: jsdelivr
 
 
 ## => Sharing

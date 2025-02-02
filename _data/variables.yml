@@ -43,7 +43,7 @@ default:
 
 sources:
   jsdelivr:
-    font_awesome: "https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+    font_awesome: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"
     jquery: "https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
     leancloud_js_sdk: "https://cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av.min.js"
     chart: "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"
@@ -52,4 +52,4 @@ sources:
       css: "https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css"
     valine: "https://cdn.jsdelivr.net/npm/valine@1.5.3/dist/Valine.min.js"
     mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.7/tex-mml-svg.min.js" # 除了用mathjax，还可以用katex
-    mermaid: import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/+esm'
+    mermaid: "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/chunks/mermaid.esm.min/architecture-I3QFYML2-BNJ4OOAP.mjs"

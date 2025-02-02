@@ -27,6 +27,7 @@ _site/
 _drifts/
 .jekyll-metadata
 .jekyll-cache/
+_includes/markdown-enhancements/katex.html
 
 .editorconfig
 .eslintrc

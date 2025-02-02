@@ -14,7 +14,7 @@ default:
   chart: false
   toc:
     selectors: "h1,h2,h3"
-  sources: cdnjs
+  sources: jsdelivr
 
   page:
     mode: normal
@@ -42,36 +42,14 @@ default:
     search: default # algolia or lunr
 
 sources:
-  bootcdn:
-    font_awesome: "https://cdn.bootcdn.net/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    jquery: "https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"
-    leancloud_js_sdk: "https://cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av.min.js" # bootcdn not available
-    chart: "https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.1/chart.min.js"
-    gitalk:
-      js: "https://cdn.bootcss.com/gitalk/1.8.0/gitalk.min.js"
-      css: "https://cdn.bootcss.com/gitalk/1.8.0/gitalk.min.css"
-    valine: "https://unpkg.com/valine/dist/Valine.min.js" # bootcdn not available
-    mathjax: "https://cdn.bootcdn.net/ajax/libs/mathjax/4.0.0-beta.7/tex-mml-svg.min.js"  # 除了用mathjax，还可以用katex
-    mermaid: "https://cdn.bootcdn.net/ajax/libs/mermaid/11.4.1/chunks/mermaid.esm.min/architecture-I3QFYML2-BNJ4OOAP.mjs"
-  unpkg:
-    font_awesome: "https://use.fontawesome.com/releases/v5.15.1/css/all.css"
-    jquery: "https://unpkg.com/jquery@3.7.1/dist/jquery.min.js"
+  jsdelivr:
+    font_awesome: "https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+    jquery: "https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
     leancloud_js_sdk: "https://cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av.min.js"
-    chart: "https://unpkg.com/chart.js@4.4.1/dist/Chart.min.js"
+    chart: "https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"
     gitalk:
-      js: "https://unpkg.com/gitalk/dist/gitalk.min.js"
-      css: "https://unpkg.com/gitalk/dist/gitalk.css"
-    valine: "https//unpkg.com/valine/dist/Valine.min.js"
-    mathjax: "https://www.unpkg.com/browse/mathjax@3.2.2/es5/tex-mml-svg.js"
-    mermaid: "https://unpkg.com/mermaid@8.0.0-rc.8/dist/mermaid.min.js"
-  cdnjs:
-    font_awesome: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    jquery: "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-    leancloud_js_sdk: "https://cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av.min.js"
-    chart: "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
-    gitalk:
-      js: "https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"
-      css: "https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css"
-    valine: "https://cdnjs.cloudflare.com/ajax/libs/valine/1.5.3/Valine.min.js"
-    mathjax: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.0.0-beta.7/tex-mml-svg.min.js"
-    mermaid: "https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.1/chunks/mermaid.esm.min/architecture-I3QFYML2-BNJ4OOAP.mjs"
+      js: "https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js"
+      css: "https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css"
+    valine: "https://cdn.jsdelivr.net/npm/valine@1.5.3/dist/Valine.min.js"
+    mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.7/tex-mml-svg.min.js" # 除了用mathjax，还可以用katex
+    mermaid: import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/+esm'

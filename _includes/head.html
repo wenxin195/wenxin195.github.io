@@ -2,23 +2,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-{%- include snippets/get-article-title.html article=page -%}
-<title>
-  {%- if __return -%}
-    {{ __return }} - {{ site.title }}
-  {%- else -%}
-    {{ site.title }}
-  {%- endif -%}
-</title>
-
-{% comment %} 用于 SEO 的页面描述，显示该页面的摘要信息(剔除html标签和换行符并截断至160字) {% endcomment %}
-{%- if page.excerpt -%}
-  {{ _result = page.excerpt | strip_html | strip_newlines | strip | truncate: 160 }}
-{%- else -%}
-  {{ _result = site.description }}
-{%- endif -%}
-<meta name="description" content={{ _result }} />
-<link rel="canonical" href="{%- include snippets/page-url.html -%}" />
+{% comment %}
+    自动生成页面的SEO元数据，填充标题、描述、Open Graph等
+  {% endcomment %}
+{% seo %}
 
 {%- assign _paths_rss = site.paths.rss | default: site.data.variables.default.paths.rss -%}
 {%- include snippets/get-nav-url.html path=_paths_rss -%}

@@ -32,15 +32,13 @@ article_header:
 
       <div class="hero__content">
         <div class="mb-5">
-          {%- comment -%} 显示section标题 {%- endcomment -%}
           <h3>{{ _section.title }}</h3>
 
-          {%- comment -%} 如果有摘要则显示摘要 {%- endcomment -%}
           {% if _section.excerpt %}
             <p>{{ _section.excerpt }}</p>
           {% endif %}
 
-          {%- comment -%} 如果有操作按钮则显示按钮列表 {%- endcomment -%}
+          {%- comment -%} 操作按钮 {%- endcomment -%}
           {% if _section.actions %}
             <ul class="menu">
               {% for _action in _section.actions %}
@@ -59,29 +57,42 @@ article_header:
 
         {%- comment -%} 如果有子内容则显示网格布局 {%- endcomment -%}
         {% if _section.children %}
+          {%- assign _size = _section.children | size  -%}
+
           <div class="grid--container">
             <div class="grid grid--p-3">
               {% for child in _section.children %}
                 {%- comment -%} 根据子内容数量动态设置网格列宽 {%- endcomment -%}
-                <div class="cell cell--12 cell--md-{{ 12 | divided_by: [2, _section.children.size | default: 2] | last }} cell--lg-{{ 12 | divided_by: [4, _section.children.size | default: 4] | last }}">
+                {%- if _size >= 2 -%}
+                  {%- assign _cell_md_col = 6 -%}
+                {%- else -%}
+                  {%- assign _cell_md_col = 12 | divided_by: _size -%}
+                {%- endif -%}
+
+                {%- if _size >= 4 -%}
+                  {%- assign _cell_lg_col = 3 -%}
+                {%- else -%}
+                  {%- assign _cell_lg_col = 12 | divided_by: _size -%}
+                {%- endif -%}
+                
+                <div class="cell cell--12 cell--md-{{ _cell_md_col }} cell--lg-{{ _cell_lg_col }} ">
                   <div class="mb-5">
-                    {%- comment -%} 显示子内容标题 {%- endcomment -%}
                     <h4>{{ child.title }}</h4>
 
-                    {%- comment -%} 如果有子内容摘要则显示 {%- endcomment -%}
                     {% if child.excerpt %}
                       <p>{{ child.excerpt }}</p>
                     {% endif %}
 
-                    {%- comment -%} 如果有子内容操作按钮则显示 {%- endcomment -%}
+                    {%- comment -%} 子内容操作按钮 {%- endcomment -%}
                     {% if child.actions %}
                       <ul class="menu">
                         {% for _action in child.actions %}
                           {%- include snippets/get-nav-url.html path=_action.url -%}
                           {%- assign _url = __return -%}
+                          {%- assign _type = _action.type | default: 'outline-info' -%}
                           
                           <li>
-                            <a class="button button--{{ _action.type | default: 'outline-info' }} button--pill button--lg" href="{{ _url }}">
+                            <a class="button button--{{ _type }} button--pill button--lg" href="{{ _url }}">
                               {{ _action.text }}
                             </a>
                           </li>
@@ -90,19 +101,40 @@ article_header:
                     {% endif %}
                   </div>
 
-                  {%- comment -%} 如果有子内容图片则显示 {%- endcomment -%}
+                  {%- comment -%} 子内容图片 {%- endcomment -%}
                   {% if child.image and child.image.src %}
-                    <div class="{{ 'mb-5' if child.image.is_row }}">
-                      {%- include snippets/get-nav-url.html path=child.image.src -%}
-                      <div class="mx-auto" style="{{ child.image.style }}">
-                        <a href="{{ __return | default: '#' }}">
-                          <img src="{{ __return }}" alt="{{ child.title }}"/>
+                    {%- if child.image.url -%}
+                      {%- include snippets/get-nav-url.html path=child.image.url -%}
+                      {%- assign _item_image_url = __return -%}
+                    {%- else -%}
+                      {%- assign _item_image_url = nil -%}
+                    {%- endif -%}
+
+                    {%- include snippets/get-nav-url.html path=child.image.src -%}
+                    {%- assign _item_image_src = __return -%}
+
+                    {%- if child.image.is_row -%}
+                      <div class="mb-5">
+                    {%- endif -%}
+                      
+                    <div class="mx-auto" style="{{ child.image.style }}">
+                      {%- if _item_image_url -%}
+                        <a href="{{ _item_image_url }}">
+                      {%- endif -%}
+
+                      <img src="{{ _item_image_src }}"/>
+
+                      {%- if _item_image_url -%}
                         </a>
-                      </div>
+                      {%- endif -%}
                     </div>
-                  {% endif %}
+
+                    {%- if child.image.is_row -%}
+                      </div> {%- comment -%} 闭合 mb-5 标签 {%- endcomment -%}
+                    {%- endif -%}
+                  {%- endif -%}
                   
-                  {%- comment -%} 如果有子内容正文则显示 {%- endcomment -%}
+                  {%- comment -%} 子内容正文 {%- endcomment -%}
                   {% if child.content %}
                     <p>{{ child.content }}</p>
                   {% endif %}
@@ -111,8 +143,55 @@ article_header:
             </div>
           </div>
         {% endif %}
-      </div>
-      </section> {%- comment -%} 闭合 section 标签 {%- endcomment -%}
+
+      {%- if _section.image.full_width == true -%}
+        </div> {% comment %} 闭合 hero__content 标签 {% endcomment %}
+      {%- endif -%}
+
+      {%- if _section.image and _section.image.src -%}
+        {%- if _section.image.url -%}
+          {%- include snippets/get-nav-url.html path=_section.image.url -%}
+          {%- assign _section_image_url = __return -%}
+        {%- else -%}
+          {%- assign _section_image_url = nil -%}
+        {%- endif -%}
+
+        {%- include snippets/get-nav-url.html path=_section.image.src -%}
+        {%- assign _section_image_src = __return -%}
+
+        {%- if _section.image.is_row -%}
+          <div class="mb-5">
+        {%- endif -%}
+
+        <div class="mx-auto" style="{{ _section.image.style }}">
+          {%- if _section_image_url -%}
+            <a href="{{ _section_image_url }}">
+          {%- endif -%}
+          
+          {%- if _section.image.full_width == true -%}
+            <img class="hero__cover hero__cover--full-width" src="{{ _section_image_src }}"/>
+          {%- else -%}
+            <img class="hero__cover" src="{{ _section_image_src }}"/>
+          {%- endif -%}
+          
+          {%- if _section_image_url -%}
+            </a>
+          {%- endif -%}
+        </div>
+
+        {%- if _section.image.is_row -%}
+          </div> {% comment %} 闭合 mb-5 标签 {% endcomment %}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if _section.image.full_width != true -%}
+        </div> {% comment %} 闭合 hero__content 标签 {% endcomment %}
+      {%- endif -%}
+
+      {%- if _section.content-%}
+        <p>{{ _section.content }}</p>
+      {%- endif -%}
+      </section> {%- comment -%} 闭合 hero hero--center 标签 {%- endcomment -%}
     {% endfor %}
   </div>
 </div>

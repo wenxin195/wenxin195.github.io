@@ -1,6 +1,6 @@
 <!-- Calculate the post's reading time, and display the word count in tooltip -->
 
-<!-- strip_html是删除所有html标签的函数 -->
+{% comment %} strip_html是删除所有html标签的函数 {% endcomment %}
 {% assign words = include.content | strip_html | strip_newlines | split: "" | size %}
 
 {%- include snippets/get-locale-string.html key='PROMPT' -%}
@@ -12,13 +12,13 @@
 {%- include snippets/get-locale-string.html key='WORDS' -%}
 {%- assign _words = __return -%}
 
-<!-- words per minute -->
+{% comment %} words per minute {% endcomment %}
 {%- assign wpm = 500 -%}
 {%- assign min_time = 1 -%}
 
 {%- assign read_time = words | divided_by: wpm -%}
 
-<!-- 等价于 if read_time <= 0 -->
+{% comment %} 等价于 if read_time <= 0 {% endcomment %}
 {%- unless read_time > 0 -%}
   {%- assign read_time = min_time -%}
 {%- endunless -%}
@@ -29,7 +29,6 @@
 
 {%- if include.layout == "article" -%}
   {%- if include.show_label -%}
-    <!-- return element -->
     <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ words }} {{ _words  }}">
       {{ _prompt }}<em>{{- read_time -}}</em>{{ _unit }}
       
@@ -38,6 +37,6 @@
         {%- unless _prompt_words > 1 -%}{{ ' ' }}{%- endunless -%}
         {{ read_prompt }}
       {%- endif -%}
-  </span>
+    </span>
   {%- endif -%}
 {%- endif -%}

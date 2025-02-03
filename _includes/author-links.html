@@ -7,19 +7,11 @@
       <link itemprop="url" href="{{ _author.url }}">
     {%- endif -%}
 
-    {%- if _author.type == 'organization' -%}
-      {%- include snippets/get-locale-string.html key='EMAIL_US' -%}
-      {%- assign _locale_string_email = __return -%}
+    {%- include snippets/get-locale-string.html key='EMAIL_ME' -%}
+    {%- assign _locale_string_email = __return -%}
 
-      {%- include snippets/get-locale-string.html key='FOLLOW_US' -%}
-      {%- assign _locale_string_follow = __return -%}
-    {%- else -%}
-      {%- include snippets/get-locale-string.html key='EMAIL_ME' -%}
-      {%- assign _locale_string_email = __return -%}
-
-      {%- include snippets/get-locale-string.html key='FOLLOW_ME' -%}
-      {%- assign _locale_string_follow = __return -%}
-    {%- endif -%}
+    {%- include snippets/get-locale-string.html key='FOLLOW_ME' -%}
+    {%- assign _locale_string_follow = __return -%}
 
     {%- include snippets/get-locale-string.html key='EMAIL_ME' -%}
     {%- if _author.email -%}

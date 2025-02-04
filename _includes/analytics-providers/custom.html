@@ -1,3 +1,16 @@
 <!-- start custom analytics snippet -->
 
+{%- if site.analytics.baidu.base_id -%}
+  {% comment %} Global site tag (gtag.js) - Baidu Analytics {% endcomment %}
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement('script');
+      hm.src = 'https://hm.baidu.com/hm.js?{{ site.analytics.baidu.base_id }}';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+{%- endif -%}
+
 <!-- end custom analytics snippet -->

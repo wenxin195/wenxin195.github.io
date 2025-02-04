@@ -174,12 +174,15 @@ search:
 ## => Analytics
 ##############################
 analytics:
-  provider: google # false (default), "google", "custom"
+  provider: custom # false (default), "google", "custom"
 
   ## Google Analytics
   google:
     tracking_id : G-8KCLGX7719 # Google Analytics id for the site
     anonymize_ip: false # Anonymize IP tracking for Analytics
+
+  baidu:
+    base_id: 883a4ce3e6ad9013680a082966735ed7
 
 
 ## => Build

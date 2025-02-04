@@ -1,0 +1,105 @@
+/* post 的“打赏”功能 */
+/* html 文件位于 _include/article/top/custom.thml */
+/* js 文件位于 _include/scripts/appreciate.js */
+
+/* 打赏二维码 */
+.appreciate-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 两列布局 */
+  gap: 30px; /* 两列之间的间距 */
+  position: relative;
+
+  background-size: 400% 400%;  /* 背景扩展 */
+  animation: gradientBackground 5s ease infinite; /* 动态渐变背景 */
+
+  &:hover .appreciate-qrcode {
+    display: block;
+  }
+}
+
+.appreciate-container {
+  position: relative;
+
+  /* flex布局 */
+  display: flex;
+  flex-wrap: wrap; /* 允许换行 */
+  justify-content: space-between; /* 保证二维码在行内分配空间 */
+  gap: 20px; /* 让二维码之间有间隙 */
+
+  /* grid布局 */
+  // display: grid;
+  // grid-template-columns: repeat(2, 1fr); /* 两列布局 */
+  // gap: 30px; /* 两列之间的间距 */
+
+  &:hover .appreciate-qrcode {
+    display: block;
+  }
+}
+
+.appreciate-icon {
+  display: inline-block;
+  position: relative;
+  width: 48%; /* flex的配置 */
+  // width: 100%; /* grid的配置 */
+}
+
+.appreciate-qrcode {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 68px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  z-index: 100;
+  text-align: center;
+
+  p {
+    text-align: right;
+    margin: -3px;
+  }
+}
+
+.appreciate-item {
+  display: flex;
+  justify-content: space-between;
+
+  figure {
+    margin: 0; /* 移除figure的默认间距 */
+  }
+
+  img {
+    height: 150px;
+    width: auto;
+  }
+}
+
+/* style.css */
+.appreciate-icon img {
+  width: 40px;   /* 设置图标大小 */
+  height: 40px;  /* 设置图标大小 */
+  filter: drop-shadow(6px 6px 15px rgba(0, 0, 0, 0.3)) drop-shadow(-6px -6px 15px rgba(0, 0, 0, 0.1)); /* 更复杂的阴影 */
+  transition: transform 0.4s ease, filter 0.4s ease, box-shadow 0.4s ease; /* 动画过渡 */
+  border-radius: 50%; /* 圆形图标 */
+}
+
+/* 鼠标悬停时，图标放大并旋转，增强立体感 */
+.appreciate-icon:hover img {
+  transform: scale(1.1) rotate(5deg); /* 放大并微旋转 */
+  filter: drop-shadow(10px 10px 30px rgba(0, 0, 0, 0.5)) drop-shadow(-10px -10px 30px rgba(0, 0, 0, 0.3)); /* 加深阴影 */
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3), 0px 0px 40px rgba(0, 0, 0, 0.2); /* 添加外部光晕 */
+  animation: pulse 1s ease-out infinite; /* 动态脉冲效果 */
+}
+
+/* 脉冲动画效果 */
+@keyframes pulse {
+  0% { transform: scale(1.1) rotate(5deg); }
+  50% { transform: scale(1.15) rotate(10deg); }
+  100% { transform: scale(1.1) rotate(5deg); }
+}
+
+@keyframes gradientBackground {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

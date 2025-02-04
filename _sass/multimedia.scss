@@ -1,0 +1,25 @@
+/* post 的“PDF下载”和“观看视频”功能 */
+/* html 文件位于 _include/article/top/custom.thml */
+
+.multimedia {
+  display: flex;
+  justify-content: flex-end;
+
+  img {
+    width: 32px;
+    margin-right: 5px;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none; // 去除链接的下划线
+  }
+}
+
+.multimedia .pdf,
+.multimedia .video {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}

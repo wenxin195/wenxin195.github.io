@@ -1,17 +1,11 @@
 /* post 的“分享到”功能 */
-/* html 文件位于 _include/sharing-providers/custom.html */
+/* html 文件位于 _include/article/top/custom.thml */
 /* js 文件位于 _include/scripts/wechat-share.js */
 
-.post-options {
+.share-section {
   display: flex;
-  align-items: flex-start;
-  margin-top: 10px;
-
-  .share-section {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-  }
+  align-items: center;
+  margin-right: 20px;
 }
 
 .share-buttons {
@@ -27,28 +21,12 @@
     img {
       width: 32px;
       height: 32px;
+      transition: transform 0.3s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
     }
-  }
-}
-
-.multimedia {
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-
-  img {
-    width: 32px;
-    margin-right: 5px;
-  }
-
-  a {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none; // 去除链接的下划线
-  }
-
-  &:hover span {
-    color: #ff6600;
   }
 }
 
@@ -69,8 +47,8 @@
 .wechat-qrcode {
   display: none; // 默认隐藏二维码
   position: absolute; // 绝对定位
-  top: 50; // 控制二维码相对于图标的垂直位置
-  left: -40px; // 控制二维码相对于图标的水平位置
+  top: 50px; // 控制二维码相对于图标的垂直位置
+  right: -70px; // 控制二维码相对于图标的水平位置
   padding: 10px;
   border: 1px solid #ddd;
   background: #fff;

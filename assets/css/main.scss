@@ -4,7 +4,7 @@
 
 @import
 
-    "skins/default",
+    "skins/{{ site.text_skin | default: site.data.variables.default.text_skin }}",
 
     "common/variables",
     "common/function",

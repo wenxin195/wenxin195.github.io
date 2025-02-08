@@ -312,32 +312,231 @@ COUNTROWS (
 ) + 1
 ```
 
-与之类似的还有 EARLIEST 函数。
+与之类似的还有<a href="https://learn.microsoft.com/en-us/dax/earliest-function-dax" target="_blank"> EARLIEST </a>函数。
 
-## FILTER 函数
+## FILTER 系列函数
 
-## KEEPFILTERS 函数
+### FILTER 函数
+
+FILTER 函数用于过滤表格或列，生成满足特定条件的子集。其语法如下：
+
+```text
+FILTER(<table>,<filter>)
+```
+
+其中参数`table`表示要过滤的表，`table`也可以是表表达式，`filter`是 Boolean 表达式，返回值为一个满足条件的子表格。
+
+> FILTER 函数不能单独使用，而是作为嵌套函数，嵌入到需要表作为参数的其他函数中。
+{: .prompt-warning}
+
+下面的数据表计算了除“美式”之外的咖啡销量：
+
+```text
+除美式之外的销量 =
+SUMX ( FILTER ( '销售表', RELATED ( '商品表'[名称] ) <> "美式" ), '销售表'[数量] )
+```
+
+<div style="text-align: center;">
+   <div style="display: flex; justify-content: center;">
+     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
+       <img src="/assets/images/picture/DAX/filter_function.png" alt="filter_function" style="width: 500px;">
+     </figure>
+   </div>
+   <p style="margin-top: 0;">图 7: FILTER 函数示例结果</p>
+</div>
+
+### KEEPFILTERS 函数
+
+值得一提的是，在 DAX 中要尽量**避免使用 FILTER 函数作为过滤器参数**！例如要计算“卡布奇诺”的销售成本，可以使用下面的 DAX 表达式进行计算：
+
+```text
+卡布奇诺的销售成本 =
+CALCULATE ( [销售成本], FILTER ( '商品表', '商品表'[名称] = "卡布奇诺" ) )
+```
+
+CALCULATE 函数接受了 FILTER 函数返回的表表达式，该函数为商品表的每一行计算它的 Filters 表达式。但是通过使用 Boolean 表达式可以更有效地实现这个需求：
+
+```text
+卡布奇诺的销售成本 = 
+CALCULATE ( [销售成本], KEEPFILTERS ('商品表'[名称] = "卡布奇诺" ) )
+```
+
+KEEPFILTERS 函数可以保留应用于`名称`列的任何现有 Filters，而不会被覆盖。
+
+尽可能将筛选参数作为 Boolean 表达式传递。这是因为导入模型表是内存中的列存储，它们经过明确优化，可以以这种方式高效过滤列。但是如果遇到以下这几种是则必须使用 FILTER 函数：
+
+1. 无法引用来自多个表的列
+2. 无法引用度量值
+3. 无法使用嵌套 CALCULATE 函数
+4. 无法使用扫描或返回表的函数
+
+### REMOVEFILTERS 函数
+
+REMOVEFILTERS 函数用于在计算过程中移除特定列或表的过滤器。它可以取消当前 Context 中的某些 Filters，使得度量值或计算结果在没有这些 Filters 的情况下进行计算。
+
+REMOVEFILTERS 函数的语法如下：
+
+```text
+REMOVEFILTERS([<table> | <column>[, <column>[, <column>[,…]]]])
+```
+
+其中参数`table`是想要清除 Filters 的表，`column`是想要消除 Filters 的列。REMOVEFILTERS 函数不会返回任何值。
 
 ## LOOKUPVALUE 函数
 
-## MATCHBY 函数
+LOOKUPVALUE 函数可以根据某个条件返回一个表格中的指定列的值，与 Excel 中的 VLOOKUP 函数或者 HLOOKUP 函数类似。LOOKUPVALUE 函数也可以在不同表格之间进行查找和匹配。
 
-## MOVINGAVERAGE 函数
+它的语法如下：
 
-## OFFSET 函数
+```text
+LOOKUPVALUE (
+    <result_columnName>,
+    <search_columnName>,
+    <search_value>
+    [, <search2_columnName>, <search2_value>]…
+    [, <alternateResult>]
+)
+```
 
-ORDERBY 函数 和 PARTITIONBY 函数
+其中参数`result_columnName`表示要返回的值的现有列的名称，**它不能是一个表达式**；`search_columnName`是现有列的名称，它可以与 `result_columnName`在同一表中，也可以在相关的表中，同样它也不能是一个表达式；`search_Value`是在`search_columnName`中查找的值，可以指定多个`search_columnName`和`search_value`对；`alternateResult`表示发生错误时的指定返回值，如果未指定，则在查找时没有找到匹配的值时返回空值，在查找列中有多个相同的值是返回`error`。
 
-## RANGE 函数
-
-## RANK 函数
-
-## REMOVEFILTERS 函数
-
-## ROWNUMBER 函数
-
-## RUNNINGSUM 函数
+> 如果结果列的表与搜索列的表之间存在关系，那么在大多数情况下，使用 RELATED 函数而不是 LOOKUPVALUE 会更高效，并且能提供更好的性能。
+{: .prompt-tip}
 
 ## SELECTEDVALUE 函数
 
-## WINDOW 函数
+SELECTEDVALUE 函数用于从当前 Filter context 中获取列的**唯一值**。如果在 Context 中有多个值，它会返回一个默认值(如果指定了的话)，否则会返回空值。
+
+SELECTEDVALUE 函数的语法如下：
+
+```text
+SELECTEDVALUE(<columnName>[, <alternateResult>])
+```
+
+其中参数`columnName`为现有列的名称，不能是表达式；`alternateResult`表示发生错误时的指定返回值，如果未指定，则在查找时没有找到匹配的值时返回空值，在查找列中有多个相同的值是返回`error`。
+
+## 窗口函数
+
+### OFFSET 函数
+
+在 SQL 中，LEAD 函数和 LAG 函数的语法形式如下：
+
+```sql
+LAG(expr [, N[, default]]) OVER ([PARTITION BY ...] [ORDERBY BY ... ASC|DESC ...] [ROWS|RANGE BETWEEN ... AND ...])
+LEAD(expr [, N[, default]]) OVER ([PARTITION BY ...] [ORDERBY BY ... ASC|DESC ...] [ROWS|RANGE BETWEEN ... AND ...])
+```
+
+在 DAX 表达式中，OFFSET 函数配合 PARTITION 函数、ORDER 函数和 MATCHBY 函数，也可以实现 LEAD 函数和 LAG 函数的效果。OFFSET 函数的语法如下：
+
+```text
+OFFSET ( <delta>[, <relation> or <axis>][, <orderBy>][, <blanks>][, <partitionBy>][, <matchBy>][, <reset>] )
+```
+
+其中参数`delta`表示在要从中获取数据的当前行之前(负值)或之后(正值)的行数。
+
+下面解释 DAX 窗口函数中的固定参数：
+
+1. `partitionBy`用于定义如何对`relation`进行分区的列，如果省略则被视为单个分区；
+2. `orderBy`是用来定义每个分区如何排序的表达式；
+3. `matchBy`用作定义如何匹配数据，以及标识当前行的列；
+4. `relation`表示返回输出行的表表达式，如果指定那么`partitionBy`中的所有列则必须全部来自于`relation`或者它的相关表，如果省略那么`orderBy`必须提供并且`partitionBy`的列名和`orderBy`的列名必须相同且来自于同一张表；
+5. `blank`是一个枚举，定义在对`relation`或`axis`排序时如何处理空值；
+6. `axis`表示 visual shape 的 axis，仅在可视化计算中使用，用来替代`relation`；
+7. `reset`指示计算是否重置以及在 visual shape 的列层次结构的哪个级别上重置，仅在可视化计算中使用。
+
+> `relation`参数通常使用 SELECTCOLUMNS 函数提取单列。
+{: .prompt-info}
+
+### RANK 函数
+
+在 SQL 中，RANK 函数的语法形式如下：
+
+```sql
+RANK() OVER ([PARTITION BY ...] [ORDERBY BY ... ASC|DESC ...] [ROWS|RANGE BETWEEN ... AND ...])
+```
+
+在 DAX 表达式中，RANK 函数配合 PARTITION 函数、ORDER 函数和 MATCHBY 函数，也可以实现 RANK 函数的效果。RANK 函数的语法如下：
+
+```text
+RANK ( [<ties>][, <relation> or <axis>][, <orderBy>][, <blanks>][, <partitionBy>][, <matchBy>][, <reset>] )
+```
+
+其中参数`ties`用作定义在两行或多行并列时如何处理排序，可分为“DENSE 模式”或者“SKIP 模式”(默认)。
+
+### ROWNUMBER 函数
+
+在 SQL 中，ROW_NUMBER 函数的语法形式如下：
+
+```sql
+ROW_NUMBER() OVER ([PARTITION BY ...] [ORDERBY BY ... ASC|DESC ...] [ROWS|RANGE BETWEEN ... AND ...])
+```
+
+在 DAX 表达式中，ROWNUMBER 函数配合 PARTITION 函数、ORDER 函数和 MATCHBY 函数，也可以实现 ROWNUMBER 函数的效果。ROWNUMBER 函数的语法如下：
+
+```text
+ROWNUMBER ( [<relation> or <axis>][, <orderBy>][, <blanks>][, <partitionBy>][, <matchBy>][, <reset>] )
+```
+
+其中参数`delta`表示在要从中获取数据的当前行之前(负值)或之后(正值)的行数。
+
+### WINDOW 函数
+
+在 SQL 中，NTILE 函数的语法如下：
+
+```sql
+NTILE(N) OVER ([PARTITION BY ...] [ORDERBY BY ... ASC|DESC ...] [ROWS|RANGE BETWEEN ... AND ...])
+```
+
+在 DAX 表达式中，WINDOW 函数配合 PARTITION 函数、ORDER 函数和 MATCHBY 函数，也可以实现 WINDOW 函数的效果。WINDOW 函数的语法如下：
+
+```text
+WINDOW ( from[, from_type], to[, to_type][, <relation> or <axis>][, <orderBy>][, <blanks>][, <partitionBy>][, <matchBy>][, <reset>] )
+```
+
+其中参数`from`和`to`表示窗口的起始/结束位置；若`from_type`或者`to_type`为`REL`，则表示从当前行向后移动(负值)或向前移动(正值)以获得窗口中的第一行的行数，若`from_type`或者`to_type`为`ABS`，并且`from`是正数，那么它是窗口的开始距离分区的开始的位置。
+
+## 可视化计算函数
+
+> 以下函数仅能使用在<a href="https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-visual-calculations-overview" target="_blank">可视化计算</a>中！
+{: .prompt-danger}
+
+### MOVINGAVERAGE 函数
+
+MOVINGAVERAGE 函数会沿视觉对象计算数据网格的指定轴计算移动平均值，这对于时间序列分析十分有用。其语法如下：
+
+```text
+MOVINGAVERAGE ( <column>, <windowSize>[, <includeCurrent>][, <axis>][, <blanks>][, <reset>] )
+```
+
+其中参数`column`表示为每个元素提供值的列。
+
+下面解释 DAX 可视化计算函数中的固定参数：
+
+1. `windowSize`表示计算中要包括的行数，必须是常量值；
+2. `includeCurrent`指定是否将当前行包含在范围内，默认为`TRUE`；
+3. `axis`用作计算移动平均值的方向；
+4. `blank`是一个枚举，定义在排序时如何处理空值。
+
+### RANGE 函数
+
+RANGE 函数能够返回给定轴内相对于当前行的行间隔，这个间隔要么由当前步骤之前的最后一个`step`行组成，要么由当前步骤之后的第一个`step`行组成。
+
+RANGE 函数的语法如下：
+
+```text
+RANGE ( <step>[, <includeCurrent>][, <axis>][, <blanks>][, <reset>] )
+```
+
+其中参数`step`是在要包含在范围中的当前行之前(负值)或之后(正值)的行数，必须是一个常数。
+
+### RUNNINGSUM 函数
+
+RUNNINGSUM 函数返回沿可视化矩阵的给定轴计算的运行和，也就是说RUNNINGSUM 函数可以计算给定列在所有元素上的总和，直到 axis 的当前元素。
+
+RUNNUNGSUM 函数的语法如下：
+
+```text
+RUNNINGSUM ( <column>[, <axis>][, <blanks>][, <reset>] )
+```
+
+其中参数`column`为每个元素提供值的列。

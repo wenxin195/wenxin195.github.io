@@ -10,14 +10,15 @@ download: false
 videos: false
 refactor: true
 mathjax: false
+mermaid: true
 modify_date: "2025-01-20 00:40:00"
 ---
 
-Power BI 是一款功能强大的商业智能软件，在当下的数据分析领域占据着重要地位。它就像是 Excel 的升级版，不过功能更为全面且强大，已然成为数据处理与分析方面的得力助手。Power BI 由三部分组成：Power Query、Power Pivot 和 Power View。
+Power BI 是一款功能强大的商业智能软件，在当下的数据分析领域占据着重要地位。它就像是 Excel 的升级版，不过功能更为全面且强大，已然成为数据处理与分析方面的得力助手。Power BI 由三部分组成：[Power Query](#power-query)、[Power Pivot](#power-pivot) 和 [Power View](#power-view)。
 
 <!--more-->
 
-Power Query 用来获取文件、文件夹、数据库、网页等数据并进行深度加工处理，然后把这些处理步骤进行保存，后期数据更新时无须再次重复操作。Power Query有可视化的操作界面，同时支持用 **M 语言**进行高级编辑。
+Power Query 用来获取文件、文件夹、数据库、网页等数据并进行深度加工处理，然后把这些处理步骤进行保存，后期数据更新时无须再次重复操作。Power Query 有可视化的操作界面，同时支持用 **M 语言**进行高级编辑。
 
 Power Pivot 可以利用 Power Query 处理好的数据或其他数据建立分析维度，实现模型搭建。Power Pivot 使用 **DAX 语言**进行函数编辑，DAX 具有与 Excel 函数相似的编辑方式。
 
@@ -34,7 +35,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/title.png" alt="title" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/title.png" alt="title" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 1: 将第一行作为标题</p>
@@ -47,11 +48,11 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/data_categories.png" alt="data_categories" style="width: 350px;">
+       <img src="/assets/images/picture/DAX/component/data_categories.png" alt="data_categories" style="width: 350px;">
        <figcaption>(a) 手动修改数据类型</figcaption>
      </figure>
      <figure style="text-align: center; margin-top:121px;">
-       <img src="/assets/images/picture/DAX/data_categories2.png" alt="data_categories2" style="width: 350px;">
+       <img src="/assets/images/picture/DAX/component/data_categories2.png" alt="data_categories2" style="width: 350px;">
        <figcaption>(b) 自动检测数据类型</figcaption>
      </figure>
    </div>
@@ -69,7 +70,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/delete_row.png" alt="delete_row" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/delete_row.png" alt="delete_row" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 3: 删除重复值、空值和 Error 值</p>
@@ -80,7 +81,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/null_values.png" alt="null_values" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/null_values.png" alt="null_values" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 4: 填充缺失值</p>
@@ -91,7 +92,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/alter.png" alt="alter" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/alter.png" alt="alter" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 5: 内容替换</p>
@@ -102,7 +103,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/letter_operation.png" alt="letter_operation" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/letter_operation.png" alt="letter_operation" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 6: 对字段中的英文进行操作</p>
@@ -115,7 +116,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/split_merge.png" alt="split_merge" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/split_merge.png" alt="split_merge" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 7: 对字段进行拆分合并</p>
@@ -126,7 +127,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/extract.png" alt="extract" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/extract.png" alt="extract" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 8: 对字段的值进行提取</p>
@@ -139,7 +140,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/group.png" alt="group" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/group.png" alt="group" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 9: 分组聚合统计</p>
@@ -152,7 +153,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/pivot.png" alt="pivot" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/pivot.png" alt="pivot" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 10: 透视表与逆透视表</p>
@@ -169,7 +170,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/condition_column.png" alt="condition_column" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/condition_column.png" alt="condition_column" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 11: 条件列</p>
@@ -180,7 +181,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/indicator_column.png" alt="indicator_column" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/indicator_column.png" alt="indicator_column" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 12: 索引列</p>
@@ -193,7 +194,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/custom_column.png" alt="custom_column" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/custom_column.png" alt="custom_column" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 13: 自定义列</p>
@@ -206,7 +207,7 @@ Power Query 中的“日期”和“时间”命令可以设置“日期”/“�
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/time.png" alt="time" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/time.png" alt="time" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 14: 日期&时间列</p>
@@ -221,11 +222,11 @@ Power Query 中的“日期”和“时间”命令可以设置“日期”/“�
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-top: 264px;">
-       <img src="/assets/images/picture/DAX/consolidation1.png" alt="consolidation1" style="width: 350px;">
+       <img src="/assets/images/picture/DAX/component/consolidation1.png" alt="consolidation1" style="width: 350px;">
        <figcaption>(a) 合并查询命令</figcaption>
      </figure>
      <figure style="text-align: center; margin-top:0px;">
-       <img src="/assets/images/picture/DAX/consolidation2.png" alt="consolidation2" style="width: 350px;">
+       <img src="/assets/images/picture/DAX/component/consolidation2.png" alt="consolidation2" style="width: 350px;">
        <figcaption>(b) 设置连接方式</figcaption>
      </figure>
    </div>
@@ -237,11 +238,11 @@ Power Query 中的“日期”和“时间”命令可以设置“日期”/“�
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-top: 77px;">
-       <img src="/assets/images/picture/DAX/addition1.png" alt="addition1" style="width: 350px;">
+       <img src="/assets/images/picture/DAX/component/addition1.png" alt="addition1" style="width: 350px;">
        <figcaption>(a) 追加查询命令</figcaption>
      </figure>
      <figure style="text-align: center; margin-top:0px;">
-       <img src="/assets/images/picture/DAX/addition2.png" alt="addition2" style="width: 350px;">
+       <img src="/assets/images/picture/DAX/component/addition2.png" alt="addition2" style="width: 350px;">
        <figcaption>(b) 选择追加数据表</figcaption>
      </figure>
    </div>
@@ -250,7 +251,20 @@ Power Query 中的“日期”和“时间”命令可以设置“日期”/“�
 
 ### 汇总数据集
 
-Power Query 允许批量导入文件夹的数据集，后续只需往文件夹中添加新的文件即可，Power Query 会自动更新数据。但是需要注意的是，该文件夹下的数据集的格式必须保持一致，否则 Power Query 会因为格式混乱而报错。
+Power Query 允许批量导入文件夹的数据集，后续只需往文件夹中添加新的文件即可，Power Query 会自动更新数据。
+
+<pre class="mermaid">
+  flowchart LR
+    A@{ shape: circle, label: 获取数据 }
+    B@{ shape: documents, label: 选择从“文件夹” }
+    C@{ shape: rect, label: 输入目标文件夹路径 }
+    D@{ shape: rounded, label: 下拉“组合”选项 }
+    E@{ shape: rounded, label: 选择“合并并转换数据” }
+    F@{ shape: processes, label: 进行数据 ETL 流程 }
+    A --> B --> C --> D --> E --> F
+</pre>
+
+但是需要注意的是，文件夹下的数据集的格式必须保持一致，否则 Power Query 会因为格式混乱而报错。
 
 ## Power View
 
@@ -277,7 +291,7 @@ Power Pivot 是 Power BI 中的核心组件之一。它是一种数据建模工�
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/data_model1.png" alt="data_model1" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/data_model1.png" alt="data_model1" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 17: 星型模型</p>
@@ -294,7 +308,7 @@ Power Pivot 是 Power BI 中的核心组件之一。它是一种数据建模工�
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/data_model2.png" alt="data_model2" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/data_model2.png" alt="data_model2" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 18: 雪花模型</p>
@@ -309,7 +323,7 @@ Power Pivot 是 Power BI 中的核心组件之一。它是一种数据建模工�
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/data_model3.png" alt="data_model3" style="width: 500px;">
+       <img src="/assets/images/picture/DAX/component/data_model3.png" alt="data_model3" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 19: 星座模型</p>
@@ -382,7 +396,7 @@ Power Pivot 将指标(Indicator)定义成**度量值**(Measures)，也被称作�
 
 上下文(Context)是理解 DAX 的核心概念，它直接影响着数据的计算、呈现以及交互方式。简单来说 Context 就是 DAX 所处的外部环境，它又分为筛选上下文和行上下文。
 
-筛选上下文(Filter context)是指对数据集应用的筛选条件或上下文。它通常由切片器(Slicers)、行/列维度、度量值、以及其他视觉对象(包括 Visual Level Filters、Page Level Filters 和 Report Level Filters)中的选择所决定。简单来说 Filter context 就是对字段进行筛选。
+筛选上下文(Filter context)是指对数据集应用的筛选条件。它通常由切片器、行/列维度、度量值、以及其他视觉对象中的选择所决定。简单来说 Filter context 就是对字段进行筛选。
 
 在 Power BI 中，度量值是最常依赖 Filter context 的元素。当你选择报表中的某个筛选条件或维度时，这些筛选条件会影响度量值的计算，进而改变报表中的结果。
 
@@ -391,7 +405,7 @@ DAX 中的表函数，例如 FILTER 函数、ALL 函数等，都是基于 Filter
 > 所有度量值都可以看作是 Filter context 的函数。
 {: .prompt-danger }
 
-而行上下文(Row context)是指对每一行数据进行计算时产生的 Context。它通常出现在 Calculated Columns 中。在每一行添加计算时，DAX 引擎会自动为每一行提供 Row context。简单来说 Row context 就是对表进行迭代。
+而行上下文(Row context)是指对每一行数据进行计算时产生的 Context。它通常出现在计算列中。在每一行添加计算时，DAX 引擎会自动为每一行提供 Row context。简单来说 Row context 就是对表进行迭代。
 
 DAX 中的迭代函数，例如 SUMX 函数、AVERAGEX 函数等，都是基于 Row context 进行操作的。
 
@@ -400,9 +414,18 @@ DAX 中的迭代函数，例如 SUMX 函数、AVERAGEX 函数等，都是基于 
 
 在某些情况下，Row context 和 Filter context 可能会结合在一起。在 Power BI 中，DAX 的计算是动态的，它们会基于当前的上下文来调整结果。
 
-例如在使用 CALCULATE 函数时，DAX 会在现有的 Filter context 基础上修改或添加筛选条件，进而影响度量值的计算。
+例如在使用 CALCULATE 函数时，DAX 会在现有的 Filter context 基础上修改或添加筛选条件，进而影响度量值的计算。DAX 中的一些函数(如 EARLIER 函数)会在 Row context 和 Filter context 之间进行转换。
 
-DAX 中的一些函数(如 EARLIER 函数)会在 Row context 和 Filter context 之间进行转换。
+### 筛选器
+
+Power BI 中的筛选器(filters)是用来限制报表中显示的数据的机制。它们允许用户专注于数据集的特定部分，无论是通过可视化、页面还是报表，并有助于确保得出的见解与当前 Context 或分析相关。
+
+筛选器分为下面几种类型：
+
+1. 视觉级筛选器(Visual-Level Filters)： 这些筛选器仅适用于报告页面上的单个视觉效果。它们有助于缩小特定图表、表格或其他可视化中显示的数据范围。例如有一个按地区显示销售额的条形图，视觉级筛选器可能会限制数据，只显示销售额超过某个阈值的地区；
+2. 页面级筛选器(Page-Level Filters)：这些筛选器适用于特定报告页面上的所有可视化数据。当我们想在一个页面中创建多个可视化数据的集中视图时，这些筛选器非常有用。例如在销售仪表板上，可以使用页面级筛选器在该页面的所有图表中显示特定年份的数据；
+3. 报告级筛选器(Report-Level Filters)：这些筛选器会影响整个报告中的每个页面和可视化效果。它们通过应用统一的筛选器来确保整个报表数据的一致性。例如报告级过滤器可用于将整个报告限制为特定业务部门或国家的数据；
+4. 切片器(Slicers)： 切片是交互式可视元素，可用作屏幕上的筛选器。用户可通过点击切片选项动态过滤报告。例如切片器可以让用户选择一个或多个产品类别，并立即更新页面上的所有可视化内容，以反映用户的选择。
 
 ## DAX 表达式
 
@@ -606,7 +629,7 @@ RETURN
   </tbody>
 </table>
 
-### 过滤函数
+### 筛选函数
 
 <table>
   <thead>
@@ -620,155 +643,155 @@ RETURN
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/all-function-dax" target="_blank"><strong>ALL</strong></a>
       </td>
-      <td>返回表中的所有行或者列中的所有值，忽略可能已应用的任何筛选条件。</td>
+      <td>忽略任何可能已应用的筛选器，并返回所有行或列中的所有值。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/allcrossfiltered-function-dax" target="_blank"><strong>ALLCROSSFILTERED</strong></a>
       </td>
-      <td>清除应用于表的所有筛选条件。</td>
+      <td>清除所有应用于表的筛选器。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/allexcept-function-dax" target="_blank"><strong>ALLEXCEPT</strong></a>
       </td>
-      <td>删除表中的所有 Context，除了应用于指定列的筛选条件。</td>
+      <td>清除应用于指定列外的 Filter context。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/allnoblankrow-function-dax" target="_blank"><strong>ALLNOBLANKROW</strong></a>
       </td>
-      <td>返回所有行或者返回列中所有不同的值(不包括空行)，并忽略可能存在的任何 Context。</td>
+      <td>忽略可能存在的 Filter context，并返回除空白行以外的所有行，或除空白行以外的列的所有不同值。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/allselected-function-dax" target="_blank"><strong>ALLSELECTED</strong></a>
       </td>
-      <td>从当前查询中的列和行中删除 Filter Context，同时保留所有其他 Filter Context 或者 Power View 中的筛选条件。</td>
+      <td>删除当前查询中列和行的 Filter context，同时保留所有其他 Filter context 或显式筛选器。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/calculate-function-dax" target="_blank"><strong>CALCULATE</strong></a> /
         <a href="https://learn.microsoft.com/en-us/dax/calculatetable-function-dax" target="_blank"><strong>CALCULATETABLE</strong></a>
       </td>
-      <td>在修改的 Filter Context 中计算表达式/表表达式。</td>
+      <td>修改 Filter Context 中的表达式或者表表达式。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/earlier-function-dax" target="_blank"><strong>EARLIER</strong></a> /
         <a href="https://learn.microsoft.com/en-us/dax/earliest-function-dax" target="_blank"><strong>EARLIEST</strong></a>
       </td>
-      <td>返回在外部评估过程中指定列的当前值。</td>
+      <td>从当前 Row context 的上一级 Row context 中返回列的标量值。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/filter-function-dax" target="_blank"><strong>FILTER</strong></a>
       </td>
-      <td>返回一个表示另一个表或表达式子集的表。</td>
+      <td>返回表示另一个表或表达式子集的表。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/first-function-dax" target="_blank"><strong>FIRST</strong></a> /
         <a href="https://learn.microsoft.com/en-us/dax/last-function-dax" target="_blank"><strong>LAST</strong></a>
       </td>
-      <td>仅用于视觉计算，从 Axis 的第一行/最后一行中检索视觉矩阵中的一个值。</td>
+      <td>从坐标轴的第一行/最后一行读取可视化矩阵中的数值，仅用于可视化计算。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/index-function-dax" target="_blank"><strong>INDEX</strong></a>
       </td>
-      <td>返回指定分区内按指定顺序或指定 Axis 排序的绝对位置指定的行。</td>
+      <td>返回指定分区中由位置参数指定的绝对位置上的一行，并按指定顺序或指定坐标轴排序。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/keepfilters-function-dax" target="_blank"><strong>KEEPFILTERS</strong></a>
       </td>
-      <td>修改在评估 CALCULATE 或 CALCULATETABLE 函数时应用筛选条件的方式。</td>
+      <td>修改 CALCULATE 或 CALCULATETABLE 函数在应用筛选器的方式。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/lookupvalue-function-dax" target="_blank"><strong>LOOKUPVALUE</strong></a>
       </td>
-      <td>返回符合所有指定搜索条件的行的值，该函数可以应用一个或多个搜索条件。</td>
+      <td>返回符合搜索条件指定的所有条件的行值，该函数可以应用一个或多个搜索条件。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/matchby-function-dax" target="_blank"><strong>MATCHBY</strong></a>
       </td>
-      <td>在窗口函数中定义用于确定如何匹配数据并识别“当前行”的列。</td>
+      <td>在窗口函数中，定义用于确定如何匹配数据和识别当前行的列。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/movingaverage-function-dax" target="_blank"><strong>MOVINGAVERAGE</strong></a>
       </td>
-      <td>返回在给定 Axis 上计算的移动平均值。</td>
+      <td>返回沿视觉矩阵给定轴计算的移动平均值。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/previous-function-dax" target="_blank"><strong>PREVIOUS</strong></a> /
         <a href="https://learn.microsoft.com/en-us/dax/next-function-dax" target="_blank"><strong>NEXT</strong></a>
       </td>
-      <td>仅用于视觉计算，从视觉矩阵中 Axis 的前一行/下一行中检索一个值。</td>
+      <td>读取可视化矩阵中坐标轴上一行/下一行的数，仅用于可视化计算</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/offset-function-dax" target="_blank"><strong>OFFSET</strong></a>
       </td>
-      <td>返回一个单行，该行位于同一表中的“当前行”之前或之后，由给定的偏移量决定。</td>
+      <td>按给定偏移量返回同一表格中当前行之前或之后的一行。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/orderby-function-dax" target="_blank"><strong>ORDERBY</strong></a>
       </td>
-      <td>定义窗口函数的每个分区中的排序顺序列。</td>
+      <td>定义窗口函数各分区中决定排序顺序的列。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/partitionby-function-dax" target="_blank"><strong>PARTITIONBY</strong></a>
       </td>
-      <td>定义用于分区窗口函数的`relation`参数的列。</td>
+      <td>定义用于分割窗口函数<code class="language-plaintext highlighter-rouge">relation</code>参数的列。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/range-function-dax" target="_blank"><strong>RANGE</strong></a>
       </td>
-      <td>返回相对于当前行的给定 Axis 中的行间隔。</td>
+      <td>返回给定坐标轴上相对于当前行的行间隔，WINDOW 函数的快捷方式。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/rank-function-dax" target="_blank"><strong>RANK</strong></a>
       </td>
-      <td>返回给定间隔内行的排名。</td>
+      <td>返回某一行在给定区间内的排名。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/removefilters-function-dax" target="_blank"><strong>REMOVEFILTERS</strong></a>
       </td>
-      <td>清除指定表或列上的筛选条件。</td>
+      <td>清除指定表或列中的筛选器。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/rownumber-function-dax" target="_blank"><strong>ROWNUMBER</strong></a>
       </td>
-      <td>返回给定间隔内行的唯一排名。</td>
+      <td>返回给定区间内某一行的唯一排名。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/runningsum-function-dax" target="_blank"><strong>RUNNINGSUM</strong></a>
       </td>
-      <td>返回在给定 Axis 上计算的运行总和。</td>
+      <td>返回沿视觉矩阵给定轴计算的总和。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/selectedvalue-function-dax" target="_blank"><strong>SELECTEDVALUE</strong></a>
       </td>
-      <td>当列名的 Context 被过滤为只有一个不同的值时返回该值，否则返回替代结果。</td>
+      <td>如果<code class="language-plaintext highlighter-rouge">columnName</code>的 Context 已筛选到只有一个不同的值则返回该值，否则返回<code class="language-plaintext highlighter-rouge">alternateResult</code>。</td>
     </tr>
     <tr>
       <td>
         <a href="https://learn.microsoft.com/en-us/dax/window-function-dax" target="_blank"><strong>WINDOW</strong></a>
       </td>
-      <td>返回多个行，这些行位于给定的间隔内。</td>
+      <td>返回位于给定间隔内的多行。</td>
     </tr>
   </tbody>
 </table>

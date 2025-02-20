@@ -15,9 +15,9 @@ modify_date: "2024-11-06 17:51:00"
 
 <!--more-->
 
-## Buffon投针的计算机模拟
+## Buffon 投针的计算机模拟
 
-回顾用Buffon投针估算圆周率 $\pi$ 的公式：
+回顾用 Buffon 投针估算圆周率 $\pi$ 的公式：
 
 $$
   \begin{equation}
@@ -73,7 +73,7 @@ buffon <- function(toss_nums, needle_lengths, line_spacing) {
 ```
 {: .nolineno }
 
-用Python来模拟的示例如下：
+用 Python 来模拟的示例如下：
 
 ```python
 import numpy as np
@@ -146,7 +146,7 @@ monty_hall_simulation <- function(num_trials, change) {
 ```
 {: .nolineno }
 
-Python模拟示例如下：
+Python 模拟示例如下：
 
 ```python
 import numpy as np

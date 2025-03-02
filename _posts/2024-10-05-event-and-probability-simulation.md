@@ -1,7 +1,7 @@
 ---
-key: post-event-and-probability-simulation
+key: event-and-probability-simulation
 title: "用计算机模拟 Buffon 投针和三门问题"
-permalink: "/event-and-probability-simulation.html"
+permalink: "/event-and-probability-simulation"
 tags:
   - 概率论
   - 统计计算

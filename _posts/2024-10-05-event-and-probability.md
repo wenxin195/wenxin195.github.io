@@ -1,7 +1,7 @@
 ---
 key: event-and-probability
 title: "概率论基础(1) 随机事件与概率"
-permalink: "/event-and-probability.html"
+permalink: "/event-and-probability"
 tags:
   - 统计学
   - 概率论

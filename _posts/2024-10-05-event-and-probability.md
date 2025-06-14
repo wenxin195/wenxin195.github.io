@@ -10,6 +10,7 @@ layout: article
 download: true
 videos: false
 refactor: false
+mathjax: true
 modify_date: "2025-01-27 01:50:00"
 ---
 

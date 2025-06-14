@@ -84,7 +84,7 @@ toc:
 ## => Markdown Enhancements
 ##############################
 ## Mathjax
-mathjax: true # false (default), true
+mathjax: false # false (default), true
 mathjax_autoNumber: true # false (default), true
 
 ## Mermaid
@@ -120,7 +120,7 @@ sharing:
 ## => Comments
 ##############################
 comments:
-  provider: gitalk # false (default), "disqus", "gitalk", "valine", "custom"
+  provider: false # false (default), "disqus", "gitalk", "valine", "custom"
 
   ## Disqus
   disqus:
@@ -214,8 +214,6 @@ exclude:
   - package-lock.json
   - package.json
   - /vendor
-  - modify-instructions.md
-  - module_use.md
 
 defaults:
   - scope:

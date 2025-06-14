@@ -2,7 +2,7 @@
 layout: page
 key: page-about
 title: 关于我
-permalink: /about.html
+permalink: /about
 ---
 
 Hello, 我叫钟文鑫，是一名数据分析师，我对时间序列分析、因果推断、用户研究有着浓厚的兴趣。

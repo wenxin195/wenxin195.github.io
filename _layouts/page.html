@@ -297,5 +297,7 @@ layout: base
   </script>
 {%- endif -%}
 
-{%- include markdown-enhancements.html -%}
+{%- if page.layout == 'article' -%}
+  {%- include markdown-enhancements.html -%}
+{%- endif -%}
 {%- include pageview.html -%}

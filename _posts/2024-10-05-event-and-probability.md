@@ -58,7 +58,7 @@ modify_date: "2025-01-27 01:50:00"
 
 下面的例子分别解释了何为离散样本空间和连续样本空间：
 
-1. 在研究英文字母的使用情况时，那么可能出现的结果为 $A,B,\cdots,Z$ 和空格“␣”，将样本空间选定为 ${\mit\Omega}=\\{\text{␣}, A,B,\cdots,Z\\}$ 是合适的，它是一个离散的样本空间；
+1. 在研究英文字母的使用情况时，可能出现的结果为 $A,B,\cdots,Z$ 和空格“$\text{␣}$”，将样本空间选定为 ${\mit\Omega}=\\{\text{␣}, A,B,\cdots,Z\\}$ 是合适的，它是一个离散的样本空间；
 2. 用 $t$ 表示用户在某 App 上使用的时间，那么“用户使用时间”的样本空间就是所有非负实数 ${\mit\Omega}=\\{t\mid t\geqslant0\\}$，它是一个连续的样本空间。
 
 在确定样本空间的时候，不同的试验结果必须是**相互排斥的**，即在试验过程中只能产生**唯一**的一个结果。需要注意的是随机现象的样本空间要包含**至少两个样本点**。若将确定性现象也一并考虑，那么仅含有一个样本点的样本空间，所对应的确定性现象。
@@ -889,7 +889,7 @@ $$
 </div>
 
 <details class="details-example" markdown="1">
-<summary>比丰投针问题(估计圆周率 $\pi$)</summary>
+<summary>Buffon 投针问题(估计圆周率 $\pi$)</summary>
 平面上画有间隔为 $d(d>0)$ 的等距平行线，向平面任意投掷一枚长为 $l(l< d)$ 的针。记事件 $A$ 为针与任一平行线相交，下面我们求针与任一平行线相交的概率。
 
 设 $x$ 为针的中点到最近平行线的垂直距离，$\varphi$ 为针与最近平行线所形成的夹角，于是样本空间 $\mit\Omega$ 就为
@@ -909,7 +909,7 @@ $$
 于是由几何概型可知
 
 $$
-  P(A)=\frac{S_A}{S_{\mathit\Omega}}=\frac{\displaystyle\int_{0}^{\pi}\frac{l}{2}\sin{\varphi}}{\frac{d}{2}\pi}=\frac{2l}{d\pi}
+  P(A)=\frac{S_A}{S_{\mathit\Omega}}=\frac{\displaystyle\int_{0}^{\pi}\frac{l}{2}\sin{\varphi}}{\frac{d}{2}\pi}=\frac{2l}{d\pi} \ (l<d)
 $$
 
 </details>
@@ -918,31 +918,31 @@ $$
 
 $$
 \begin{equation}
-    \pi\approx\frac{2lN}{dn}
+    \pi\approx\frac{2lN}{dn} \ (l<d)
 \end{equation}
 $$
 
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
       <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-        <img src="/assets/images/picture/event_and_probabity/needle.png" alt="比丰投针问题" style="width: 300px; margin-top: 56px;">
-        <figcaption>(a) 比丰投针问题</figcaption>
+        <img src="/assets/images/picture/event_and_probabity/needle.png" alt="Buffon 投针问题" style="width: 300px; margin-top: 56px;">
+        <figcaption>(a) Buffon 投针问题</figcaption>
       </figure>
       <figure style="text-align: center; margin-bottom: 0;">
-        <img src="/assets/images/picture/event_and_probabity/needle_space.png" alt="比丰投针的样本空间" style="width: 300px;">
-        <figcaption>(b) 比丰投针的样本空间</figcaption>
+        <img src="/assets/images/picture/event_and_probabity/needle_space.png" alt="Buffon 投针的样本空间" style="width: 300px;">
+        <figcaption>(b) Buffon 投针的样本空间</figcaption>
       </figure>
       <figure style="text-align: center; margin-bottom: 0;">
         <img src="/assets/images/picture/event_and_probabity/intersect.png" alt="相交的充要条件" style="width: 300px; margin-top: 116px;">
         <figcaption>(c) 针与平行线相交的充分必要条件</figcaption>
       </figure>
    </div>
-   <p style="margin-top: 0;">图 8: 比丰投针</p>
+   <p style="margin-top: 0;">图 8: Buffon 投针</p>
 </div>
 
 这是一个颇为奇妙的方法：只要设计一个随机试验，使一个事件的概率与某个未知数有关，然后通过重复试验，以频率估计概率，即可求得未知数的近似解。
 
-一般来说试验次数越多，则求得的近似解就越精确，随着计算机的出现，人们便可利用计算机来大量重复地模拟所设计的随机试验。这种方法得到了迅速的发展和广泛的应用，人们称这种方法为**随机模拟法**，也称为 <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method" target="_blank"><strong>Monte Carlo 法</strong></a>。比丰投针的随机模拟详见<a href="/event-and-probability-simulation.html#buffon投针的计算机模拟" target="_blank">比丰投针的计算机模拟</a>。
+一般来说试验次数越多，则求得的近似解就越精确，随着计算机的出现，人们便可利用计算机来大量重复地模拟所设计的随机试验。这种方法得到了迅速的发展和广泛的应用，人们称这种方法为**随机模拟法**，也称为 <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method" target="_blank"><strong>Monte Carlo 法</strong></a>。Buffon 投针的随机模拟详见<a href="/event-and-probability-simulation.html#buffon投针的计算机模拟" target="_blank"> Buffon 投针的计算机模拟</a>。
 
 <details class="details-example" markdown="1">
 <summary>Bertrand 悖论</summary>

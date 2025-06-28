@@ -45,18 +45,23 @@
   }
 }
 
+@mixin details($class, $type) {
+  &.details-#{$class} {
+    border-left: 0.2rem solid var(--prompt-#{$type}-icon-color);
+
+    > summary {
+      background-color: var(--prompt-#{$type}-bg);
+      color: var(--prompt-#{$type}-icon-color);
+    }
+  }
+}
+
 @mixin ml-mr($value) {
   margin-left: $value;
   margin-right: $value;
 }
 
-@mixin colorbox(
-  $border-color,
-  $icon-color,
-  $icon-content,
-  $bg-color,
-  $fa-style: "solid"
-) {
+@mixin colorbox($border-color, $icon-color, $icon-content, $bg-color, $fa-style: "solid") {
   border-left: 0.2rem solid $border-color;
   border-radius: 0.25rem;
   color: var(--text-color);

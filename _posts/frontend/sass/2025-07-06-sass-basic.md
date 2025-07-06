@@ -18,7 +18,7 @@ Sass(Syntactically Awesome Style Sheets)是一个 CSS 预处理器，有助于�
 
 <!--more-->
 
-Sass 在 CSS 语法的基础上增加了变量、嵌套、混合宏、继承等高级功能，使 CSS 更易于维护、可复用且更易于编写。使用 Sass 以及 Sass 的样式库(比如 Compass)有助于更好地组织管理样式文件，以及更高效地开发项目。
+Sass 在 CSS 语法的基础上增加了变量、嵌套、器、继承等高级功能，使 CSS 更易于维护、可复用且更易于编写。使用 Sass 以及 Sass 的样式库(比如 Compass)有助于更好地组织管理样式文件，以及更高效地开发项目。
 
 ## Sass 变量
 
@@ -32,7 +32,7 @@ body {
 }
 ```
 
-Sass 变量默认是局部变量，仅在定义它的代码块内有效。如果变量在文件的最外层(不在任何代码块内)定义，则为全局变量，可在整个 Sass 文件或导入的文件中使用。例如：
+Sass 变量默认是**局部变量**，仅在定义它的**代码块内有效**。如果变量在文件的最外层(不在任何代码块内)定义，则为全局变量，可在整个 Sass 文件或导入的文件中使用。例如：
 
 ```scss
 $myColor: red;
@@ -59,10 +59,10 @@ p {
 }
 ```
 
-> 如果在局部作用域内定义了与全局变量同名的变量，局部变量会覆盖全局变量，仅在当前代码块内生效。
-{: .prompt-tip}
+> 如果在局部作用域内定义了与全局变量同名的变量，那么**局部变量会覆盖全局变量**，仅在当前代码块内生效。
+{: .prompt-warning}
 
-在局部作用域内，可以使用`!global`将变量显式声明为全局变量，覆盖之前定义的同名全局变量。例如：
+在局部作用域内，可以使用`!global`将变量显式声明为全局变量，覆盖之前定义的**同名全局变量**。例如：
 
 ```scss
 $myColor: red;
@@ -89,10 +89,10 @@ p {
 }
 ```
 
-> 全局变量应该定义在任何代码块之外，因此最好使用单独的文件定义所有全局变量，并使用`@include`导入。
+> 全局变量应该定义在任何代码块之外，最好使用单独的文件定义所有全局变量，并使用`@include`导入。
 {: .prompt-danger}
 
-在声明变量时，变量值也可以引用其他变量。当你通过粒度区分，为不同的值取不同名字时，这相当有用。下例在独立的颜色值粒度上定义了一个变量，且在另一个更复杂的边框值粒度上也定义了一个变量。
+在声明变量时，变量值也可以引用其他变量。当通过粒度区分，为不同的值取不同名字时，这相当有用。下面这例子中，我们在独立的颜色值粒度上定义了一个变量，且在另一个更复杂的边框值粒度上也定义了一个变量：
 
 ```scss
 $highlight-color: blue;
@@ -105,18 +105,23 @@ $highlight-border: 1px solid $highlight-color;
 
 ### 默认变量
 
-一般情况下，如果反复声明一个变量，那么只有最后一处声明有效且它会覆盖前边的值。
+一般情况下，如果反复声明一个变量，那么只有最后一次声明才有效，并且它会覆盖前面所声明过的所有值。
 
-可以在变量的结尾添加`!default`，这会给一个未通过`!default`声明赋值的变量赋值，此时如果变量已经被赋值，不会再被重新赋值，但是如果变量还没有被赋值，则会被赋予新的值。例如：
+有时候，我们会在变量的结尾添加`!default`，这会给一个未通过`!default`声明的变量赋值。此时如果变量已经被赋值，则不会再被重新赋值；但是如果变量还没有被赋值，则它就会被赋予新的值。
+
+这样做的好处是：如果在导入 Sass 局部文件之前声明了一个`$variable`变量，那么局部文件中对`$varible`赋值为`value`的操作则会失效。如果没有做这样的声明，则`$variable`将默认为`value`。例如：
 
 ```scss
+/*variables.scss*/
 $content: "First content";
-$content: "Second content?" !default;
-$new_content: "First time reference" !default;
+
+/*Operation document*/
+@import "variables"
+
+$content: "Second content?" !default;  // 这不会生效！
 
 #main {
   content: $content;
-  new-content: $new_content;
 }
 ```
 
@@ -125,11 +130,8 @@ $new_content: "First time reference" !default;
 ```css
 #main {
   content: "First content";
-  new-content: "First time reference";
 }
 ```
-
-这样做的好处是：如果在导入 Sass 局部文件之前声明了一个`$content`变量，那么局部文件中对`$content`赋值`Second content?`的操作就无效。如果没有做这样的声明，则`$fancybox-width`将默认为`Second content?`。
 
 变量是`null`时，会视为未被`!default`赋值：
 
@@ -163,7 +165,7 @@ p.#{$name} {
 }
 ```
 
-使用`#{}`可以避免 Sass 运行计算表达式，直接编译 CSS。例如：
+使用`#{}`会直接编译 CSS，可以避免 Sass 运行计算表达式。例如：
 
 ```scss
 p {
@@ -183,52 +185,50 @@ p {
 
 ## 数据类型
 
-在 Sass 中，有以下的数据类型：
+在 Sass 中，有以下数据类型：
 
 1. 字符串(Strings)
 
-    Sass 字符串支持有引号字符串(`'`或者`"`定义)，和无引号字符串，在编译 CSS 文件时不会改变其类型。只有一种情况例外，使用`#{}`时，有引号字符串将被编译为无引号字符串。
+    Sass 字符串支持**有引号字符串**(`'`或者`"`定义)和**无引号字符串**，在编译 CSS 文件时不会改变其类型。只有在使用`#{}`时，有引号字符串将被编译为无引号字符串。
 2. 数组(Lists)
-    数组可以指定多个值，这些值之间通过空格或逗号分隔，并且是单个值也被视为(只包含一个值的)数组。
+    数组可以指定多个值，这些值之间通过**空格或逗号**分隔，并且是单个值也被视为(只包含一个值的)数组。
 
     数组本身没有太多功能，但是通过 Sass 可以发挥其最大的作用：
 
-    - `nth`函数可以直接访问数组中的某一项；
-    - `join`函数可以将多个数组连接在一起；
-    - `append`函数可以在数组中添加新值；
-    - `@each`指令能够遍历数组中的每一项。
+    - [`nth`](https://sass-lang.com/documentation/modules/list/#nth)函数可以直接访问数组中的某一项；
+    - [`join`](https://sass-lang.com/documentation/modules/list/#join)函数可以将多个数组连接在一起；
+    - [`append`](https://sass-lang.com/documentation/modules/list/#append)函数可以在数组中添加新的值；
+    - [`@each`](#each)指令能够遍历数组中的每一项。
 
-    数组中可以包含子数组，例如`1px 2px, 5px 6px`、`(1px 2px) (5px 6px)`或者`(1px, 2px), (5px, 6px)`。
+    数组中也可以包含子数组，例如`1px 2px, 5px 6px`、`(1px 2px) (5px 6px)`或者`(1px, 2px), (5px, 6px)`。
 3. 颜色(Colors)
 
-    任何 CSS 颜色表达式都会返回一个颜色值，这包括大量与未加引号的字符串无法区分的命名颜色。在 Compressed 模式下，Sass 会输出颜色的最小 CSS 表示形式。
+    任何 CSS 颜色表达式都会对应一个颜色值，这包括大量与无引号字符串也无法区分的颜色名称。在 Compressed 模式下，Sass 会输出颜色的最小 CSS 表达式。例如`#FF0000`在 Compressed 模式下会输出为`red`，`blanchedalmond`会输出为`#FFEBCD`。
 
-    例如`#FF0000`在 Compressed 模式下会输出为`red`，但`blanchedalmond`则会输出为`#FFEBCD`。
-
-    > 如果颜色名称用于选择器的构建，必须始终将其加上引号，以避免在选择器中插值的颜色在 Compressed 模式下会变成无效语法。
+    > 如果颜色名称被用于选择器的构建，则必须将其加上引号，以避免选择器中插值的颜色在 Compressed 模式下会变成无效语法。
     {: .prompt-warning}
 4. 映射(Maps)
 
-    Maps 是`(key: value)`的组合，并且允许被动态访问。Maps 的键值可以是变量、表达式或者是 Sass 的任一数据类型(甚至是另一个 Maps)，给定的值可以与多个键相关联，但是给定的键在 Maps 中只能关联一个值。
+    Maps 是`(key: value)`的组合，并且允许被**动态访问**。Maps 的键值可以是变量、表达式或者是 Sass 的任一数据类型(甚至是另一个 Maps)。给定的值可以与多个键相关联，但是给定的键在 Maps 中只能关联一个值。
 
     > 使用`inspect($value)`函数生成用于调试 Maps 的有用输出。
     {: .prompt-warning}
 
     Maps 可以通过以下 Sass 函数对其进行操作：
 
-    - `map-get`函数用于查找键值；
-    - `map-merge`函数用于 Map 和新加的键值融合；
-    - `@each`指令可添加样式到一个 Map 中的每个键值对。
+    - [`map-get`](https://sass-lang.com/documentation/modules/map/#get)函数用于查找键值；
+    - [`map-merge`](https://sass-lang.com/documentation/modules/map/#merge)函数用于 Maps 和新加的键值融合；
+    - [`@each`](#each)指令可添加样式到一个 Maps 中的每个键值对。
 
-    数组可以使用的场景，Maps 也同样可以使用。在数组函数中 Maps 会被自动转换为数组。例如`(key1: value1, key2: value2)`会被数组函数自动转换成`key1 value1, key2 value2`，反之则不行(空数组除外)。
+    数组可以使用的场景，Maps 也同样可以使用。在数组函数中 Maps 会被自动转换为数组。例如`(key1: value1, key2: value2)`会被数组函数自动转换成`key1 value1, key2 value2`，**反之则不行**(空数组除外)。
   
-除此之外，Sass 还包括：布尔值(Booleans)、数字(Numbers)、空值(Nulls)的数据类型。
+除此之外，Sass 的数据类型还包括：布尔值(Booleans)、数字(Numbers)和空值(Nulls)。
 
 ## 嵌套规则
 
-嵌套是指将不同的逻辑结构组合在一起，从而使样式可读性更高，避免了重复输入父选择器，而且令复杂的 CSS 结构更易于管理。
+嵌套是指将不同的逻辑结构组合在一起，避免了重复输入父级选择器，从而使样式可读性更高，而且令复杂的 CSS 结构更易于管理。
 
-在 Sass 中我们可以将多个 CSS 规则组合在一起。如果使用了多个选择器，则可以在一个选择器内嵌套另一个选择器，从而创建复合选择器，内层的样式将它外层的选择器作为父选择器。例如：
+在 Sass 中我们可以将多个 CSS 规则组合在一起。如果使用了多个选择器，则可以在一个选择器内嵌套另一个选择器，从而创建**复合选择器**，外层选择器会作为内层选择的父级选择器。例如：
 
 ```scss
 #main p {
@@ -242,7 +242,7 @@ p {
 }
 ```
 
-当 Sass 解开一个分组选择器的内嵌规则时，它允许把每一个内嵌选择器的规则都正确地解出来，例如：
+当 Sass 解开一个分组选择器的内嵌规则时，它可以把每一个内嵌选择器的规则都正确地解出来，例如：
 
 ```scss
 .container {
@@ -271,7 +271,7 @@ nav, aside {
 > 虽然 Sass 可以让样式表看上去很小，但实际生成的 CSS 却可能非常大，这会显著降低网站的速度。
 {: .prompt-warning}
 
-### 父级选择器
+### 引用父级选择器
 
 引用父级选择器`&`允许动态引用外部的选择器，增强代码的灵活性和可读性，常用于生成伪类、伪元素、组合选择器或动态类名。例如：
 
@@ -288,10 +288,10 @@ nav, aside {
 
 ```
 
-> 编译后的 CSS 文件中`&`将被替换成嵌套外层的父选择器，如果含有多层嵌套，最外层的父选择器会一层一层向下传递。
+> 编译后的 CSS 文件中`&`将会被替换成嵌套外层的父级选择器，如果含有多层嵌套，最外层的父级选择器会一层一层向下传递。
 {: .prompt-tip}
 
-`&`必须作为选择器的第一个字符，其后可以跟随后缀生成复合的选择器，例如：
+`&`可以作为选择器的第一个字符，其后可以跟随后缀生成复合的选择器，例如：
 
 ```scss
 #main {
@@ -305,7 +305,7 @@ nav, aside {
 
 ### 属性嵌套
 
-有些 CSS 属性遵循相同的命名空间，比如`font-family, font-size, font-weight`都以`font`作为属性的命名空间。为了便于管理这样的属性，同时也为了避免了重复输入，Sass 允许将属性嵌套在命名空间中，例如：
+有些 CSS 属性遵循相同的命名空间，比如`font-family, font-size, font-weight`都是`font`作为命名空间的属性。为了便于管理这样的属性，同时也为了避免了重复输入，Sass 允许将属性嵌套在命名空间中，例如：
 
 ```scss
 .funky {
@@ -1058,7 +1058,7 @@ p {
 
 通过 <a href="http://sass-lang.com/docs/yardoc/Sass/Script/Functions.html" target="_blank">Sass::Script::Functions</a> 查看完整的 Sass 函数列表，参数名，以及如何自定义函数。
 
-## 自定义函数
+### 自定义函数
 
 Sass 支持自定义函数，并能在任何属性值或变量、表达式等中使用：
 
@@ -1086,3 +1086,13 @@ $gutter-width: 10px;
 ```
 
 建议在自定义函数前添加前缀避免命名冲突，其他人阅读代码时也会知道这不是 Sass 或者 CSS 的自带函数。自定义函数与`@mixin` 相同，都支持可变参数。
+
+* * *
+
+## 参考文献
+
+1. [Sass: Documentation](https://sass-lang.com/documentation/)
+2. [https://sass.hk/](https://sass.hk/)
+3. [https://www.w3schools.com/sass/default.php](https://www.w3schools.com/sass/default.php)
+4. [https://cankaoshouce.com/sass/sass-course.html](https://cankaoshouce.com/sass/sass-course.html)
+5. [https://www.geeksforgeeks.org/css/sass/](https://www.geeksforgeeks.org/css/sass/)

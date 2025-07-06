@@ -1,29 +1,37 @@
 @import "module";
 
 html {
-  &:not([data-mode]),
-  &[data-mode="light"] {
-    @include light-scheme;
-  }
+  @include light-scheme;
+}
+
+.article__content {
+  @include box("info", "\f06a");
+  @include box("tip", "\f0eb", "regular");
+  @include box("warning", "\f06a");
+  @include box("danger", "\f071");
 }
 
 blockquote {
-  border-left: 0.125rem solid var(--blockquote-border-color);
+  border-left: 0.125rem solid #eeeeee;
   padding-left: 1rem;
-  color: var(--blockquote-text-color);
+  color: #757575;
   margin-top: 0.5rem;
 
-  > p:last-child {
-    margin-top: 0;
+  > p {
+    margin: 0 !important;
+
+    &:last-child {
+      margin-top: 0;
+    }
   }
 
-  &[class^="prompt-"] {
+  &[class|="prompt"] {
     font-size: 1rem;
     line-height: 1.4rem; // 设置与图标相近的行高
     border-left: 0;
     position: relative;
     padding: 1rem 1rem 1rem 3rem;
-    color: var(--prompt-text-color);
+    color: rgba(46, 46, 46, 0.77);
 
     @extend %rounded;
 
@@ -44,46 +52,9 @@ blockquote {
   @include prompt("danger", "\f071");
 }
 
-.box-info {
-  @include colorbox(
-    var(--prompt-info-icon-color),
-    var(--prompt-info-icon-color),
-    "\f06a",
-    var(--prompt-info-bg)
-  );
-}
-
-.box-tip {
-  @include colorbox(
-    var(--prompt-tip-icon-color),
-    var(--prompt-tip-icon-color),
-    "\f0eb",
-    var(--prompt-tip-bg),
-    "regular"
-  );
-}
-
-.box-warning {
-  @include colorbox(
-    var(--prompt-warning-icon-color),
-    var(--prompt-warning-icon-color),
-    "\f06a",
-    var(--prompt-warning-bg)
-  );
-}
-
-.box-danger {
-  @include colorbox(
-    var(--prompt-danger-icon-color),
-    var(--prompt-danger-icon-color),
-    "\f071",
-    var(--prompt-danger-bg)
-  );
-}
-
 details {
   border-radius: 0.25rem;
-  box-shadow: var(--language-border-color) 1px 1px 2px 1px; //借用了代码框的边框颜色变量
+  box-shadow: #ececec 1px 1px 2px 1px; //借用了代码框的边框颜色变量
   font-family: (
     "Times New Roman",
     "SimSun",
@@ -127,14 +98,14 @@ details {
     > summary {
       // transition: margin 200ms ease-out;
       margin-bottom: 0.6rem; // 展开会有动画效果
-    }
 
-    > summary::before {
-      margin-right: 0.5rem;
-    }
+      &::before {
+        margin-right: 0.5rem;
+      }
 
-    > summary::after {
-      transform: rotate(90deg);
+      &::after {
+        transform: rotate(90deg);
+      }
     }
   }
 
@@ -153,7 +124,7 @@ details {
     overflow-x: auto;
     border-spacing: 0;
 
-    thead {
+    > thead {
       border-bottom: solid 2px rgba(210, 215, 217, 0.75);
       text-align: center;
 
@@ -162,9 +133,9 @@ details {
       }
     }
 
-    tbody {
+    > tbody {
       tr {
-        border-bottom: 1px solid var(--tb-border-color);
+        border-bottom: 1px solid #eaeaea;
 
         td {
           @extend %table-cell;

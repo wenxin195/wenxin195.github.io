@@ -19,21 +19,37 @@ modify_date: "2025-06-19 23:55:00"
 
 ## Buffon 投针的计算机模拟
 
-回顾用 Buffon 投针估算圆周率 $\pi$ 的公式：
+平面上画有间隔为 $d(d>0)$ 的等距平行线，向平面任意投掷一枚长为 $l(l< d)$ 的针。设 $x$ 为针的中点到最近平行线的垂直距离，$\varphi$ 为针与最近平行线所形成的夹角，于是样本空间 $\mit\Omega$ 就为
+
+$$
+  {\mathit\Omega}=\left\{(x,\varphi)\mid 0\leqslant x\leqslant\frac{d}{2},0\leqslant\varphi\leqslant\pi\right\}
+$$
+
+易知针与平行线相交的充分必要条件是：
 
 $$
   \begin{equation}
-  \pi\approx\frac{2lN}{dn} \ (l<d)
+    x\leqslant\frac{l}{2}\sin{\varphi}
   \end{equation}
 $$
 
-其中 $l$ 为针的长度，$d$ 为两个平行线间的间距，$N$ 为投掷次数，$n$ 为针与任一平行线相交的次数。针与平行线相交的充分必要条件是：
+记事件 $A$ 为针与任一平行线相交，由几何概型可知
 
 $$
-  \begin{equation}
-  x\leqslant\frac{l}{2}\sin{\varphi}
-  \end{equation}
+\begin{equation}\label{eq:Buffon}
+  P(A)=\frac{S_A}{S_{\mathit\Omega}}=\frac{\displaystyle\int_{0}^{\pi}\frac{l}{2}\sin{\varphi}}{\frac{d}{2}\pi}=\frac{2l}{d\pi} \ (l<d)
+\end{equation}
 $$
+
+当实验次数 $N$ 足够大时，$P(A)\to\frac{n}{N}(N\to\infty)$，于是带入\eqref{eq:Buffon}式中，可解得
+
+$$
+\begin{equation}
+    \pi\approx\frac{2lN}{dn} \ (l<d)
+\end{equation}
+$$
+
+其中 $n$ 为针与任一平行线相交的次数。
 
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
@@ -49,7 +65,7 @@ $$
    <p style="margin-top: 0;">图 1: 比丰投针</p>
 </div>
 
-用 R 语言来模拟的示例如下：
+我们用 R 语言来模拟 Buffon 投针的整个过程：
 
 ```R
 buffon <- function(toss_nums, needle_lengths, line_spacing) {
@@ -256,7 +272,7 @@ $$
 
 下面我们用 R 语言来模拟这一调查过程。表 1 为我们模拟的调查数据表：
 
-<table>
+<table style="text-align: center;">
   <caption>表 1: 敏感性调查模拟数据表</caption>
   <thead>
     <tr>

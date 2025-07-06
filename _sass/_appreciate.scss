@@ -4,32 +4,15 @@
 
 /* 打赏二维码 */
 .appreciate-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 两列布局 */
-  gap: 30px; /* 两列之间的间距 */
-  position: relative;
-
-  background-size: 400% 400%;  /* 背景扩展 */
-  animation: gradientBackground 5s ease infinite; /* 动态渐变背景 */
-
-  &:hover .appreciate-qrcode {
-    display: block;
-  }
-}
-
-.appreciate-container {
-  position: relative;
-
   /* flex布局 */
   display: flex;
   flex-wrap: wrap; /* 允许换行 */
   justify-content: space-between; /* 保证二维码在行内分配空间 */
   gap: 20px; /* 让二维码之间有间隙 */
 
-  /* grid布局 */
-  // display: grid;
-  // grid-template-columns: repeat(2, 1fr); /* 两列布局 */
-  // gap: 30px; /* 两列之间的间距 */
+  position: relative;
+  background-size: 400% 400%;  /* 背景扩展 */
+  animation: gradientBackground 5s ease infinite; /* 动态渐变背景 */
 
   &:hover .appreciate-qrcode {
     display: block;

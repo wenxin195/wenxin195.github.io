@@ -1,17 +1,17 @@
 .article__content {
   img.shadow, .shadow > img {
-    @include box-shadow();
+    @include box-shadow();  // 为图片添加阴影效果
   }
 
   img.border, .border > img {
-    border: 1px solid $border-color-l;
+    border: 1px solid $border-color-l;  // 为图片添加边框
   }
 
   img.rounded, .rounded > img {
-    border-radius: map-get($base, border-radius);
+    border-radius: map-get($base, border-radius);  // 为图片添加圆角效果
   }
 
   img.circle, .circle > img {
-    border-radius: 50%;
+    border-radius: 50%;  // 为图片添加圆形裁剪效果
   }
 }

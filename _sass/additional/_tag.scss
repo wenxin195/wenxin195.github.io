@@ -1,21 +1,13 @@
+@mixin tag($type, $color) {
+  code.#{$type} {
+    color: $text-color-function;
+    background-color: $color;
+  }
+}
+
 .article__content {
-  code.success {
-    color: $text-color-function;
-    background-color: $green;
-  }
-
-  code.info {
-    color: $text-color-function;
-    background-color: $blue;
-  }
-
-  code.warning {
-    color: $text-color-function;
-    background-color: $yellow;
-  }
-
-  code.error {
-    color: $text-color-function;
-    background-color: $red;
-  }
+  @include tag("success", $green);
+  @include tag("info", $blue);
+  @include tag("warning", $yellow);
+  @include tag("error", $red);
 }

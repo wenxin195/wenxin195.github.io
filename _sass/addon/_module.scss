@@ -16,7 +16,7 @@
 }
 
 %text-highlight {
-  color: var(--text-muted-highlight-color);
+  color: inherit;
   font-weight: 600;
 }
 
@@ -36,7 +36,7 @@
       font: var(--fa-font-#{$fa-style});
       font-size: 1.5rem;
       vertical-align: middle; // 设置垂直对齐
-      margin-top: 0;
+      margin-top: -0.1rem;
 
       @if $rotate !=0 {
         transform: rotate(#{$rotate}deg);
@@ -57,8 +57,10 @@
 }
 
 @mixin ml-mr($value) {
-  margin-left: $value;
-  margin-right: $value;
+  margin: {
+    left: $value;
+    right: $value;
+  }
 }
 
 @mixin colorbox($border-color, $icon-color, $icon-content, $bg-color, $fa-style: "solid") {
@@ -66,11 +68,11 @@
   border-radius: 0.25rem;
   color: var(--text-color);
   padding: 0.6rem 1rem 0.6rem 1.5rem;
-  box-shadow: var(--language-border-color) 1px 1px 2px 1px;
+  box-shadow: #ececec 1px 1px 2px 1px;
   position: relative;
   margin-bottom: 1rem;
 
-  > div.title {
+  > .title {
     background-color: $bg-color;
     color: $icon-color;
     padding: 0.5rem 0.6rem 0.5rem 3rem;
@@ -78,27 +80,42 @@
     font-weight: 600;
 
     &:empty {
-      display: none; // 隐藏空的 title
-      margin: 0; // 移除不必要的 margin
-      padding: 0; // 移除不必要的 padding
+      display: none;
+      margin: 0;
+      padding: 0;
     }
 
     &::before {
       content: $icon-content;
       color: $icon-color;
       font: var(--fa-font-#{$fa-style});
+      font-size: 1.5rem;
       text-align: center;
       width: 3rem;
       position: absolute;
       left: 0.2rem;
-      margin-top: 0.4rem;
+      margin-top: 0.2rem;
       text-rendering: auto;
       -webkit-font-smoothing: antialiased;
     }
   }
 
   > p:last-child {
-    margin-bottom: 0;
-    margin-top: 0px;
+    margin: {
+      bottom: 0;
+      top: 0;
+    }
+  }
+}
+
+@mixin box($type, $icon-content, $fa-style: "solid") {
+  .box-#{$type} {
+    @include colorbox(
+      var(--prompt-#{$type}-icon-color),
+      var(--prompt-#{$type}-icon-color),
+      $icon-content,
+      var(--prompt-#{$type}-bg),
+      $fa-style
+    );
   }
 }

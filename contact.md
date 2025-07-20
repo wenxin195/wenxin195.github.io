@@ -25,38 +25,38 @@ permalink: /contact
 <ul>
   <li>
     <div class="contact-social-item">
-      <img src="assets/images/icon/facebook.svg" alt="facebook" />
-      <a href="https://www.facebook.com/profile.php?id=61569485184749" target="_blank">Facebook</a>
+      <img src="assets/images/icon/facebook.svg" alt="Facebook" />
+      <a href="https://www.facebook.com/profile.php?id=61569485184749" title="Facebook">Facebook</a>
     </div>
   </li>
   <li>
     <div class="contact-social-item">
       <img src="assets/images/icon/weibo.svg" alt="weibo" />
-      <a href="https://weibo.com/2943658367" target="_blank">微博</a>
+      <a href="https://weibo.com/2943658367" title="weibo">微博</a>
     </div>
   </li>
   <li>
     <div class="contact-social-item">
-      <img src="assets/images/icon/linkedin.svg" alt="linkedin" />
-      <a href="https://www.linkedin.com/in/钟文鑫" target="_blank">Linkedin</a>
+      <img src="assets/images/icon/linkedin.svg" alt="Linkedin" />
+      <a href="https://www.linkedin.com/in/钟文鑫" title="Linkedin">Linkedin</a>
     </div>
   </li>
   <li>
     <div class="contact-social-item">
-      <img src="assets/images/icon/github.svg" alt="github" />
-      <a href="https://github.com/wenxin195" target="_blank">GitHub</a>
+      <img src="assets/images/icon/github.svg" alt="Github" />
+      <a href="https://github.com/wenxin195" title="Github">Github</a>
     </div>
   </li>
   <li>
     <div class="contact-social-item">
-      <img src="assets/images/icon/bili.svg" alt="bili" />
-      <a href="https://space.bilibili.com/10738871" target="_blank">Bilibili</a>
+      <img src="assets/images/icon/bili.svg" alt="Bili" />
+      <a href="https://space.bilibili.com/10738871" title="Bili">Bili</a>
     </div>
   </li>
   <li>
     <div class="contact-social-item">
-      <img src="assets/images/icon/csdn.svg" alt="csdn" />
-      <a href="https://blog.csdn.net/weixin_46784010" target="_blank">CSDN</a>
+      <img src="assets/images/icon/csdn.svg" alt="CSDN" />
+      <a href="https://blog.csdn.net/weixin_46784010" title="CSDN">CSDN</a>
     </div>
   </li>
 </ul>

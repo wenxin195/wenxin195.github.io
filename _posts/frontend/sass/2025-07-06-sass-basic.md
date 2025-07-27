@@ -22,17 +22,19 @@ Sass 在 CSS 语法的基础上增加了[变量](https://sass-lang.com/documenta
 
 ## Sass 变量
 
-Sass 变量的定义方式是：`<variable>: <expression>`，其中变量名使用`$`符号开头进行声明。例如：
+Sass 变量的定义方式是：`<variable>: <expression>`，其中变量名使用`$`符号开头进行声明。
 
 ```scss
 $myFont: Helvetica, sans-serif;
 
-body { font-family: $myFont; }
+body {
+  font-family: $myFont;
+}
 ```
 
 ### 变量的作用范围
 
-Sass 变量默认是**局部变量**，仅在定义它的**代码块内有效**。如果变量在样式表的最外层(不在任何代码块内)定义，则为全局变量，可在整个 Sass 文件或导入的文件中使用。例如：
+Sass 变量默认是**局部变量**，仅在定义它的**代码块内有效**；如果变量在样式表的最外层(不在任何代码块内)定义，则为全局变量，可在整个 Sass 样式表或者下游文件里使用。例如：
 
 ```scss
 $myColor: red;
@@ -42,87 +44,112 @@ h1 {
   color: $myColor;
 }
 
-p { color: $myColor; }
+p {
+  color: $myColor;
+}
 ```
 
 这将会输出
 
 ```css
-h1 { color: green; }
-p { color: red; }
+h1 {
+  color: green;
+}
+
+p {
+  color: red;
+}
 ```
 
-> 如果在局部作用域内定义了与全局变量同名的变量，那么**局部变量会覆盖全局变量**，仅在当前代码块内生效。
+> 如果在局部作用域内定义了与全局变量同名的变量，那么**局部变量则会遮蔽全局变量**(即 [Shadowing](https://sass-lang.com/documentation/variables/#shadowing))，该变量仅在当前代码块内生效。
 {: .prompt-warning}
 
-在局部作用域内，可以使用`!global`将变量显式声明为全局变量，覆盖之前定义的**同名全局变量**。例如：
+在局部作用域内，可以使用`!global`将变量显式声明为全局变量，遮蔽之前定义的**同名全局变量**。例如：
 
 ```scss
 $myColor: red;
 
+@mixin change-color {
+  #myColor: green !global;  // 强制遮蔽
+};
+
 h1 {
-  $myColor: green !global;
+  @include change-color;
   color: $myColor;
 }
 
-p { color: $myColor; }
+p {
+  color: $myColor;
+}
 ```
 
 这将会输出
 
 ```css
-h1 { color: green; }
-p { color: green; }
+h1 {
+  color: green;
+}
+
+p {
+  color: green;
+}
 ```
 
-> `!global`只能用于设置已经在样式表顶层声明的变量。它不能用于声明一个新变量！
+若`change-color`没有被调用，那么`<h1>`与`<p>`的属性值则会为`red`。
+
+> `!global`只能用于遮蔽已经在样式表顶层声明的变量，不能用于声明一个新变量！
 {: .prompt-danger}
 
-> 全局变量应该定义在任何代码块之外，最好使用单独的样式表定义所有全局变量，并使用`@include`导入。
-{: .prompt-warning}
-
-在声明变量时，变量值也可以引用其他变量。当通过粒度区分，为不同的值取不同名字时，这相当有用。下面这例子中，我们在独立的颜色值粒度上定义了一个变量，且在另一个更复杂的边框值粒度上也定义了一个变量：
+在声明变量时，变量值也可以引用其他变量。当通过粒度区分，为不同的值取不同名字时会相当有用。下面这例子中，我们在独立的颜色值粒度上定义了一个变量，且在另一个更复杂的边框值粒度上也定义了一个变量：
 
 ```scss
 $highlight-color: blue;
 $highlight-border: 1px solid $highlight-color;
 
-.selected { border: $highlight-border; }
+.selected {
+  border: $highlight-border;
+}
 ```
 
 ### 默认变量
 
-一般情况下，如果反复声明一个变量，那么只有最后一次声明才有效，并且它会覆盖前面所声明过的所有值。
+一般情况下，如果反复声明一个变量，那么只有**最后一次**声明才有效，并且它会覆盖前面所声明过的所有值。可以在变量的结尾添加`!default`，这会给一个未通过`!default`声明的变量赋值。只有当变量**未定义**或者它的值为`null`时，才会将值赋给该变量，否则将会使用默认值。
 
-那么在变量的结尾添加`!default`，这会给一个未通过`!default`声明的变量赋值。只有当变量**未定义**或其值为`null`时，才会将值赋给该变量；否则他将会使用默认值。
-
-这样做的好处是：如果在导入 Sass 引用文件之前声明了一个变量，那么引用文件中再对该变量赋值的操作则会失效；如果在引用文件里没有对该变量进行赋值，则会使用默认值。例如：
+这样做的好处是：如果在 Sass 样式文件里已经声明了一个变量，那么下游文件再对该变量进行声明的操作将会失效；如果下游文件里没有对该变量进行赋值，则会使用样式文件的默认值。例如：
 
 ```scss
 // _library.scss
 $content: "First content";
+```
 
+```scss
 // style.scss
 @import "library"
 $content: "Second content?" !default;  // 这不会生效！
 
-div { content: $content; }
+div {
+  content: $content;
+}
 ```
 
 这将会输出
 
 ```css
-div { content: "First content"; }
+div {
+  content: "First content";
+}
 ```
 
-可以使用`@use <url> with ( <variable>: <value>[, ...] );`覆盖掉变量的默认值，但是仅当变量声明在样式表顶部时才会生效！
+在 Sass 中，可以使用`@use <url> with ( <variable>: <value>[, ...] );`配置变量的值，当且仅当变量定义在样式表顶部，并且用`!default`声明时才会生效！
 
 ```scss
 // _library.scss
 $black: #000 !default;
 $border-radius: 0.25rem !default;
 $box-shadow: 0 0.5rem 1rem rgba($black, 0.15) !default;
+```
 
+```scss
 // style.scss
 @use 'library' with (
   $black: #222,
@@ -134,7 +161,7 @@ $box-shadow: 0 0.5rem 1rem rgba($black, 0.15) !default;
 
 ### 控制流中的变量作用域
 
-在流控制中声明的变量有特殊的作用域规则：新的声明会新值赋给这些变量，而不是由局部变量覆盖全局变量。这就使得很容易地为变量赋值定义规则，或者在循环中不断迭代或计算值。例如：
+在控制流中声明的变量有特殊的作用域规则：新的声明会赋值给这些变量，而不是由局部变量遮蔽全局变量。这就使得很容易地为变量赋值定义规则，或者在循环中不断迭代或计算值。例如：
 
 ```scss
 $dark-theme: true !default;
@@ -163,7 +190,7 @@ $accent-color: hsl(277, 70%, 35%) !default;
 }
 ```
 
-> 流控制作用域中的变量可以赋值给外部作用域中的现有变量，但是在流控制作用域中声明的新变量在外作用域中将无法访问。需要确保在给变量赋值之前已经声明了该变量，即需要将其声明为`null`。
+> 控制流作用域中的声明可以赋值给外部作用域里的变量，但是控制流作用域中定义的变量无法在外作用域里访问。要确保在给控制流作用域中的变量赋值之前已经定义了该变量，在外部将其声明为`null`或者其他值。
 {: .prompt-warning}
 
 ## 插值语句
@@ -574,8 +601,6 @@ Sass 有一种特殊的选择器，称为“占位符”。它的外观和功能
 
 `@use`能够从其他 Sass 样式表加载混合宏、函数和变量等，并将多个样式表中的 CSS 组合在一起。通过`@use`加载的样式表被称为模块(modules)。任何以`@use`加载的样式，无论加载了多少次都会在编译后的 CSS 输出中只包含一次。
 
-除`@forward`之外，`@use`的使用必须位于其他指令之前。可以在`@use`前先声明变量，以便在配置模块时使用：
-
 #### 加载成员
 
 按照下面的方法使用`@use`载入的成员(混合宏、函数和变量等)：
@@ -635,7 +660,7 @@ $radius: 3px;
 }
 ```
 
-> 建议只对自己编写的样式表这样做；否则可能会引入新成员，导致名称冲突！
+> 除`@forward`之外，`@use`的使用必须位于其他指令之前。可以在`@use`前先声明变量，以便在配置模块时使用。
 {: .prompt-warning}
 
 #### 创建私有成员
@@ -746,20 +771,115 @@ library.$color: blue;
 
 ### @forward
 
-`@forward`指令能够加载一个 Sass 样式表，并在使用`@use`加载样式表时使混合宏、函数和变量等可用。它使得跨许多文件组织 Sass 库成为可能，同时允许它们的用户加载单个入口点文件。
+`@forward`指令能够加载一个 Sass 样式表，并在使用`@use`加载样式表时使混合宏、函数和变量等可用。它使得跨许多文件组织 Sass 库成为可能，同时允许它们的用户加载单个入口文件。
+
+被`@forward`加载模块中的公共变量仅在引用文件里可用，在该模块中不可用。例如：
+
+```scss
+// _list.scss
+@mixin list-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// bootstrap.scss
+@forward "list";
+
+// styles.scss
+@use "bootstrap";
+
+li {
+  @include bootstrap.list-reset;  // `list-reset`在`bootstrap.scss`中不可用！
+}
+```
+
+#### 设置前缀
+
+由于模块成员通常与名称空间一起使用，因此简短的名称通常是最易读的选项。但是这些名称在定义它们的模块之外可能没有意义，因此`@forward`指令可以选择为它的所有成员添加额外的前缀。其写法为`@forward "<url>" as <prefix>-*`，它将给定的前缀添加到模块的每个混合宏，函数和变量名等的开头。例如如果模块定义了一个名为`reset`的成员，并将其命名为`list-*`，则下游样式表将把它引用为`list-reset`：
+
+```scss
+// _list.scss
+@mixin reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// bootstrap.scss
+@forward "list" as list-*;
+
+// styles.scss
+@use "bootstrap";
+
+li {
+  @include bootstrap.list-reset;
+}
+```
+
+#### 控制可用性
+
+有时可能不希望从模块使用每个成员，需要将某些成员保留为私有，可能希望要求用户以不同的方式加载某些成员。那么可以通过`@forward "<url>" hide <members...>`或者`@forward "<url>" show <members...>`来控制哪些成员可以被使用。例如：
+
+```scss
+// _list.scss
+$horizontal-list-gap: 2em;
+
+@mixin list-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin list-horizontal {
+  @include list-reset;
+
+  li {
+    display: inline-block;
+    margin: {
+      left: -2px;
+      right: $horizontal-list-gap;
+    }
+  }
+}
+
+// bootstrap.scss
+@forward "list" hide list-reset, $horizontal-list-gap;
+```
+
+#### 配置模块
+
+`@forward`还可以用配置加载模块，这与`@use`的工作原理基本相同，但是`@forward`的配置可以在其配置中使用`!default`。这允许模块更改上游样式表的默认值，同时仍然允许下游样式表覆盖它们。
+
+```scss
+// _library.scss
+$black: #000 !default;
+$border-radius: 0.25rem !default;
+$box-shadow: 0 0.5rem 1rem rgba($black, 0.15) !default;
+
+code {
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+}
+
+// _opinionated.scss
+@forward 'library' with (
+  $black: #222 !default,
+  $border-radius: 0.1rem !default
+);
+
+// style.scss
+@use 'opinionated' with ($black: #333);
+```
 
 ### @import
 
-Sass 拓展了`@import`的功能，允许其导入 SCSS 或 Sass 文件。被导入的文件将合并编译到同一个 CSS 文件中，另外被导入的文件中所包含的变量或者`@mixin`都可以在导入的文件中使用。
+Sass 拓展了`@import`的功能，允许其导入 SCSS 或 Sass 文件。被导入的文件将合并编译到同一个 CSS 文件中，另外被导入的文件中所包含的变量或者混合宏都可以在导入的文件中使用。如果同一份样式表被多次导入，则`@import`每次都会重新执行。
 
-通常`@import`寻找 Sass 文件并将其导入，但在以下情况下 `@import`仅作为普通的 CSS 语句，不会导入任何 Sass 文件：
+> 在最新的 Sass 编写规范中，`@import`已经弃用，建议使用`@use`和`@forward`代替！
+{: .prompt-danger}
 
-- 文件拓展名是`.css`；
-- 文件名以`http://`开头；
-- 文件名是`url()`；
-- `@import`包含[`media queries`](https://www.w3.org/TR/mediaqueries-3)。
-
-Sass 允许同时导入多个文件，导入文件也可以使用`#{ }`插值语句，但不是通过变量动态导入 Sass 文件，只能作用于 CSS 的`url()`导入方式：
+Sass 允许同时导入多个文件，导入文件也可以使用`#{}`插值语句，但不是通过变量动态导入 Sass 文件，只能作用于 CSS 的`url()`导入方式：
 
 ```scss
 $family: unquote("Droid+Sans");
@@ -784,6 +904,14 @@ $family: unquote("Droid+Sans");
 
 > 在`@mixin`指令和控制流语句中不可以使用嵌套的`@import`！
 {: .prompt-danger}
+
+
+`@use`旨在取代旧的`@import`指令，但它的工作方式被有意设计得不同。以下是两者之间的一些主要区别：
+
+- `@use`只使变量、函数和混合宏在当前文件的作用域中可用，它从不将它们添加到全局作用域。这使得找出 Sass 文件引用的每个名称的来源变得容易，并且意味着可以使用更短的名称而不会有任何冲突的风险；
+- `@use`只加载每个文件一次。这确保了不会意外地多次复制依赖项的 CSS；
+- `@use`必须出现在文件的开头，不能嵌套在样式规则中。嵌套导入可以迁移到混合宏中调用或`meta.load-css()`中；
+- `@use`加载的模块必须使用有引号字符串。
 
 ### @media
 

@@ -1,56 +1,45 @@
-// post 的“分享到”功能
-// html 文件位于 _include/article/top/custom.thml
-// js 文件位于 _include/scripts/wechat-share.js
-
+// 定义分享功能的区域
 .share-section {
   display: flex;
   align-items: center;
   margin-right: 20px;
 }
 
+// 分享按钮的样式
 .share-buttons {
   display: flex;
   gap: 5px;
   align-items: center;
 
-  a {
-    display: inline-block;
-    width: auto;
-    height: auto;
+  .share-icon {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s;
 
-    img {
-      width: 32px;
-      height: 32px;
-      transition: transform 0.3s;
-
-      &:hover {
-        transform: scale(1.2);
-      }
+    &:hover {
+      transform: scale(1.2);
     }
   }
 }
 
-/* 微信二维码 */
+// 微信二维码
 .share-wechat-container {
   position: relative; // 使二维码的定位基于此容器
 
-  .share-wechat {
-    display: inline-block;
-    position: relative;
+  .wechat-qrcode {
+    display: none; // 默认隐藏二维码
+    position: absolute; // 绝对定位
+    right: -70px; // 控制二维码相对于图标的水平位置
+    padding: 10px;
+    background: #fff;
+    border: {
+      width: 1px;
+      style: solid;
+      color: #ddd;
+    }
   }
 
   &:hover .wechat-qrcode {
     display: block;
   }
-}
-
-.wechat-qrcode {
-  display: none; // 默认隐藏二维码
-  position: absolute; // 绝对定位
-  top: 50px; // 控制二维码相对于图标的垂直位置
-  right: -70px; // 控制二维码相对于图标的水平位置
-  padding: 10px;
-  border: 1px solid #ddd;
-  background: #fff;
-  z-index: 100; // 确保二维码位于图标上方
 }

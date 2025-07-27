@@ -3,10 +3,10 @@
   display: flex; /* 保证原本的布局风格 */
   align-items: flex-start;
   justify-content: space-between; /* 保持绝对距离 */
-}
 
-.post-options > .share-section,
-.post-options > .appreciate-container,
-.post-options > .multimedia {
-  flex-grow: 2; /* 确保每个元素均匀分布 */
+  .share-section,
+  .appreciate-container,
+  .multimedia {
+    flex-grow: 2; /* 确保每个元素均匀分布 */
+  }
 }

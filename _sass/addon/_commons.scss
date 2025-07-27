@@ -1,9 +1,5 @@
 @import "module";
 
-html {
-  @include light-scheme;
-}
-
 .article__content {
   @include box("info", "\f06a");
   @include box("tip", "\f0eb", "regular");
@@ -124,7 +120,7 @@ details {
     overflow-x: auto;
     border-spacing: 0;
 
-    > thead {
+    thead {
       border-bottom: solid 2px rgba(210, 215, 217, 0.75);
       text-align: center;
 
@@ -133,7 +129,7 @@ details {
       }
     }
 
-    > tbody {
+    tbody {
       tr {
         border-bottom: 1px solid #eaeaea;
 

@@ -2,14 +2,32 @@
 /* js 文件位于 _include/scripts/clipboard.js */
 /* 被引用在 _layout/article.html */
 
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes backgroundFadeOut {
+  from {
+    background-color: #4caf50;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
 .copy-success {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   transition: background-color 1s ease-out;
   position: relative;
   overflow: hidden;
-  
+
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -22,25 +40,9 @@
   animation: backgroundFadeOut 2s forwards;
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
+.code-header {
+  button {
+    transition: background-color 0.3s ease;
+    position: relative;
   }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes backgroundFadeOut {
-  from {
-    background-color: #4CAF50;
-  }
-  to {
-    background-color: transparent;
-  }
-}
-
-.code-header button {
-  transition: background-color 0.3s ease;
-  position: relative;
 }

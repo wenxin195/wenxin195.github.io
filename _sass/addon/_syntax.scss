@@ -13,7 +13,7 @@ html {
   padding-right: 1.5rem;
 }
 
-/*代码块标识头*/
+// 代码块标识头
 .code-header {
   @extend %no-cursor;
 
@@ -24,11 +24,11 @@ html {
   margin-left: 0.75rem;
   margin-right: 0.25rem;
 
-  /* the label block */
+  // the label block
   span {
     line-height: 2.25rem;
 
-    /* label icon */
+    // label icon
     i {
       font-size: 1rem;
       width: 1.75;
@@ -39,13 +39,13 @@ html {
       }
     }
 
+    // center the file icon
     @at-root [file] #{&} > i {
       position: relative;
       top: 1px;
-      /* center the file icon */
     }
 
-    /* label text */
+    // label text
     &::after {
       content: attr(data-label-text);
       font-size: 0.85rem;
@@ -55,7 +55,7 @@ html {
     }
   }
 
-  /* clipboard */
+  // clipboard
   button {
     @extend %cursor-pointer;
     @extend %rounded;
@@ -84,7 +84,7 @@ html {
   }
 }
 
-/* 代码块高亮部分 */
+// 代码块高亮部分
 .highlight {
   @extend %rounded;
   @extend %code-snippet-bg;
@@ -113,10 +113,8 @@ html {
         font-size: 0.85rem;
         line-height: 1.4rem;
         word-wrap: normal;
-        overflow: visible;
-        /* Fixed iOS safari overflow-x */
-        word-break: normal;
-        /* Fixed iOS safari linenos code break */
+        overflow: visible; // Fixed iOS safari overflow-x
+        word-break: normal; // Fixed iOS safari linenos code break
       }
 
       &.rouge-code {
@@ -142,7 +140,7 @@ html {
   }
 }
 
-/*行内代码高亮部分*/
+// 行内代码高亮部分
 code {
   -webkit-hyphens: none;
   -ms-hyphens: none;
@@ -166,8 +164,7 @@ code {
   }
 
   a > &.highlighter-rouge {
-    padding-bottom: 0;
-    /* show link's underlinke */
+    padding-bottom: 0; // show link's underline
     color: inherit;
   }
 
@@ -180,7 +177,7 @@ code {
   }
 }
 
-/* Hide line numbers for default, console, and terminal code snippets */
+// Hide line numbers for default, console, and terminal code snippets
 div {
   &.nolineno,
   &.language-plaintext,

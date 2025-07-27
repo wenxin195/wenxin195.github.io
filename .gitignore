@@ -19,10 +19,6 @@ node_modules/
 *.gem
 
 yarn.lock
-package-lock.json
-Gemfile.lock
-module_use.md
-modify-instructions.md
 
 _site/
 _drifts/

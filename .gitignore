@@ -19,6 +19,7 @@ node_modules/
 *.gem
 
 yarn.lock
+Gemfile.lock
 
 _site/
 _drifts/

@@ -19,7 +19,7 @@ group :jekyll_plugins do
   gem 'jekyll-titles-from-headings'
   gem 'nokogiri'
   gem 'jekyll-include-cache'
-  gem 'wdm'
+  # gem 'wdm' if Gem.win_platform?
 end
 
 # 时区管理

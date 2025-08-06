@@ -1,17 +1,24 @@
+@use "style";
+@use "common/classes/shadow";
+
 .article__content {
-  img.shadow, .shadow > img {
-    @include box-shadow();  // 为图片添加阴影效果
+  img.shadow,
+  .shadow > img {
+    @include shadow.box-shadow(); // 为图片添加阴影效果
   }
 
-  img.border, .border > img {
-    border: 1px solid $border-color-l;  // 为图片添加边框
+  img.border,
+  .border > img {
+    border: 1px solid style.$border-color; // 为图片添加边框
   }
 
-  img.rounded, .rounded > img {
-    border-radius: map-get($base, border-radius);  // 为图片添加圆角效果
+  img.rounded,
+  .rounded > img {
+    border-radius: 0.4rem; // 为图片添加圆角效果
   }
 
-  img.circle, .circle > img {
-    border-radius: 50%;  // 为图片添加圆形裁剪效果
+  img.circle,
+  .circle > img {
+    border-radius: 50%; // 为图片添加圆形裁剪效果
   }
 }

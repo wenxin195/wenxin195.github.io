@@ -1,141 +1,75 @@
-@import "module";
+@use "module";
 
-.article__content {
-  @include box("info", "\f06a");
-  @include box("tip", "\f0eb", "regular");
-  @include box("warning", "\f06a");
-  @include box("danger", "\f071");
+// 不可展开的提示框
+@each $type, $icon-content in module.$addon-types {
+  @include module.box($type, $icon-content);
 }
 
+// prompt类
 blockquote {
-  border-left: 0.125rem solid #eeeeee;
-  padding-left: 1rem;
-  color: #757575;
-  margin-top: 0.5rem;
-
-  > p {
-    margin: 0 !important;
-
-    &:last-child {
-      margin-top: 0;
+  p {
+    margin: {
+      top: 0 !important;
+      bottom: 0 !important;
     }
   }
 
-  &[class|="prompt"] {
-    font-size: 1rem;
-    line-height: 1.4rem; // 设置与图标相近的行高
-    border-left: 0;
-    position: relative;
-    padding: 1rem 1rem 1rem 3rem;
-    color: rgba(46, 46, 46, 0.77);
-
-    @extend %rounded;
-
-    &::before {
-      text-align: center;
-      width: 3rem;
-      position: absolute;
-      left: 0.25rem;
-      margin-top: 0.4rem;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
-    }
+  @each $type, $icon-content in module.$addon-types {
+    @include module.prompt($type, $icon-content);
   }
-
-  @include prompt("tip", "\f0eb", $fa-style: "regular");
-  @include prompt("info", "\f06a", $rotate: 180);
-  @include prompt("warning", "\f06a");
-  @include prompt("danger", "\f071");
 }
 
+// 定理类
 details {
-  border-radius: 0.25rem;
-  box-shadow: #ececec 1px 1px 2px 1px; //借用了代码框的边框颜色变量
-  font-family: (
-    "Times New Roman",
-    "SimSun",
-    "Segoe UI",
-    Helvetica,
-    Arial,
-    sans-serif
-  );
-  margin-bottom: 1rem;
-  padding: 0.6rem 1rem 0.6rem 1.5rem;
-
-  > p:last-child {
-    margin-bottom: 0;
+  p:last-child {
+    margin-bottom: 0 !important;
   }
 
-  > summary {
-    padding: 0.5rem 1rem 0.5rem 1rem;
-    margin: -0.6rem -1rem -0.6rem -1.5rem;
-    font-weight: 600;
-    position: relative;
-    list-style: none; //隐藏默认的箭头
-    transition: background-color 0.3s ease; //添加颜色过渡效果
-    text-decoration: none; //去除下划线
-
-    &::before {
-      margin-right: 0.5rem;
-      display: inline-block;
-    }
-
-    &::after {
-      font-family: "Font Awesome 6 Free";
-      content: "\f105"; //Unicode for fa-angle-down
-      display: inline-block;
-      transition: transform 0.2s ease; //添加旋转动画
-      position: absolute;
-      right: 1rem; //调整箭头在最右边的位置
-    }
+  @each $class, $type in module.$math-types {
+    @include module.details($class, $type);
   }
 
   &[open] {
     > summary {
-      // transition: margin 200ms ease-out;
-      margin-bottom: 0.6rem; // 展开会有动画效果
-
-      &::before {
-        margin-right: 0.5rem;
-      }
+      margin-bottom: 0.6rem;
+      transition: margin 200ms ease-out;
 
       &::after {
         transform: rotate(90deg);
       }
     }
   }
-
-  @include details("definition", "tip");
-  @include details("theorem", "warning");
-  @include details("proposition", "info");
-  @include details("example", "danger");
 }
 
+// 表格样式
 .table-wrapper {
-  overflow-x: auto;
+  overflow-x: auto; // 添加水平滚动条
   margin-bottom: 1.5rem;
 
   > table {
     min-width: 100%;
-    overflow-x: auto;
     border-spacing: 0;
 
     thead {
-      border-bottom: solid 2px rgba(210, 215, 217, 0.75);
       text-align: center;
+      border-bottom: 2px solid module.$thead-color;
 
-      th {
+      > th {
         @extend %table-cell;
       }
     }
 
     tbody {
       tr {
-        border-bottom: 1px solid #eaeaea;
+        border-bottom: 1px solid module.$thead-color;
 
-        td {
-          @extend %table-cell;
+        > th {
+          text-align: center;
         }
+      }
+
+      td {
+        @extend %table-cell;
       }
     }
   }

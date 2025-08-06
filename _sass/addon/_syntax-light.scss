@@ -1,192 +1,146 @@
 @mixin light-syntax {
-  .highlight table td {
-    padding: 5px;
-  }
+  .highlight {
+    table {
+      td {
+        padding: 5px;
+      }
+      pre {
+        margin: 0;
+      }
+    }
 
-  .highlight table pre {
-    margin: 0;
-  }
+    &,
+    .w {
+      color: #24292f;
+      background-color: #f6f8fa;
+    }
 
-  .highlight,
-  .highlight .w {
-    color: #24292f;
-    background-color: #f6f8fa;
-  }
+    // 红色系列
+    .k,
+    .kd,
+    .kn,
+    .kp,
+    .kr,
+    .kt,
+    .kv {
+      color: #cf222e;
+    }
+    .gr {
+      color: #f6f8fa;
+    }
+    .gd {
+      color: #82071e;
+      background-color: #ffebe9;
+    }
 
-  .highlight .k,
-  .highlight .kd,
-  .highlight .kn,
-  .highlight .kp,
-  .highlight .kr,
-  .highlight .kt,
-  .highlight .kv {
-    color: #cf222e;
-  }
+    // 橙色系列
+    .nb,
+    .nc,
+    .no,
+    .nn {
+      color: #953800;
+    }
 
-  .highlight .gr {
-    color: #f6f8fa;
-  }
+    // 绿色系列
+    .sr,
+    .na,
+    .nt {
+      color: #116329;
+    }
+    .gi {
+      color: #116329;
+      background-color: #dafbe1;
+    }
 
-  .highlight .gd {
-    color: #82071e;
-    background-color: #ffebe9;
-  }
+    // 蓝色系列
+    .kc,
+    .l,
+    .ld,
+    .m,
+    .mb,
+    .mf,
+    .mh,
+    .mi,
+    .il,
+    .mo,
+    .mx,
+    .sb,
+    .bp,
+    .ne,
+    .nl,
+    .py,
+    .nv,
+    .vc,
+    .vg,
+    .vi,
+    .vm,
+    .o,
+    .ow {
+      color: #0550ae;
+    }
 
-  .highlight .nb {
-    color: #953800;
-  }
+    .gh,
+    .gu {
+      color: #0550ae;
+      font-weight: bold;
+    }
 
-  .highlight .nc {
-    color: #953800;
-  }
+    // 深蓝色系列
+    .s,
+    .sa,
+    .sc,
+    .dl,
+    .sd,
+    .s2,
+    .se,
+    .sh,
+    .sx,
+    .s1,
+    .ss {
+      color: #0a3069;
+    }
 
-  .highlight .no {
-    color: #953800;
-  }
+    // 紫色系列
+    .nd,
+    .nf,
+    .fm {
+      color: #8250df;
+    }
 
-  .highlight .nn {
-    color: #953800;
-  }
+    // 错误样式
+    .err {
+      color: #f6f8fa;
+      background-color: #82071e;
+    }
 
-  .highlight .sr {
-    color: #116329;
-  }
+    // 灰色系列
+    .c,
+    .ch,
+    .cd,
+    .cm,
+    .cp,
+    .cpf,
+    .c1,
+    .cs,
+    .gl,
+    .gt {
+      color: #68717a;
+    }
 
-  .highlight .na {
-    color: #116329;
-  }
+    // 默认色系列
+    .ni,
+    .si {
+      color: #24292f;
+    }
 
-  .highlight .nt {
-    color: #116329;
-  }
+    .ge {
+      color: #24292f;
+      font-style: italic;
+    }
 
-  .highlight .gi {
-    color: #116329;
-    background-color: #dafbe1;
-  }
-
-  .highlight .kc {
-    color: #0550ae;
-  }
-
-  .highlight .l,
-  .highlight .ld,
-  .highlight .m,
-  .highlight .mb,
-  .highlight .mf,
-  .highlight .mh,
-  .highlight .mi,
-  .highlight .il,
-  .highlight .mo,
-  .highlight .mx {
-    color: #0550ae;
-  }
-
-  .highlight .sb {
-    color: #0550ae;
-  }
-
-  .highlight .bp {
-    color: #0550ae;
-  }
-
-  .highlight .ne {
-    color: #0550ae;
-  }
-
-  .highlight .nl {
-    color: #0550ae;
-  }
-
-  .highlight .py {
-    color: #0550ae;
-  }
-
-  .highlight .nv,
-  .highlight .vc,
-  .highlight .vg,
-  .highlight .vi,
-  .highlight .vm {
-    color: #0550ae;
-  }
-
-  .highlight .o,
-  .highlight .ow {
-    color: #0550ae;
-  }
-
-  .highlight .gh {
-    color: #0550ae;
-    font-weight: bold;
-  }
-
-  .highlight .gu {
-    color: #0550ae;
-    font-weight: bold;
-  }
-
-  .highlight .s,
-  .highlight .sa,
-  .highlight .sc,
-  .highlight .dl,
-  .highlight .sd,
-  .highlight .s2,
-  .highlight .se,
-  .highlight .sh,
-  .highlight .sx,
-  .highlight .s1,
-  .highlight .ss {
-    color: #0a3069;
-  }
-
-  .highlight .nd {
-    color: #8250df;
-  }
-
-  .highlight .nf,
-  .highlight .fm {
-    color: #8250df;
-  }
-
-  .highlight .err {
-    color: #f6f8fa;
-    background-color: #82071e;
-  }
-
-  .highlight .c,
-  .highlight .ch,
-  .highlight .cd,
-  .highlight .cm,
-  .highlight .cp,
-  .highlight .cpf,
-  .highlight .c1,
-  .highlight .cs {
-    color: #68717a;
-  }
-
-  .highlight .gl {
-    color: #68717a;
-  }
-
-  .highlight .gt {
-    color: #68717a;
-  }
-
-  .highlight .ni {
-    color: #24292f;
-  }
-
-  .highlight .si {
-    color: #24292f;
-  }
-
-  .highlight .ge {
-    color: #24292f;
-    font-style: italic;
-  }
-
-  .highlight .gs {
-    color: #24292f;
-    font-weight: bold;
+    .gs {
+      color: #24292f;
+      font-weight: bold;
+    }
   }
 }

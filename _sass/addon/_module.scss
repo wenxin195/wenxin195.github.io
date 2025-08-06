@@ -1,18 +1,12 @@
-@import "colors";
+@use "sass:map";
+@use "colors";
+@forward "colors";
 
-%rounded {
-  border-radius: 10px;
-}
-
-%no-cursor {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-%cursor-pointer {
-  cursor: pointer;
+%code-snippet-padding {
+  padding: {
+    left: 1rem;
+    right: 1.5rem;
+  }
 }
 
 %text-highlight {
@@ -26,34 +20,35 @@
   white-space: nowrap;
 }
 
-@mixin prompt($type, $fa-content, $fa-style: "solid", $rotate: 0) {
-  &[class*=#{$type}] {
-    background-color: map-get($prompt-colors, #{$type}-bg);
+@mixin text-color($type) {
+  color: map.get(colors.$prompt-colors, #{$type}-color);
+}
 
-    &::before {
-      content: $fa-content;
-      color: map-get($prompt-colors, #{$type}-color);
-      font: var(--fa-font-#{$fa-style});
-      font-size: 1.5rem;
-      vertical-align: middle; // 设置垂直对齐
-      margin-top: -0.1rem;
+@mixin background-color($type) {
+  background-color: map.get(colors.$prompt-colors, #{$type}-bg);
+}
 
-      @if $rotate !=0 {
-        transform: rotate(#{$rotate}deg);
-      }
-    }
+@mixin box-base-style($type) {
+  box-shadow: 1px 1px 2px 1px #ececec;
+  padding: 0.6rem 1rem 0.6rem 1.5rem;
+  margin-bottom: 1rem;
+  border: {
+    left: 0.2rem solid map.get(colors.$prompt-colors, #{$type}-color);
+    radius: 0.25rem;
   }
 }
 
-@mixin details($class, $type) {
-  &.details-#{$class} {
-    border-left: 0.2rem solid map-get($prompt-colors, #{$type}-color);
+@mixin box-title-style(
+  $type,
+  $padding: 0.5rem 1rem,
+  $margin: -0.6rem -1rem 0.6rem -1.5rem
+) {
+  font-weight: 600;
+  padding: $padding;
+  margin: $margin;
 
-    > summary {
-      background-color: map-get($prompt-colors, #{$type}-bg);
-      color: map-get($prompt-colors, #{$type}-color);
-    }
-  }
+  @include text-color($type);
+  @include background-color($type);
 }
 
 @mixin ml-mr($value) {
@@ -63,59 +58,107 @@
   }
 }
 
-@mixin colorbox($border-color, $icon-color, $icon-content, $bg-color, $fa-style: "solid") {
-  border-left: 0.2rem solid $border-color;
-  border-radius: 0.25rem;
-  color: var(--text-color);
-  padding: 0.6rem 1rem 0.6rem 1.5rem;
-  box-shadow: #ececec 1px 1px 2px 1px;
-  position: relative;
-  margin-bottom: 1rem;
-
-  > .title {
-    background-color: $bg-color;
-    color: $icon-color;
-    padding: 0.5rem 0.6rem 0.5rem 3rem;
-    margin: -0.6rem -1rem 0.6rem -1.5rem;
-    font-weight: 600;
-
-    &:empty {
-      display: none;
-      margin: 0;
-      padding: 0;
+@mixin icon-font-adjustments($type) {
+  @if $type == "tip" {
+    font: var(--fa-font-regular) {
+      size: 1.5rem;
     }
-
-    &::before {
-      content: $icon-content;
-      color: $icon-color;
-      font: var(--fa-font-#{$fa-style});
-      font-size: 1.5rem;
-      text-align: center;
-      width: 3rem;
-      position: absolute;
-      left: 0.2rem;
-      margin-top: 0.2rem;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
+  } @else {
+    font: var(--fa-font-solid) {
+      size: 1.5rem;
     }
   }
 
-  p:last-child {
-    margin: {
-      bottom: 0;
-      top: 0;
+  @if $type == "info" {
+    transform: rotate(180deg);
+  }
+}
+
+@mixin icon-base-style($content, $top-offset: 0, $left-offset: 0.25rem) {
+  position: absolute;
+  width: 3rem;
+  text-align: center;
+  content: $content;
+  left: $left-offset;
+  margin-top: $top-offset;
+}
+
+@mixin prompt($type, $fa-content) {
+  &.prompt-#{$type} {
+    position: relative;
+    font-size: 1rem;
+    line-height: 1.4rem; // 设置与图标相近的行高
+    padding: 1rem 1rem 1rem 3rem;
+    color: rgba(46, 46, 46, 0.77);
+    border: {
+      left: 0.125rem solid #eeeeee;
+      radius: 10px;
+    }
+
+    @include background-color($type);
+
+    &::before {
+      @include icon-base-style($fa-content, -0.1rem);
+      @include text-color($type);
+      @include icon-font-adjustments($type);
     }
   }
 }
 
-@mixin box($type, $icon-content, $fa-style: "solid") {
-  &[class*=#{$type}] {
-    @include colorbox(
-      map-get($prompt-colors, #{$type}-color),
-      map-get($prompt-colors, #{$type}-color),
-      $icon-content,
-      map-get($prompt-colors, #{$type}-bg),
-      $fa-style
-    );
+@mixin details($class, $type) {
+  &.details-#{$class} {
+    @include box-base-style($type);
+
+    > summary {
+      position: relative;
+      list-style: none; // 隐藏默认的箭头
+      transition: background-color 0.3s ease; // 添加颜色过渡效果
+
+      @include box-title-style(
+        $type,
+        $padding: 0.5rem 1rem,
+        $margin: -0.6rem -1rem -0.6rem -1.5rem
+      );
+
+      &::after {
+        position: absolute;
+        right: 1rem; // 调整箭头在最右边的位置
+        font-family: "Font Awesome 6 Free";
+        content: "\f105"; // Unicode for fa-angle-down
+        transition: transform 0.2s ease; // 添加旋转动画
+      }
+    }
+  }
+}
+
+@mixin box($type, $icon-content) {
+  .box-#{$type} {
+    position: relative;
+
+    @include box-base-style($type);
+
+    .title {
+      @include box-title-style(
+        $type,
+        $padding: 0.5rem 0.6rem 0.5rem 3rem,
+        $margin: -0.6rem -1rem 0.6rem -1.5rem
+      );
+
+      &:empty {
+        display: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      &::before {
+        @include icon-base-style($icon-content, 0.1rem, 0.2rem);
+        @include text-color($type);
+        @include icon-font-adjustments($type);
+      }
+    }
+
+    p:last-child {
+      margin-bottom: 0 !important;
+    }
   }
 }

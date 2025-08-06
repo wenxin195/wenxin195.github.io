@@ -1,73 +1,64 @@
-@import "syntax-light";
+@use "syntax-light" as light;
+@use "module";
 
-html {
-  @include light-syntax;
-}
-
-%code-snippet-bg {
-  background-color: #f6f8fa;
-}
-
-%code-snippet-padding {
-  padding-left: 1rem;
-  padding-right: 1.5rem;
-}
+@include light.light-syntax;
 
 // 代码块标识头
 .code-header {
-  @extend %no-cursor;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 2.25rem;
-  margin-left: 0.75rem;
-  margin-right: 0.25rem;
+  height: module.$header-height;
+  margin: {
+    left: 0.75rem;
+    right: 0.25rem;
+  }
 
   // the label block
   span {
-    line-height: 2.25rem;
+    line-height: module.$header-height;
 
     // label icon
     i {
       font-size: 1rem;
       width: 1.75;
-      color: #c9c8c8;
+      color: module.$light-text-color;
 
       &.small {
         font-size: 70%;
       }
     }
 
-    // center the file icon
-    @at-root [file] #{&} > i {
-      position: relative;
-      top: 1px;
-    }
-
     // label text
     &::after {
       content: attr(data-label-text);
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #a3a3a3;
+      font: {
+        size: module.$code-font-size;
+        weight: 600;
+      }
+      color: module.$label-text-color;
       margin-left: 0.3rem;
     }
   }
 
+  [file] & > i {
+    position: relative;
+    top: 1px;
+  }
+
   // clipboard
   button {
-    @extend %cursor-pointer;
-    @extend %rounded;
-
-    border: 1px solid transparent;
-    height: 2.25rem;
-    width: 2.25rem;
+    border: 1px solid transparent {
+      radius: module.$border-radius;
+    }
+    height: module.$header-height;
+    width: module.$header-height;
     padding: 0;
     background-color: inherit;
+    cursor: pointer;
 
     i {
-      color: #c9c8c8;
+      color: module.$light-text-color;
     }
 
     &:focus {
@@ -86,22 +77,23 @@ html {
 
 // 代码块高亮部分
 .highlight {
-  @extend %rounded;
-  @extend %code-snippet-bg;
-
-  overflow: auto;
+  background-color: module.$code-bg-color;
+  overflow-x: auto;
   margin-top: -10px;
+  border-radius: module.$border-radius;
 
-  @at-root figure#{&} {
-    @extend %code-snippet-bg;
+  figure#{&} {
+    background-color: module.$code-bg-color;
   }
 
   table {
     td {
       &:first-child {
         display: inline-block;
-        margin-left: 1rem;
-        margin-right: 0.75rem;
+        margin: {
+          left: 1rem;
+          right: 0.75rem;
+        }
       }
 
       &:last-child {
@@ -110,11 +102,9 @@ html {
 
       pre {
         margin-bottom: 0;
-        font-size: 0.85rem;
+        font-size: module.$code-font-size;
         line-height: 1.4rem;
         word-wrap: normal;
-        overflow: visible; // Fixed iOS safari overflow-x
-        word-break: normal; // Fixed iOS safari linenos code break
       }
 
       &.rouge-code {
@@ -131,12 +121,7 @@ html {
 
   .lineno {
     text-align: right;
-    color: #9e9e9e;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    color: module.$lineno-color;
   }
 }
 
@@ -145,20 +130,20 @@ code {
   -webkit-hyphens: none;
   -ms-hyphens: none;
   hyphens: none;
-  color: #3a3a3a;
+  color: module.$dark-text-color;
 
   &.highlighter-rouge {
-    font-size: 0.85rem;
+    font-size: module.$code-font-size;
     padding: 3px 5px;
     word-break: break-word;
     border-radius: 6px;
-    background-color: #f9f2f4;
-    color: #c7254e;
+    background-color: module.$inline-code-bg;
+    color: module.$inline-code-color;
   }
 
   &.filepath {
     background-color: inherit;
-    color: #cacaca;
+    color: module.$filepath-color;
     font-weight: 600;
     padding: 0;
   }
@@ -194,15 +179,14 @@ div {
   }
 
   &[class^="language-"] {
-    @extend %rounded;
-    @extend %code-snippet-bg;
-
-    box-shadow: #ececec 0 0 0 1px;
+    background-color: module.$code-bg-color;
+    box-shadow: module.$border-color 0 0 0 1px;
+    border-radius: module.$border-radius;
 
     .content > & {
-      @include ml-mr(-1rem);
-
       border-radius: 0;
+
+      @include module.ml-mr(-1rem);
     }
 
     .highlight {
@@ -215,30 +199,29 @@ div {
 @media all {
   div[class^="language-"] {
     .content > & {
-      @include ml-mr(0);
+      border-radius: module.$border-radius;
 
-      border-radius: 10px;
+      @include module.ml-mr(0);
     }
 
     .code-header {
-      @include ml-mr(0);
-
-      $dot-margin: 1rem;
+      @include module.ml-mr(0);
 
       &::before {
         content: "";
         display: inline-block;
-        margin-left: $dot-margin;
+        margin-left: module.$dot-margin;
         width: 0.75rem;
         height: 0.75rem;
         border-radius: 50%;
-        background-color: #e5e5e5;
-        box-shadow: (0.75rem + 0.5rem) 0 0 #e5e5e5, (0.75rem + 0.5rem) * 2 0 0 #e5e5e5;
+        background-color: module.$dot-color;
+        box-shadow: (0.75rem + 0.5rem) 0 0 module.$dot-color,
+          (0.75rem + 0.5rem) * 2 0 0 module.$dot-color;
       }
 
       span {
         // center the text of label
-        margin-left: calc(($dot-margin + 0.75rem) / 2 * -1);
+        margin-left: calc((#{module.$dot-margin} + 0.75rem) / 2 * -1);
       }
     }
   }

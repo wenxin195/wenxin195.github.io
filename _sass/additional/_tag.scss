@@ -1,13 +1,7 @@
-@mixin tag($type, $color) {
-  code.#{$type} {
-    color: $text-color-function;
-    background-color: $color;
-  }
-}
+@use "style";
 
 .article__content {
-  @include tag("success", $green);
-  @include tag("info", $blue);
-  @include tag("warning", $yellow);
-  @include tag("error", $red);
+  @each $type, $color in style.$addtional-styles {
+    @include style.tag($type, $color);
+  }
 }

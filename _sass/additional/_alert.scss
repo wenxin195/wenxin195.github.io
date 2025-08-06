@@ -1,15 +1,7 @@
-@mixin arlert($type, $color) {
-  p.#{$type} {
-    padding: map-get($spacers, 2) map-get($spacers, 3);
-    background-color: rgba($color, .1);  // 10% 透明度
-    border: 1px solid $color;
-    border-radius: map-get($base, border-radius);
-  }
-}
+@use "style";
 
 .article__content {
-  @include arlert("success", $green);
-  @include arlert("info", $blue);
-  @include arlert("warning", $yellow);
-  @include arlert("error", $red);
+  @each $type, $color in style.$addtional-styles {
+    @include style.arlert($type, $color);
+  }
 }

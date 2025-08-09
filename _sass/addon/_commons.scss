@@ -7,10 +7,13 @@
 
 // prompt类
 blockquote {
-  p {
-    margin: {
-      top: 0 !important;
-      bottom: 0 !important;
+  P {
+    &:first-child {
+      margin-top: 0 !important;
+    }
+
+    &:last-child {
+      margin-bottom: 0 !important;
     }
   }
 

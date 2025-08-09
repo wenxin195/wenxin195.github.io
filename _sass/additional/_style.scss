@@ -1,6 +1,6 @@
 @use "sass:color";
 
-$addtional-styles: (
+$status-colors: (
   "success": #52c41a,
   "info": #1890ff,
   "warning": #fa8c16,
@@ -14,7 +14,7 @@ $border-radius: 0.4rem;
   border: 1px solid $color;
 }
 
-@mixin arlert($type, $color) {
+@mixin alert($type, $color) {
   p.#{$type} {
     padding: 0.5rem 1rem;
     background-color: rgba($color, 0.1); // 10% 透明度
@@ -28,5 +28,7 @@ $border-radius: 0.4rem;
   code.#{$type} {
     color: #fff;
     background-color: $color;
+    padding: 0.2rem 0.5rem; // 添加内边距以提高视觉效果
+    border-radius: $border-radius;
   }
 }

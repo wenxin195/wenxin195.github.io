@@ -1,7 +1,7 @@
 @use "style";
 
 .article__content {
-  @each $type, $color in style.$addtional-styles {
+  @each $type, $color in style.$status-colors {
     @include style.tag($type, $color);
   }
 }

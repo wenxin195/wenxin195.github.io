@@ -9,12 +9,12 @@
 
   img.border,
   .border > img {
-    border: 1px solid style.$border-color; // 为图片添加边框
+    @include style.border-style(style.$border-color); // 为图片添加边框
   }
 
   img.rounded,
   .rounded > img {
-    border-radius: 0.4rem; // 为图片添加圆角效果
+    border-radius: style.$border-radius; // 为图片添加圆角效果
   }
 
   img.circle,

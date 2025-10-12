@@ -14,15 +14,15 @@ refactor: true
 modify_date: "2025-07-20 11:45:00"
 ---
 
-Sass(Syntactically Awesome Style Sheets)是一个 CSS 预处理器，有助于减少 CSS 的重复代码并节省时间。它是一种更稳定、更强大的 CSS 扩展语言，能够结构化地描述文档的样式。
+Sass（Syntactically Awesome Style Sheets）是一款功能强大的 CSS 预处理器，它扩展了 CSS 语言，使得样式的编写更加结构化、稳定且高效。通过使用 Sass，可以减少 CSS 代码的冗余，提高样式的可维护性、可复用性，并使编写过程更加简便。
 
 <!--more-->
 
-Sass 在 CSS 语法的基础上增加了[变量](https://sass-lang.com/documentation/variables)、[嵌套规则](https://sass-lang.com/documentation/style-rules#nesting)、[混合宏](https://sass-lang.com/documentation/at-rules/mixin)、[继承](https://sass-lang.com/documentation/at-rules/extend/)和[函数](https://sass-lang.com/documentation/modules)等高级功能，并且所有语法均与 CSS 完全兼容，这使得 CSS 更易于维护、可复用且更易于编写。使用 Sass 有助于更好地组织管理样式文件，以及更高效地开发项目。
+在传统的 CSS 基础上，Sass 引入了[变量](https://sass-lang.com/documentation/variables)、[嵌套规则](https://sass-lang.com/documentation/style-rules#nesting)、[Mixins](https://sass-lang.com/documentation/at-rules/mixin)、[继承](https://sass-lang.com/documentation/at-rules/extend/)和[函数](https://sass-lang.com/documentation/modules)等高级功能，同时保持了与 CSS 的完全兼容性。这些增强功能让样式管理更加灵活，代码更易维护，也大大提升了开发效率，帮助开发者更好地组织和管理样式文件。
 
 ## Sass 变量
 
-Sass 变量的定义方式是：`<variable>: <expression>`，其中变量名使用`$`符号开头进行声明。
+Sass 变量的定义方式是：`<variable>: <expression>`，其中变量名使用`$`符号开头进行声明。例如：
 
 ```scss
 $myFont: Helvetica, sans-serif;
@@ -49,7 +49,7 @@ p {
 }
 ```
 
-这将会输出
+编译后得到：
 
 ```css
 h1 {
@@ -83,7 +83,7 @@ p {
 }
 ```
 
-这将会输出
+编译后得到：
 
 ```css
 h1 {
@@ -99,6 +99,9 @@ p {
 
 > `!global`只能用于遮蔽已经在样式表顶层声明的变量，不能用于声明一个新变量！
 {: .prompt-danger}
+
+> 全局变量应该定义在任何规则之外，最佳实践是编写一个全局变量样式表，并使用`@include`使用全局变量。
+{: .prompt-tip}
 
 在声明变量时，变量值也可以引用其他变量。当通过粒度区分，为不同的值取不同名字时会相当有用。下面这例子中，我们在独立的颜色值粒度上定义了一个变量，且在另一个更复杂的边框值粒度上也定义了一个变量：
 
@@ -132,7 +135,7 @@ div {
 }
 ```
 
-这将会输出
+编译后得到：
 
 ```css
 div {
@@ -180,7 +183,7 @@ $accent-color: hsl(277, 70%, 35%) !default;
 }
 ```
 
-这将会输出
+编译后得到：
 
 ```css
 .button {
@@ -195,7 +198,7 @@ $accent-color: hsl(277, 70%, 35%) !default;
 
 ## 插值语句
 
-在 Sass 中使用`#{}`定义一个插值语句，它几乎可以在 Sass 样式表的任何地方使用，任意数据类型、变量和运算操作等[^SassScript]都可以嵌入到代码块里。这在编写混合宏时特别有用，因为它允许创建选择器的过程中传入参数：
+Sass 中有一个插值语句(Interpolation)`#{}`，它几乎可以在 Sass 样式表的任何地方使用，任意数据类型、变量和运算操作等[^SassScript]都可以嵌入到代码块里。这在编写Mixins时特别有用，因为它允许创建选择器的过程中传入参数：
 
 ```scss
 @mixin corner-icon($name, $top-or-bottom, $left-or-right) {
@@ -219,7 +222,7 @@ p {
 }
 ```
 
-这将会输出
+编译后得到：
 
 ```css
 p { font: 12px/30px; }
@@ -229,14 +232,23 @@ p { font: 12px/30px; }
 
 ### 字符串
 
-Sass 字符串(Strings)支持**有引号字符串**(`'`或者`"`定义)和**无引号字符串**，在编译 CSS 文件时不会改变其类型。在实践中除了那些特殊的无引号字符串(例如颜色值)之外，最好都是用有引号字符串。
+Sass 字符串(Strings)支持**有引号字符串**(`'`或者`"`定义)和**无引号字符串**，在编译 CSS 文件时不会改变其类型。在实际操作中除了那些特殊的无引号字符串(例如颜色值)之外，最好都是用有引号字符串。
 
-Sass 中有许多[字符串函数](https://sass-lang.com/documentation/modules/string)，例如`string.unquote()`可以将有引号字符串转换成无引号字符串，`string.quote()`会将无引号字符串转换成无引号字符串。
+Sass 中有许多[字符串函数](https://sass-lang.com/documentation/modules/string)，例如：
 
-> 在使用插值语句`#{}`时，有引号字符串将被编译为无引号字符串。
-{: .prompt-tip}
+- [`string.unquote()`](https://sass-lang.com/documentation/modules/string/#unquote)可以将有引号字符串转换成无引号字符串，[`string.quote()`](https://sass-lang.com/documentation/modules/string/#quote)会将无引号字符串转换成无引号字符串；
 
-Sass 还有很多字符串索引函数，索引 1 表示字符串的第一个字符，索引 -1 表示字符串中的最后一个字符。例如`string.index()`与`string.slice()`。
+  > 在使用插值语句`#{}`时，有引号字符串将被编译为无引号字符串。
+  {: .prompt-tip}
+
+- [`string.index()`](https://sass-lang.com/documentation/modules/string/#index)能够返回指定字符串的第一个索引值，如果不包括该字符串则返回`null`；
+
+  > 在 Sass 中，索引 1 表示字符串的第一个字符，索引 -1 表示字符串中的最后一个字符。
+  {: .prompt-info}
+
+- [`string.slice()`](https://sass-lang.com/documentation/modules/string/#slice)可以返回指定索引的字符串切片；
+- [`string.insert()`](https://sass-lang.com/documentation/modules/string/#insert)可以在指定索引插入字符串；
+- [`string.split()`](https://sass-lang.com/documentation/modules/string/#split)能够按照特定分隔符的字符串分割成字符串列表。
 
 ### 数值
 
@@ -276,24 +288,24 @@ Sass 的百分比和其他单位一样，但是它们不能与小数相互转换
 > Sass 在处理精确小数的时候，会四舍五入地将小数保留至 10 位。
 {: .prompt-info}
 
-### 数组
+### 列表
 
-数组(Lists)可以指定多个值，这些值之间通过空格、逗号或者`/`分隔，也可以使用`[ ]`括起来，只要它们在数组中保持一致即可。单个值也被视为(只包含一个值的)数组，任何用空格或者逗号的表达式也会被视作是一个数组，空数组可以直接用`[]`表示。
+列表(Lists)可以指定多个值，这些值之间通过空格、逗号或者`/`分隔，也可以使用`[ ]`括起来，只要它们在列表中保持一致即可。单个值也被视为(只包含一个值的)列表，任何用空格或者逗号的表达式也会被视作是一个列表，空列表可以直接用`[]`表示。
 
-> 使用`/`分隔数组已经被**弃用**，推荐使用`list.slash($elements...)`代替。
+> 使用`/`分隔列表已经被**弃用**，推荐使用`list.slash($elements...)`代替。
 {: .prompt-warning}
 
-数组中也可以包含子数组，例如`1px 2px, 5px 6px`、`(1px 2px) (5px 6px)`或者`(1px, 2px), (5px, 6px)`。
+列表中也可以包含子列表，例如`1px 2px, 5px 6px`、`(1px 2px) (5px 6px)`或者`(1px, 2px), (5px, 6px)`。
 
-数组本身没有太多功能，但是通过 Sass 可以发挥其最大的作用：
+列表本身没有太多功能，但是通过 Sass 可以发挥其最大的作用：
 
-- [`nth`](https://sass-lang.com/documentation/modules/list/#nth)函数可以直接访问数组中的某一项；
-- [`join`](https://sass-lang.com/documentation/modules/list/#join)函数可以将多个数组连接在一起；
-- [`append`](https://sass-lang.com/documentation/modules/list/#append)函数可以在数组中添加新的值；
-- [`index`](https://sass-lang.com/documentation/modules/list#index)函数可以查找元素在数组中的索引值；
-- [`@each`](#each)指令能够遍历数组中的每一项。
+- [`list.nth()`](https://sass-lang.com/documentation/modules/list/#nth)可以直接访问列表中的某一项；
+- [`list.join()`](https://sass-lang.com/documentation/modules/list/#join)可以将多个列表连接在一起；
+- [`list.append()`](https://sass-lang.com/documentation/modules/list/#append)可以在列表中添加新的值；
+- [`list.index()`](https://sass-lang.com/documentation/modules/list/#index)可以返回元素在列表中的第一个索引值，如果不存在该元素则返回`null`；
+- [`@each`](#each)指令能够遍历列表中的每一项。
 
-Sass 的数组是不可修改的，数组函数的返回值都是新的数组。当样式表的不同部分之间共享同一个数组时，不可变性可以帮助避免许多潜在的 Bug。但是仍然可以通过将新数组分配给相同的变量来更新状态。这通常在函数和`mixin`中用于将一堆值收集到一个数组中：
+Sass 的列表是不可修改的，列表函数的返回值都是新的列表。当样式表的不同部分之间共享同一个列表时，不可变性可以帮助避免许多潜在的 Bug。但是仍然可以通过将新列表分配给相同的变量来更新状态。这通常在函数和`mixin`中用于将一堆值收集到一个列表中：
 
 ```scss
 @function prefixes-for-browsers($browsers) {
@@ -307,7 +319,7 @@ Sass 的数组是不可修改的，数组函数的返回值都是新的数组。
 }
 ```
 
-当需要声明一个接受任意参数的`mixin`或函数时，得到的值是一个被称为**参数数组**的特殊数组。它的作用就像一个包含传递给`mixin`或函数的所有参数的数组，但有一个额外的特性：如果传递了关键字参数，则可以通过将参数数组传递给[`meta.keywords()`](https://sass-lang.com/documentation/modules/meta#keywords)函数来作为映射访问它们：
+当需要声明一个接受任意参数的`mixin`或函数时，会得到一个特殊的列表。这种列表被称为**参数列表**。它的作用就像一个包含传递给`mixin`或函数的所有参数的列表，但有一个额外的特性：如果传递了关键字参数，则可以通过将参数列表传递给[`meta.keywords()`](https://sass-lang.com/documentation/modules/meta#keywords)函数来作为映射访问它们：
 
 ```scss
 @mixin syntax-colors($args...) {
@@ -330,6 +342,14 @@ Sass 的数组是不可修改的，数组函数的返回值都是新的数组。
 > 如果颜色名称被用于选择器的构建，则必须将其加上引号，以避免选择器中插值的颜色在 Compressed 模式下会变成无效语法。
 {: .prompt-warning}
 
+下面是 Sass 常用的颜色函数：
+
+- [`color.adjust()`](https://sass-lang.com/documentation/modules/color/#adjust)可以定量地调整颜色值的属性；
+- [`color.change()`](https://sass-lang.com/documentation/modules/color/#change)可以设置颜色值的属性；
+- [`color.scale()`](https://sass-lang.com/documentation/modules/color/#scale)可以定量地调整颜色值的属性，与`color.adjust()`的区别在于前者只能按照整数调整颜色值，而`color.scale`可以用连续的数值改变颜色值；
+- [`color.mix()`](https://sass-lang.com/documentation/modules/color/#mix)能够按照指定方法返回`color1`与`color2`的混合颜色值，与 CSS 的`color-mix()`函数使用相同的算法混合颜色值；
+- [`color.channel`](https://sass-lang.com/documentation/modules/color/#channel)用于提取某个颜色空间(如 HSL、RGB、LAB 等)中某个特定通道的值，允许按通道(如色相、饱和度、亮度等)提取颜色信息。
+
 ### 映射
 
 Maps 是`(key: value)`的组合，并且允许被**动态访问**。Maps 的键值可以是任意 SassScript 表达式(甚至是另一个 Maps)，使用`==`比较两个键是否相同。给定的值可以与多个键相关联，但是给定的键在 Maps 中只能关联一个值，对于空 Maps 使用`()`表示。
@@ -339,12 +359,12 @@ Maps 是`(key: value)`的组合，并且允许被**动态访问**。Maps 的键�
 
 Maps 可以通过以下 Sass 函数对其进行操作：
 
-- [`map-get`](https://sass-lang.com/documentation/modules/map/#get)函数用于通过键查找对应的值；
-- [`map-set`](https://sass-lang.com/documentation/modules/map#set)函数用作修改匹配键的值；
-- [`map-merge`](https://sass-lang.com/documentation/modules/map/#merge)函数用于 Maps 和新加的键值融合；
+- [`map.get`](https://sass-lang.com/documentation/modules/map/#get)用于通过键查找对应的值；
+- [`map.set`](https://sass-lang.com/documentation/modules/map/#set)用作修改匹配键的值；
+- [`map.merge`](https://sass-lang.com/documentation/modules/map/#merge)用于 Maps 和新加的键值融合；
 - [`@each`](#each)指令可添加样式到一个 Maps 中的每个键值对。
 
-数组可以使用的场景，Maps 也同样可以使用。在数组函数中 Maps 会被自动转换为数组。事实上，一切的 Maps 都是数组(包括空 Map)，每个 Maps 都是包括键值对的子数组的数组。例如`(key1: value1, key2: value2)`会被数组函数自动转换成`key1 value1, key2 value2`，**反之则不行**(空数组除外)。
+列表可以使用的场景，Maps 也同样可以使用。在列表函数中 Maps 会被自动转换为列表。事实上，一切的 Maps 都是列表(包括空 Map)，每个 Maps 都是包括键值对的子列表的列表。例如`(key1: value1, key2: value2)`会被列表函数自动转换成`key1 value1, key2 value2`，**反之则不行**(空列表除外)。
 
 > 为了避免混淆，应该使用有引号字符串作为 Maps 的键(无引号字符串可能颜色值或者其他类型)。
 {: .prompt-tip}
@@ -415,7 +435,7 @@ nav {
 }
 ```
 
-这将会输出
+编译后得到：
 
 ```css
 .alert ul,
@@ -446,7 +466,7 @@ p {
 }
 ```
 
-> 虽然 Sass 可以让样式表看上去很小，但实际生成的 CSS 却可能非常大，这会显著降低网站的速度！
+> 注意：嵌套过多会导致生成的 CSS 文件体积过大。
 {: .prompt-warning}
 
 ### 父级选择器
@@ -616,11 +636,11 @@ Sass 有一种特殊的选择器，称为“占位符”。它的外观和功能
 
 ### @use
 
-`@use`能够从其他 Sass 样式表加载混合宏、函数和变量等，并将多个样式表中的 CSS 组合在一起。通过`@use`加载的样式表被称为模块(modules)。任何以`@use`加载的样式，无论加载了多少次都会在编译后的 CSS 输出中只包含一次。
+`@use`能够从其他 Sass 样式表加载Mixins、函数和变量等，并将多个样式表中的 CSS 组合在一起。通过`@use`加载的样式表被称为模块(modules)。任何以`@use`加载的样式，无论加载了多少次都会在编译后的 CSS 输出中只包含一次。
 
 #### 加载成员
 
-按照下面的方法使用`@use`载入的成员(混合宏、函数和变量等)：
+按照下面的方法使用`@use`载入的成员(Mixins、函数和变量等)：
 
 ```scss
 // _corners.scss
@@ -788,7 +808,7 @@ library.$color: blue;
 
 ### @forward
 
-`@forward`指令能够加载一个 Sass 样式表，并在使用`@use`加载样式表时使混合宏、函数和变量等可用。它使得跨许多文件组织 Sass 库成为可能，同时允许它们的用户加载单个入口文件。
+`@forward`指令能够加载一个 Sass 样式表，并在使用`@use`加载样式表时使Mixins、函数和变量等可用。它使得跨许多文件组织 Sass 库成为可能，同时允许它们的用户加载单个入口文件。
 
 被`@forward`加载模块中的公共变量仅在引用文件里可用，在该模块中不可用。例如：
 
@@ -813,7 +833,7 @@ li {
 
 #### 设置前缀
 
-由于模块成员通常与名称空间一起使用，因此简短的名称通常是最易读的选项。但是这些名称在定义它们的模块之外可能没有意义，因此`@forward`指令可以选择为它的所有成员添加额外的前缀。其写法为`@forward "<url>" as <prefix>-*`，它将给定的前缀添加到模块的每个混合宏，函数和变量名等的开头。例如如果模块定义了一个名为`reset`的成员，并将其命名为`list-*`，则下游样式表将把它引用为`list-reset`：
+由于模块成员通常与名称空间一起使用，因此简短的名称通常是最易读的选项。但是这些名称在定义它们的模块之外可能没有意义，因此`@forward`指令可以选择为它的所有成员添加额外的前缀。其写法为`@forward "<url>" as <prefix>-*`，它将给定的前缀添加到模块的每个Mixins，函数和变量名等的开头。例如如果模块定义了一个名为`reset`的成员，并将其命名为`list-*`，则下游样式表将把它引用为`list-reset`：
 
 ```scss
 // _list.scss
@@ -891,7 +911,7 @@ code {
 
 ### @import
 
-Sass 拓展了`@import`的功能，允许其导入 SCSS 或 Sass 文件。被导入的文件将合并编译到同一个 CSS 文件中，另外被导入的文件中所包含的变量或者混合宏都可以在导入的文件中使用。如果同一份样式表被多次导入，则`@import`每次都会重新执行。
+Sass 拓展了`@import`的功能，允许其导入 SCSS 或 Sass 文件。被导入的文件将合并编译到同一个 CSS 文件中，另外被导入的文件中所包含的变量或者Mixins都可以在导入的文件中使用。如果同一份样式表被多次导入，则`@import`每次都会重新执行。
 
 > 在最新的 Sass 编写规范中，`@import`已经弃用，建议使用`@use`和`@forward`代替！
 {: .prompt-danger}
@@ -922,78 +942,12 @@ $family: unquote("Droid+Sans");
 > 在`@mixin`指令和控制流语句中不可以使用嵌套的`@import`！
 {: .prompt-danger}
 
-
 `@use`旨在取代旧的`@import`指令，但它的工作方式被有意设计得不同。以下是两者之间的一些主要区别：
 
-- `@use`只使变量、函数和混合宏在当前文件的作用域中可用，它从不将它们添加到全局作用域。这使得找出 Sass 文件引用的每个名称的来源变得容易，并且意味着可以使用更短的名称而不会有任何冲突的风险；
+- `@use`只使变量、函数和Mixins在当前文件的作用域中可用，它从不将它们添加到全局作用域。这使得找出 Sass 文件引用的每个名称的来源变得容易，并且意味着可以使用更短的名称而不会有任何冲突的风险；
 - `@use`只加载每个文件一次。这确保了不会意外地多次复制依赖项的 CSS；
-- `@use`必须出现在文件的开头，不能嵌套在样式规则中。嵌套导入可以迁移到混合宏中调用或`meta.load-css()`中；
+- `@use`必须出现在文件的开头，不能嵌套在样式规则中。嵌套导入可以迁移到Mixins中调用或`meta.load-css()`中；
 - `@use`加载的模块必须使用有引号字符串。
-
-### @media
-
-Sass 中`@media`与 CSS 中用法一样，只是增加了一点额外的功能：允许其在 CSS 规则中嵌套。
-
-如果`@media`嵌套在 CSS 规则内，那么在编译时`@media`将被编译到文件的最外层，包含嵌套的父选择器。这个功能让`@media`用起来更方便，不需要重复使用选择器，也不会打乱 CSS 的书写流程。例如：
-
-```scss
-.sidebar {
-  width: 300px;
-  @media screen and (orientation: landscape) {
-    width: 500px;
-  }
-}
-```
-
-这将会输出
-
-```css
-.sidebar {
-  width: 300px;
-}
-
-@media screen and (orientation: landscape) {
-  .sidebar {
-    width: 500px;
-  }
-}
-```
-
-`@media`允许互相嵌套使用，在编译时 Sass 自动添加`and`关键字：
-
-```scss
-@media screen {
-  .sidebar {
-    @media (orientation: landscape) {
-      width: 500px;
-    }
-  }
-}
-```
-
-这将会输出
-
-```css
-@media screen and (orientation: landscape) {
-  .sidebar {
-    width: 500px;
-  }
-}
-```
-
-`@media`甚至可以使用变量、函数、运算表达式等代替条件的名称或者值：
-
-```scss
-$media: screen;
-$feature: -webkit-min-device-pixel-ratio;
-$value: 1.5;
-
-@media #{$media} and ($feature: $value) {
-  .sidebar {
-    width: 500px;
-  }
-}
-```
 
 ### @extend
 
@@ -1065,7 +1019,7 @@ a:hover {
 }
 ```
 
-这将会输出
+编译后得到：
 
 ```css
 a:hover, .hoverlink {
@@ -1095,7 +1049,7 @@ a:hover, .hoverlink {
 }
 ```
 
-这将会输出
+编译后得到：
 
 ```css
 .error, .seriousError {
@@ -1204,7 +1158,7 @@ a {
 }
 ```
 
-这将会输出
+编译后得到：
 
 ```css
 #admin .tabbar a,
@@ -1226,7 +1180,7 @@ a {
 }
 ```
 
-这将会输出
+编译后得到：
 
 ```css
 #admin .tabbar a,
@@ -1334,29 +1288,7 @@ p {
 }
 ```
 
-### @each
-
-`@each`的语法规则如下：
-
-```scss
-@each <variable> in <expression> { ... }
-```
-
-其中`<expression>`为一个数组。`@each`可以很容易地为数组中的每个元素或 Maps 中的每对元素指定样式或进行计算。这对于重复的风格来说是很好的，它们之间只有一些变化。
-
-例如：
-
-```scss
-$animals: puma, sea-slug, egret, salamander;
-
-@each $animal in $animal {
-  .#{$animal}-icon {
-    background-image: url('/images/#{$animal}.png');
-  }
-}
-```
-
-### @for
+### @for 与 @while
 
 `@for`的语法规则如下：
 
@@ -1382,7 +1314,43 @@ $animals: puma, sea-slug, egret, salamander;
 }
 ```
 
-`@each`也可以使用多个变量，如果是该变量是一个数组，那么子数组的每个元素都被分配给各自的变量。例如:
+例如：
+
+```scss
+$i: 6;
+
+@while $i > 0 {
+  .item-#{$i} {
+    width: 2em * $i;
+  }
+
+  $i: $i - 2;
+}
+```
+
+### @each
+
+`@each`的语法规则如下：
+
+```scss
+@each <variable> in <expression> { ... }
+```
+
+其中`<expression>`为一个列表。`@each`可以很容易地为列表中的每个元素或 Maps 中的每对元素指定样式或进行计算。这对于重复的风格来说是很好的，它们之间只有一些变化。
+
+例如：
+
+```scss
+$animals: puma, sea-slug, egret, salamander;
+
+@each $animal in $animal {
+  .#{$animal}-icon {
+    background-image: url('/images/#{$animal}.png');
+  }
+}
+```
+
+`@each`也可以使用多个变量，如果是该变量是一个列表，那么子列表的每个元素都被分配给各自的变量。例如:
 
 ```scss
 $objects: (puma, black, default), (sea-slug, blue, pointer), (egret, white, move);
@@ -1396,7 +1364,7 @@ $objects: (puma, black, default), (sea-slug, blue, pointer), (egret, white, move
 }
 ```
 
-由于 Maps 被视为成对的数组，因此多重赋值也适用于它们。例如:
+由于 Maps 被视为成对的列表，因此多重赋值也适用于它们。例如:
 
 ```scss
 $object: (h1: 2em, h2: 1.5em, h3: 1.2em);
@@ -1405,22 +1373,6 @@ $object: (h1: 2em, h2: 1.5em, h3: 1.2em);
   #{$header} {
     font-size: $size;
   }
-}
-```
-
-### @while
-
-例如：
-
-```scss
-$i: 6;
-
-@while $i > 0 {
-  .item-#{$i} {
-    width: 2em * $i;
-  }
-
-  $i: $i - 2;
 }
 ```
 
@@ -1565,7 +1517,7 @@ h1 {
 }
 ```
 
-有时不能确定混合器需要使用多少个参数，比如一个关于`box-shadow`的混合器不能确定有多少个`'shadow'`会被用到。这时可以使用参数变量`...`声明告诉 Sass 将这些参数视为值数组处理：
+有时不能确定混合器需要使用多少个参数，比如一个关于`box-shadow`的混合器不能确定有多少个`'shadow'`会被用到。这时可以使用参数变量`...`声明告诉 Sass 将这些参数视为值列表处理：
 
 ```scss
 @mixin box-shadow($shadows...) {
@@ -1624,7 +1576,7 @@ $values: #ff0000, #00ff00, #0000ff;
 }
 ```
 
-这将会输出
+编译后得到：
 
 ```scss
 * html {
@@ -1726,4 +1678,4 @@ $gutter-width: 10px;
 4. [https://cankaoshouce.com/sass/sass-course.html](https://cankaoshouce.com/sass/sass-course.html)
 5. [https://www.geeksforgeeks.org/css/sass](https://www.geeksforgeeks.org/css/sass)
 
-[^SassScript]: 在 Sass 中，数据类型、变量和运算操作等统称 [SassScript 表达式](https://sass-lang.com/documentation/syntax/structure#expressions)。
+[^SassScript]: 在 Sass 中，表达式(Expressions)是指出现在属性或变量声明右侧的任何内容，它包括但不限于值(如数字、字符串、布尔值等数据类型)、变量、运算符、函数以及控制流等。Sass 的表达式语法通常被统称为 [*SassScript*](https://sass-lang.com/documentation/syntax/structure#expressions)。

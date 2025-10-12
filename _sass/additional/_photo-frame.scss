@@ -14,11 +14,11 @@
 
   img.rounded,
   .rounded > img {
-    border-radius: style.$rounded-border-radius; // 为图片添加圆角效果
+    border-radius: style.$border-radius; // 为图片添加圆角效果
   }
 
   img.circle,
   .circle > img {
-    border-radius: style.$circle-border-radius; // 为图片添加圆形裁剪效果
+    border-radius: 50%; // 为图片添加圆形裁剪效果
   }
 }

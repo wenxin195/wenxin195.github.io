@@ -8,8 +8,7 @@ $status-colors: (
 );
 
 $border-color: color.mix(#000, #fff, 10%);
-$rounded-border-radius: 0.4rem;
-$circle-border-radius: 50%;
+$border-radius: 0.4rem;
 
 @mixin border-style($color) {
   border: 1px solid $color;

@@ -23,11 +23,10 @@ Gemfile.lock
 
 _site/
 _drifts/
-.jekyll-metadata
 .jekyll-cache/
 _includes/markdown-enhancements/katex.html
 
-.editorconfig
+.jekyll-metadata
 .eslintrc
 .prettierrc
 .stylelintignore

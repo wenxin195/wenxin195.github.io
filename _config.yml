@@ -209,10 +209,14 @@ exclude:
   - Gemfile.lock
   - LICENSE
   - README.md
-  - gulpfile.js
-  - jekyll-text-theme.gemspec
-  - package.json
-  - /vendor
+  - .sass-cache/
+  - .jekyll-cache/
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
 
 defaults:
   - scope:
@@ -238,8 +242,7 @@ sass:
 ## => Plugins
 ##############################
 plugins:
-  - jekyll-include-cache
   - jekyll-paginate
-  - jekyll-sass-converter
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-include-cache

@@ -1,7 +1,7 @@
 ---
 key: sass-tutorial
 title: "Sass 教程"
-permalink: "/sass-basic"
+permalink: "/sass-basic" 
 tags:
   - Web 前端
   - Sass
@@ -14,38 +14,75 @@ refactor: true
 modify_date: "2025-07-20 11:45:00"
 ---
 
-Sass（Syntactically Awesome Style Sheets）是一款功能强大的 CSS 预处理器，它扩展了 CSS 语言，使得样式的编写更加结构化、稳定且高效。通过使用 Sass，可以减少 CSS 代码的冗余，提高样式的可维护性、可复用性，并使编写过程更加简便。
+Sass(Syntactically Awesome Style Sheets)是一款功能强大的 CSS 预处理器，它扩展了 CSS 语言的能力，使得开发者能够以更结构化、更易维护且更高效的方式编写样式。通过减少代码冗余并提升可复用性，Sass 在保持与标准 CSS 完全兼容的同时，简化了样式设计流程。
 
 <!--more-->
 
-在传统的 CSS 基础上，Sass 引入了[变量](https://sass-lang.com/documentation/variables)、[嵌套规则](https://sass-lang.com/documentation/style-rules#nesting)、[Mixins](https://sass-lang.com/documentation/at-rules/mixin)、[继承](https://sass-lang.com/documentation/at-rules/extend/)和[函数](https://sass-lang.com/documentation/modules)等高级功能，同时保持了与 CSS 的完全兼容性。这些增强功能让样式管理更加灵活，代码更易维护，也大大提升了开发效率，帮助开发者更好地组织和管理样式文件。
+Sass 引入了超越传统 CSS 的强大特性，即[变量](https://sass-lang.com/documentation/variables)、[样式规则](https://sass-lang.com/documentation/style-rules#nesting)、[Mixins](https://sass-lang.com/documentation/at-rules/mixin)、[继承](https://sass-lang.com/documentation/at-rules/extend/)和[函数](https://sass-lang.com/documentation/modules)等高级功能。这些功能使样式管理更灵活、代码更易维护、开发更高效，让开发者能够更轻松地组织和管理样式表。
+
+Sass 样式表由 **语句** (Statements)和 **表达式** (Expressions)组成，它们协同工作以生成最终的 CSS 输出。
+
+语句是定义 **样式表结构** 和 **行为** 的指令，分为以下几类：
+
+- 通用语句：这些语句可以在 Sass 样式表的 **任何位置** 使用。
+  - 变量声明，例如`$primary-color: #c6538c`；
+  - 控制指令，例如`@if`、`@each`、`@for`和`@while`等；
+  - 调试和错误处理指令，例如`@error`、`@warn`和`@debug`等。
+- CSS 语句：这些语句生成 CSS 输出，可在除`@function`之外的任何位置使用。
+  - 样式规则(Style rules)，例如`h1 { color: $primary-color; }`；
+  - CSS 中的 at-Rules，例如`@media`、`@font-face`或`@keyframes`；
+  - 使用了`@include`的 Mixins 指令；
+  - 用于控制输出嵌套的`@at-root`规则；
+- 顶部语句：这些语句仅限于在 **样式表的顶部** 或 **嵌套在顶部 CSS 语句** 中使用。
+  - 使用了`@use`的加载模块，以及使用了`@import`的导入模块；
+  - 使用了`@mixin`的 Mixins 定义，以及使用了`@function`的函数定义。
+- 其他语句：
+  - 属性声明，例如：`font-size: 16px;`，属性声明仅可在 **样式规则** 和某些 **CSS 中的 at-Rules** 中使用；
+  - 使用了`@extend`的继承语句，仅可在 **样式规则** 中使用。
+
+表达式出现在 **属性** 或 **变量声明** 的右侧，并计算它们的值。Sass 表达式(我们将其统称为 *SassScript*)比标准 CSS 值强大得多。它们包括：
+
+- 文字表达式(Literal)：用来表示 **静态值**。
+  - 数字表达式(Numbers)，它们有或者没有单位，例如`12`或`100px`；
+  - 字符串表达式(Strings)，它们带或者不带引号，例如`"Helvetica Neue"`或 `bold`；
+  - 颜色表达式(Colors)，通过十六进制代码、名称或函数指定，例如`#c6538c`或`blue`；
+  - 布尔表达式(Boolean)，即`true`或`false`；
+  - Nulls 值；
+  - 列表(Lists)，用空格或逗号分隔，可以带或者不带方括号，例如`1.5em 1em 0 2em`、`Helvetica, Arial, sans-serif`或`[col1-start]`；
+  - 映射(Maps)，例如`("background": red, "foreground": pink)`。
+- 运算符表达式：支持数学计算、比较和逻辑运算等。
+- 其他表达式：包括变量、函数调用和父选择器`&`等。
+
+通过使用这些强大的特性，Sass 让开发人员能够编写更清晰、更模块化、可扩展的样式表，从而改变 CSS 的编写和维护方式。
 
 ## Sass 变量
 
-Sass 变量的定义方式是：`<variable>: <expression>`，其中变量名使用`$`符号开头进行声明。例如：
+Sass 变量是一项强大的功能，通过减少重复、支持复杂计算以及简化库配置来优化样式表。定义变量的语法是：`<variable>: <expression>`，其中变量名以`$`符号作为前缀。例如：
 
 ```scss
-$myFont: Helvetica, sans-serif;
+$primary-font: Helvetica, sans-serif;
 
 body {
-  font-family: $myFont;
+  font-family: $primary-font;
 }
 ```
 
-### 变量的作用范围
+这种方法提高了样式表的可维护性和一致性。
 
-Sass 变量默认是**局部变量**，仅在定义它的**代码块内有效**；如果变量在样式表的最外层(不在任何代码块内)定义，则为全局变量，可在整个 Sass 样式表或者下游文件里使用。例如：
+### 变量的作用域
+
+Sass 变量默认是 **局部变量**，这意味着它们只能在 **定义它们的代码块内** 访问。在任何 **代码块之外** 声明的变量则为 **全局变量**，可以在整个样式表或下游文件中使用。例如：
 
 ```scss
-$myColor: red;
+$global-color: red;
 
 h1 {
-  $myColor: green;
-  color: $myColor;
+  $local-color: green; // Local variable, will shadowing global variable
+  color: $local-color;
 }
 
 p {
-  color: $myColor;
+  color: $global-color; // Uses global variable
 }
 ```
 
@@ -61,25 +98,25 @@ p {
 }
 ```
 
-> 如果在局部作用域内定义了与全局变量同名的变量，那么**局部变量则会遮蔽全局变量**(即 [Shadowing](https://sass-lang.com/documentation/variables/#shadowing))，该变量仅在当前代码块内生效。
+> 当局部变量与全局变量同名时，局部变量会在其作用域内 **遮蔽** ([Shadowing](https://sass-lang.com/documentation/variables/#shadowing))全局变量；在除该作用域之外的全局变量不受影响。
 {: .prompt-warning}
 
-在局部作用域内，可以使用`!global`将变量显式声明为全局变量，遮蔽之前定义的**同名全局变量**。例如：
+要在局部作用域内显式覆盖全局变量，可以使用`!global`，这将修改整个样式表中的全局变量：
 
 ```scss
-$myColor: red;
+$global-color: red;
 
-@mixin change-color {
-  #myColor: green !global;  // 强制遮蔽
-};
+@mixin update-color {
+  $global-color: green !global; // Overrides global variable
+}
 
 h1 {
-  @include change-color;
-  color: $myColor;
+  @include update-color;
+  color: $global-color;
 }
 
 p {
-  color: $myColor;
+  color: $global-color;
 }
 ```
 
@@ -95,15 +132,14 @@ p {
 }
 ```
 
-若`change-color`没有被调用，那么`<h1>`与`<p>`的属性值则会为`red`。
+若`update-color`没有被`@include`引用，那么`<h1>`与`<p>`的属性值则都为`red`。
 
-> `!global`只能用于遮蔽已经在样式表顶层声明的变量，不能用于声明一个新变量！
+> `!global`只能修改现有的全局变量，无法用于声明新的全局变量！
 {: .prompt-danger}
 
-> 全局变量应该定义在任何规则之外，最佳实践是编写一个全局变量样式表，并使用`@include`使用全局变量。
-{: .prompt-tip}
+### 引用变量
 
-在声明变量时，变量值也可以引用其他变量。当通过粒度区分，为不同的值取不同名字时会相当有用。下面这例子中，我们在独立的颜色值粒度上定义了一个变量，且在另一个更复杂的边框值粒度上也定义了一个变量：
+Sass 变量可以引用其他变量，从而实现模块化和可复用的样式。这对于创建值之间的关系(例如颜色和边框)特别有用，例如：
 
 ```scss
 $highlight-color: blue;
@@ -114,21 +150,19 @@ $highlight-border: 1px solid $highlight-color;
 }
 ```
 
+这确保了变量的一致性并简化了更新流程，因为修改`$highlight-color`会自动更新`$highlight-border`。
+
 ### 默认变量
 
-一般情况下，如果反复声明一个变量，那么只有**最后一次**声明才有效，并且它会覆盖前面所声明过的所有值。可以在变量的结尾添加`!default`，这会给一个未通过`!default`声明的变量赋值。只有当变量**未定义**或者它的值为`null`时，才会将值赋给该变量，否则将会使用默认值。
-
-这样做的好处是：如果在 Sass 样式表里已经声明了一个变量，那么下游文件再对该变量进行声明的操作将会失效；如果下游文件中没有对该变量进行赋值，则会使用样式表的默认值。例如：
+Sass 允许使用`!default`为变量分配默认值，仅当 **变量未定义** 或为 **空值** 时，Sass 才会为其才会赋值。这在库文件中尤其有用，可实现下游自定义而不覆盖预定义值：
 
 ```scss
 // _library.scss
-$content: "First content";
-```
+$content: "Default content" !default;
 
-```scss
 // style.scss
-@import "library"
-$content: "Second content?" !default;  // 这不会生效！
+@use 'library';
+$content: "Custom content" !default; // Ignored, because the `$content` is already defined
 
 div {
   content: $content;
@@ -139,20 +173,18 @@ div {
 
 ```css
 div {
-  content: "First content";
+  content: "Default content";
 }
 ```
 
-在 Sass 中，可以使用`@use <url> with ( <variable>: <value>[, ...] );`配置变量的值；但是前提条件是：变量必须定义在样式表顶部，并且用`!default`声明时才会生效！
+还可以使用`@use <url> with ( <variable>: <value>[, ...] )`在库文件中配置变量，前提是 **变量是在样式表的顶部，使用`!default`声明的**：
 
 ```scss
 // _library.scss
 $black: #000 !default;
 $border-radius: 0.25rem !default;
 $box-shadow: 0 0.5rem 1rem rgba($black, 0.15) !default;
-```
 
-```scss
 // style.scss
 @use 'library' with (
   $black: #222,
@@ -160,11 +192,11 @@ $box-shadow: 0 0.5rem 1rem rgba($black, 0.15) !default;
 );
 ```
 
-`$black`的值会被重新赋值为`#222`，`$border-radius`的值为`0.1rem`。
+在这个例子中，`$black`被覆盖为`#222`，`$border-radius`被覆盖为`0.1rem`，而`$box-shadow`使用更新后的`$black`值。
 
-### 控制流中的变量作用域
+### 控制流中的变量
 
-在控制流中声明的变量有特殊的作用域规则：新的声明会赋值给这些变量，而不是由局部变量遮蔽全局变量。这就使得很容易地为变量赋值定义规则，或者在循环中不断迭代或计算值。例如：
+控制流中的变量(例如`@if`、`@for`)具有独特的作用域规则。赋值操作不会创建新局部变量，而是 **更新** 现有变量(通常是全局变量)。这允许在循环或条件语句中进行动态更新：
 
 ```scss
 $dark-theme: true !default;
@@ -193,12 +225,12 @@ $accent-color: hsl(277, 70%, 35%) !default;
 }
 ```
 
-> 控制流作用域中的声明可以赋值给外部作用域里的变量，但是控制流作用域中定义的变量无法在外作用域里访问。要确保给控制流作用域中的变量赋值之前已经定义了该变量，可以在外部将其声明为`null`或者其他值。
-{: .prompt-warning}
+> 控制流中赋值的变量可以修改外部作用域的变量，但是 **控制流中定义的新变量在外部无法访问**。因此在控制流中赋值变量之前，需要先在外部作用域中声明变量(通常定义为`null`值或其他)。
+{: .prompt-tip}
 
 ## 插值语句
 
-Sass 中有一个插值语句(Interpolation)`#{}`，它几乎可以在 Sass 样式表的任何地方使用，任意数据类型、变量和运算操作等[^SassScript]都可以嵌入到代码块里。这在编写Mixins时特别有用，因为它允许创建选择器的过程中传入参数：
+Sass 中有一个插值语句(Interpolation)`#{}`，它几乎可以在 Sass 样式表的任何地方使用，任意 *SassScript* 都可以嵌入到代码块里。这在编写 Mixins 时特别有用，因为它允许创建选择器的过程中传入参数：
 
 ```scss
 @mixin corner-icon($name, $top-or-bottom, $left-or-right) {
@@ -225,46 +257,45 @@ p {
 编译后得到：
 
 ```css
-p { font: 12px/30px; }
+p {
+  font: 12px/30px;
+}
 ```
 
 ## 数据类型
 
 ### 字符串
 
-Sass 字符串(Strings)支持**有引号字符串**(`'`或者`"`定义)和**无引号字符串**，在编译 CSS 文件时不会改变其类型。在实际操作中除了那些特殊的无引号字符串(例如颜色值)之外，最好都是用有引号字符串。
+Sass 字符串(Strings)支持 **有引号字符串** (使用`'`或者`"`来定义)和 **无引号字符串**，除特定不带引号的值(如颜色名称`red`)外，大多数情况下建议使用有引号的字符串。当 Sass 编译为 CSS 时，字符串类型将保持不变，从而确保一致性。
 
-Sass 中有许多[字符串函数](https://sass-lang.com/documentation/modules/string)，例如：
+Sass 提供了一组强大的[字符串函数](https://sass-lang.com/documentation/modules/string)，可高效地操作字符串：
 
-- [`string.unquote()`](https://sass-lang.com/documentation/modules/string/#unquote)可以将有引号字符串转换成无引号字符串，[`string.quote()`](https://sass-lang.com/documentation/modules/string/#quote)会将无引号字符串转换成无引号字符串；
+- [`string.unquote($string)`](https://sass-lang.com/documentation/modules/string/#unquote)，将有引号字符串转换为无引号字符串；
 
-  > 在使用插值语句`#{}`时，有引号字符串将被编译为无引号字符串。
+- [`string.quote($string)`](https://sass-lang.com/documentation/modules/string/#quote)，可以为无引号字符串添加引号。
+
+  > 使用插值语句`#{}`时，有引号字符串会被编译为无引号字符串，这可能影响它们在 CSS 中的处理方式。
   {: .prompt-tip}
 
-- [`string.index()`](https://sass-lang.com/documentation/modules/string/#index)能够返回指定字符串的第一个索引值，如果不包括该字符串则返回`null`；
+- [`string.index($string, $substring)`](https://sass-lang.com/documentation/modules/string/#index)，返回`$string`中首次出现`$substring`的起始索引(序号从 1 开始计数)，若未找到则返回`null`。
 
-  > 在 Sass 中，索引 1 表示字符串的第一个字符，索引 -1 表示字符串中的最后一个字符。
+  > 在 Sass 中，字符串索引从第一个字符开始计数，起始值为 1，而非 0。
   {: .prompt-info}
 
-- [`string.slice()`](https://sass-lang.com/documentation/modules/string/#slice)可以返回指定索引的字符串切片；
-- [`string.insert()`](https://sass-lang.com/documentation/modules/string/#insert)可以在指定索引插入字符串；
-- [`string.split()`](https://sass-lang.com/documentation/modules/string/#split)能够按照特定分隔符的字符串分割成字符串列表。
+- [`string.slice($string, $start, $end)`](https://sass-lang.com/documentation/modules/string/#slice)，提取字符串中`$start`和`$end`索引之间的部分；
+- [`string.insert($string, $insert, $index)`](https://sass-lang.com/documentation/modules/string/#insert)，将`$insert`插入到`$string`的`$index`位置；
+- [`string.split($string, $separator)`](https://sass-lang.com/documentation/modules/string/#split)，根据`$separator`将字符串拆分为列表。
 
 ### 数值
 
-数值(Numbers)由两部分组成：数字及其单位，例如`16`和`16px`。
+Sass 中的数字由一个 **数值** 和一个 **可选单位** 组成，例如`16`或`16px`。Sass 支持与 CSS 兼容的数字格式，包括科学记数法(例如 1200 可以表示为`1.2e3`)。
 
-> Sass 的数值支持与 CSS 的数值的相同格式，包括科学计数法。
-{: .prompt-info}
+Sass 有灵活的基于单位的计算机制：数字相乘时其单位会相应地计算(例如`4px * 6px`等于`24px*px`)；除法计算的单位是分子来自第一个数字，分母来自第二个数字(例如`math.div(5px, 2s)`等于`2.5px/s`)。
 
-Sass 有强大的单位计算操作，当两个数值相乘时，它们的**单位也做相对应的计算**，例如`4px*6px: 24px*px`，`div(5px, 2s): 2.5px/s`。一个数值的分子、分母可以是**任意数量的单位**，分子的单位为第一个数值的单位，分母的单位是第二个数值的单位。
-
-Sass 可以在兼容的单位之间自动转换，如果尝试组合不兼容的单位时(如`1in+1em`)，Sass 则会抛出错误。
-
-如果分子的单位与分母的单位是兼容(例如`math.div(96px, 1in)`)，那么它们将会被相互抵消，得到一个无单位的数值。这种抵消使得你可以轻松定义一个比率，用于在不同单位之间进行转换。在下面的示例中，我们将速度设置为每个像素 1/50 秒，然后将其乘以过渡覆盖的像素数，以获得所需的时间：
+Sass 会自动转换兼容单位(例如`1in`转换为`96px`)，但尝试组合不兼容的单位(例如`1in + 1em`)则会抛出错误；对于单位抵消运算(例如`math.div(96px, 1in)`)，Sass 会简化为无单位数值(即只输出`96`)。
 
 ```scss
-$transition-speed: math.div(1s, 50px);  // 1/50(s/px)
+$transition-speed: math.div(1s, 50px); // 0.02s/px
 
 @mixin move($left-start, $left-stop) {
   position: absolute;
@@ -277,54 +308,49 @@ $transition-speed: math.div(1s, 50px);  // 1/50(s/px)
 }
 
 .slider {
-  @include move(10px, 120px);
+  @include move(10px, 120px); // Transition time: (120px - 10px) * 0.02s/px = 2.2s
 }
 ```
 
-要特别指出的是，避免使用像`#{$number}px`这样的插值语句。这实际上并没有创建一个数值，而只是创建一个**无引号字符串**，它不能与任何数值或者函数进行运算。尽量让数值单位简洁，例如`$number*1px`或者直接给`$number`赋值一个单位。
+需要特别指出的是，**避免使用带单位的数字进行插值** (例如`#{$number}px`)，因为这会创建一个不带引号的字符串，而不是一个数字，这无法应用于计算。最佳实践是改用`$number * 1px`或直接赋予其单位。
 
-Sass 的百分比和其他单位一样，但是它们不能与小数相互转换，因为在 CSS 中小数和百分比意味着不同的东西。例如，`50%`是一个以`%`为单位的数值。可以使用`math.div($percentage, 100%)`将`$percentage`转换成对应的小数，使用`$decimal*100%`或者`math.percentage()`计算对应小数的百分比。
+Sass 会将百分比视为带`%`单位的数字。使用`math.div($percentage, 100%)`可以将百分比转换为小数，或通过`math.percentage($decimal)`将小数转换为百分比，也可以使用`$decimal * 100%`的形式进行转换。
 
-> Sass 在处理精确小数的时候，会四舍五入地将小数保留至 10 位。
+> 为了保证精度，Sass 将小数四舍五入到小数点后 10 位。
 {: .prompt-info}
 
 ### 列表
 
-列表(Lists)可以指定多个值，这些值之间通过空格、逗号或者`/`分隔，也可以使用`[ ]`括起来，只要它们在列表中保持一致即可。单个值也被视为(只包含一个值的)列表，任何用空格或者逗号的表达式也会被视作是一个列表，空列表可以直接用`[]`表示。
+Sass 中的列表(Lists)是由空格、逗号或斜杠`/`分隔，或用方括号`[]`括起的值集合。单个值被视为仅含一项的列表，空列表表示为`[]`。列表还可以嵌套子列表，例如`(1px 2px, 5px 6px)`。
 
-> 使用`/`分隔列表已经被**弃用**，推荐使用`list.slash($elements...)`代替。
+> 不推荐使用`/`作为分隔符，请改用`list.slash($elements...)`！
 {: .prompt-warning}
 
-列表中也可以包含子列表，例如`1px 2px, 5px 6px`、`(1px 2px) (5px 6px)`或者`(1px, 2px), (5px, 6px)`。
+Sass 提供了一系列强大的[列表函数](https://sass-lang.com/documentation/modules/list)：
 
-列表本身没有太多功能，但是通过 Sass 可以发挥其最大的作用：
+- [`list.nth($list, $n)`](https://sass-lang.com/documentation/modules/list/#nth)，检索列表中的第 n 个项(从 1 开始计数)。
+- [`list.join($list1, $list2)`](https://sass-lang.com/documentation/modules/list/#join)，将两个列表合并为一个；
+- [`list.append($list, $value)`](https://sass-lang.com/documentation/modules/list/#append)，将值添加到列表末尾；
+- [`list.index($list, $value)`](https://sass-lang.com/documentation/modules/list/#index)，返回 `$list`中`$value`的第一个索引，如果未找到则返回`null`；
+- [`@each`](#each)指令，遍历列表中的每个项。
 
-- [`list.nth()`](https://sass-lang.com/documentation/modules/list/#nth)可以直接访问列表中的某一项；
-- [`list.join()`](https://sass-lang.com/documentation/modules/list/#join)可以将多个列表连接在一起；
-- [`list.append()`](https://sass-lang.com/documentation/modules/list/#append)可以在列表中添加新的值；
-- [`list.index()`](https://sass-lang.com/documentation/modules/list/#index)可以返回元素在列表中的第一个索引值，如果不存在该元素则返回`null`；
-- [`@each`](#each)指令能够遍历列表中的每一项。
-
-Sass 的列表是不可修改的，列表函数的返回值都是新的列表。当样式表的不同部分之间共享同一个列表时，不可变性可以帮助避免许多潜在的 Bug。但是仍然可以通过将新列表分配给相同的变量来更新状态。这通常在函数和`mixin`中用于将一堆值收集到一个列表中：
+在 Sass 中，**列表是不可变的**，这意味着函数会 **返回新的列表**，而不是修改现有的列表。此特性可避免在不同样式表间共享列表时引发错误。若需更新列表，只需将新列表重新赋值给同一个变量即可。
 
 ```scss
 @function prefixes-for-browsers($browsers) {
   $prefixes: ();
-
   @each $browser in $browsers {
     $prefixes: list.append($prefixes, map.get($prefixes-by-browser, $browser));
   }
-
   @return $prefixes;
 }
 ```
 
-当需要声明一个接受任意参数的`mixin`或函数时，会得到一个特殊的列表。这种列表被称为**参数列表**。它的作用就像一个包含传递给`mixin`或函数的所有参数的列表，但有一个额外的特性：如果传递了关键字参数，则可以通过将参数列表传递给[`meta.keywords()`](https://sass-lang.com/documentation/modules/meta#keywords)函数来作为映射访问它们：
+在定义 Mixins 或者带有可变参数`$args...`时，会生成一个名为 **参数列表** 的特殊列表。该列表包含所有传递的参数，并确需通过`meta.keywords($args)`以映射的形式访问关键字参数。
 
 ```scss
 @mixin syntax-colors($args...) {
-  @debug meta.keywords($args);
-
+  @debug meta.keywords($args); // Outputs keyword arguments as a map
   @each $name, $color in meta.keywords($args) {
     pre span.stx-#{$name} {
       color: $color;
@@ -332,78 +358,90 @@ Sass 的列表是不可修改的，列表函数的返回值都是新的列表。
   }
 }
 
-@include syntax-colors($string: #080, $comment: #800, $variable: #60b)
+@include syntax-colors($string: #080, $comment: #800, $variable: #60b);
 ```
 
 ### 颜色
 
-任何 CSS 颜色表达式都会对应一个颜色值，这包括大量与无引号字符串也无法区分的颜色名称。在 Compressed 模式下，Sass 会输出颜色的最小 CSS 表达式。例如`#FF0000`在 Compressed 模式下会输出为`red`，`blanchedalmond`会输出为`#FFEBCD`。
+Sass 将 CSS 颜色表达式(例如`#FF0000`、`rgb(255, 0, 0)`或者`red`)视为颜色值(Colors)。任何 CSS 颜色表达式都会对应一个颜色值，这包括大量的用无引号字符串也无法区分的颜色名称。
 
-> 如果颜色名称被用于选择器的构建，则必须将其加上引号，以避免选择器中插值的颜色在 Compressed 模式下会变成无效语法。
+在 Compressed 模式下，Sass 会将颜色优化为最短的 CSS 表示形式，例如`#FF0000`会被视为`red`，`blanchedalmond`会被视为`#FFEBCD`。
+
+> 在使用插值语句`${}`的样式选择器中指定颜色名称时，需要使用有引号字符串表示颜色值(例如`"red"`)，以避免 Compressed 模式下出现无效 CSS。
 {: .prompt-warning}
 
-下面是 Sass 常用的颜色函数：
+主要的[颜色函数](https://sass-lang.com/documentation/modules/color)包括：
 
-- [`color.adjust()`](https://sass-lang.com/documentation/modules/color/#adjust)可以定量地调整颜色值的属性；
-- [`color.change()`](https://sass-lang.com/documentation/modules/color/#change)可以设置颜色值的属性；
-- [`color.scale()`](https://sass-lang.com/documentation/modules/color/#scale)可以定量地调整颜色值的属性，与`color.adjust()`的区别在于前者只能按照整数调整颜色值，而`color.scale`可以用连续的数值改变颜色值；
-- [`color.mix()`](https://sass-lang.com/documentation/modules/color/#mix)能够按照指定方法返回`color1`与`color2`的混合颜色值，与 CSS 的`color-mix()`函数使用相同的算法混合颜色值；
-- [`color.channel`](https://sass-lang.com/documentation/modules/color/#channel)用于提取某个颜色空间(如 HSL、RGB、LAB 等)中某个特定通道的值，允许按通道(如色相、饱和度、亮度等)提取颜色信息。
+- [`color.adjust($color, $properties...)`](https://sass-lang.com/documentation/modules/color/#adjust)，按固定量调整特定的颜色属性(例如色调、饱和度等)；
+- [`color.change($color, $properties...)`](https://sass-lang.com/documentation/modules/color/#change)，将特定颜色属性设置为新值；
+- [`color.scale($color, $properties...)`](https://sass-lang.com/documentation/modules/color/#scale)，连续缩放颜色属性，与使用离散步骤的`color.adjust`有所不同；
+- [`color.mix($color1, $color2, $weight)`](https://sass-lang.com/documentation/modules/color/#mix)，使用与 CSS 里的`color-mix()`函数相同的算法混合两种颜色；
+- [`color.channel($color, $channel, $space)`](https://sass-lang.com/documentation/modules/color/#channel)。从给定颜色空间(例如 HSL、RGB 等)中的颜色中提取特定通道(色相、饱和度等)。
+
+```scss
+$base-color: #036;
+.adjusted {
+  background: color.adjust($base-color, $lightness: +10%); // Lightens the color
+}
+```
 
 ### 映射
 
-Maps 是`(key: value)`的组合，并且允许被**动态访问**。Maps 的键值可以是任意 SassScript 表达式(甚至是另一个 Maps)，使用`==`比较两个键是否相同。给定的值可以与多个键相关联，但是给定的键在 Maps 中只能关联一个值，对于空 Maps 使用`()`表示。
+映射(Maps)是键值对的集合，使用`(key: value, ...)`来定义。其中 Key 可以是任何 *SassScript* 表达式(包括其他映射)，并使用`==`进行比较。每个 Key 只能映射到一个 Value，空映射表示为`()`。
 
-> 使用[`meta.inspect($value)`](https://sass-lang.com/documentation/modules/meta#inspect)函数生成用于调试 Maps 的有用输出。
+> 使用`meta.inspect($value)`生成可读输出对映射进行调试。
+{: .prompt-info}
+
+Sass 中提供了用于动态操作的[映射函数](https://sass-lang.com/documentation/modules/map)：
+
+- [`map.get($map, $key)`](https://sass-lang.com/documentation/modules/map/#get)，检索给定 Key 的值；
+- [`map.set($map, $key, $value)`](https://sass-lang.com/documentation/modules/map/#set)，返回一个包含更新后的键值对的新映射；
+- [`map.merge($map1, $map2)`](https://sass-lang.com/documentation/modules/map/#merge)，将两张映射合并成一张新映射；
+- [`@each`](#each)指令，遍历映射中的每个键值对。
+
+在列表函数中，映射可视为列表进行处理，此时它们会被转换为键值对列表(例如`(key1: value1, key2: value2)`将变为`key1 value1, key2 value2`)；但列表无法转换为映射(空列表除外)。
+
+> 使用有引号字符串作为映射的 Key，以避免与其他数据类型混淆。
 {: .prompt-warning}
 
-Maps 可以通过以下 Sass 函数对其进行操作：
-
-- [`map.get`](https://sass-lang.com/documentation/modules/map/#get)用于通过键查找对应的值；
-- [`map.set`](https://sass-lang.com/documentation/modules/map/#set)用作修改匹配键的值；
-- [`map.merge`](https://sass-lang.com/documentation/modules/map/#merge)用于 Maps 和新加的键值融合；
-- [`@each`](#each)指令可添加样式到一个 Maps 中的每个键值对。
-
-列表可以使用的场景，Maps 也同样可以使用。在列表函数中 Maps 会被自动转换为列表。事实上，一切的 Maps 都是列表(包括空 Map)，每个 Maps 都是包括键值对的子列表的列表。例如`(key1: value1, key2: value2)`会被列表函数自动转换成`key1 value1, key2 value2`，**反之则不行**(空列表除外)。
-
-> 为了避免混淆，应该使用有引号字符串作为 Maps 的键(无引号字符串可能颜色值或者其他类型)。
-{: .prompt-tip}
-
-Sass 中的 Maps 是不可修改的，这意味着 Maps 的值的内容永远不会改变。Sass 函数都返回新的 Maps，而不是修改原来的 Maps。不可变性有助于避免在样式表的不同部分共享相同的 Maps 时可能出现的许多隐蔽的 Bug。
-
-但是仍然可以通过将新映射分配给相同的变量来随时间更新状态。这通常在函数和`mixin`中用于跟踪映射中的配置：
+与列表类似，映射也是不可变的。函数 **返回新的映射**，同时保留原始映射。要更新映射，只需将新映射重新赋值给原变量即可。
 
 ```scss
+$prefixes-by-browser: (webkit: -webkit, moz: -moz);
+
 @mixin add-browser-prefix($browser, $prefix) {
   $prefixes-by-browser: map.merge($prefixes-by-browser, ($browser: $prefix)) !global;
 }
 
-@include add-browser-prefix("opera", o);
+@include add-browser-prefix(opera, -o);
 ```
 
-> 除此之外，Sass 的数据类型还包括：布尔值(Booleans)和空值(Nulls)。
-{: .prompt-info}
+### Boolean 值与 Nulls 值
+
+- Boolean 值：即`true`和`false`，常用于条件语句，例如`@if`；
+- Nulls 值：即`null`值，用于指示数据缺失或重置属性。
 
 ## 样式规则
 
-样式规则([Style rules](https://sass-lang.com/documentation/style-rules))是 Sass 的基础。在 Sass 和 CSS 中，属性声明(Property declarations)定义了与选择器匹配的元素的样式。Sass 增加了额外的功能，使它们更容易编写和自动化。声明的值可以是任何 SassScript，它可以被计算并存储在结果中。
+样式规则([Style rules](https://sass-lang.com/documentation/style-rules))是 Sass 的基础。属性声明(Property declarations)定义了应用于匹配选择器的元素的样式，Sass 通过简化编写过程并自动化样式任务的功能增强了此过程。声明的值可以是任何有效的 *SassScript* 表达式，该表达式会被求值并包含在编译后的 CSS 输出中。
 
 ```scss
 .circle {
   $size: 100px;
-  width: $size; height: $size;
+  width: $size;
+  height: $size;
   border-radius: $size * 0.5;
 }
 ```
 
-> 若声明的值为`null`或者**无引号空字符串**，那么 Sass 则不会将它编译成 CSS。
-{: .prompt-tip}
+> 如果声明的值为`null`或者是 **无引号的空字符串**，Sass 会将其从编译后的 CSS 中省略。
+{: .prompt-info}
 
 ### 嵌套规则
 
-嵌套([Nesting](https://sass-lang.com/documentation/style-rules/#nesting))是指将不同的逻辑结构组合在一起，避免了重复输入父级选择器，从而使样式可读性更高，而且令复杂的 CSS 结构更易于管理。
+嵌套([Nesting](https://sass-lang.com/documentation/style-rules/#nesting))允许开发者按照层次结构组织相关样式，从而减少重复父选择器的需要并提高可读性。此功能使复杂的 CSS 结构更易于管理。
 
-在 Sass 中我们可以将多个 CSS 规则组合在一起。如果使用了多个选择器，则可以在一个选择器内嵌套另一个选择器，从而创建**复合选择器**，外层选择器会作为内层选择的父级选择器。例如：
+在 Sass 中可以将 CSS 规则嵌套在一起。当使用多个选择器时，则会创建 **复合选择器**，其中外部选择器将成为内部选择器的父级。例如：
 
 ```scss
 nav {
@@ -413,7 +451,9 @@ nav {
     list-style: none;
   }
 
-  li { display: inline-block; }
+  li {
+    display: inline-block;
+  }
 
   a {
     display: block;
@@ -423,7 +463,7 @@ nav {
 }
 ```
 
-当 Sass 解开一个分组选择器的内嵌规则时，它可以把每一个内嵌选择器的规则都正确地解出来，例如：
+当 Sass 处理带有分组选择器的嵌套规则时，它会正确扩展每个嵌套规则。例如：
 
 ```scss
 .alert, .warning {
@@ -448,51 +488,61 @@ nav {
 }
 ```
 
-也可以嵌套使用组合子的选择器。您可以将组合子放在外部选择器的末尾，内部选择器的开头，甚至可以单独放在两者之间：
+还可以将选择器与组合器嵌套。组合器可以出现在外部选择器的末尾、内部选择器的开头，或者独立于它们之间：
 
 ```scss
 ul > {
-  li { list-style-type: none; }
+  li {
+    list-style-type: none;
+  }
 }
 
 h2 {
-  + p { border-top: 1px solid gray; }
+  + p {
+    border-top: 1px solid gray;
+  }
 }
 
 p {
   ~ {
-    span { opacity: 0.8; }
+    span {
+      opacity: 0.8;
+    }
   }
 }
 ```
 
-> 注意：嵌套过多会导致生成的 CSS 文件体积过大。
+> 注意：过多的嵌套会导致 CSS 文件过大，影响性能！
 {: .prompt-warning}
 
 ### 父级选择器
 
-父级选择器[`&`](https://sass-lang.com/documentation/style-rules/parent-selector)是 Sass 的一个特殊选择器，在嵌套规则中它被允许动态引用外部的选择器，它使得以更复杂的方式复用外部选择器成为可能，同时增强了代码的灵活性和可读性，比如添加一个伪类或在父类之前添加一个选择器：
+父选择器[`&`](https://sass-lang.com/documentation/style-rules/parent-selector)是 Sass 的一项强大功能，可以在嵌套规则中动态引用外部选择器。它支持复杂选择器的复用，从而提升代码的灵活性与可读性。例如它能为父元素附加伪类或添加前置选择器：
 
 ```scss
 .alert {
-  // 父选择器可用于向外部选择器添加伪类
-  &:hover { font-weight: bold; }
+  // Append a pseudo-class to the parent selector
+  &:hover {
+    font-weight: bold;
+  }
 
-  // 还可以用于在特定上下文中设置外部选择器的样式，例如将 body 设置为使用从右向左的语言
+  // Apply styles in a specific context, e.g., right-to-left languages
   [dir=rtl] & {
     margin-left: 0;
     margin-right: 10px;
   }
 
-  // 甚至可以将它用作伪类选择器的参数
-  :not(&) { opacity: 0.8; }
+  // Use as an argument in a pseudo-class
+  :not(&) {
+    opacity: 0.8;
+  }
 }
 ```
 
-> 编译后的 CSS 文件中`&`将会被替换成嵌套外层的父级选择器，如果含有多层嵌套，最外层的父级选择器会逐层向下传递。
+> 在编译后的 CSS 输出，`&`会被替换为最外层的父选择器。在多层嵌套中，最顶部的父选择器会向下传递到每一层。
 {: .prompt-tip}
 
-`&`可以作为选择器的第一个字符，其后可以跟随后缀生成复合的选择器，例如：
+`&`也可以用作选择器的第一部分，紧接着后缀来创建复合选择器：
 
 ```scss
 #main {
@@ -504,10 +554,9 @@ p {
 }
 ```
 
-如果父级表达式`&`在任何样式规则之外使用，则返回`null`。可以像下面的案例一样使用这个规则：
+如果`&`在样式规则之外使用，则结果为`null`。这可以在 Mixins 中加以利用，实现条件化样式应用：
 
 ```scss
-// 使用上述规则来确认`@mixin`是否被调用
 @mixin app-background($color) {
   #{if(&, '&.app-background', '.app-background')} {
     background-color: $color;
@@ -522,7 +571,7 @@ p {
 }
 ```
 
-可以将`&`传递给函数或将其包含在插值语句，或者在其他选择器中，例如将它与选择器函数和`@at-root`规则结合使用。下面的案例是编写一个匹配外部选择器和元素选择器的选择器：
+`&`也可以传递给函数、或者用于插值语句，或与选择器函数和`@at-root`规则结合使用。例如，要将父选择器与元素选择器统一起来：
 
 ```scss
 @use "sass:selector";
@@ -545,7 +594,7 @@ p {
 
 ### 属性嵌套
 
-属性名称也可以使用插值语句`${}`，这使得可以根据需要动态生成属性，甚至可以插入整个属性名：
+Sass 支持属性嵌套，允许使用插值`${}`动态生成属性名称。这对于动态创建带有前缀的属性或整个属性名称非常有用：
 
 ```scss
 @mixin prefix($property, $value, $prefixes) {
@@ -560,7 +609,7 @@ p {
 }
 ```
 
-有些 CSS 属性遵循相同的命名空间(Namespace)，比如`font-family, font-size, font-weight`都是`font`作为命名空间的属性。为了便于管理这样的属性，同时也为了避免了重复输入，Sass 允许将属性嵌套在命名空间中，例如：
+共享公共命名空间的属性(例如`font-family`、`font-size`和`font-weight`)可以嵌套在其命名空间下，以减少重复并改善组织方式：
 
 ```scss
 .funky {
@@ -572,7 +621,7 @@ p {
 }
 ```
 
-命名空间也可以包含自己的属性值，例如：
+命名空间还可以包含自己的属性值：
 
 ```scss
 .funky {
@@ -585,9 +634,7 @@ p {
 
 ### 自定义属性
 
-CSS 自定义属性(即 CSS 变量)允许在其声明值中使用几乎任何文本。更重要的是 JavaScript 可以访问这些值，因此任何值都可能与用户相关。
-
-Sass 解析自定义属性声明的方式与解析其他属性声明的方式不同。所有的 token 都按原样传递给 CSS。唯一的例外是插值语句`#{}`，这是将动态值注入自定义属性的唯一方法。
+CSS 自定义属性(即 CSS 变量)几乎允许任何文本作为其值，这使得它们可以被 JavaScript 访问，并且具有高度的动态性。Sass 处理自定义属性声明的方式有所不同，它会将所有标记原样传递给 CSS；插值语句`#{}`除外，这是注入动态值的唯一方法：
 
 ```scss
 $primary: #81899b;
@@ -598,18 +645,16 @@ $warn: #dfa612;
   --primary: #{$primary};
   --accent: #{$accent};
   --warn: #{$warn};
-  --consumed-by-js: $primary;  // $primary 的值并不会被正常解析
+  --consumed-by-js: $primary; // $primary is not parsed as a value
 }
 ```
 
-> 插值语句`#{}`会从字符串中删除引号，这很难将有引号字符串用作自定义属性的值，可以使用`meta.inspect()`函数来保留引号。
+> 插值语句`#{}`会从有引号字符串中删除引号。要保留自定义属性值中的引号，可以使用`meta.inspect()`函数。
 {: .prompt-tip}
 
 ### 占位符选择器
 
-Sass 有一种特殊的选择器，称为“占位符”。它的外观和功能都很像一个 Class 选择器，但它以`%`开头，并且不包含在 CSS 输出中。实际上任何包含占位符选择器的复杂选择器都不包含在 CSS 中，任何选择器都包含占位符的样式规则也不包含在 CSS 中。
-
-占位符选择器不像 Class 选择器，占位符不会让 CSS 显得杂乱。Class 选择器如果定义了但未在 HTML 中使用，仍然会出现在最终的 CSS 文件中，增加文件体积。而占位符选择器如果未被`@extend`引用，则完全不会出现在输出 CSS 中，因此不会造成冗余代码，有助于保持 CSS 文件的简洁。除此之外占位符选择器不会强制编写第三方库的开发者使用特定的类名。
+Sass 引入了占位符选择器，用`%`来表示。它的功能类似于类选择器，但除非经过继承，否则会被排除在编译的 CSS 之外。这可以避免不必要的 CSS 输出，保持文件精简，并避免因未使用的样式导致冗余。占位符选择器非常适合可复用的样式块，无需强制使用特定的类名，尤其是在第三方库中。
 
 ```scss
 %toolbelt {
@@ -618,7 +663,9 @@ Sass 有一种特殊的选择器，称为“占位符”。它的外观和功能
   padding: 16px 0;
   width: 100%;
 
-  &:hover { border: 2px rgba(#000, .5) solid; }
+  &:hover {
+    border: 2px rgba(#000, .5) solid;
+  }
 }
 
 .action-buttons {
@@ -632,15 +679,264 @@ Sass 有一种特殊的选择器，称为“占位符”。它的外观和功能
 }
 ```
 
+## Mixins
+
+Mixins 是一项强大的功能，它允许定义可复用的 CSS 样式块，从而避免使用例如`.float-left`这类非语义化的类名。借助 Mixins，开发者可以封装 CSS 规则、Sass 特性，甚至动态变量，从而创建灵活、可重复使用的样式。
+
+当网站存在小规模重复的样式模式(如统一的颜色或字体)时，Sass 变量是保持一致性的理想选择。然而随着样式变得越来越复杂，重复使用大块 CSS 代码会变得非常繁琐，这时 Mixins 就能够高效地重复使用整个样式块。
+
+### @mixin
+
+`@mixin`可以定义可复用的样式块。例如：
+
+```scss
+@mixin large-text {
+  font: {
+    family: Arial;
+    size: 20px;
+    weight: bold;
+  }
+  color: #ff0000;
+}
+```
+
+> 过度使用 Mixins 和大型样式块会使编译后的 CSS 体积膨胀，从而可能降低页面加载速度。请谨慎使用！
+{: .prompt-danger}
+
+当需要重复一组逻辑样式时，例如需要协同工作以实现特定效果(圆角或自定义排版设置)的一组属性，Mixins 是理想的选择。一个好的经验法则是：像`rounded-corners`、`fancy-font`或`no-bullets`这样的有着清晰定义的抽象样式，使用 Mixins 是一个非常明智地选择。而如果难以找到一个有意义的名称，Mixins 可能并非最佳解决方案。
+
+Mixin 与 CSS 类有相似之处，但用途截然不同：CSS 类应用于 HTML 中，具有语义含义，描述元素是什么；Mixin 应用于样式表中，描述元素的外观，属于纯粹的样式展示层级。
+
+Mixins 还可以包含选择器，甚至使用`&`引用父选择器。例如：
+
+```scss
+@mixin clearfix {
+  display: inline-block;
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+  * html & {
+    height: 1px;
+  }
+}
+```
+
+### @include
+
+定义好 Mixins 之后，需要通过`@include`进行引用，例如：
+
+```scss
+.page-title {
+  @include clearfix;
+  padding: 4px;
+  margin-top: 10px;
+}
+```
+
+还可以在样式表的顶部引用 Mixins，但它们不能直接定义属性或使用父选择器：
+
+```scss
+@mixin silly-links {
+  a {
+    color: blue;
+    background-color: red;
+  }
+}
+
+@include silly-links;
+```
+
+Mixins 甚至可以包含其他 Mixins 以实现模块化组合：
+
+```scss
+@mixin highlighted-background { 
+  background-color: #fc0;
+}
+
+@mixin header-text {
+  font-size: 20px;
+}
+
+@mixin compound {
+  @include highlighted-background;
+  @include header-text;
+}
+```
+
+> 为了安全性和灵活性，Mixin 最好使用后代选择器。这样可以确保它们在样式表的任何位置被导入时，都不会引发特异性问题。
+{: .prompt-warning}
+
+### 参数化 Mixins
+
+Mixins 有了参数之后功能更加强大，它可以传递变量来动态自定义样式。参数定义在括号中，并以逗号分隔：
+
+```scss
+@mixin sexy-border($color, $width) {
+  border: {
+    color: $color;
+    width: $width;
+    style: dashed;
+  }
+}
+
+p {
+  @include sexy-border(blue, 1in);
+}
+```
+
+还可以为参数设置默认值，如果没有提供值，则使用这些默认值：
+
+```scss
+@mixin sexy-border($color, $width: 1in) {
+  border: {
+    color: $color;
+    width: $width;
+    style: dashed;
+  }
+}
+
+p {
+  @include sexy-border(blue);
+}
+
+h1 {
+  @include sexy-border(blue, 2in);
+}
+```
+
+为提高可读性，参数也可通过关键字参数传递：
+
+```scss
+p {
+  @include sexy-border($color: blue);
+}
+
+h1 {
+  @include sexy-border($color: blue, $width: 2in);
+}
+```
+
+当不确定 Mixins 需要多少个参数时(例如对于具有多个阴影的`box-shadow`)，可以使用`...`将参数视为列表：
+
+```scss
+@mixin box-shadow($shadows...) {
+  -moz-box-shadow: $shadows;
+  -webkit-box-shadow: $shadows;
+  box-shadow: $shadows;
+}
+
+.shadows {
+  @include box-shadow(0px 4px 5px #666, 2px 6px 10px #999);
+}
+```
+
+还可以使用`...`传递值列表作为参数：
+
+```scss
+$values: #ff0000, #00ff00, #0000ff;
+
+@mixin colors($text, $background, $border) {
+  color: $text;
+  background-color: $background;
+  border-color: $border;
+}
+
+.primary {
+  @include colors($values...);
+}
+```
+
+这种方法也适用于包装 Mixins，它可以扩展功能而无需改变原始 Mixins 的签名：
+
+```scss
+@mixin stylish-mixin($args...) {
+  // Base styles
+}
+
+@mixin wrapped-stylish-mixin($args...) {
+  font-weight: bold;
+  @include stylish-mixin($args...);
+}
+
+.stylish {
+  @include wrapped-stylish-mixin(#00ff00, $width: 100px);
+}
+```
+
+### Content Blocks
+
+Mixins 可以接受 Content Blocks，使用`@content`的特定位置注入自定义样式。这对于有条件地应用样式非常有用，例如针对特定浏览器：
+
+```scss
+@mixin apply-to-ie6-only {
+  * html {
+    @content;
+  }
+}
+
+@include apply-to-ie6-only {
+  #logo {
+    background-image: url(/logo.gif);
+  }
+}
+```
+
+编译后得到：
+
+```scss
+* html {
+  #logo {
+  background-image: url(/logo.gif);
+  }
+}
+```
+
+Content Blocks 在其定义的作用域内进行求值，而不是在 Mixins 的作用域内。这意味着 Mixins 内部的局部变量无法被内容块访问，变量会被解析为其全局或周围作用域的值：
+
+```scss
+$color: white;
+
+@mixin colors($color: blue) {
+  background-color: $color;
+  @content;
+  border-color: $color;
+}
+
+.colors {
+  @include colors {
+    color: $color; // Resolves to global $color (white), not the Mixin's $color (blue)
+  }
+}
+```
+
+类似地，在周围范围内定义的变量可以在 Content Blocks 内使用：
+
+```scss
+#sidebar {
+  $sidebar-width: 300px;
+  width: $sidebar-width;
+
+  @include smartphone {
+    width: $sidebar-width / 3;
+  }
+}
+```
+
 ## at-Rules
 
-### @use
+### 加载与导入
 
-`@use`能够从其他 Sass 样式表加载Mixins、函数和变量等，并将多个样式表中的 CSS 组合在一起。通过`@use`加载的样式表被称为模块(modules)。任何以`@use`加载的样式，无论加载了多少次都会在编译后的 CSS 输出中只包含一次。
+Sass 提供了强大的工具来导入和加载样式表，使开发者能够高效组织代码，并在不同文件间复用变量、Mixins 和函数等 *SassScript*。`@use`和`@forward`是 Sass 中管理依赖项的现代推荐方法，而较旧的`@import`现已弃用。
 
-#### 加载成员
+#### @use
 
-按照下面的方法使用`@use`载入的成员(Mixins、函数和变量等)：
+`@use`可以从另一个 Sass 样式表(称为模块，Modules)加载 Mixins、函数、变量和其他成员。与旧版`@import`不同，使用`@use`加载的模块无论被引用多少次，在编译后的 CSS 输出中都只会被包含一次，从而确保代码更简洁、更高效。
+
+以下是使用`@use`的基本示例：
 
 ```scss
 // _corners.scss
@@ -659,10 +955,12 @@ $radius: 3px;
 }
 ```
 
-也可以为导入的模块重命名：
+在此示例中，加载了`corners`模块，并且其成员(`rounded` Mixins 和`$radius`变量)使用`corners`命名空间进行访问。
+
+可以使用`as`关键字为模块分配自定义命名空间，从而使代码更简洁或更具上下文相关性：
 
 ```scss
-//_corners.scss
+// _corners.scss
 $radius: 3px;
 
 @mixin rounded {
@@ -678,7 +976,7 @@ $radius: 3px;
 }
 ```
 
-或者使用`*`表示导入所有的成员：
+为了完全避免命名空间，还可以使用`as *`将模块的所有成员导入当前作用域：
 
 ```scss
 // _corners.scss
@@ -697,33 +995,31 @@ $radius: 3px;
 }
 ```
 
-> 除`@forward`之外，`@use`的使用必须位于其他指令之前。可以在`@use`前先声明变量，以便在配置模块时使用。
+> `@use`必须出现在其他 Sass 指令之前(`@forward`除外)。但是可以在`@use`之前声明变量来配置模块。
 {: .prompt-warning}
 
-#### 创建私有成员
-
-有时候可能不希望定义的所有成员在样式表之外可用，Sass 通过以`-`或`_`开头来定义私有成员，这些成员将在定义它们的样式表中像往常一样工作，但它们不会成为模块公共 API 的一部分，这意味着在引用文件中无法使用它们。
+为限制特定成员的访问权限，Sass 允许通过在变量、Mixins 或函数名前添加连字符`-`或下划线`_`来定义私有成员。这些成员仅在模块内部可访问，但在加载该模块的文件中不可用：
 
 ```scss
-//_corners.scss
+// _corners.scss
 $-radius: 3px;
 
 @mixin rounded {
   border-radius: $-radius;
 }
 
-// style.scs
+// style.scss
 @use "corners";
 
 .button {
   @include corners.rounded;
-  padding: 5px + corners.$-radius;  // 这会报错！$-radius 在`_corners.scss`外无法使用
+  padding: 5px + corners.$-radius; // Error: $-radius is private and inaccessible
 }
 ```
 
-#### 配置默认值
+这确保了敏感或内部成员保持封装，使模块的公共 API 保持简洁。
 
-模块中若有变量使用了`!default`进行声明，那么可以使用`@use <url> with (<variable>: <value>, <variable>: <value>)`对该变量的值进行重新配置，配置的值将覆盖变量的默认值。
+模块可以使用`!default`标志声明变量，允许下游样式表使用`@use ... with`覆盖其默认值：
 
 ```scss
 // _library.scss
@@ -743,10 +1039,12 @@ code {
 );
 ```
 
-> 一个模块即时被加载的多次，仍会保持相同的配置。`@use ... with`只能在每个模块中使用一次。
+在这种情况下，`$black`和`$border-radius`会被覆盖，而 $box-shadow 则保留其默认值。**即使模块被多次加载，其配置也只会应用一次！**
+
+> 在样式表中，每个模块只能使用一次`@use ... with`！
 {: .prompt-warning}
 
-使用`@use ... with`来配置模块非常方便，特别是在使用最初编写用于使用`@import`指令的库时。但它不是特别灵活，不建议将其用于更高级的用例。如果发现自己想要一次配置许多变量，将映射作为配置传递，或者在模块加载后更新配置，可以考虑编写一个`mixin`来设置变量，另一个`mixin`来注入样式：
+对于更高级的配置需求，例如传递多个变量或动态更新配置，可以考虑使用 Mixins：
 
 ```scss
 // _library.scss
@@ -754,7 +1052,6 @@ $-black: #000;
 $-border-radius: 0.25rem;
 $-box-shadow: null;
 
-// 如果配置了`$-box-shadow`，则返回其配置值。否则返回`$-black`的值。
 @function -box-shadow() {
   @return $-box-shadow or (0 0.5rem 1rem rgba($-black, 0.15));
 }
@@ -789,7 +1086,9 @@ $-box-shadow: null;
 @include library.styles;
 ```
 
-加载模块后，还可以重新为变量赋新的值：
+这种方法为复杂的用例提供了更大的灵活性，例如传递配置图或在模块加载后更新样式。
+
+除了以上用法，还可以在加载模块后为模块的变量重新赋值：
 
 ```scss
 // _library.scss
@@ -804,13 +1103,11 @@ library.$color: blue;
 @use 'override';
 ```
 
-这时`library.$color`的值为`blue`。
+这时`library.$color`在最终输出中更新为蓝色，演示了如何在下游修改模块。
 
-### @forward
+#### @forward
 
-`@forward`指令能够加载一个 Sass 样式表，并在使用`@use`加载样式表时使Mixins、函数和变量等可用。它使得跨许多文件组织 Sass 库成为可能，同时允许它们的用户加载单个入口文件。
-
-被`@forward`加载模块中的公共变量仅在引用文件里可用，在该模块中不可用。例如：
+`@forward`是专为构建模块化 Sass 库而设计。它会加载样式表，并将其中的 Mixins、函数和变量提供给使用`@use`的下游样式表。这可以为跨多个文件的库创建单个入口点。例如：
 
 ```scss
 // _list.scss
@@ -827,13 +1124,13 @@ library.$color: blue;
 @use "bootstrap";
 
 li {
-  @include bootstrap.list-reset;  // `list-reset`在`bootstrap.scss`中不可用！
+  @include bootstrap.list-reset;
 }
 ```
 
-#### 设置前缀
+注意，`@forward`转发的成员仅在下游样式表`styles.scss`中可用，而在转发文件`bootstrap.scss`中不可用。
 
-由于模块成员通常与名称空间一起使用，因此简短的名称通常是最易读的选项。但是这些名称在定义它们的模块之外可能没有意义，因此`@forward`指令可以选择为它的所有成员添加额外的前缀。其写法为`@forward "<url>" as <prefix>-*`，它将给定的前缀添加到模块的每个Mixins，函数和变量名等的开头。例如如果模块定义了一个名为`reset`的成员，并将其命名为`list-*`，则下游样式表将把它引用为`list-reset`：
+为了使成员名称更具描述性，可以使用`<prefix>-*`为所有转发的成员添加前缀：
 
 ```scss
 // _list.scss
@@ -854,9 +1151,9 @@ li {
 }
 ```
 
-#### 控制可用性
+在这个示例中，`reset` Mixins 被公开为了`list-reset`，提高了下游样式表的清晰度。
 
-有时可能不希望从模块使用每个成员，需要将某些成员保留为私有，可能希望要求用户以不同的方式加载某些成员。那么可以通过`@forward "<url>" hide <members...>`或者`@forward "<url>" show <members...>`来控制哪些成员可以被使用。例如：
+可以使用隐藏或显示关键字来控制转发哪些成员，例如：
 
 ```scss
 // _list.scss
@@ -870,7 +1167,6 @@ $horizontal-list-gap: 2em;
 
 @mixin list-horizontal {
   @include list-reset;
-
   li {
     display: inline-block;
     margin: {
@@ -884,9 +1180,9 @@ $horizontal-list-gap: 2em;
 @forward "list" hide list-reset, $horizontal-list-gap;
 ```
 
-#### 配置模块
+在这个例子中，`list-reset`和`$horizo​​ntal-list-gap`被隐藏，使得下游样式表无法使用它们，而`list-horizo​​ntal`仍然可以访问。
 
-`@forward`还可以用配置加载模块，这与`@use`的工作原理基本相同，但是`@forward`的配置可以在其配置中使用`!default`。这允许模块更改上游样式表的默认值，同时仍然允许下游样式表覆盖它们。
+类似于`@use`，`@forward`支持使用`with`子句进行配置。带有`!default`的变量可以被覆盖，并且这些默认值可以在后续进一步自定义：
 
 ```scss
 // _library.scss
@@ -909,47 +1205,39 @@ code {
 @use 'opinionated' with ($black: #333);
 ```
 
-### @import
+例子中的`_opinionated.scss`使用默认配置转发了`_library.scss`，然后`style.scss`进一步覆盖它。
 
-Sass 拓展了`@import`的功能，允许其导入 SCSS 或 Sass 文件。被导入的文件将合并编译到同一个 CSS 文件中，另外被导入的文件中所包含的变量或者Mixins都可以在导入的文件中使用。如果同一份样式表被多次导入，则`@import`每次都会重新执行。
+#### @import
 
-> 在最新的 Sass 编写规范中，`@import`已经弃用，建议使用`@use`和`@forward`代替！
+Sass 虽然仍能支持`@import`，但在最新版中已被弃用，取而代之的是 `@use`和`@forward`。它将导入的 SCSS 或 Sass 文件合并为一个 CSS 输出，使变量和混合宏在全局范围内可用。然而它有几个缺点：
+
+- 全局作用域污染：导入的成员会被添加到全局作用域，增加了命名冲突的风险；
+- 多次导入：同一个文件可能被多次导入，这可能会导致输出中的 CSS 重复；
+- 嵌套导入：`@import`可以在样式规则中使用，但不能在`@mixin`或控制流指令中使用。
+
+> `@mixin`或控制流语句中不允许嵌套`@import`！
 {: .prompt-danger}
 
-Sass 允许同时导入多个文件，导入文件也可以使用`#{}`插值语句，但不是通过变量动态导入 Sass 文件，只能作用于 CSS 的`url()`导入方式：
+可以使用单个`@import`语句导入多个文件，并为 CSS`url()`导入使用插值语句`#{}`：
 
 ```scss
 $family: unquote("Droid+Sans");
 @import url("http://fonts.googleapis.com/css?family=\#{$family}");
 ```
 
-> 如果需要导入 SCSS 或者 Sass 文件，但又不希望将其编译为 CSS，只需要在文件名前添加下划线，这样会告诉 Sass 不要编译这些文件。
+> 为了防止 Sass 文件被编译为 CSS，请在其名称前添加下划线(例如`_example.scss`)，这些部分文件仅用于导入。
 {: .prompt-tip}
-
-`@import`指令也可以在 CSS 中嵌套使用：
-
-```scss
-/* style.scss */
-.example {
-  color: red;
-}
-
-#main {
-  @import "example";
-}
-```
-
-> 在`@mixin`指令和控制流语句中不可以使用嵌套的`@import`！
-{: .prompt-danger}
 
 `@use`旨在取代旧的`@import`指令，但它的工作方式被有意设计得不同。以下是两者之间的一些主要区别：
 
-- `@use`只使变量、函数和Mixins在当前文件的作用域中可用，它从不将它们添加到全局作用域。这使得找出 Sass 文件引用的每个名称的来源变得容易，并且意味着可以使用更短的名称而不会有任何冲突的风险；
-- `@use`只加载每个文件一次。这确保了不会意外地多次复制依赖项的 CSS；
-- `@use`必须出现在文件的开头，不能嵌套在样式规则中。嵌套导入可以迁移到Mixins中调用或`meta.load-css()`中；
-- `@use`加载的模块必须使用有引号字符串。
+- `@use`将成员加载到模块的命名空间中，避免全局作用域污染，并支持更短、无冲突的名称；
+- 使用`@use`加载的模块只会被包含一次，从而避免重复的 CSS 输出；
+- `@use`必须出现在文件顶部，并且不能嵌套在样式规则中。嵌套导入可以用 Mixins 或`meta.load-css()`函数替换；
+- `@use`要求模块 URL 为带引号的字符串(例如`@use "library"`)。
 
-### @extend
+### 继承
+
+在设计网页时，可能经常会遇到多个元素共享一组通用样式，但某些元素需要额外样式的情况。HTML 中一种常见的做法是为一个元素分配多个类，一个用于共享样式，另一个用于特有样式。例如可能有一个通用的`error`样式和一个更具体的 `seriousError`样式，如下所示：
 
 在设计网页的时候常常遇到一个元素使用的样式与另一个元素完全相同，但又添加了额外的样式。通常会在 HTML 中给元素定义两个 Class：一个通用样式和一个特殊样式。假设现在要设计一个**普通错误样式**与一个**严重错误样式**，我们一般会这样写：
 
@@ -972,7 +1260,9 @@ $family: unquote("Droid+Sans");
 }
 ```
 
-麻烦的是，这样做必须时刻记住使用`.seriousError`时需要参考`.error`的样式，这可能会带来意想不到的 Bug，或者给 HTML 添加无语意的样式。使用`@extend`可以避免上述情况，告诉 Sass 将一个选择器下的所有样式继承给另一个选择器：
+这种方法可行但存在缺陷。你必须始终记住在 HTML 中将`.seriousError`与`.error`配对，这可能会导致错误或混乱、无语义的标记。Sass 的`@extend`提供了一个更简洁的解决方案，它允许一个选择器继承另一个选择器的所有样式，从而无需应用多个类。
+
+Sass 中的`@extend`可以将一个选择器的样式继承到另一个选择器。例如：
 
 ```scss
 .error {
@@ -986,9 +1276,7 @@ $family: unquote("Droid+Sans");
 }
 ```
 
-上面代码的意思是将`.error`下的所有样式继承给`.seriousError`，`border-width: 3px;`是单独给`.seriousError`设定特殊样式，这样使用`.seriousError`的地方可以不再使用`.error`，其他使用到`.error`的样式也会同样继承给`.seriousError`。
-
-`@extend`的作用是将重复使用的样式`.error`继承给需要包含这个样式的特殊样式`.seriousError`，正如刚刚的例子会输出：
+在这个示例中，`.seriousError`继承了`.error`的所有样式，并添加了`border-width: 3px`的样式。这意味着只需要在 HTML 中应用`.seriousError`类，从而简化标记。编译后的 CSS 如下所示：
 
 ```css
 .error, .seriousError {
@@ -1001,13 +1289,11 @@ $family: unquote("Droid+Sans");
 }
 ```
 
-当合并选择器时，`@extend`会避免无谓的重复，`.seriousError.seriousError`将编译为`.seriousError`，不能匹配任何元素的选择器(比如`#main#footer`)也会删除。
+Sass 会智能地组合选择器以避免冗余。它不会生成像`.seriousError.seriousError`这样不必要的重复代码，并且会移除无法匹配任何元素的选择器(例如`#main#footer`)。
 
 #### 继承复杂选择器
 
-Class选择器并不是唯一可以被继承的，Sass 允许继承任何定义给单个元素的选择器，比如`.special.cool`、`a:hover`或者`a.user[href^="http://"]`等。
-
-与 类 元素一样，`a:hover`的样式将继承给`.hoverlink`：
+`@extend`并不局限于类选择器。开发者可以继承任何应用于单个元素的选择器，例如`.special.cool`、`a:hover`，甚至`a.user[href^="http://"]`。例如：
 
 ```scss
 a:hover {
@@ -1027,9 +1313,11 @@ a:hover, .hoverlink {
 }
 ```
 
+这种灵活性使得`@extend`能够在各种选择器类型中重用样式。
+
 #### 多重继承
 
-同一个选择器可以继承给多个选择器，它所包含的属性将继承给所有被继承的选择器：
+单个选择器可以继承多个选择器的样式，并组合它们的属性。请考虑以下示例：
 
 ```scss
 .error {
@@ -1067,11 +1355,11 @@ a:hover, .hoverlink {
 }
 ```
 
-每个`.seriousError`将包含`.error`与`.attention`下的所有样式，这时后定义的样式享有优先权：`.seriousError`的背景颜色是`#ff0`而不是`#fdd`，因为`.attention`在`.error`之后定义。
+在这个例子中，`.seriousError`同时继承了`.error`和`.attention`的样式。需要注意的是，后定义的样具有更高的优先级，因此`.seriousError`的背景颜色是`#ff0`(来自`.attention`)，而不是来自`.error`的`#fdd`。
 
-多重继承可以使用逗号分隔选择器名，比如`@extend .error, .attention;`与`@extend .error;`和`@extend.attention`有相同的效果。
+除此之外，还可以使用逗号分隔的列表在一行中写入多个继承名，例如 `@extend .error, .attention;`，这样可以达到相同的效果。
 
-当一个选择器继承给第二个后，可以继续将第二个选择器继承给第三个，例如：
+继承也可以链式执行。例如：
 
 ```scss
 .error {
@@ -1094,7 +1382,7 @@ a:hover, .hoverlink {
 }
 ```
 
-现在每个`.seriousError`选择器将包含`.error`的样式，而`.criticalError`不仅包含`.seriousError`的样式也会同时包含`.error`的所有样式，上面的代码编译为：
+此时`.criticalError`继承自`.seriousError`的样式，而`.seriousError`又继承自`.error`，从而形成清晰的样式层级结构。上面的代码编译为：
 
 ```css
 .error, .seriousError, .criticalError {
@@ -1117,7 +1405,7 @@ a:hover, .hoverlink {
 
 #### 选择器序列
 
-暂时不可以将选择器序列(比如`.foo .bar`或者`.foo + .bar`)延伸给其他元素，但是却可以将其他元素继承给选择器序列，比如
+在 Sass 中，无法直接继承选择器序列(例如`.foo .bar`或`.foo + .bar`)，但可以在序列中继承单个选择器。例如：
 
 ```scss
 a {
@@ -1132,43 +1420,7 @@ a {
 }
 ```
 
-有时会遇到复杂的情况，比如选择器列中的某个元素需要继承给另一个选择器序列，这种情况下两个选择器序列需要合并，比如：
-
-```scss
-#admin .tabbar a {
-  font-weight: bold;
-}
-
-#demo .overview .fakelink {
-  @extend a;
-}
-```
-
-理论上讲能够生成所有匹配条件的结果，但是这样生成的样式表太复杂了，上面这个简单的例子就可能有 10 种结果。所以 Sass 只会编译输出有用的选择器。
-
-当两个选择器序列合并时，如果没有包含相同的选择器，则将生成两个新选择器，第一列出现在第二列之前，或者第二列出现在第一列之前：
-
-```scss
-#admin .tabbar a {
-  font-weight: bold;
-}
-
-#demo .overview .fakelink {
-  @extend a;
-}
-```
-
-编译后得到：
-
-```css
-#admin .tabbar a,
-#admin .tabbar #demo .overview .fakelink,
-#demo .overview #admin .tabbar .fakelink {
-  font-weight: bold;
-}
-```
-
-如果两个序列包含了相同的选择器，相同部分将会合并在一起，其他部分交替输出。在下面的例子里，两个列都包含`#admin`，输出结果中它们合并在了一起：
+在序列中继承选择器时，Sass 会智能地合并序列，并且只生成有用的选择器组合，避免输出过于复杂或冗余。例如：
 
 ```scss
 #admin .tabbar a {
@@ -1190,22 +1442,23 @@ a {
 }
 ```
 
+例如上面的例子中，两个序列存在共同部分(即`#admin`)，Sass 会高效地将它们合并。
+
 #### @extend-Only 选择器
 
-有时需要定义一套样式并不是给某个元素用，而是只通过`@extend`指令使用，尤其是在制作 Sass 样式库的时候，希望 Sass 能够忽略用不到的样式。
-
-如果使用普通的 CSS 规则，最后会编译出很多用不到的样式，也容易与其他样式名冲突，所以 Sass 引入了**占位符选择器**`%`。
-
-占位符选择器以`%`符号开头，并且不包含在 CSS 输出中。实际上，任何包含占位符选择器的组合选择器都不包含在 CSS 中，任何选择器都包含占位符的样式规则也不包含在 CSS 中。若占位符如果没有继承，那么就不会被编译。
+创建 Sass 库时，您可能希望定义仅用于继承而非直接使用的样式。Sass 提供了占位符选择器，用`%`符号表示。除非经过继承，否则这些选择器会被排除在编译后的 CSS 之外，从而保持输出的简洁性并避免与其他样式名称冲突。
+例如：
 
 ```scss
 %toolbelt {
   box-sizing: border-box;
-  border-top: 1px rgba(#000, .12) solid;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
   padding: 16px 0;
   width: 100%;
 
-  &:hover { border: 2px rgba(#000, .5) solid; }
+  &:hover {
+    border: 2px solid rgba(0, 0, 0, 0.5);
+  }
 }
 
 .action-buttons {
@@ -1219,11 +1472,11 @@ a {
 }
 ```
 
+在这个例子中，除非进行继承操作，否则`%toolbelt`样式不会出现在编译后的 CSS 中，这使其成为库中可重用样式集的理想选择。
+
 #### !optional 关键字
 
-如果`@extend`失败会收到错误提示，比如`a.important {@extend .notice}`，当没有`.notice`选择器时将会报错，只有 `h1.notice`包含`.notice`时也会报错，因为`h1`与`a`冲突，会生成新的选择器。
-
-如果要求`@extend`不生成新选择器，可以通过`!optional`声明达到这个目的，例如：
+默认情况下，如果`@extend`失效，如尝试继承不存在的选择器(例如`.notice`)，或者继承存在冲突的选择器(例如将`.notice`从`h1.notice`继承到`a.important`)，Sass 则会抛出错误。要使继承可选并避免错误，可以使用`!optional`标志：
 
 ```scss
 a.important {
@@ -1231,14 +1484,16 @@ a.important {
 }
 ```
 
-在指令中使用`@extend`时(比如在`@media`中)有一些限制：Sass 不可以将`@media`层外的 CSS 规则继承给指令层内的 CSS，这样会生成大量的无用代码。也就是说如果在`@media`(或者其他 CSS 指令)中使用`@extend`，必须继承给相同指令层中的选择器。
+这确保了如果`.notice`不存在或无法继承，Sass 也不会产生错误。
 
-下面的例子是可行的：
+#### CSS 指令限制
+
+在 CSS 指令(例如`@media`)中使用`@extend`时，Sass 会进行一些限制，以避免生成过多的代码。你只能在同一指令作用域内继承选择器。例如：
 
 ```scss
 @media print {
   .error {
-    border: 1px #f00;
+    border: 1px solid #f00;
     background-color: #fdd;
   }
 
@@ -1253,7 +1508,7 @@ a.important {
 
 ```scss
 .error {
-  border: 1px #f00;
+  border: 1px solid #f00;
   background-color: #fdd;
 }
 
@@ -1265,13 +1520,58 @@ a.important {
 }
 ```
 
-### @at-rule
+此限制确保 Sass 不会通过在不相关的上下文中扩展样式来产生冗余的 CSS。
+
+### @at-root
+
+`@at-root`的语法是：`@at-root [<selector>] { ... }`。`@at-root`让块中的所有内容在文档根节点处输出，而非采用常规的嵌套方式。它最常用于与 *SassScript* 父选择器和选择器函数进行高级嵌套操作。
+
+例如想编写一个与外部选择器和元素选择器匹配的选择器，那么则可以编写一个类似下面的 Mixins，使用`selector.unify()`函数将`&`与下游样式表的选择器组合起来：
+
+```scss
+@use "sass:selector";
+
+@mixin unify-parent($child) {
+  @at-root #{selector.unify(&, $child)} {
+    @content;
+  }
+}
+
+.wrapper .field {
+  @include unify-parent("input") {
+    /* ... */
+  }
+  @include unify-parent("select") {
+    /* ... */
+  }
+}
+```
+
+`@at-root`在这里是必需的，因为 Sass 在执行选择器嵌套时不知道使用了什么插值来生成选择器。这意味着即使你使用`&`作为 *SassScript* 表达式，它也会自动将外部选择器添加到内部选择器中。`@at-root`明确告诉 Sass 不要包含外部选择器(尽管它始终会包含在`&`表达式中)。
+
+在单独使用时，`@at-root`仅会移除样式规则。诸如`@media`或`@supports`之类的 at-Rules 将会保留。如果不希望这样，可以使用类似媒体查询功能的语法来精确控制其包含或排除的内容，例如`@at-root (with: <rules...>) { ... }`或`@at-root (without: <rules...>) { ... }`。`(without: ...)`查询会告诉 Sass 哪些规则应该被排除，而`(with: ...)`查询会排除除列出的规则之外的所有规则。
+
+```scss
+@media print {
+  .page {
+    width: 8in;
+
+    @at-root (without: media) {
+      color: #111;
+    }
+
+    @at-root (with: rule) {
+      font-size: 1.2em;
+    }
+  }
+}
+```
 
 ## 控制流
 
-### @if 与 @else
+### 判断语句
 
-例如：
+示例如下：
 
 ```scss
 $type: monster;
@@ -1288,23 +1588,13 @@ p {
 }
 ```
 
-### @for 与 @while
+### 循环与遍历
 
-`@for`的语法规则如下：
+#### @for 与 @while
 
-```scss
-@for <variable> from <expression> to <expression> { ... }
-```
+`@for`的语法为：`@for <variable> from <expression> to <expression> { ... }`，或者`@for <variable> from <expression> through <expression> { ... }`。
 
-或者
-
-```scss
-@for <variable> from <expression> through <expression> { ... }
-```
-
-如果使用`to`，则包前不包后；如果使用了`through`，则包前也包后。
-
-例如：
+如果使用`to`，则包前不包后；如果使用了`through`，则包前也包后。例如：
 
 ```scss
 @for $i from 1 through 3 {
@@ -1314,7 +1604,7 @@ p {
 }
 ```
 
-例如：
+还有的例子是：
 
 ```scss
 $i: 6;
@@ -1328,7 +1618,7 @@ $i: 6;
 }
 ```
 
-### @each
+#### @each
 
 `@each`的语法规则如下：
 
@@ -1376,247 +1666,6 @@ $object: (h1: 2em, h2: 1.5em, h3: 1.2em);
 }
 ```
 
-## 混合器
-
-混合器用于定义可重复使用的样式，避免了使用无语意的 Class，比如`.float-left`。混合器可以包含所有的 CSS 规则，绝大部分 Sass 规则，甚至通过参数功能引入变量，输出多样化的样式。
-
-如果整个网站中有几处小小的样式类似(例如一致的颜色和字体)，那么使用变量来统一处理这种情况是非常不错的选择。但是当你的样式变得越来越复杂，你需要大段大段的重用样式的代码，独立的变量就没办法应付这种情况了。你可以通过 Sass 的混合器实现大段样式的重用。
-
-### @mixin
-
-`@mixin`指令的作用是定义混合器，比如名为`large-text`的混合器通过下面的代码定义：
-
-```scss
-@mixin large-text {
-  font: {
-    family: Arial;
-    size: 20px;
-    weight: bold;
-  }
-  color: #ff0000;
-}
-```
-
-> 大量重用的`@mixin`可能会导致生成的样式表过大，网页加载缓慢。
-{: .prompt-tip}
-
-利用混合器，可以很容易地在样式表的不同地方共享样式。如果你发现自己在不停地重复一段样式，那就应该把这段样式构造成优良的混合器，尤其是这段样式本身就是一个逻辑单元，比如说是一组放在一起有意义的属性。
-
-判断一组属性是否应该组合成一个混合器，一条经验法则就是你能否为这个混合器想出一个好的名字。如果你能找到一个很好的短名字来描述这些属性修饰的样式，比如`rounded-corners`、`fancy-font`或者`no-bullets`，那么往往能够构造一个合适的混合器。如果你找不到，这时候构造一个混合器可能并不合适。
-
-混合器在某些方面跟 CSS 类很像。都是需要给一大段样式命名，所以在选择使用哪个的时候可能会产生疑惑。最重要的区别就是类名是在 HTML 文件中应用的，而混合器是在样式表中应用的。这就意味着类名具有语义化含义，而不仅仅是一种展示性的描述：用来描述 HTML 元素的含义而不是 HTML 元素的外观。而另一方面，混合器是展示性的描述，用来描述一条 CSS 规则应用之后会产生怎样的效果。
-
-`@mixin`也可以包含选择器和属性，甚至可以用`&`引用父选择器：
-
-```scss
-@mixin clearfix {
-  display: inline-block;
-  &:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-  }
-  * html & {
-    height: 1px
-  }
-}
-```
-
-### @include
-
-定义好混合器之后，需要通过`@include`指令引用混合器，例如：
-
-```scss
-.page-title {
-  @include clearfix;
-  padding: 4px;
-  margin-top: 10px;
-}
-```
-
-也可以在最外层引用混合样式，不会直接定义属性，也不可以使用父选择器：
-
-```scss
-@mixin silly-links {
-  a {
-    color: blue;
-    background-color: red;
-  }
-}
-
-@include silly-links;
-```
-
-混合样式中也可以包含其他混合样式：
-
-```scss
-@mixin highlighted-background { 
-  background-color: #fc0;
-}
-
-@mixin header-text {
-  font-size: 20px;
-}
-
-@mixin compound {
-  @include highlighted-background;
-  @include header-text;
-}
-```
-
-> 混合样式中应该只定义后代选择器，这样可以安全的导入到文件的任何位置。
-{: .prompt-tip}
-
-参数用于给混合器中的样式设定变量，并且赋值使用。在定义混合器的时候，按照变量的格式通过逗号分隔，将参数写进圆括号里。引用指令时按照参数的顺序，再将所赋的值对应写进括号：
-
-```scss
-@mixin sexy-border($color, $width) {
-  border: {
-    color: $color;
-    width: $width;
-    style: dashed;
-  }
-}
-
-p {
-  @include sexy-border(blue, 1in);
-}
-```
-
-混合器也可以使用给变量赋值的方法给参数设定默认值，然后当这个指令被引用的时候，如果没有给参数赋值，则自动使用默认值：
-
-```scss
-@mixin sexy-border($color, $width: 1in) {
-  border: {
-    color: $color;
-    width: $width;
-    style: dashed;
-  }
-}
-
-p {
-  @include sexy-border(blue);
-}
-
-h1 {
-  @include sexy-border(blue, 2in);
-}
-```
-
-混合器也可以使用关键词参数，上面的例子也可以写成：
-
-```scss
-p {
-  @include sexy-border($color: blue);
-}
-
-h1 {
-  @include sexy-border($color: blue, $width: 2in);
-}
-```
-
-有时不能确定混合器需要使用多少个参数，比如一个关于`box-shadow`的混合器不能确定有多少个`'shadow'`会被用到。这时可以使用参数变量`...`声明告诉 Sass 将这些参数视为值列表处理：
-
-```scss
-@mixin box-shadow($shadows...) {
-  -moz-box-shadow: $shadows;
-  -webkit-box-shadow: $shadows;
-  box-shadow: $shadows;
-}
-
-.shadows {
-  @include box-shadow(0px 4px 5px #666, 2px 6px 10px #999);
-}
-```
-
-在引用`@include`指令的适合，也可以使用参数变量，与平时用法一样，将一串值逐条作为参数引用：
-
-```scss
-$values: #ff0000, #00ff00, #0000ff;
-
-@mixin colors($text, $background, $border) {
-  color: $text;
-  background-color: $background;
-  border-color: $border;
-}
-
-.primary {
-  @include colors($values...);
-}
-```
-
-可以使用变量参数传给`@mixin`，并在不改变`@mixin`参数签名的情况下添加额外的样式。如果这样做甚至关键字参数也会传递给`@mixin`。例如：
-
-```scss
-@mixin wrapped-stylish-mixin($args...) {
-  font-weight: bold;
-  @include stylish-mixin($args...);
-}
-
-.stylish {
-  @include wrapped-stylish-mixin(#00ff00, $width: 100px);
-}
-```
-
-在引用混合样式的时候，可以先将一段代码导入到混合器中，然后再输出混合样式，额外导入的部分将出现在`@content`标志的地方：
-
-```scss
-@mixin apply-to-ie6-only {
-  * html {
-    @content;
-  }
-}
-
-@include apply-to-ie6-only {
-  #logo {
-    background-image: url(/logo.gif);
-  }
-}
-```
-
-编译后得到：
-
-```scss
-* html {
-  #logo {
-  background-image: url(/logo.gif);
-  }
-}
-```
-
-传递给`@mixin`的内容块在定义该块的作用域中求值，而不是在`@mixin`的作用域中求值。这意味着`@mixin~的局部变量不能在传入的样式块中使用，变量将解析为全局值：
-
-```scss
-$color: white;
-
-@mixin colors($color: blue) {
-  background-color: $color;
-  @content;
-  border-color: $color;
-}
-
-.colors {
-  @include colors {
-    color: $color;
-  }
-}
-```
-
-此外这清楚地表明，在传递的块中使用的变量和`@mixin`与块周围定义的其他样式相关。例如：
-
-```scss
-#sidebar {
-  $sidebar-width: 300px;
-  width: $sidebar-width;
-
-  @include smartphone {
-    width: $sidebar-width / 3;
-  }
-}
-```
-
 ## 函数
 
 在 Sass 中定义了多种函数，有些甚至可以通过普通的 CSS 语句调用，例如：
@@ -1638,8 +1687,6 @@ p {
 虽然不够简明，但是阅读起来会更方便。关键词参数给函数提供了更灵活的接口，以及容易调用的参数。关键词参数可以打乱顺序使用，如果使用默认值也可以省缺，另外，参数名被视为变量名，下划线、短横线可以互换使用。
 
 通过 [Sass::Script::Functions](http://sass-lang.com/docs/yardoc/Sass/Script/Functions.html) 查看完整的 Sass 函数列表，参数名，以及如何自定义函数。
-
-### 自定义函数
 
 Sass 支持自定义函数，并能在任何属性值或变量、表达式等中使用：
 
@@ -1677,5 +1724,3 @@ $gutter-width: 10px;
 3. [https://www.w3schools.com/sass/default.php](https://www.w3schools.com/sass/default.php)
 4. [https://cankaoshouce.com/sass/sass-course.html](https://cankaoshouce.com/sass/sass-course.html)
 5. [https://www.geeksforgeeks.org/css/sass](https://www.geeksforgeeks.org/css/sass)
-
-[^SassScript]: 在 Sass 中，表达式(Expressions)是指出现在属性或变量声明右侧的任何内容，它包括但不限于值(如数字、字符串、布尔值等数据类型)、变量、运算符、函数以及控制流等。Sass 的表达式语法通常被统称为 [*SassScript*](https://sass-lang.com/documentation/syntax/structure#expressions)。

@@ -1,5 +1,6 @@
 @use "style";
 
+// 为文章内容生成状态提醒样式
 .article__content {
   @each $type, $color in style.$status-colors {
     @include style.alert($type, $color);

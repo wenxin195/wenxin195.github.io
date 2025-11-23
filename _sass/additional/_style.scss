@@ -1,14 +1,16 @@
 @use "sass:color";
 
+// 状态颜色映射，使用 !default 以便在其它文件中覆盖
 $status-colors: (
   "success": #52c41a,
   "info": #1890ff,
   "warning": #fa8c16,
   "danger": #f5222d,
-);
+) !default;
 
-$border-color: color.mix(#000, #fff, 10%);
-$border-radius: 0.4rem;
+// 边框颜色与圆角，允许上层覆盖
+$border-color: color.mix(#000, #fff, 10%) !default;
+$border-radius: 0.4rem !default;
 
 @mixin border-style($color) {
   border: 1px solid $color;
@@ -17,7 +19,7 @@ $border-radius: 0.4rem;
 @mixin alert($type, $color) {
   p.#{$type} {
     padding: 0.5rem 1rem;
-    background-color: rgba($color, 0.1); // 10% 透明度
+    background-color: rgba($color, 0.1);
     border-radius: $border-radius;
 
     @include border-style($color);

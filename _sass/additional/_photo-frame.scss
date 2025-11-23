@@ -2,16 +2,19 @@
 @use "common/classes/shadow";
 
 .article__content {
+  // 图像阴影：支持直接在图片上加类或在容器上加类
   img.shadow,
   .shadow > img {
     @include shadow.box-shadow(); // 为图片添加阴影效果
   }
 
+  // 边框：支持 img.border 或 .border > img
   img.border,
   .border > img {
     @include style.border-style(style.$border-color); // 为图片添加边框
   }
 
+  // 圆角与圆形裁剪
   img.rounded,
   .rounded > img {
     border-radius: style.$border-radius; // 为图片添加圆角效果

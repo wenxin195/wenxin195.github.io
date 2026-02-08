@@ -1,22 +1,19 @@
 <meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-{% comment %}
-    自动生成页面的SEO元数据，填充标题、描述、Open Graph等
-  {% endcomment %}
+{% comment %} 基于 _config.yml 生成 SEO {% endcomment %}
 {% seo %}
 
-{%- assign _paths_rss = site.paths.rss | default: site.data.variables.default.paths.rss -%}
-{%- include snippets/get-nav-url.html path=_paths_rss -%}
-<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ __return }}" />
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.baseurl }}/feed.xml" />
 
 {%- include head/favicon.html -%}
+
+{% comment %} 重新写 {% endcomment %}
 {%- include snippets/prepend-baseurl.html path='/assets/css/main.css' -%}
 <link rel="stylesheet" href="{{ __return }}" />
 
+{% comment %} 需要重新评估载入量 {% endcomment %}
 {%- include snippets/get-sources.html -%}
-{%- assign _sources = __return -%}
-<link rel="stylesheet" href="{{ _sources.font_awesome }}" />
+<link rel="stylesheet" href="{{ __return.font_awesome }}" />
 
 {%- include head/custom.html -%}

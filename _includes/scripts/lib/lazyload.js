@@ -115,7 +115,11 @@
           for (i = 0; i < val.length; i++) {
             node = null, url = val[i];
             if (s[url] === undefined) {
-              (type === 'js' ) && (node = createNode('script', { src: url }));
+              if (type === 'js') {
+                var attrs = { src: url };
+                attrs.async = true;
+                node = createNode('script', attrs);
+              }
               (type === 'css') && (node = createNode('link', { rel: 'stylesheet', href: url }));
               if (node) {
                 node.onload = (function(type, url) {

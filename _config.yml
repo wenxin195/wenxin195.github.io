@@ -18,7 +18,7 @@
 ##############################
 text_skin: default # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
 highlight_theme: tomorrow-night-bright # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
-url     : # the base hostname & protocol for your site e.g. https://www.someone.com
+url     : https://wenxin195.github.io # the base hostname & protocol for your site e.g. https://www.someone.com
 baseurl : # does not include hostname
 Encoding: utf-8
 title   : StatSphere
@@ -78,7 +78,7 @@ license: CC-BY-NC-SA-4.0 # "CC-BY-4.0", "CC-BY-SA-4.0", "CC-BY-NC-4.0", "CC-BY-N
 
 ## TOC
 toc:
-  selectors: # "h1,h2,h3" (default)
+  selectors: h1,h2,h3 # "h1,h2,h3" (default)
 
 
 ## => Markdown Enhancements

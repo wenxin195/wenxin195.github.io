@@ -2,20 +2,19 @@
 layout: page
 key: page-contact
 title: 联系我
-permalink: /contact
 ---
 
 感谢您访问我的博客！如果您有任何问题、建议或合作意向，请随时通过以下方式与我联系。
 
 <form action="https://formspree.io/f/mrbgzrdg" method="POST">
   <label for="name"><i class="fas fa-user"></i> 姓名</label>
-  <input type="text" id="name" name="name" required>
+  <input type="text" id="name" name="name" autocomplete="name" required>
 
   <label for="email"><i class="fas fa-envelope"></i> 电子邮件</label>
-  <input type="email" id="email" name="_replyto" required>
+  <input type="email" id="email" name="_replyto" autocomplete="email" required>
 
   <label for="message"><i class="fas fa-comment"></i> 消息</label>
-  <textarea id="message" name="message" required></textarea>
+  <textarea id="message" name="message" required style="resize: vertical;"></textarea>
 
   <input type="hidden" name="_subject" value="博客联系表单">
   <button type="submit"><i class="fas fa-paper-plane"></i> 发送</button>

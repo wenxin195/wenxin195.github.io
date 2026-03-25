@@ -2,22 +2,26 @@
 @use "colors";
 @forward "colors";
 
-%code-snippet-padding {
-  padding: {
-    left: 1rem;
-    right: 1.5rem;
+@mixin code-snippet-padding {
+  padding-left: 1rem;
+  padding-right: 1.5rem;
+}
+
+@mixin reset-last-paragraph {
+  > p:last-child {
+    margin-bottom: 0 !important;
   }
 }
 
-%text-highlight {
-  color: inherit;
-  font-weight: 600;
-}
-
-%table-cell {
+@mixin table-cell {
   padding: 0.4rem 1rem;
   font-size: 95%;
   white-space: nowrap;
+}
+
+@mixin horizontal-margin($value) {
+  margin-left: $value;
+  margin-right: $value; 
 }
 
 @mixin text-color($type) {
@@ -29,13 +33,11 @@
 }
 
 @mixin box-base-style($type) {
-  box-shadow: 1px 1px 2px 1px #ececec;
+  box-shadow: 1px 1px 2px 1px map.get(colors.$table-color, border-color);
   padding: 0.6rem 1rem 0.6rem 1.5rem;
   margin-bottom: 1rem;
-  border: {
-    left: 0.2rem solid map.get(colors.$prompt-colors, #{$type}-color);
-    radius: 0.25rem;
-  }
+  border-left: 0.2rem solid map.get(colors.$prompt-colors, #{$type}-color);
+  border-radius: 0.25rem;
 }
 
 @mixin box-title-style(
@@ -49,13 +51,6 @@
 
   @include text-color($type);
   @include background-color($type);
-}
-
-@mixin ml-mr($value) {
-  margin: {
-    left: $value;
-    right: $value;
-  }
 }
 
 @mixin icon-font-adjustments($type) {
@@ -87,7 +82,7 @@
   &.prompt-#{$type} {
     position: relative;
     font-size: 1rem;
-    line-height: 1.4rem; // 设置与图标相近的行高
+    line-height: 1.4rem;
     padding: 1rem 1rem 1rem 3rem;
     color: rgba(46, 46, 46, 0.77);
     border: {
@@ -111,8 +106,8 @@
 
     > summary {
       position: relative;
-      list-style: none; // 隐藏默认的箭头
-      transition: background-color 0.3s ease; // 添加颜色过渡效果
+      list-style: none;
+      transition: background-color 0.3s ease;
 
       @include box-title-style(
         $type,
@@ -122,10 +117,10 @@
 
       &::after {
         position: absolute;
-        right: 1rem; // 调整箭头在最右边的位置
+        right: 1rem;
         font-family: "Font Awesome 6 Free";
-        content: "\f105"; // Unicode for fa-angle-down
-        transition: transform 0.2s ease; // 添加旋转动画
+        content: "\f105";
+        transition: transform 0.2s ease;
       }
     }
   }
@@ -157,8 +152,6 @@
       }
     }
 
-    p:last-child {
-      margin-bottom: 0 !important;
-    }
+    @include reset-last-paragraph;
   }
 }

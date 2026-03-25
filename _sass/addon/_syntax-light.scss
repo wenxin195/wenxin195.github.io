@@ -1,145 +1,105 @@
+@use "sass:map";
+
+// === 配色方案定义 ===
+$light-syntax-colors: (
+  primary: #24292f,        // 主文本色
+  bg: #f6f8fa,             // 背景色
+  
+  red-color: #cf222e,      // 关键字
+  red-dark: #82071e,       // 删除内容
+  red-bg: #ffebe9,         // 删除背景
+  
+  orange-color: #953800,   // 类名、内置函数
+  
+  green-color: #116329,    // 标签、属性
+  green-bg: #dafbe1,       // 添加背景
+  
+  blue-color: #0550ae,     // 常量、运算符
+  blue-dark: #0a3069,      // 字符串
+  
+  purple-color: #8250df,   // 函数名、装饰器
+  
+  gray-color: #68717a,     // 注释
+  gray-light: #f6f8fa      // 错误文本色
+);
+
 @mixin light-syntax {
   .highlight {
     table {
-      td {
-        padding: 5px;
-      }
-      pre {
-        margin: 0;
-      }
+      td { padding: 5px; }
+      pre { margin: 0; }
     }
 
-    &,
-    .w {
-      color: #24292f;
-      background-color: #f6f8fa;
+    &, .w {
+      color: map.get($light-syntax-colors, primary);
+      background-color: map.get($light-syntax-colors, bg);
     }
 
-    // 红色系列
-    .k,
-    .kd,
-    .kn,
-    .kp,
-    .kr,
-    .kt,
-    .kv {
-      color: #cf222e;
+    .k, .kd, .kn, .kp, .kr, .kt, .kv { 
+      color: map.get($light-syntax-colors, red-color); 
     }
-    .gr {
-      color: #f6f8fa;
+    
+    .gr { 
+      color: map.get($light-syntax-colors, gray-light); 
     }
+    
     .gd {
-      color: #82071e;
-      background-color: #ffebe9;
+      color: map.get($light-syntax-colors, red-dark);
+      background-color: map.get($light-syntax-colors, red-bg);
     }
 
-    // 橙色系列
-    .nb,
-    .nc,
-    .no,
-    .nn {
-      color: #953800;
+    .nb, .nc, .no, .nn { 
+      color: map.get($light-syntax-colors, orange-color); 
     }
 
-    // 绿色系列
-    .sr,
-    .na,
-    .nt {
-      color: #116329;
+    .sr, .na, .nt { 
+      color: map.get($light-syntax-colors, green-color); 
     }
+    
     .gi {
-      color: #116329;
-      background-color: #dafbe1;
+      color: map.get($light-syntax-colors, green-color);
+      background-color: map.get($light-syntax-colors, green-bg);
     }
 
-    // 蓝色系列
-    .kc,
-    .l,
-    .ld,
-    .m,
-    .mb,
-    .mf,
-    .mh,
-    .mi,
-    .il,
-    .mo,
-    .mx,
-    .sb,
-    .bp,
-    .ne,
-    .nl,
-    .py,
-    .nv,
-    .vc,
-    .vg,
-    .vi,
-    .vm,
-    .o,
-    .ow {
-      color: #0550ae;
+    .kc, .l, .ld, .m, .mb, .mf, .mh, .mi, .il, .mo, .mx,
+    .sb, .bp, .ne, .nl, .py, .nv, .vc, .vg, .vi, .vm,
+    .o, .ow { 
+      color: map.get($light-syntax-colors, blue-color); 
     }
 
-    .gh,
-    .gu {
-      color: #0550ae;
+    .gh, .gu {
+      color: map.get($light-syntax-colors, blue-color);
       font-weight: bold;
     }
 
-    // 深蓝色系列
-    .s,
-    .sa,
-    .sc,
-    .dl,
-    .sd,
-    .s2,
-    .se,
-    .sh,
-    .sx,
-    .s1,
-    .ss {
-      color: #0a3069;
+    .s, .sa, .sc, .dl, .sd, .s2, .se, .sh, .sx, .s1, .ss { 
+      color: map.get($light-syntax-colors, blue-dark); 
     }
 
-    // 紫色系列
-    .nd,
-    .nf,
-    .fm {
-      color: #8250df;
+    .nd, .nf, .fm { 
+      color: map.get($light-syntax-colors, purple-color); 
     }
 
-    // 错误样式
     .err {
-      color: #f6f8fa;
-      background-color: #82071e;
+      color: map.get($light-syntax-colors, gray-light);
+      background-color: map.get($light-syntax-colors, red-dark);
     }
 
-    // 灰色系列
-    .c,
-    .ch,
-    .cd,
-    .cm,
-    .cp,
-    .cpf,
-    .c1,
-    .cs,
-    .gl,
-    .gt {
-      color: #68717a;
+    .c, .ch, .cd, .cm, .cp, .cpf, .c1, .cs, .gl, .gt { 
+      color: map.get($light-syntax-colors, gray-color); 
     }
 
-    // 默认色系列
-    .ni,
-    .si {
-      color: #24292f;
+    .ni, .si { 
+      color: map.get($light-syntax-colors, primary); 
     }
 
     .ge {
-      color: #24292f;
+      color: map.get($light-syntax-colors, primary);
       font-style: italic;
     }
 
     .gs {
-      color: #24292f;
+      color: map.get($light-syntax-colors, primary);
       font-weight: bold;
     }
   }

@@ -1,32 +1,24 @@
 @use "module";
+@use "sass:map";
 
-// 不可展开的提示框
 @each $type, $icon-content in module.$addon-types {
   @include module.box($type, $icon-content);
 }
 
-// prompt类
 blockquote {
-  P {
-    &:first-child {
-      margin-top: 0 !important;
-    }
-
-    &:last-child {
-      margin-bottom: 0 !important;
-    }
+  p:first-child {
+    margin-top: 0 !important;
   }
+
+  @include module.reset-last-paragraph;
 
   @each $type, $icon-content in module.$addon-types {
     @include module.prompt($type, $icon-content);
   }
 }
 
-// 定理类
 details {
-  p:last-child {
-    margin-bottom: 0 !important;
-  }
+  @include module.reset-last-paragraph;
 
   @each $class, $type in module.$math-types {
     @include module.details($class, $type);
@@ -44,7 +36,6 @@ details {
   }
 }
 
-// 表格样式
 .table-wrapper {
   overflow-x: auto; // 添加水平滚动条
   margin-bottom: 1.5rem;
@@ -55,16 +46,16 @@ details {
 
     thead {
       text-align: center;
-      border-bottom: 2px solid module.$thead-color;
+      border-bottom: 2px solid map.get(module.$table-color, thead-color);
 
       > th {
-        @extend %table-cell;
+        @include module.table-cell;
       }
     }
 
     tbody {
       tr {
-        border-bottom: 1px solid module.$thead-color;
+        border-bottom: 1px solid map.get(module.$table-color, thead-color);
 
         > th {
           text-align: center;
@@ -72,7 +63,7 @@ details {
       }
 
       td {
-        @extend %table-cell;
+        @include module.table-cell;
       }
     }
   }

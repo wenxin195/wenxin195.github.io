@@ -1,42 +1,35 @@
-@use "syntax-light" as light;
 @use "module";
+@use "sass:map";
+@use "sass:math";
+@use "syntax-light" as light;
 
 @include light.light-syntax;
 
-// 代码块标识头
 .code-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: module.$header-height;
-  margin: {
-    left: 0.75rem;
-    right: 0.25rem;
-  }
+  margin-left: 0.75rem;
+  margin-right: 0.25rem;
 
-  // the label block
   span {
     line-height: module.$header-height;
-
-    // label icon
+    
     i {
       font-size: 1rem;
-      width: 1.75;
-      color: module.$light-text-color;
-
+      color: map.get(module.$block-code-colors, gray-color);
+      
       &.small {
         font-size: 70%;
       }
     }
 
-    // label text
     &::after {
       content: attr(data-label-text);
-      font: {
-        size: module.$code-font-size;
-        weight: 600;
-      }
-      color: module.$label-text-color;
+      font-size: module.$code-font-size;
+      font-weight: 600;
+      color: map.get(module.$block-code-colors, gray-color);
       margin-left: 0.3rem;
     }
   }
@@ -46,11 +39,9 @@
     top: 1px;
   }
 
-  // clipboard
   button {
-    border: 1px solid transparent {
-      radius: module.$border-radius;
-    }
+    border: 1px solid transparent;
+    border-radius: module.$border-radius;
     height: module.$header-height;
     width: module.$header-height;
     padding: 0;
@@ -58,7 +49,7 @@
     cursor: pointer;
 
     i {
-      color: module.$light-text-color;
+      color: map.get(module.$block-code-colors, gray-color);
     }
 
     &:focus {
@@ -72,18 +63,21 @@
         color: white;
       }
     }
+
+    @media print{
+      visibility: hidden;
+    }
   }
 }
 
-// 代码块高亮部分
 .highlight {
-  background-color: module.$code-bg-color;
+  background-color: map.get(module.$block-code-colors, bg-color);
   overflow-x: auto;
   margin-top: -10px;
   border-radius: module.$border-radius;
 
   figure#{&} {
-    background-color: module.$code-bg-color;
+    background-color: inherit;
   }
 
   table {
@@ -108,7 +102,7 @@
       }
 
       &.rouge-code {
-        @extend %code-snippet-padding;
+        @include module.code-snippet-padding;
 
         a {
           color: inherit !important;
@@ -121,14 +115,11 @@
 
   .lineno {
     text-align: right;
-    color: module.$lineno-color;
+    color: map.get(module.$block-code-colors, gray-color);
   }
 }
 
-// 行内代码高亮部分
 code {
-  -webkit-hyphens: none;
-  -ms-hyphens: none;
   hyphens: none;
   color: module.$dark-text-color;
 
@@ -137,19 +128,19 @@ code {
     padding: 3px 5px;
     word-break: break-word;
     border-radius: 6px;
-    background-color: module.$inline-code-bg;
-    color: module.$inline-code-color;
+    background-color: map.get(module.$inline-code-colors, code-bg);
+    color: map.get(module.$inline-code-colors, code-color);
   }
-
+  
   &.filepath {
     background-color: inherit;
-    color: module.$filepath-color;
+    color: map.get(module.$block-code-colors, filepath-color);
     font-weight: 600;
     padding: 0;
   }
 
   a > &.highlighter-rouge {
-    padding-bottom: 0; // show link's underline
+    padding-bottom: 0;
     color: inherit;
   }
 
@@ -162,7 +153,6 @@ code {
   }
 }
 
-// Hide line numbers for default, console, and terminal code snippets
 div {
   &.nolineno,
   &.language-plaintext,
@@ -179,33 +169,22 @@ div {
   }
 
   &[class^="language-"] {
-    background-color: module.$code-bg-color;
-    box-shadow: module.$border-color 0 0 0 1px;
+    background-color: map.get(module.$block-code-colors, bg-color);
+    box-shadow: map.get(module.$table-color, border-color) 0 0 0 1px;
     border-radius: module.$border-radius;
 
     .content > & {
-      border-radius: 0;
-
-      @include module.ml-mr(-1rem);
+      border-radius: module.$border-radius;
+      @include module.horizontal-margin(0);
     }
 
     .highlight {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
     }
-  }
-}
-
-@media all {
-  div[class^="language-"] {
-    .content > & {
-      border-radius: module.$border-radius;
-
-      @include module.ml-mr(0);
-    }
 
     .code-header {
-      @include module.ml-mr(0);
+      @include module.horizontal-margin(0);
 
       &::before {
         content: "";
@@ -214,14 +193,13 @@ div {
         width: 0.75rem;
         height: 0.75rem;
         border-radius: 50%;
-        background-color: module.$dot-color;
-        box-shadow: (0.75rem + 0.5rem) 0 0 module.$dot-color,
-          (0.75rem + 0.5rem) * 2 0 0 module.$dot-color;
+        background-color: map.get(module.$block-code-colors, dot-color);
+        box-shadow: (0.75rem + 0.5rem) 0 0 map.get(module.$block-code-colors, dot-color),
+          (0.75rem + 0.5rem) * 2 0 0 map.get(module.$block-code-colors, dot-color);
       }
 
       span {
-        // center the text of label
-        margin-left: calc((#{module.$dot-margin} + 0.75rem) / 2 * -1);
+        margin-left: math.div((module.$dot-margin + 0.75rem), 2) * -1;
       }
     }
   }

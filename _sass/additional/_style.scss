@@ -1,6 +1,5 @@
 @use "sass:color";
 
-// 状态颜色映射，使用 !default 以便在其它文件中覆盖
 $status-colors: (
   "success": #52c41a,
   "info": #1890ff,
@@ -8,9 +7,8 @@ $status-colors: (
   "danger": #f5222d,
 ) !default;
 
-// 边框颜色与圆角，允许上层覆盖
 $border-color: color.mix(#000, #fff, 10%) !default;
-$border-radius: 0.4rem !default;
+$border-radius: 0.7rem !default;
 
 @mixin border-style($color) {
   border: 1px solid $color;
@@ -30,7 +28,7 @@ $border-radius: 0.4rem !default;
   code.#{$type} {
     color: #fff;
     background-color: $color;
-    padding: 0.2rem 0.5rem; // 添加内边距以提高视觉效果
+    padding: 0.2rem 0.5rem;
     border-radius: $border-radius;
   }
 }

@@ -1,15 +1,19 @@
-.contact-social-item {
-  display: flex;
+.contact-list__item {
+  display: list-item; 
+  vertical-align: middle; 
+}
+
+.contact-social {
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin: 0;
-  padding: 0;
-  position: relative;
+  vertical-align: middle;
+}
 
-  > img {
-    display: block;
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-  }
+.contact-social__icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  object-fit: contain;
 }

@@ -1,27 +1,33 @@
-.layout--404 {
+.layout--not-found {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.container {
+.not-found__content {
   .sign {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
 
-    img {
+    & > img {
       width: 50px;
       height: 50px;
     }
   }
+  
+  .not-found__tip {
+    & > p:first-of-type {
+      font-size: 18px;
+    }
+  }
 }
 
-.error--image {
+.not-found__image {
   margin-left: 20px;
 
-  img {
+  & > img {
     width: 400px;
     height: 400px;
   }

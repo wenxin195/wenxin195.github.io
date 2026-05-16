@@ -3,23 +3,24 @@ layout: page
 title: 404
 show_title: false
 ---
-<div class="layout--404">
-  {% comment %} 左侧内容 {% endcomment %}
-  <div class="container">
+
+<div class="layout--not-found">
+  <!-- 左侧内容 -->
+  <div class="not-found__content">
     <div class="sign">
       <img src="assets/images/icon/dangerous.svg" alt="dangerous" />
       <h1>Oops!</h1>
     </div>
 
-    <div class="tip">
-      <p style="font-size: 18px;"><strong>Error code: 404</strong></p>
-      <p>看起来您访问的内容不存在，请检查您输入的地址是否正确。</p>
-      <p>您可以 <a href="/">返回首页</a> 或 <a href="archive.html"> 查看文章列表</a>。</p>
+    <div class="not-found__tip">
+      <p><strong>Error Code: 404</strong></p>
+      <p>看起来您访问的内容不存在，请检查您输入的地址是否正确。</p>  
+      <p>您可以 <a href="/">返回首页</a> 或 <a href="{{ site.data.path.paths.archive | prepend: site.baseurl }}">查看文章列表</a>。</p>
     </div>
   </div>
   
-  {% comment %} 右侧图片 {% endcomment %}
-  <div class="error--image">
+  <!-- 右侧图片 -->
+  <div class="not-found__image">
     <img src="assets/images/icon/404.jpg" alt="404" />
   </div>
 </div>

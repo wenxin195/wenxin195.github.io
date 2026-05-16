@@ -1,5 +1,7 @@
+@use "sass:map";
+
 .layout--archive {
-  & > .layout--archive__result {
-    margin: map-get($spacers, 4) 0;
+  & > .archive__result {
+    margin: map.get($spacers, 4) 0;
   }
 }

@@ -1,10 +1,9 @@
 ---
-# Only the main Sass file needs front matter (the dashes are enough)
 ---
 
 @import
 
-    "skins/{{ site.text_skin | default: site.data.variables.default.text_skin }}",
+    "skins/default",
 
     "common/variables",
     "common/function",
@@ -35,7 +34,6 @@
     "components/article-content",
     "components/article-footer",
     "components/author-links",
-    "components/author-profile",
     "components/tags",
     "components/search",
     "components/lightbox",
@@ -59,7 +57,6 @@
     "layout/articles",
     "layout/archive",
     "layout/home",
-    "layout/landing",
     "layout/404",
 
     "custom",
@@ -71,5 +68,6 @@
     "clipboard",
     "email",
     "article-top",
-    "contact"
+    "contact",
+    "pagefind"
 ;

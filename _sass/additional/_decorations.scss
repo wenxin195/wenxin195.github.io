@@ -1,0 +1,31 @@
+@use "sass:color";
+@use "./tokens" as tokens;
+@use "./styles" as styles;
+@use "../common/classes/shadow" as shadow;
+
+.article__content {
+  @each $class, $prompt-type in tokens.$status-types {
+    @include styles.alart($class, $prompt-type);
+    @include styles.tag($class, $prompt-type);
+  }
+
+  img.shadow,
+  .shadow > img {
+    @include shadow.box-shadow();
+  }
+
+  img.border,
+  .border > img {
+    border: 1px solid color.mix(#000, #fff, 10%);
+  }
+
+  img.rounded,
+  .rounded > img {
+    border-radius: 0.8rem;
+  }
+
+  img.circle,
+  .circle > img {
+    border-radius: 50%;
+  }
+}

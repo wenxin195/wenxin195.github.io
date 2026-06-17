@@ -1,0 +1,8 @@
+@use "sass:color";
+
+$status-types: (
+  "success": "tip",
+  "info": "info",
+  "warning": "warning",
+  "danger": "danger",
+) !default;

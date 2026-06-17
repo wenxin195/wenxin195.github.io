@@ -1,0 +1,26 @@
+@use "sass:map";
+@use "../addon/colors";
+@use "../addon/module";
+@use "./tokens" as tokens;
+
+@mixin alart($class, $prompt-type) {
+  .#{$class}:not(code) {
+    @include module.background-color($prompt-type);
+
+    padding: 0.6rem 1rem 0.6rem 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 0.2rem solid map.get(colors.$prompt-colors, #{$prompt-type}-color);
+    border-radius: 0.8rem;
+    color: rgba(46, 46, 46, 0.77);
+  }
+}
+
+@mixin tag($class, $prompt-type) {
+  code.#{$class} {
+    @include module.background-color($prompt-type);
+    @include module.text-color($prompt-type);
+
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.2rem;
+  }
+}

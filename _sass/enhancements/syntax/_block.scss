@@ -136,14 +136,23 @@
     white-space: normal;
   }
 
+  // Stack one source line per row; each row keeps gutter + code in a horizontal flex.
+  .code-block__body code {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .code-block__line {
-    display: block;
-    white-space: pre;
-    padding-right: 1.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    min-width: 100%;
+    width: max-content;
 
     &::before {
       content: attr(data-line);
-      display: inline-block;
+      flex: 0 0 auto;
       box-sizing: content-box;
       width: 2.25rem;
       margin-right: 1rem;
@@ -153,8 +162,15 @@
       user-select: none;
       position: sticky;
       left: 0;
+      z-index: 1;
       background-color: var(--syntax-bg);
     }
+  }
+
+  .code-block__code {
+    flex: 1 0 auto;
+    white-space: pre;
+    padding-right: 1.5rem;
   }
 }
 

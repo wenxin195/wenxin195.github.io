@@ -82,13 +82,48 @@ module Jekyll
             code.inner_html
           end
 
+          # Rouge often puts the trailing "\n" inside a token span (e.g. Chinese
+          # comments: <span class="c1"># …\n</span>). Splitting on "\n" alone
+          # breaks tags; Nokogiri then nests/repairs lines and layout collapses.
+          # Split on newlines while closing/reopening the open <span> stack.
           def wrap_lines(inner_html)
-            parts = inner_html.split(/\r?\n/)
-            parts.pop if parts.length > 1 && parts.last.empty?
+            lines = split_html_lines(inner_html)
+            lines.pop if lines.length > 1 && lines.last.empty?
 
-            parts.each_with_index.map do |line, index|
-              %(<span class="code-block__line" data-line="#{index + 1}">#{line}</span>)
-            end.join
+            lines.each_with_index.map do |line, index|
+              %(<span class="code-block__line" data-line="#{index + 1}"><span class="code-block__code">#{line}</span></span>)
+            end.join("\n")
+          end
+
+          def split_html_lines(inner_html)
+            lines = []
+            current = +""
+            open_spans = []
+
+            inner_html.split(/(<span\b[^>]*>|<\/span>)/).each do |token|
+              next if token.empty?
+
+              if token.start_with?("<span")
+                open_spans << token
+                current << token
+              elsif token == "</span>"
+                open_spans.pop
+                current << token
+              else
+                token.split(/\r?\n/, -1).each_with_index do |piece, i|
+                  if i.positive?
+                    open_spans.reverse_each { current << "</span>" }
+                    lines << current
+                    current = +""
+                    open_spans.each { |tag| current << tag }
+                  end
+                  current << piece
+                end
+              end
+            end
+
+            lines << current
+            lines
           end
 
           def build_figure(frag, lang:, file:, lineno:, code_html:)

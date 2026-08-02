@@ -4,7 +4,7 @@ source "https://rubygems.org"
 gem 'jekyll'
 gem 'faraday-retry'
 gem 'nokogiri'
-gem 'wdm' if Gem.win_platform?
+gem "wdm", "~> 0.2.0", platforms: %i[mingw mswin x64_mingw windows]
 
 # jekyll插件
 group :jekyll_plugins do

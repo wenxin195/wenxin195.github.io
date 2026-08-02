@@ -1,4 +1,4 @@
-<footer class="site-footer py-4 js-site-footer d-print-none">
+<footer class="site-footer js-site-footer d-print-none">
   <div class="site-footer__inner">
     {%- assign _site_author = site.data.authors[site.author.name] -%}
 
@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="site-info mt-2">
+    <div class="site-info">
       <div>
         <span>©</span>
         <span>{{- _t.COPYRIGHT_DATES -}}‒{{- site.time | date: '%Y' -}}</span>
@@ -40,7 +40,11 @@
         <div>
           <script src="//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js" defer></script>
           <a title="Busuanzi — site UV/PV counter" href="https://busuanzi.ibruce.info/" target="_blank" rel="noopener noreferrer">Busuanzi</a>
-          <span id="busuanzi_site_uv"><i class="fa fa-user"></i></span> | <span id="busuanzi_site_pv"><i class="fa fa-eye"></i></span>
+          <i class="fas fa-user" aria-hidden="true"></i>
+          <span id="busuanzi_site_uv"></span>
+          |
+          <i class="fas fa-eye" aria-hidden="true"></i>
+          <span id="busuanzi_site_pv"></span>
         </div>
       </div>
     {%- endif -%}

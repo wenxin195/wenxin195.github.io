@@ -1,0 +1,168 @@
+@use "sass:map";
+@use "sass:math";
+@use "tokens" as tokens;
+
+// Canonical code-block chrome + body (see _plugins/content/transforms/code_blocks.rb).
+
+.code-block {
+  margin: map.get(tokens.$spacers, 3) 0;
+  border-radius: map.get(tokens.$popup, radius);
+  background-color: var(--syntax-bg);
+  box-shadow: var(--syntax-chrome-border) 0 0 0 1px;
+  overflow: hidden;
+
+  .article-body & {
+    max-width: 100%;
+  }
+}
+
+.code-block__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: map.get(tokens.$code-chrome, header-height);
+  padding-right: 0.25rem;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    margin-left: map.get(tokens.$code-chrome, dot-margin);
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background-color: var(--syntax-chrome-dot);
+    box-shadow:
+      (0.75rem + 0.5rem) 0 0 var(--syntax-chrome-dot),
+      (0.75rem + 0.5rem) * 2 0 0 var(--syntax-chrome-dot);
+  }
+}
+
+.code-block__label {
+  line-height: map.get(tokens.$code-chrome, header-height);
+  margin-left: math.div((map.get(tokens.$code-chrome, dot-margin) + 0.75rem), 2) * -1;
+
+  i {
+    font-size: 1rem;
+    color: var(--syntax-gray);
+
+    &.small {
+      font-size: 70%;
+    }
+  }
+
+  &::after {
+    content: attr(data-label-text);
+    font-size: map.get(tokens.$base, font-size-sm);
+    font-weight: 600;
+    color: var(--syntax-gray);
+    margin-left: 0.3rem;
+  }
+}
+
+.code-block__copy {
+  border: 1px solid transparent;
+  border-radius: map.get(tokens.$popup, radius);
+  height: map.get(tokens.$code-chrome, header-height);
+  width: map.get(tokens.$code-chrome, header-height);
+  padding: 0;
+  background-color: inherit;
+  cursor: pointer;
+  transition: background-color map.get(tokens.$animation, duration-md) ease;
+  position: relative;
+
+  i {
+    color: var(--syntax-gray);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--syntax-blue);
+    outline-offset: 2px;
+  }
+
+  &:hover {
+    background-color: tokens.$decorate-color;
+
+    i {
+      color: tokens.$text-color-d;
+    }
+  }
+
+  @media print {
+    visibility: hidden;
+  }
+}
+
+.code-block__body {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: var(--syntax-bg);
+  border-radius: 0 0 map.get(tokens.$popup, radius) map.get(tokens.$popup, radius);
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--syntax-blue);
+    outline-offset: -2px;
+  }
+
+  pre.highlight {
+    margin: 0;
+    padding: map.get(tokens.$spacers, 3) 0;
+    background-color: var(--syntax-bg);
+    color: var(--syntax-primary);
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  code {
+    display: block;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font-size: map.get(tokens.$base, font-size-sm);
+    line-height: 1.4rem;
+    hyphens: none;
+  }
+}
+
+.code-block[data-lineno="true"] {
+  .code-block__body pre.highlight {
+    white-space: normal;
+  }
+
+  .code-block__line {
+    display: block;
+    white-space: pre;
+    padding-right: 1.5rem;
+
+    &::before {
+      content: attr(data-line);
+      display: inline-block;
+      box-sizing: content-box;
+      width: 2.25rem;
+      margin-right: 1rem;
+      padding-left: 0.75rem;
+      text-align: right;
+      color: var(--syntax-gray);
+      user-select: none;
+      position: sticky;
+      left: 0;
+      background-color: var(--syntax-bg);
+    }
+  }
+}
+
+.code-block[data-lineno="false"] {
+  .code-block__body pre.highlight {
+    padding-left: 1rem;
+    padding-right: 1.5rem;
+    white-space: pre;
+    overflow-x: auto;
+  }
+}

@@ -1,0 +1,129 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "./pseudo" as pseudo;
+
+/// Assign --clickable-* custom properties. Does not emit interaction rules.
+/// When $auto-tone is true, hover/active backgrounds are color-mix toward black
+/// from $bg (brand buttons). When hover/active/focus args are null and
+/// $auto-tone is false, the mechanism falls back to plain vars.
+/// Declarations are wrapped in `& {}` so paint may follow nested rules safely.
+@mixin paint(
+  $fg,
+  $bg: null,
+  $hover-fg: null,
+  $hover-bg: null,
+  $active-fg: null,
+  $active-bg: null,
+  $focus-fg: null,
+  $focus-bg: null,
+  $disabled-alpha: null,
+  $auto-tone: false
+) {
+  & {
+    --clickable-fg: #{$fg};
+
+    @if $bg != null {
+      --clickable-bg: #{$bg};
+    }
+
+    @if $auto-tone and $bg != null {
+      --clickable-hover-fg: #{$fg};
+      --clickable-active-fg: #{$fg};
+      --clickable-focus-fg: #{$fg};
+      --clickable-hover-bg: color-mix(in srgb, #{$bg} 86%, black);
+      --clickable-active-bg: color-mix(in srgb, #{$bg} 84%, black);
+      --clickable-focus-bg: var(--clickable-hover-bg);
+    } @else {
+      @if $hover-fg != null {
+        --clickable-hover-fg: #{$hover-fg};
+      }
+
+      @if $hover-bg != null {
+        --clickable-hover-bg: #{$hover-bg};
+      }
+
+      @if $active-fg != null {
+        --clickable-active-fg: #{$active-fg};
+      }
+
+      @if $active-bg != null {
+        --clickable-active-bg: #{$active-bg};
+      }
+
+      @if $focus-fg != null {
+        --clickable-focus-fg: #{$focus-fg};
+      }
+
+      @if $focus-bg != null {
+        --clickable-focus-bg: #{$focus-bg};
+      }
+    }
+
+    @if $disabled-alpha != null {
+      --clickable-disabled-alpha: #{$disabled-alpha};
+    }
+  }
+}
+
+/// Emit one interaction declaration tree reading --clickable-* variables.
+@mixin clickable($fill-svg: true, $has-bg: true) {
+  & {
+    transition: map.get(variables.$clickable, transition);
+  }
+
+  @if $fill-svg {
+    svg path {
+      fill: currentColor;
+    }
+  }
+
+  @include pseudo.plain() {
+    color: var(--clickable-fg);
+
+    @if $has-bg {
+      background-color: var(--clickable-bg);
+    }
+  }
+
+  @include pseudo.hover() {
+    color: var(--clickable-hover-fg, var(--clickable-fg));
+
+    @if $has-bg {
+      background-color: var(--clickable-hover-bg, var(--clickable-bg));
+    }
+  }
+
+  @include pseudo.active() {
+    color: var(--clickable-active-fg, var(--clickable-hover-fg, var(--clickable-fg)));
+
+    @if $has-bg {
+      background-color: var(--clickable-active-bg, var(--clickable-hover-bg, var(--clickable-bg)));
+    }
+  }
+
+  @include pseudo.focus() {
+    color: var(--clickable-focus-fg, var(--clickable-hover-fg, var(--clickable-fg)));
+
+    @if $has-bg {
+      background-color: var(--clickable-focus-bg, var(--clickable-hover-bg, var(--clickable-bg)));
+      box-shadow: 0 0 0 2px
+        color-mix(
+          in srgb,
+          var(--clickable-focus-bg, var(--clickable-hover-bg, var(--clickable-bg))) 40%,
+          transparent
+        );
+    }
+  }
+
+  @include pseudo.disabled() {
+    color: color-mix(
+      in srgb,
+      var(--clickable-fg) calc(var(--clickable-disabled-alpha, 0.3) * 100%),
+      transparent
+    ) !important;
+
+    @if $has-bg {
+      background-color: var(--clickable-bg) !important;
+    }
+  }
+}

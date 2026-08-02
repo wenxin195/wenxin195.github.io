@@ -1,0 +1,49 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+
+// Always one row: share | appreciate | multimedia.
+// Narrow: compress children (hide labels) instead of stacking.
+
+.article-toolbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  column-gap: map.get(variables.$spacers, 2);
+  margin: map.get(variables.$spacers, 4) 0;
+  min-width: 0;
+  max-width: 100%;
+
+  .share,
+  .appreciate,
+  .multimedia {
+    min-width: 0;
+  }
+
+  .share {
+    justify-self: start;
+  }
+
+  .appreciate {
+    justify-self: center;
+  }
+
+  .multimedia {
+    justify-self: end;
+  }
+
+  // FAB gutter (< lg): drop text labels so icons fit one row.
+  @include media.media-breakpoint-down(lg) {
+    column-gap: map.get(variables.$spacers, 1);
+    margin: map.get(variables.$spacers, 3) 0;
+
+    .share__label {
+      display: none;
+    }
+
+    .multimedia__pdf > a > span,
+    .multimedia__video > a > span {
+      display: none;
+    }
+  }
+}

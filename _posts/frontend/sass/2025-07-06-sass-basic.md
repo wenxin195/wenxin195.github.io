@@ -6,10 +6,6 @@ tags:
   - CSS
 author: Wenxin Zhong
 layout: article
-mathjax: false
-download: false
-videos: false
-refactor: true
 modify_date: "2026-03-22 00:28:00"
 ---
 
@@ -68,6 +64,7 @@ body {
 > Sass 变量通过减少重复项、支持复杂计算以及简化库配置来优化样式表，提高了样式表的可维护性和一致性。
 {: .prompt-info}
 
+
 ### 变量的作用域
 
 Sass 变量默认是 **局部变量**，这意味着它们只能在 **定义它们的代码块内** 访问。在任何 **代码块之外** 声明的变量则为 **全局变量**，可以在整个样式表或下游文件中使用。例如：
@@ -100,6 +97,7 @@ p {
 > 当局部变量与全局变量 **同名** 时，局部变量会在其作用域内 **[Shadowing](https://sass-lang.com/documentation/variables/#shadowing)** 全局变量；在除该作用域之外的全局变量不受影响。
 {: .prompt-warning}
 
+
 要在局部作用域内显式覆盖全局变量，可以使用`!global`，这将修改整个样式表中的全局变量：
 
 ```scss
@@ -130,6 +128,7 @@ p {
 
 > `!global`只能修改现有的全局变量，无法用于声明新的全局变量！
 {: .prompt-danger}
+
 
 ### 变量的使用
 
@@ -222,6 +221,7 @@ $accent-color: hsl(277, 70%, 35%) !default;
 > 控制流中赋值的变量可以修改外部作用域的变量，但是 **控制流中定义的新变量在外部无法访问**。因此在控制流中赋值变量之前，需要先在外部作用域中声明变量(通常定义为`null`值或其他)。
 {: .prompt-tip}
 
+
 ## 插值语句
 
 Sass 的插值语句(Interpolation)`#{}`几乎可以在 Sass 样式表的任何地方使用，任意 *SassScript* 都可以嵌入到代码块里。这在编写 Mixins 宏命令时特别有用，因为它允许创建选择器的过程中传入参数：
@@ -280,13 +280,15 @@ Sass 提供了一组强大的[字符串函数](https://sass-lang.com/documentati
 
 - [`string.quote($string)`](https://sass-lang.com/documentation/modules/string/#quote)，可以为无引号字符串添加引号。
 
-  > 使用插值语句`#{}`时，有引号字符串会被编译为无引号字符串，这可能影响它们在 CSS 中的处理方式。
-  {: .prompt-tip}
+> 使用插值语句`#{}`时，有引号字符串会被编译为无引号字符串，这可能影响它们在 CSS 中的处理方式。
+{: .prompt-tip}
+
 
 - [`string.index($string, $substring)`](https://sass-lang.com/documentation/modules/string/#index)，返回`$string`中首次出现`$substring`的起始索引(序号从 1 开始计数)，若未找到则返回`null`。
 
-  > 在 Sass 中，字符串索引从第一个字符开始计数，起始值为 1，而非 0。
-  {: .prompt-info}
+> 在 Sass 中，字符串索引从第一个字符开始计数，起始值为 1，而非 0。
+{: .prompt-info}
+
 
 - [`string.slice($string, $start, $end)`](https://sass-lang.com/documentation/modules/string/#slice)，提取字符串中`$start`和`$end`索引之间的部分；
 - [`string.insert($string, $insert, $index)`](https://sass-lang.com/documentation/modules/string/#insert)，将`$insert`插入到`$string`的`$index`位置；
@@ -327,12 +329,14 @@ Sass 会将百分比视为带`%`单位的数字。使用`math.div($percentage, 1
 > 为了保证精度，Sass 将小数四舍五入到小数点后 10 位。
 {: .prompt-info}
 
+
 ### 列表
 
 Sass 中的列表(Lists)是由空格、逗号或斜杠`/`分隔，或用方括号`[]`括起的值集合。单个值被视为仅含一项的列表，空列表表示为`[]`。列表还可以嵌套子列表，例如`(1px 2px, 5px 6px)`。
 
 > 不推荐使用`/`作为分隔符，请改用`list.slash($elements...)`！
 {: .prompt-warning}
+
 
 Sass 提供了一系列强大的[列表函数](https://sass-lang.com/documentation/modules/list)：
 
@@ -398,6 +402,7 @@ Sass 将 CSS 颜色表达式(例如`#FF0000`、`rgb(255, 0, 0)`或者`red`)视�
 > 在使用插值语句`${}`的样式选择器中指定颜色名称时，需要使用有引号字符串表示颜色值(例如`"red"`)，以避免 Compressed 模式下出现无效 CSS。
 {: .prompt-warning}
 
+
 主要的[颜色函数](https://sass-lang.com/documentation/modules/color)包括：
 
 - [`color.adjust($color, $properties...)`](https://sass-lang.com/documentation/modules/color/#adjust)，按固定量调整特定的颜色属性(例如色调、饱和度等)；
@@ -423,6 +428,7 @@ $base-color: #036;
 > 使用`meta.inspect($value)`生成可读输出对映射进行调试。
 {: .prompt-info}
 
+
 Sass 中提供了用于动态操作的[映射函数](https://sass-lang.com/documentation/modules/map)：
 
 - [`map.get($map, $key)`](https://sass-lang.com/documentation/modules/map/#get)，检索给定 Key 的值；
@@ -434,6 +440,7 @@ Sass 中提供了用于动态操作的[映射函数](https://sass-lang.com/docum
 
 > 使用有引号字符串作为映射的 Key，以避免与其他数据类型混淆。
 {: .prompt-warning}
+
 
 与列表类似，映射也是不可变的。函数 **返回新的映射**，同时保留原始映射。要更新映射，只需将新映射重新赋值给原变量即可。
 
@@ -469,6 +476,7 @@ $prefixes-by-browser: (webkit: -webkit, moz: -moz);
 
 > 如果声明的值为`null`或者是 **无引号的空字符串**，Sass 会将其从编译后的 CSS 中省略。
 {: .prompt-info}
+
 
 ### 嵌套规则
 
@@ -548,6 +556,7 @@ p {
 > 注意：过多的嵌套会导致 CSS 文件过大，严重影响性能！
 {: .prompt-warning}
 
+
 ### 父级选择器
 
 父级选择器[`&`](https://sass-lang.com/documentation/style-rules/parent-selector)是 Sass 的一项强大功能，它可以在嵌套规则中动态引用外部选择器。`&`支持复杂选择器的复用，从而提升代码的灵活性与可读性。例如它能为父元素附加伪类或添加前置选择器：
@@ -591,6 +600,7 @@ p {
 
 > 在编译后的 CSS 输出，`&`会被替换为最外层的父元素。在多层嵌套中，最顶部的父元素会向下传递到每一层。
 {: .prompt-tip}
+
 
 `&`也可以用作选择器的第一部分，紧接着后缀来创建复合选择器：
 
@@ -728,6 +738,7 @@ $warn: #dfa612;
 > 插值语句`#{}`会从有引号字符串中删除引号。要保留自定义属性值中的引号，可以使用`meta.inspect()`函数。
 {: .prompt-tip}
 
+
 ### 占位符选择器
 
 Sass 引入了占位符选择器，用`%`来表示。它的功能类似于类选择器；但是如果不是用继承`@extend`，则会被排除在编译的 CSS 之外。这可以避免不必要的 CSS 输出，保持文件精简，并避免因未使用的样式导致冗余。占位符选择器非常适合可复用的样式块，无需强制使用特定的类名，尤其是在第三方库中。
@@ -802,6 +813,7 @@ Mixins 是一项强大的功能，它允许定义可复用的 CSS 样式块，�
 > 过度使用 Mixins 和大型样式块会使编译后的 CSS 体积膨胀，从而可能降低页面加载速度。请谨慎使用！
 {: .prompt-danger}
 
+
 当需要 **重复使用一组逻辑样式** 时，特别是当一组属性需要协同工作以实现特定效果（如圆角或自定义排版设置）时，Mixins 是一个理想的选择。一个好的经验法则是：像`rounded-corners`、`fancy-font`或`no-bullets`这样具有清晰抽象意义的样式，使用 Mixins 会是非常明智的选择。如果难以为这些样式命名，或者它们缺乏明确的语义，Mixins 可能就不再是最佳解决方案。
 
 虽然 Mixin 与 CSS 类有些相似，但它们的用途却截然不同：CSS 类应用于 HTML 中，承载着语义信息，描述元素的功能和意义；而 Mixin 则用于样式表中，专注于描述元素的视觉表现，属于纯粹的样式展示层级。
@@ -864,6 +876,7 @@ Mixins 可以包含选择器，甚至还使用`&`引用父元素。例如：
 > Mixin 与占位符`%`的区别是：Mixin 可以接收参数并插入样式块，适合灵活复用；占位符`%`不能接收参数，适合样式共享和减少生成的 CSS 量。
 {: .prompt-tip}
 
+
 还可以在样式表的顶部引用 Mixins，但它们不能直接定义属性或使用父元素：
 
 ```scss
@@ -896,6 +909,7 @@ Mixins 甚至可以包含其他 Mixins 以实现模块化组合：
 
 > 为了安全性和灵活性，Mixin 最好使用后代选择器。这样可以确保它们在样式表的任何位置被导入时，都不会引发特异性问题。
 {: .prompt-warning}
+
 
 ### 参数化 Mixins
 
@@ -1125,6 +1139,7 @@ $radius: 3px;
 > `@use`必须出现在其他 Sass 指令之前(`@forward`除外)，但是可以在`@use`之前声明变量来配置模块。
 {: .prompt-warning}
 
+
 为限制特定成员的访问权限，Sass 允许通过在变量、Mixins 或函数名前添加连字符`-`或下划线`_`来定义私有成员。这些成员仅在模块内部可访问，但在加载该模块的文件中不可用：
 
 ```scss
@@ -1170,6 +1185,7 @@ code {
 
 > 在样式表中，每个模块只能使用一次`@use ... with`！
 {: .prompt-warning}
+
 
 对于更高级的配置需求，例如传递多个变量或动态更新配置，可以考虑使用 Mixins：
 
@@ -1345,6 +1361,7 @@ Sass 虽然仍能支持`@import`，但在最新版中已被弃用，取而代之
 > `@mixin`或控制流语句中不允许嵌套`@import`！
 {: .prompt-danger}
 
+
 可以使用单个`@import`语句导入多个文件，并为 CSS`url()`导入使用插值语句`#{}`：
 
 ```scss
@@ -1354,6 +1371,7 @@ $family: unquote("Droid+Sans");
 
 > 为了防止 Sass 文件被编译为 CSS，请在其名称前添加下划线(例如`_example.scss`)，这些部分文件仅用于导入。
 {: .prompt-tip}
+
 
 `@use`旨在取代旧的`@import`指令，但它的工作方式被有意设计得不同。以下是两者之间的一些主要区别：
 
@@ -1764,6 +1782,7 @@ $i: 6;
 > 在实际项目中很少使用，可以优先考虑`@each`或`@for`语句。
 {: .prompt-tip}
 
+
 Sass 的遍历逻辑可以使用`@each`和`for`语句。
 
 `@each`用于遍历列表或 Maps，是最常用的循环方式，其语法为：`@each <variable> in <expression> { ... }`。例如：
@@ -1825,10 +1844,12 @@ $object: (h1: 2em, h2: 1.5em, h3: 1.2em);
 > 为避免与 CSS 内置函数或未来的 Sass 更新冲突，建议为自定义函数添加特定前缀(例如`fn-`)。
 {: .prompt-info}
 
+
 与`@mixin`类似，调用函数时可以显式指定参数名，以提高代码可读性：`px-to-rem($px: 20px, $base: 10px)`。除此之外，还使用`...`接收不确定数量的参数，常用于包装其他计算逻辑。
 
 > 如果需要生成一段 CSS 样式，请使用`@mixin`；如果只是想计算一个数值(如颜色计算、单位转换等)，请使用`@function`！
 {: .prompt-warning}
+
 
 Sass 提供大量内置函数(例如颜色、字符串、数学函数等)：
 

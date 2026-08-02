@@ -1,0 +1,97 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+
+// Unique content-width assembly for the site shell (and shared __inner consumers).
+// Do not redeclare these max-width / horizontal padding rules elsewhere.
+
+@mixin content-inner {
+  width: 100%;
+  max-width: map.get(variables.$layout, content-max-width);
+  padding: 0 map.get(variables.$spacers, 5);
+  margin: 0 auto;
+
+  @include media.media-breakpoint-up(xl) {
+    max-width: map.get(variables.$layout, content-max-width-xl);
+  }
+
+  @include media.media-breakpoint-down(lg) {
+    padding: 0 map.get(variables.$spacers, 4);
+  }
+
+  @include media.media-breakpoint-down(md) {
+    padding: 0 map.get(variables.$spacers, 3);
+  }
+}
+
+// Article pages only — FABs mount on article shell-main, not home/archive/etc.
+@mixin content-inner-fab-gutter {
+  @include media.media-breakpoint-down(lg) {
+    padding-right: calc(
+      #{map.get(variables.$layout, floating-actions-gutter)} + env(safe-area-inset-right, 0px)
+    );
+  }
+
+  @include media.media-breakpoint-down(md) {
+    padding-right: calc(
+      #{map.get(variables.$layout, floating-actions-gutter-sm)} + env(safe-area-inset-right, 0px)
+    );
+  }
+}
+
+@mixin content-inner-with-aside {
+  max-width: map.get(variables.$layout, content-max-width) + map.get(variables.$layout, aside-width);
+
+  @include media.media-breakpoint-up(xl) {
+    max-width: map.get(variables.$layout, content-max-width-xl) +
+      map.get(variables.$layout, aside-width-xl);
+  }
+
+  @include media.media-breakpoint-down(lg) {
+    max-width: map.get(variables.$layout, content-max-width);
+  }
+}
+
+.site-header__inner,
+.site-footer__inner,
+.search__inner,
+.article-hero__inner {
+  @include content-inner;
+}
+
+.layout-page__inner,
+.layout-home__inner,
+.layout-articles__inner,
+.layout-archive__inner,
+.layout-not-found__inner {
+  @include content-inner;
+}
+
+.article-layout__inner {
+  @include content-inner;
+  @include content-inner-fab-gutter;
+}
+
+// Header/footer are siblings of main, not descendants — lift via :has().
+.layout-shell:has(.shell-main--has-aside) {
+  .site-header__inner,
+  .site-footer__inner,
+  .article-layout__inner {
+    @include content-inner-with-aside;
+  }
+}
+
+.shell-main--full-width {
+  .article-layout__inner,
+  .layout-page__inner,
+  .layout-home__inner,
+  .layout-articles__inner,
+  .layout-archive__inner,
+  .layout-not-found__inner {
+    max-width: 100%;
+  }
+}
+
+.article-layout__inner--flush {
+  max-width: 100%;
+}

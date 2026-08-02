@@ -1,0 +1,29 @@
+// Blocks layer (S4a–S4d). One BEM block → one module.
+@use "./search";
+@use "./lightbox";
+@use "./pagefind";
+
+@use "./article-layout";
+@use "./article-aside";
+@use "./article-header";
+@use "./article-hero";
+@use "./article-info";
+@use "./article-body";
+@use "./article-footer";
+@use "./article-toolbar";
+@use "./article-nav";
+@use "./article-comments";
+
+@use "./article-list";
+@use "./pagination";
+@use "./archive-filters";
+@use "./archive-result";
+
+@use "./sharing";
+@use "./appreciate";
+@use "./multimedia";
+@use "./floating-actions";
+@use "./clipboard";
+@use "./donate";
+@use "./contact";
+@use "./extensions";

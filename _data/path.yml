@@ -1,0 +1,5 @@
+urls:
+  root   : /
+  home   : /
+  archive: /archive
+  rss    : /feed.xml

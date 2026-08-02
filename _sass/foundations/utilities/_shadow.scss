@@ -1,0 +1,70 @@
+@use "tokens" as variables;
+
+// Elevation tiers — finite set; consumers must not invent parallel box-shadow literals.
+@mixin box-shadow($level: default, $color: default) {
+  @if $color == default {
+    $color: variables.$text-color-d;
+  }
+
+  @if $level == 0 {
+    box-shadow: none;
+  }
+
+  @if $level == 1 or $level == default {
+    box-shadow:
+      0 4px 8px color-mix(in srgb, #{$color} 23%, transparent),
+      0 1px 3px color-mix(in srgb, #{$color} 8%, transparent),
+      0 6px 12px color-mix(in srgb, #{$color} 2%, transparent);
+  }
+
+  @if $level == 2 {
+    box-shadow:
+      0 8px 16px color-mix(in srgb, #{$color} 23%, transparent),
+      0 2px 6px color-mix(in srgb, #{$color} 8%, transparent),
+      0 12px 24px color-mix(in srgb, #{$color} 2%, transparent);
+  }
+
+  // Flyout / QR panels (absorbs former 16px@12% / 20px@15%)
+  @if $level == popup {
+    box-shadow: 0 4px 20px color-mix(in srgb, #{$color} 15%, transparent);
+  }
+
+  // Floating action buttons
+  @if $level == float {
+    box-shadow: 0 4px 12px color-mix(in srgb, #{$color} 12%, transparent);
+  }
+
+  // Compact controls (e.g. form submit)
+  @if $level == raised {
+    box-shadow: 0 4px 10px color-mix(in srgb, #{$color} 12%, transparent);
+  }
+
+  @if $level == raised-strong {
+    box-shadow: 0 6px 14px color-mix(in srgb, #{$color} 18%, transparent);
+  }
+
+  // Cards / contact form
+  @if $level == elevated {
+    box-shadow:
+      0 8px 20px color-mix(in srgb, #{$color} 8%, transparent),
+      0 2px 6px color-mix(in srgb, #{$color} 6%, transparent);
+  }
+
+  @if $level == elevated-hover {
+    box-shadow:
+      0 12px 28px color-mix(in srgb, #{$color} 12%, transparent),
+      0 4px 10px color-mix(in srgb, #{$color} 8%, transparent);
+  }
+}
+
+.box-shadow-1 {
+  @include box-shadow();
+}
+
+.box-shadow-2 {
+  @include box-shadow(2);
+}
+
+.box-shadow-popup {
+  @include box-shadow(popup);
+}

@@ -1,0 +1,27 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+@use "foundations/utilities/overflow" as overflow;
+
+.pagination {
+  margin: map.get(variables.$spacers, 4) 0;
+
+  @include media.media-breakpoint-down(md) {
+    margin: map.get(variables.$spacers, 3) 0;
+  }
+}
+
+.pagination__menu {
+  max-width: 100%;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  @include overflow.overflow(auto, "x");
+
+  > * {
+    scroll-snap-align: center;
+  }
+}
+
+.pagination__omit {
+  color: variables.$text-color-l;
+}

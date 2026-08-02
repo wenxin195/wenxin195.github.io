@@ -1,0 +1,28 @@
+{%- comment -%}
+  Single source for header + nav-drawer link items (theme/search stay in header actions).
+  Expects `_locale_key` from utils/locale.html.
+{%- endcomment -%}
+{%- if site.data.navigation.header -%}
+  {%- for _item in site.data.navigation.header -%}
+    <li class="navigation__group navigation__group--{{ _item.icon }}">
+      <img
+        class="navigation__icon"
+        src="{{ '/assets/images/icon/navigation/' | append: _item.icon | append: '.svg' | relative_url }}"
+        alt=""
+        width="24"
+        height="24"
+      />
+
+      {%- assign _active_class = 'navigation__item' -%}
+      {%- assign current_url = page.url | append: '/' | replace: '.html', '' -%}
+      {%- assign item_url = _item.url | append: '/' -%}
+
+      {%- if current_url contains item_url -%}
+        {%- assign _active_class = _active_class | append: ' navigation__item--active' -%}
+      {%- endif -%}
+
+      {%- assign _nav_title = _item.titles[_locale_key] | default: _item.titles['zh-CN'] -%}
+      <a class="{{ _active_class }}" href="{{ _item.url }}">{{- _nav_title -}}</a>
+    </li>
+  {%- endfor -%}
+{%- endif -%}

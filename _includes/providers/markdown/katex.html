@@ -1,0 +1,28 @@
+{%- assign _sources = site.data.resources.sources.katex -%}
+
+{%- if _sources.css and _sources.js and _sources.auto_render -%}
+  <link rel="stylesheet" href="{{ _sources.css }}" />
+  <script defer src="{{ _sources.js }}"></script>
+  <script defer src="{{ _sources.auto_render }}"></script>
+  <script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof renderMathInElement !== 'function') return;
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\[', right: '\\]', display: true },
+          { left: '\\(', right: '\\)', display: false },
+          { left: '\\begin{equation}', right: '\\end{equation}', display: true },
+          { left: '\\begin{align}', right: '\\end{align}', display: true },
+          { left: '\\begin{aligned}', right: '\\end{aligned}', display: true },
+          { left: '\\begin{gather}', right: '\\end{gather}', display: true },
+        ],
+        throwOnError: false,
+        macros: {
+          '\\mit': '\\mathit',
+        },
+      });
+    });
+  </script>
+{%- endif -%}

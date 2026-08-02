@@ -1,0 +1,26 @@
+{%- comment -%}
+  M5 public params only — no secrets.
+  Requires integrations.comments.giscus: repo, repo_id, category, category_id.
+{%- endcomment -%}
+{%- assign _g = site.data.integrations.comments.giscus -%}
+{%- assign _giscus_src = site.data.resources.sources.giscus | default: 'https://giscus.app/client.js' -%}
+
+{%- if _g.repo and _g.repo_id and _g.category and _g.category_id -%}
+  <div class="giscus"></div>
+  <script
+    src="{{ _giscus_src }}"
+    data-repo="{{ _g.repo }}"
+    data-repo-id="{{ _g.repo_id }}"
+    data-category="{{ _g.category }}"
+    data-category-id="{{ _g.category_id }}"
+    data-mapping="{{ _g.mapping | default: 'pathname' }}"
+    data-strict="{{ _g.strict | default: '0' }}"
+    data-reactions-enabled="{{ _g.reactions_enabled | default: '1' }}"
+    data-emit-metadata="{{ _g.emit_metadata | default: '0' }}"
+    data-input-position="{{ _g.input_position | default: 'bottom' }}"
+    data-theme="{{ _g.theme | default: 'preferred_color_scheme' }}"
+    data-lang="{{ _g.lang | default: site.locale | default: 'zh-CN' }}"
+    crossorigin="anonymous"
+    async
+  ></script>
+{%- endif -%}

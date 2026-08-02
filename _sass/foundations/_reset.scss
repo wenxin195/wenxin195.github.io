@@ -1,0 +1,202 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+@use "foundations/utilities/link" as link;
+
+@mixin block-elements {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  hr,
+  blockquote,
+  figure,
+  pre,
+  .code-block,
+  ul,
+  ol,
+  dl,
+  table,
+  .footnotes {
+    @content;
+  }
+}
+
+@mixin heading-elements {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @content;
+  }
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: map.get(variables.$base, font-size-root);
+  background: variables.$background-color;
+  color-scheme: light;
+
+  @include media.media-breakpoint-down(md) {
+    font-size: map.get(variables.$base, font-size-root-sm);
+  }
+
+  @media print {
+    font-size: map.get(variables.$base, font-size-root-sm);
+  }
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  color: variables.$text-color;
+  background: variables.$background-color;
+  font: map.get(variables.$base, font-weight) #{map.get(variables.$base, font-size)}/#{map.get(variables.$base, line-height)}
+    map.get(variables.$base, font-family);
+
+  ::selection {
+    background: variables.$select-color;
+  }
+}
+
+@include block-elements() {
+  padding: 0;
+  margin: map.get(variables.$spacers, 2) 0;
+}
+
+input,
+textarea,
+select,
+button {
+  font: map.get(variables.$base, font-weight) #{map.get(variables.$base, font-size)}/#{map.get(variables.$base, line-height)}
+    map.get(variables.$base, font-family);
+  color: variables.$text-color;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong {
+  font-weight: map.get(variables.$base, font-weight-bold);
+}
+
+h1 {
+  font-size: map.get(variables.$base, font-size-h1);
+  color: variables.$text-color-d;
+
+  @include media.media-breakpoint-down(md) {
+    font-size: map.get(variables.$base, font-size-h1-sm);
+  }
+}
+
+h2 {
+  font-size: map.get(variables.$base, font-size-h2);
+  color: variables.$text-color-d;
+
+  @include media.media-breakpoint-down(md) {
+    font-size: map.get(variables.$base, font-size-h2-sm);
+  }
+}
+
+h3 {
+  font-size: map.get(variables.$base, font-size-h3);
+  color: variables.$text-color-d;
+
+  @include media.media-breakpoint-down(md) {
+    font-size: map.get(variables.$base, font-size-h3-sm);
+  }
+}
+
+h4 {
+  font-size: map.get(variables.$base, font-size-h4);
+  color: variables.$text-color;
+
+  @include media.media-breakpoint-down(md) {
+    font-size: map.get(variables.$base, font-size-h4-sm);
+  }
+}
+
+h5 {
+  font-size: map.get(variables.$base, font-size-h5);
+  color: variables.$text-color;
+
+  @include media.media-breakpoint-down(md) {
+    font-size: map.get(variables.$base, font-size-h5-sm);
+  }
+}
+
+h6 {
+  font-size: map.get(variables.$base, font-size-h6);
+  color: variables.$text-color-l;
+
+  @include media.media-breakpoint-down(md) {
+    font-size: map.get(variables.$base, font-size-h6-sm);
+  }
+}
+
+a {
+  font-weight: map.get(variables.$base, font-weight-bold);
+  @include link.link-colors(
+    variables.$main-color-1,
+    variables.$main-color-1,
+    variables.$main-color-1,
+    variables.$main-color-1,
+    $disabled-alpha: 0.2
+  );
+}
+
+pre,
+code {
+  font-family: map.get(variables.$base, font-family-code);
+}
+
+code {
+  font-size: map.get(variables.$base, font-size-xs);
+  line-height: map.get(variables.$base, line-height-sm);
+}
+
+figure > img {
+  display: block;
+}
+
+figcaption {
+  font-size: map.get(variables.$base, font-size-sm);
+}
+
+button {
+  padding: 0;
+  margin: 0;
+  font-size: map.get(variables.$spacers, 3);
+  cursor: pointer;
+  background-color: transparent;
+  border-width: 0;
+  outline: none;
+}
+
+input {
+  &:focus {
+    outline: none;
+  }
+}
+
+// mermaid
+.mermaidTooltip {
+  display: none;
+}

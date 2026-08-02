@@ -1,0 +1,59 @@
+{%- assign _author_name = include.article.author | default: site.author.name -%}
+{%- assign _author = site.data.authors[_author_name] -%}
+{%- assign _visible = include.visible -%}
+{%- if _visible == nil -%}
+  {%- assign _visible = true -%}
+{%- endif -%}
+
+{%- if _visible -%}
+  <div class="article-info flow-root">
+    <ul class="article-info__tags menu">
+      {%- if include.article.tags -%}
+        <i class="fa-solid fa-tags" aria-hidden="true"></i>
+      {%- endif -%}
+
+      {%- for _tag in include.article.tags -%}
+        {%- assign _tag_path = site.data.path.urls.archive | append: '?tag=' -%}
+        {%- assign _tag_encode = _tag | strip | url_encode | url_encode -%}
+
+        <li>
+          <a class="button button--secondary button--pill button--sm" href="{{ _tag_path | append: _tag_encode }}">
+            {{- _tag -}}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if include.article.layout == 'article' or page.layout == 'article' -%}
+      <ul class="article-info__meta menu">
+        <li>
+          <i class="fas fa-user" aria-hidden="true"></i>
+          <span>{{- _author_name -}}</span>
+        </li>
+        <li>
+          <i class="far fa-calendar-alt" aria-hidden="true"></i>
+          <span>{{- include.article.date | date: _t.ARTICLE_DATE_FORMAT -}}</span>
+        </li>
+        <li>
+          <i class="fa-regular fa-clock" aria-hidden="true"></i>
+          <span class="readtime" title="{{ include.article.char_count }}{{ _t.WORDS }}">
+            {{- _t.PROMPT -}}<em>{{- include.article.reading_time -}}</em>{{- _t.UNIT -}}
+          </span>
+        </li>
+      </ul>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{%- if include.semantic != false -%}
+  {%- if _author -%}
+    <meta itemprop="author" content="{{ _author_name }}">
+  {%- endif -%}
+  {%- if include.article.date -%}
+    <meta itemprop="datePublished" content="{{ include.article.date | date_to_xmlschema }}">
+  {%- endif -%}
+  {%- if include.article.tags[0] -%}
+    {%- assign _keywords = include.article.tags | join: ',' -%}
+    <meta itemprop="keywords" content="{{ _keywords }}">
+  {%- endif -%}
+{%- endif -%}

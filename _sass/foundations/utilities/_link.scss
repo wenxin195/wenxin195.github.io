@@ -1,0 +1,41 @@
+@use "tokens" as variables;
+@use "./clickable" as clickable;
+@use "./pseudo" as pseudo;
+
+@mixin link-colors(
+  $clr,
+  $hover-clr: null,
+  $active-clr: null,
+  $focus-clr: null,
+  $disabled-alpha: 0.3
+) {
+  @include clickable.paint(
+    $fg: $clr,
+    $hover-fg: if($hover-clr != null, $hover-clr, $clr),
+    $active-fg: if($active-clr != null, $active-clr, if($hover-clr != null, $hover-clr, $clr)),
+    $focus-fg: if($focus-clr != null, $focus-clr, if($hover-clr != null, $hover-clr, $clr)),
+    $disabled-alpha: $disabled-alpha
+  );
+  @include clickable.clickable($fill-svg: false, $has-bg: false);
+
+  @include pseudo.plain() {
+    text-decoration: none;
+  }
+
+  @include pseudo.hover() {
+    text-decoration: underline;
+  }
+
+  @include pseudo.active() {
+    text-decoration: none;
+  }
+}
+
+/// Theme-safe link colors (explicit states; no Sass color.scale).
+@mixin link-themed(
+  $clr: variables.$text-color,
+  $hover: variables.$main-color-1,
+  $disabled-alpha: 0.3
+) {
+  @include link-colors($clr, $hover, $hover, $hover, $disabled-alpha);
+}

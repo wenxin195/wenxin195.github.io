@@ -1,0 +1,233 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/reset" as reset;
+@use "foundations/utilities/link" as link;
+@use "foundations/utilities/media" as media;
+@use "foundations/utilities/pseudo" as pseudo;
+@use "foundations/utilities/split-line" as split;
+@use "foundations/utilities/overflow" as overflow;
+@use "foundations/utilities/horizontal-rules" as horizontal;
+
+.article-body {
+  line-height: map.get(variables.$base, line-height-lg);
+  word-wrap: break-word;
+
+  @media print {
+    line-height: map.get(variables.$base, line-height);
+  }
+
+  @include reset.block-elements() {
+    margin: map.get(variables.$spacers, 3) 0;
+
+    @media print {
+      margin: map.get(variables.$spacers, 2) 0;
+    }
+  }
+
+  @include reset.heading-elements() {
+    position: relative;
+    margin-top: map.get(variables.$spacers, 4);
+
+    @media print {
+      margin-top: map.get(variables.$spacers, 3);
+    }
+
+    & > .anchor {
+      margin-left: map.get(variables.$spacers, 1);
+      text-decoration: none;
+      visibility: hidden;
+      opacity: 0;
+
+      @include link.link-themed(variables.$border-color, variables.$main-color-1);
+
+      & > i {
+        font-size: map.get(variables.$base, font-size-sm);
+      }
+    }
+
+    @include pseudo.hover() {
+      & > .anchor {
+        cursor: pointer;
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+
+  h1,
+  h2 {
+    @include split.split-line(bottom, default, variables.$border-color-l);
+  }
+
+  hr {
+    border: none;
+    @include horizontal.horizontal-rules();
+  }
+
+  blockquote:not([class^="prompt-"]) {
+    padding-left: map.get(variables.$spacers, 3);
+    font-size: map.get(variables.$base, font-size-sm);
+    color: variables.$text-color-l;
+
+    @include split.split-line(left, 4px, variables.$border-color);
+
+    p {
+      margin: map.get(variables.$spacers, 2) 0;
+    }
+
+    & > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  img:not(.emoji) {
+    max-width: 100%;
+    vertical-align: middle;
+  }
+
+  .emoji {
+    display: inline-block;
+    width: map.get(variables.$base, line-height-lg) * 0.7rem;
+    height: map.get(variables.$base, line-height-lg) * 0.7rem;
+    vertical-align: text-bottom;
+  }
+
+  .footnotes {
+    margin-top: map.get(variables.$spacers, 5);
+    @include split.split-line();
+
+    @media print {
+      margin-top: map.get(variables.$spacers, 2) * 2;
+    }
+  }
+
+  pre {
+    @include overflow.overflow(auto);
+
+    & > code {
+      padding: 0;
+      word-wrap: normal;
+      background-color: transparent;
+
+      &.language-mermaid,
+      &.language-chart {
+        svg {
+          width: 100%;
+        }
+
+        display: none;
+
+        &[data-processed] {
+          display: block;
+        }
+      }
+    }
+  }
+
+  ul,
+  ol {
+    margin-left: map.get(variables.$spacers, 4);
+
+    @include media.media-breakpoint-down(md) {
+      margin-left: map.get(variables.$spacers, 3);
+    }
+
+    ul,
+    ol {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    li {
+      p {
+        margin: map.get(variables.$spacers, 2);
+
+        @media print {
+          margin: map.get(variables.$spacers, 1);
+        }
+      }
+    }
+  }
+
+  dl {
+    dt,
+    dd {
+      p {
+        margin: map.get(variables.$spacers, 2);
+
+        @media print {
+          margin: map.get(variables.$spacers, 1);
+        }
+      }
+    }
+
+    dt {
+      font-weight: map.get(variables.$base, font-weight-bold);
+    }
+
+    dd {
+      margin-left: 2rem;
+
+      @include media.media-breakpoint-down(md) {
+        margin-left: map.get(variables.$spacers, 3);
+      }
+    }
+  }
+
+  ul.task-list {
+    margin-left: 0;
+    list-style-type: none;
+
+    ul,
+    ol {
+      margin-left: map.get(variables.$spacers, 4);
+
+      @include media.media-breakpoint-down(md) {
+        margin-left: map.get(variables.$spacers, 3);
+      }
+    }
+  }
+
+  // Wide embeds / diagrams (skipped by CodeBlocks pipeline)
+  .language-mermaid,
+  .language-chart {
+    max-width: 100%;
+    @include overflow.overflow(auto, "x");
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    border-collapse: collapse;
+    @include overflow.overflow(auto);
+
+    thead,
+    tfoot {
+      background-color: variables.$text-background-color;
+    }
+
+    th,
+    td {
+      padding: map.get(variables.$spacers, 2);
+
+      @include media.media-breakpoint-down(md) {
+        padding: map.get(variables.$spacers, 1) map.get(variables.$spacers, 2);
+      }
+    }
+
+    th {
+      font-weight: map.get(variables.$base, font-weight-bold);
+    }
+  }
+}
+
+@keyframes anchor-flash {
+  0%   { background-color: transparent; }
+  30%  { background-color: color-mix(in srgb, #{variables.$yellow} 40%, transparent); }
+  100% { background-color: transparent; }
+}
+
+.anchor-highlight {
+  animation: anchor-flash 1.5s ease-out;
+  border-radius: map.get(variables.$base, border-radius-sm);
+}

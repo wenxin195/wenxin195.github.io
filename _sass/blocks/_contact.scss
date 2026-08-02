@@ -1,0 +1,106 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+@use "foundations/utilities/shadow" as shadow;
+
+.contact-list__item {
+  display: list-item;
+  vertical-align: middle;
+}
+
+.contact-social {
+  display: inline-flex;
+  align-items: center;
+  gap: map.get(variables.$spacers, 2);
+  vertical-align: middle;
+}
+
+.contact-social__icon {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.contact-form {
+  width: 100%;
+  max-width: 37.5rem;
+  margin: 0 auto;
+  padding: map.get(variables.$spacers, 4);
+
+  background-color: variables.$text-background-color;
+
+  border-radius: map.get(variables.$base, border-radius-sm);
+  @include shadow.box-shadow(elevated);
+
+  transition: box-shadow map.get(variables.$animation, duration-md) ease;
+
+  @include media.media-breakpoint-down(md) {
+    padding: map.get(variables.$spacers, 3);
+    max-width: none;
+  }
+
+  &:hover {
+    @include shadow.box-shadow(elevated-hover);
+  }
+}
+
+.form-button {
+  margin-top: map.get(variables.$spacers, 4);
+  width: 100%;
+  padding: map.get(variables.$spacers, 2) map.get(variables.$spacers, 3);
+
+  color: variables.$text-color-function;
+  background-color: variables.$green;
+
+  border: none;
+  border-radius: map.get(variables.$base, border-radius-sm);
+
+  @include shadow.box-shadow(raised);
+  transition: all map.get(variables.$animation, duration-sm) ease;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: color-mix(in srgb, #{variables.$green} 85%, #{variables.$text-color-d});
+    @include shadow.box-shadow(raised-strong);
+
+    transform: translateY(-1px);
+  }
+}
+
+.form-label {
+  font-size: map.get(variables.$base, font-size-lg);
+  margin-top: map.get(variables.$spacers, 2);
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  resize: vertical;
+  padding: map.get(variables.$spacers, 2);
+  font-size: map.get(variables.$base, font-size);
+
+  margin-top: map.get(variables.$spacers, 1);
+  margin-bottom: map.get(variables.$spacers, 3);
+
+  color: variables.$text-color;
+  background-color: variables.$background-color;
+  border-width: 1px;
+  border-style: solid;
+  border-color: variables.$border-color;
+  border-radius: map.get(variables.$base, border-radius-sm);
+
+  box-shadow: inset 0 1px 2px color-mix(in srgb, #{variables.$text-color-d} 5%, transparent);
+  transition: all map.get(variables.$animation, duration-sm) ease;
+
+  &:hover {
+    outline: none;
+    border-color: variables.$blue;
+
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, #{variables.$blue} 15%, transparent),
+      0 3px 8px color-mix(in srgb, #{variables.$text-color-d} 8%, transparent);
+  }
+}

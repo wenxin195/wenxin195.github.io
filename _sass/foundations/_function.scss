@@ -1,0 +1,25 @@
+@use "sass:map";
+@use "sass:color";
+@use "sass:meta";
+@use "tokens" as variables;
+
+@function get-color-theme($color) {
+  @if meta.type-of($color) != "color" {
+    @return "light";
+  }
+
+  @if color.channel($color, "lightness", $space: hsl) < 15% {
+    @return "dark";
+  } @else {
+    @return "light";
+  }
+}
+
+@function breakpoint-infix($name, $breakpoints: default) {
+  @if $breakpoints == default {
+    $breakpoints: variables.$responsive;
+  }
+
+  $min: map.get($breakpoints, $name);
+  @return if($min != 0, "#{$name}-", "");
+}

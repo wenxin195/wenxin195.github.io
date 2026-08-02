@@ -1,0 +1,15 @@
+@use "tokens" as variables;
+
+body,
+html,
+.root,
+.layout-shell {
+  height: 100%;
+}
+
+.layout-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background-color: variables.$background-color;
+}

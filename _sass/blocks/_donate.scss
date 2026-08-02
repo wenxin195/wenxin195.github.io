@@ -1,0 +1,31 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+
+.payment-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: map.get(variables.$spacers, 4);
+
+  @include media.media-breakpoint-down(md) {
+    flex-direction: column;
+    gap: map.get(variables.$spacers, 3);
+  }
+
+  .payment-item {
+    text-align: center;
+    margin-right: 0;
+
+    > img {
+      height: variables.$qrcode-size;
+      width: auto;
+      max-width: 100%;
+
+      @include media.media-breakpoint-down(md) {
+        height: calc(#{variables.$qrcode-size} * 0.85);
+      }
+    }
+  }
+}

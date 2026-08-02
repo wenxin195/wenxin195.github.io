@@ -1,0 +1,19 @@
+@use "foundations/utilities/media" as media;
+
+// Content width for .article-layout__inner lives in shell/width.
+// Do not set position:relative here — it would steal the containing block from
+// .article-aside and park .aside-toc at the bottom of the article (static pos).
+
+.article-layout__inner {
+  display: flex;
+
+  // < lg: TOC aside is a fixed drawer — leave the flex row so main cannot collapse.
+  @include media.media-breakpoint-down(lg) {
+    display: block;
+  }
+}
+
+.article-layout__main {
+  min-width: 0;
+  flex: 1;
+}

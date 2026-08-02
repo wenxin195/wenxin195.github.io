@@ -1,0 +1,177 @@
+// Site themes → CSS custom properties on html[data-theme].
+// Values aligned with TeXt skins + token-unify (prompt/code/table; dark bg/border ↔ float btn).
+// Precompute mixes here; consumers must not Sass-mix() these vars.
+
+@mixin _theme-default {
+  --color-main-1: #fc4d50;
+  --color-on-main-1: #fff;
+  --color-main-2: #fca24d;
+  --color-on-main-2: #fff;
+  --color-main-3: #f2f2f2;
+  --color-on-main-3: #333;
+
+  --color-main-theme-light: rgba(0, 0, 0, 0.9);
+  --color-main-theme-dark: rgba(255, 255, 255, 0.9);
+
+  --color-bg: #fff;
+  --color-text-d: #000;
+  --color-text: #222;
+  --color-text-l: #888;
+  --color-text-bg: rgba(0, 0, 0, 0.05);
+
+  --color-header-fg: #333;
+  --color-header-bg: #f2f2f2;
+  --color-footer-fg: #333;
+  --color-footer-bg: #f2f2f2;
+
+  --color-border: #ccc;
+  --color-border-l: #e6e6e6;
+  --color-decorate: rgba(0, 0, 0, 0.1);
+  --color-mask: rgba(0, 0, 0, 0.9);
+  --color-select: rgba(252, 77, 80, 0.5);
+
+  --color-fn-green: #52c41a;
+  --color-fn-blue: #1890ff;
+  --color-fn-yellow: #fa8c16;
+  --color-fn-red: #f5222d;
+  --color-on-fn: #fff;
+
+  --color-contrast-light-d: #000;
+  --color-contrast-light: #222;
+  --color-contrast-light-l: #888;
+  --color-contrast-dark-d: #fff;
+  --color-contrast-dark: rgba(255, 255, 255, 0.95);
+  --color-contrast-dark-l: rgba(255, 255, 255, 0.85);
+
+  // Prompt / details / box / alert — tip own; info/warning/danger aligned with huanyushi
+  --color-prompt-tip-bg: rgba(123, 247, 144, 0.2);
+  --color-prompt-tip-color: #03b303;
+  --color-prompt-info-bg: #e1f5fe;
+  --color-prompt-info-color: #0070cb;
+  --color-prompt-warning-bg: #fff3cd;
+  --color-prompt-warning-color: #ef9c03;
+  --color-prompt-danger-bg: rgba(248, 215, 218, 0.56);
+  --color-prompt-danger-color: #df3c30;
+  --color-on-prompt: rgba(46, 46, 46, 0.77);
+  --color-prompt-edge: #eeeeee;
+
+  --color-table-thead: rgba(210, 215, 217, 0.75);
+  --color-table-border: #ececec;
+
+  // Code / syntax (GitHub Primer prettylights — single tree)
+  --syntax-primary: #24292f;
+  --syntax-bg: #f6f8fa;
+  --syntax-red: #cf222e;
+  --syntax-red-dark: #82071e;
+  --syntax-red-bg: #ffebe9;
+  --syntax-orange: #953800;
+  --syntax-green: #116329;
+  --syntax-green-bg: #dafbe1;
+  --syntax-blue: #0550ae;
+  --syntax-blue-dark: #0a3069;
+  --syntax-purple: #8250df;
+  --syntax-gray: #68717a;
+  --syntax-gray-light: #f6f8fa;
+  --syntax-chrome-border: #d0d7de;
+  --syntax-chrome-dot: #c0c0c0;
+  --syntax-inline-bg: #f9f2f4;
+  --syntax-inline-fg: #c7254e;
+
+  // Cutout glyph fill / icon invert (theme axis — no business dark forks)
+  --color-cutout-fill: transparent;
+  --filter-invert: 0;
+}
+
+@mixin _theme-dark {
+  --color-main-1: #ff9500;
+  --color-on-main-1: rgba(255, 255, 255, 0.8);
+  --color-main-2: #ff006a;
+  --color-on-main-2: rgba(255, 255, 255, 0.8);
+  // Surfaces: page bg aligned with former float-btn fill; chrome slightly deeper
+  --color-main-3: #222;
+  --color-on-main-3: rgba(255, 255, 255, 0.8);
+
+  --color-main-theme-light: rgba(0, 0, 0, 0.8);
+  --color-main-theme-dark: rgba(255, 255, 255, 0.8);
+
+  --color-bg: #2a2a2a;
+  --color-text-d: rgba(255, 255, 255, 0.8);
+  --color-text: rgba(255, 255, 255, 0.7);
+  --color-text-l: rgba(255, 255, 255, 0.5);
+  --color-text-bg: rgba(255, 255, 255, 0.05);
+
+  --color-header-fg: rgba(255, 255, 255, 0.8);
+  --color-header-bg: #222;
+  --color-footer-fg: rgba(255, 255, 255, 0.8);
+  --color-footer-bg: #222;
+
+  --color-border: #4a4a4a;
+  --color-border-l: #353535;
+  --color-decorate: rgba(255, 255, 255, 0.1);
+  --color-mask: rgba(0, 0, 0, 0.9);
+  --color-select: rgba(255, 149, 0, 0.5);
+
+  --color-fn-green: #5baa34;
+  --color-fn-blue: #1c7cd4;
+  --color-fn-yellow: #c9771f;
+  --color-fn-red: #da3d45;
+  --color-on-fn: rgba(255, 255, 255, 0.8);
+
+  --color-contrast-light-d: #000;
+  --color-contrast-light: #222;
+  --color-contrast-light-l: #888;
+  --color-contrast-dark-d: rgba(255, 255, 255, 0.8);
+  --color-contrast-dark: rgba(255, 255, 255, 0.7);
+  --color-contrast-dark-l: rgba(255, 255, 255, 0.5);
+
+  // Prompt hues — tip own; info/warning/danger aligned with huanyushi
+  --color-prompt-tip-bg: rgba(91, 170, 52, 0.16);
+  --color-prompt-tip-color: #7dce55;
+  --color-prompt-info-bg: rgb(6 36 62);
+  --color-prompt-info-color: #0075d1;
+  --color-prompt-warning-bg: rgb(61 48 6 / 88%);
+  --color-prompt-warning-color: rgb(255, 165, 0, 0.8);
+  --color-prompt-danger-bg: rgb(67 22 7 / 70%);
+  --color-prompt-danger-color: #cd0202;
+  --color-on-prompt: rgba(255, 255, 255, 0.82);
+  --color-prompt-edge: #4a4a4a;
+
+  --color-table-thead: rgba(255, 255, 255, 0.1);
+  --color-table-border: #4a4a4a;
+
+  // Code / syntax (GitHub Primer prettylights — single tree)
+  --syntax-primary: #e6edf3;
+  --syntax-bg: #0d1117;
+  --syntax-red: #ff7b72;
+  --syntax-red-dark: #ffdcd7;
+  --syntax-red-bg: #67060c;
+  --syntax-orange: #ffa657;
+  --syntax-green: #7ee787;
+  --syntax-green-bg: #033a16;
+  --syntax-blue: #79c0ff;
+  --syntax-blue-dark: #a5d6ff;
+  --syntax-purple: #d2a8ff;
+  --syntax-gray: #8b949e;
+  --syntax-gray-light: #f0f6fc;
+  --syntax-chrome-border: #30363d;
+  --syntax-chrome-dot: #484f58;
+  --syntax-inline-bg: rgba(240, 113, 120, 0.14);
+  --syntax-inline-fg: #f07178;
+
+  --color-cutout-fill: #fff;
+  --filter-invert: 1;
+}
+
+html[data-theme="default"] {
+  @include _theme-default;
+}
+
+html[data-theme="dark"] {
+  @include _theme-dark;
+}
+
+// Instant theme swap: suppress inherited/transition:all washes while variables change.
+html[data-theme-switching],
+html[data-theme-switching] * {
+  transition: none !important;
+}

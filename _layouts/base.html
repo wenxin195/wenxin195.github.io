@@ -1,21 +1,46 @@
 <!DOCTYPE html>
+{%- include utils/locale.html -%}
+{%- assign _site_theme = site.site_theme | default: 'default' -%}
 
-<html lang='{{ site.lang }}'>
+{%- unless _site_theme == 'default' or _site_theme == 'dark' -%}
+  {%- assign _site_theme = 'default' -%}
+{%- endunless -%}
+<html lang="{{ site.lang }}" data-theme="{{ _site_theme }}">
   <head>
-    {%- include head.html -%}
-    {%- include scripts/variables.html -%}
+    {%- comment -%} Theme sync before CSS — prevents FOUC; see docs/theme-architecture.md {%- endcomment -%}
+    <script>
+      (function () {
+        var KEY = 'site-theme';
+        var allowed = { default: true, dark: true };
+        try {
+          var stored = localStorage.getItem(KEY);
+          if (stored && allowed[stored]) {
+            document.documentElement.setAttribute('data-theme', stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    {%- include providers/analytics.html -%}
+    {%- include document/head.html -%}
 
     <script>
-      {%- include scripts/utils/utils.js -%}
-      {%- include scripts/lib/throttle.js -%}
-      {%- include scripts/lib/lazyload.js -%}
-      {%- include analytics.html -%}
-      {%- include scripts/common.js -%}
+      (function () {
+        var r = document.documentElement;
+        var t = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        r.classList.add(t ? 'is-touch' : 'is-not-touch');
+        document.addEventListener('DOMContentLoaded', function () {
+          var root = document.querySelector('.root');
+          if (root) root.dataset.isTouch = t ? 'true' : 'false';
+        });
+      })();
     </script>
-  </head>
 
+    <script src="{{ 'assets/scripts/boot/lazyload.js' | relative_url }}"></script>
+  </head>
   <body>
-    <div class="root">{{ content }}</div>
+    <div class="root">
+      {{ content }}
+    </div>
   </body>
-  
 </html>

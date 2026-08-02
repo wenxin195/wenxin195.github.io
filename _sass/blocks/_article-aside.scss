@@ -1,0 +1,159 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+@use "foundations/utilities/overflow" as overflow;
+@use "foundations/utilities/shadow" as shadow;
+
+// Two presentations (shell/main only toggles display via .shell-main--has-aside):
+//   ≥ lg  — in-flow sidebar + affix (js adds .fixed)
+//   < lg  — .modal drawer (in markup like nav-drawer); portaled onto .js-shell
+
+.article-aside {
+  display: none;
+  position: relative;
+  width: map.get(variables.$layout, aside-width);
+  flex-shrink: 0;
+  box-sizing: border-box;
+
+  @include media.media-breakpoint-up(xl) {
+    width: map.get(variables.$layout, aside-width-xl);
+  }
+
+}
+
+// —— Desktop sidebar (≥ lg) ——
+// Neutralize .modal chrome; TOC absolute in the stretch column for affix.
+// Affix targets `.aside-toc` (not the stretch aside), so FIXED lives on toc.
+@include media.media-breakpoint-up(lg) {
+  .article-aside,
+  .article-aside.modal {
+    display: flex;
+    position: relative;
+    inset: auto;
+    top: auto;
+    left: auto;
+    width: map.get(variables.$layout, aside-width);
+    height: auto;
+    max-height: none;
+    z-index: auto;
+    opacity: 1;
+    transform: none;
+    overflow: visible;
+    pointer-events: auto;
+    background: transparent;
+    touch-action: auto;
+    align-self: stretch;
+    transition: none;
+
+    @include media.media-breakpoint-up(xl) {
+      width: map.get(variables.$layout, aside-width-xl);
+    }
+  }
+
+  .article-aside {
+    .article-aside__panel {
+      display: contents;
+      transform: none;
+      transition: none;
+      width: auto;
+      height: auto;
+      max-width: none;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .article-aside__header {
+      display: none;
+    }
+
+    .aside-toc {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding:
+        map.get(variables.$spacers, 5) 0
+        map.get(variables.$spacers, 3)
+        map.get(variables.$spacers, 5);
+      @include overflow.overflow(hidden);
+
+      // Affix FIXED — beat `position: absolute` above (same specificity, later wins).
+      &.fixed {
+        position: fixed;
+      }
+    }
+  }
+}
+
+// —— Right drawer (< lg) ——
+// Restate position:fixed — .article-aside { position: relative } wins over .modal otherwise.
+@include media.media-breakpoint-down(lg) {
+  .article-aside.modal {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100dvh;
+    z-index: map.get(variables.$z-indexes, drawer);
+    justify-content: flex-end;
+    transform: none;
+    overflow: hidden;
+    background-color: variables.$mask-color;
+    pointer-events: none;
+
+    &.modal--show {
+      transform: none;
+      pointer-events: auto;
+    }
+  }
+
+  .article-aside.modal .article-aside__panel {
+    display: flex;
+    flex-direction: column;
+    width: min(
+      #{map.get(variables.$layout, toc-drawer-width)},
+      #{map.get(variables.$layout, drawer-viewport-max)}
+    );
+    max-width: 100%;
+    height: 100%;
+    padding-top: env(safe-area-inset-top, 0);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    color: variables.$text-color;
+    background: variables.$background-color;
+    @include shadow.box-shadow(popup);
+    transform: translateX(100%);
+    transition: transform map.get(variables.$animation, duration)
+      map.get(variables.$animation, timing-function);
+  }
+
+  .article-aside.modal.modal--show .article-aside__panel {
+    transform: translateX(0);
+  }
+
+  .article-aside__header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: map.get(variables.$spacers, 2);
+    padding: map.get(variables.$spacers, 3);
+  }
+
+  .article-aside__title {
+    margin: 0;
+    font-size: map.get(variables.$base, font-size-lg);
+    font-weight: map.get(variables.$base, font-weight-bold);
+    color: variables.$text-color-d;
+  }
+
+  .aside-toc {
+    flex: 1 1 auto;
+    position: relative;
+    width: 100%;
+    min-height: 0;
+    padding: 0 map.get(variables.$spacers, 3);
+    padding-bottom: map.get(variables.$spacers, 3);
+    @include overflow.overflow(auto);
+  }
+}

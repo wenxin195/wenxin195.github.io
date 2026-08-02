@@ -1,0 +1,42 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+
+.share {
+  display: flex;
+  align-items: center;
+  gap: map.get(variables.$spacers, 2);
+}
+
+.share__label {
+  flex-shrink: 0;
+  font-size: map.get(variables.$base, font-size-lg);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.share__buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: map.get(variables.$spacers, 1);
+  align-items: center;
+}
+
+.share__icon {
+  width: 2rem;
+  height: 2rem;
+  transition: transform map.get(variables.$animation, duration-md);
+
+  @include media.media-breakpoint-down(md) {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+.share__wechat {
+  position: relative;
+}

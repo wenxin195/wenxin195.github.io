@@ -1,0 +1,68 @@
+@use "sass:map";
+@use "module";
+@use "tokens" as tokens;
+
+@each $type, $icon-content in module.$addon-types {
+  @include module.box($type, $icon-content);
+  @include module.prompt($type, $icon-content);
+}
+
+blockquote {
+  p:first-child {
+    margin-top: 0 !important;
+  }
+
+  @include module.reset-last-paragraph;
+}
+
+details {
+  @include module.reset-last-paragraph;
+
+  @each $class, $type in module.$math-types {
+    @include module.details($class, $type);
+  }
+
+  &[open] {
+    > summary {
+      margin-bottom: 0.6rem;
+      transition: margin map.get(tokens.$animation, duration-sm) ease-out;
+
+      &::after {
+        transform: translateY(-50%) rotate(90deg);
+      }
+    }
+  }
+}
+
+.table-wrapper {
+  overflow-x: auto; // 添加水平滚动条
+  margin-bottom: 1.5rem;
+
+  > table {
+    min-width: 100%;
+    border-spacing: 0;
+
+    thead {
+      text-align: center;
+      border-bottom: 2px solid map.get(tokens.$table-color, thead-color);
+
+      > th {
+        @include module.table-cell;
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid map.get(tokens.$table-color, thead-color);
+
+        > th {
+          text-align: center;
+        }
+      }
+
+      td {
+        @include module.table-cell;
+      }
+    }
+  }
+}

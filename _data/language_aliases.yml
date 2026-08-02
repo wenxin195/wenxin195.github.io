@@ -1,0 +1,84 @@
+# Rouge / fenced-code language aliases → display names
+# See: https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers
+aliases:
+  actionscript: ActionScript
+  as: ActionScript
+  as3: ActionScript
+  applescript: AppleScript
+  brightscript: BrightScript
+  bs: BrightScript
+  brs: BrightScript
+  cfscript: CFScript
+  cfc: CFScript
+  coffeescript: CoffeeScript
+  coffee: CoffeeScript
+  coffee-script: CoffeeScript
+  console: Console
+  cs: "C#"
+  csharp: "C#"
+  dax: DAX
+  erl: Erlang
+  graphql: GraphQL
+  haskell: Haskell
+  hs: Haskell
+  javascript: JavaScript
+  js: JavaScript
+  make: Makefile
+  mf: Makefile
+  gnumake: Makefile
+  bsdmake: Makefile
+  md: Markdown
+  mkd: Markdown
+  m: Matlab
+  objective_c: Objective-C
+  objc: Objective-C
+  obj-c: Objective-C
+  obj_c: Objective-C
+  objectivec: Objective-C
+  perl: Perl
+  pl: Perl
+  php: PHP
+  php3: PHP
+  php4: PHP
+  php5: PHP
+  plaintext: Text
+  powerquery: Power Query
+  pq: Power Query
+  py: Python
+  python: Python
+  r: R
+  R: R
+  rb: Ruby
+  rs: Rust
+  no_run: Rust
+  ignore: Rust
+  should_panic: Rust
+  bash: Shell
+  zsh: Shell
+  ksh: Shell
+  sh: Shell
+  shell: Shell
+  sql: SQL
+  st: Smalltalk
+  squeak: Smalltalk
+  terminal: Terminal
+  tex: TeX
+  latex: LaTeX
+  text: Text
+  ts: TypeScript
+  typescript: TypeScript
+  vb: Visual Basic
+  visualbasic: Visual Basic
+  vue: Vue.js
+  vuejs: Vue.js
+  yml: YAML
+
+upcase:
+  - css
+  - html
+  - scss
+  - ssh
+  - toml
+  - xml
+  - yaml
+  - json

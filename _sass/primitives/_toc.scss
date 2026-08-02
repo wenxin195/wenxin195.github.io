@@ -1,0 +1,158 @@
+@use "sass:map";
+@use "sass:math";
+@use "tokens" as variables;
+@use "foundations/utilities/link" as link;
+@use "foundations/utilities/split-line" as split;
+@use "foundations/utilities/overflow" as overflow;
+
+ul.toc {
+  display: block;
+  margin: 0;
+  color: variables.$text-color;
+  list-style-type: none;
+
+  & > li {
+    margin: math.div(map.get(variables.$spacers, 1), 2) 0;
+
+    a {
+      display: inline-block;
+      margin: math.div(map.get(variables.$spacers, 1), 4) 0;
+      text-decoration: none !important;
+    }
+  }
+
+  .toc-h1,
+  .toc-h2,
+  .toc-h3,
+  .toc-h4,
+  .toc-h5,
+  .toc-h6 {
+    a {
+      @include link.link-themed(variables.$text-color, variables.$main-color-1);
+    }
+
+    &.active {
+      a {
+        @include link.link-themed(variables.$main-color-1, variables.$main-color-1);
+      }
+    }
+  }
+
+  .toc-h2,
+  .toc-h3,
+  .toc-h4,
+  .toc-h5,
+  .toc-h6 {
+    &,
+    a {
+      font-size: map.get(variables.$base, font-size-xs);
+      font-weight: map.get(variables.$base, font-weight);
+      line-height: map.get(variables.$base, line-height-xs);
+    }
+  }
+
+  .toc-h1 {
+    @include split.split-line(bottom, default, variables.$border-color-l);
+
+    padding: map.get(variables.$spacers, 2) 0 map.get(variables.$spacers, 1) 0;
+    margin-bottom: map.get(variables.$spacers, 2);
+    color: variables.$text-color-d;
+
+    &,
+    a {
+      font-size: map.get(variables.$base, font-size-sm);
+      font-weight: map.get(variables.$base, font-weight-bold);
+      line-height: map.get(variables.$base, line-height-sm);
+    }
+
+    a {
+      @include link.link-themed(variables.$text-color-d, variables.$main-color-1);
+    }
+  }
+
+  .toc-h2 {
+    &,
+    a {
+      font-weight: map.get(variables.$base, font-weight-bold);
+    }
+  }
+
+  .toc-h3 {
+    margin-left: map.get(variables.$spacers, 3);
+  }
+
+  .toc-h4 {
+    margin-left: map.get(variables.$spacers, 3) * 2;
+  }
+
+  .toc-h5,
+  .toc-h6 {
+    margin-left: map.get(variables.$spacers, 3) * 3;
+  }
+
+  .toc-h6 {
+    color: variables.$text-color-l;
+
+    a {
+      @include link.link-themed(variables.$text-color-l, variables.$main-color-1);
+    }
+  }
+}
+
+ul.toc--ellipsis {
+  & > li {
+    @include overflow.overflow(hidden);
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+ul.toc--navigator {
+  & > li {
+    a {
+      padding-left: map.get(variables.$spacers, 2);
+      margin: map.get(variables.$spacers, 1) 0;
+    }
+
+    &.active {
+      a {
+        margin-left: -4px;
+        @include split.split-line(left, 4px, variables.$main-color-1);
+      }
+    }
+  }
+
+  .toc-h2,
+  .toc-h3,
+  .toc-h4 {
+    color: variables.$text-color-l;
+
+    a {
+      @include link.link-themed(variables.$text-color-l, variables.$main-color-1);
+    }
+  }
+
+  .toc-h1 {
+    color: variables.$text-color;
+
+    &,
+    a {
+      font-size: map.get(variables.$base, font-size);
+      line-height: map.get(variables.$base, line-height);
+    }
+
+    a {
+      @include link.link-themed(variables.$text-color-d, variables.$main-color-1);
+    }
+  }
+
+  .toc-h2 {
+    &,
+    a {
+      font-size: map.get(variables.$base, font-size-sm);
+      font-weight: map.get(variables.$base, font-weight-bold);
+      line-height: map.get(variables.$base, line-height-sm);
+    }
+  }
+}

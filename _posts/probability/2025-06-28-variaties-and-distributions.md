@@ -7,9 +7,6 @@ tags:
   - 概率论
 author: Wenxin Zhong
 layout: article
-download: false
-videos: false
-refactor: true
 mathjax: true
 modify_date: "2025-06-28 21:30:00"
 ---
@@ -22,10 +19,10 @@ modify_date: "2025-06-28 21:30:00"
 
 在随机现象中有很多样本点本身就是用数量表示的，由于样本点出现的随机性其数量呈现为随机变量。但是在随机现象中还有不少样本点本身不是数，这时可根据研究需要设置随机变量。
 
-<details class="details-definition" markdown="1" open>
-<summary>随机变量</summary>
+{% details definition "随机变量" open %}
 定义在样本空间 ${\mit\Omega}$ 上的实值函数 $X=X(\omega)$ 称为随机变量，常用大写字母 $X,Y,Z$ 等表示随机变量，其取值用小写字母 $x,y,z$ 等表示。
-</details>
+{% enddetails %}
+
 
 假如一个随机变量仅可能取有限个或可列个值，则称其为**离散随机变量**。假如一个随机变量的可能取值充满数轴上的一个区间 $(a,b)$，则称其为**连续随机变量**，其中 $a$ 可以是 $-\infty$，$b$ 可以是 $+\infty$。
 
@@ -33,6 +30,7 @@ modify_date: "2025-06-28 21:30:00"
 
 > 随机变量函数的自变量(样本点)可以是数，也可以不是数，但因变量一定是实数！
 {: .prompt-warning}
+
 
 与微积分中的变量不同，概率论中的随机变量 $X$ 是一种“**随机取值**的变量且伴随一个**分布**”。以离散随机变量为例，我们不仅要知道 $X$ 可能取哪些值，而且还要知道它取这些值的概率各是多少，这就需要分布的概念，有没有分布是区分一般变量与随机变量的主要标志。
 
@@ -65,8 +63,7 @@ $$
 
 于是 $F(x)$ 对所有 $x\in(-\infty,+\infty)$ 都有定义，因而 $F(x)$ 是定义在 $\mathbb{R}$ 上、取值于 $[0,1]$ 的一个函数，于是就把它定义为分布函数：
 
-<details class="details-definition" markdown="1" open>
-<summary>分布函数</summary>
+{% details definition "分布函数" open %}
 设 $X$ 是一个随机变量，对任意实数 $x$，称
 
 $$
@@ -76,12 +73,12 @@ $$
 $$
 
 为随机变量 $X$ 的分布函数，且称 $X$ 服从 $F(x)$，记为 $X\sim F(x)$。有时也可用 $F_X(x)$ 以表明是 $X$ 的分布函数。
-</details>
+{% enddetails %}
+
 
 从分布函数的定义可见，任一随机变量 $X$(无论离散还是连续)都有一个分布函数。有了分布函数，就可据此算得与随机变量 $X$ 有关事件的概率。
 
-<details class="details-theorem" markdown="1" open>
-<summary>定理 1</summary>
+{% details theorem "定理 1" open %}
 任一分布函数 $F(x)$ 都具有如下三条基本性质：
   <ol>
     <li>
@@ -105,7 +102,8 @@ $$
       $$
     </li>
   </ol>
-</details>
+{% enddetails %}
+
 
 以上三条基本性质是分布函数必须具有的性质，还可以证明：满足这三条基本性质的函数必定是某个随机变量的分布函数，从而这三条基本性质成为判别某个函数是否能成为分布函数的**充要条件**。
 
@@ -113,8 +111,7 @@ $$
 
 对离散随机变量而言，常用以下定义的分布列来表示其分布：
 
-<details class="details-definition" markdown="1" open>
-<summary>分布列</summary>
+{% details definition "分布列" open %}
 设是一个离散随机变量，如果 $X$ 的所有可能取值是 $x_1,x_2,\cdots,x_n,\cdots$，则称 $X$ 取 $x_i$ 的概率
 
 $$
@@ -124,7 +121,8 @@ $$
 $$
 
 为 $X$ 的概率质量函数(Probability mass function)或者概率分布列，简称为分布列，记为 $X\sim\{p_i\}$。
-</details>
+{% enddetails %}
+
 
 分布列也可用如下列表方式来表示：
 
@@ -151,16 +149,17 @@ $$
   </tbody>
 </table>
 
-<details class="details-proposition" markdown="1" open>
-<summary>定理 1</summary>
+{% details proposition "定理 1" open %}
 分布列有以下性质：
 
 1. 非负性。即 $p(x_i)\geqslant0$，
 2. 正则性。即 即 $\sum\limits_{i=1}^{\infty}p(x_i)=1$。
-</details>
+{% enddetails %}
+
 
 > 以上两条基本性质是分布列必须具有的性质，也是判别某个数列是否能成为分布列的**充要条件**。
 {: .prompt-danger}
+
 
 由离散随机变量 $X$ 的分布列很容易写出 $X$ 的累积分布函数
 
@@ -174,6 +173,7 @@ $$
 
 > 在具体求离散随机变量 $X$ 的分布列时，关键是求出 $X$ 的所有可能取值及取这些值的概率。
 {: .prompt-warning}
+
 
 ### 概率密度函数
 
@@ -201,8 +201,7 @@ $$
 
 综上所述，可得概率密度函数 $p(x)$ 的如下严格定义：
 
-<details class="details-definition" markdown="1" open>
-<summary>概率分布函数</summary>
+{% details definition "概率分布函数" open %}
 设随机变量 $X$ 的分布函数为 $F(x)$，若存在实数轴上的一个非负可积函数 $p(x)$，$\forall x\in\mathbb{R}$，有
 
 $$
@@ -212,7 +211,8 @@ $$
 $$
 
 则称 $p(x)$ 为随机变量 $X$ 的概率密度函数(Probability density function)，简称为概率密度或者密度。
-</details>
+{% enddetails %}
+
 
 从定义可以看出，在 $F(x)$ 的导数存在的点上，有
 
@@ -224,16 +224,17 @@ $$
 
 $F(x)$ 是累积分布函数，其导函数 ${F}'(x)$ 是概率密度函数。
 
-<details class="details-proposition" markdown="1" open>
-<summary>命题 2</summary>
+{% details proposition "命题 2" open %}
 密度函数有以下性质：
 
 1. 非负性。即 $p(x)\leqslant0$；
 2. 正则性。即 $\displaystyle\int_{-\infty}^{+\infty}p(x)\mathrm{d}x=1$。
-</details>
+{% enddetails %}
+
 
 > 以上两条基本性质是密度函数必须具有的性质，也是确定或判别某个函数是否成为密度函数的**充要条件**。
 {: .prompt-danger}
+
 
 譬如已知某个函数 $p(x)$ 为密度函数，若 $p(x)$ 中有一个待定常数,则可利用正则性 $\displaystyle\int_{-\infty}^{+\infty}p(x)\mathrm{d}x=1$ 来确定该常数。
 
@@ -314,6 +315,7 @@ $$
 > 除了离散分布和连续分布之外，还有既非离散又非连续的分布！
 {: .prompt-tip}
 
+
 ## 随机变量的数字特征
 
 每个随机变量都有一个分布(分布列、密度函数或分布函数)，不同的随机变量可能拥有不同的分布，也可能拥有相同的分布。分布全面地描述了随机变量取值的统计规律性，由分布可以算出有关随机事件的概率。除此以外由分布还可以算得相应随机变量的均值、方差、分位数等特征数，这些特征数各从一个侧面描述了分布的特征。
@@ -360,8 +362,7 @@ $$
 
 受到计算样本平均值的启发，随机变量的期望可以定义为如下形式：
 
-<details class="details-definition" markdown="1" open>
-<summary>离散随机变量的期望</summary>
+{% details definition "离散随机变量的期望" open %}
 设离散随机变量 $X$ 的分布列为
 
 $$
@@ -383,12 +384,12 @@ $$
     \mathbb{E}(X)=\sum_{i=1}^{\infty}x_ip(x_i)
   \end{equation}
 $$
-</details>
+{% enddetails %}
+
 
 在定义中要求无穷级数\eqref{eq:离散分布要求}绝对收敛，是为了保证数学期望唯一(这是由于若无穷级数是绝对收敛的，则其和不受到运算次序的影响)。由于有限项的和不受次序变动的影响，故取有限个可能值的随机变量的数学期望总是存在的。若无穷级数\eqref{eq:离散分布要求}不收敛，则离散随机变量 $X$ 的数学期望不存在！
 
-<details class="details-definition" markdown="1" open>
-<summary>连续随机变量的期望</summary>
+{% details definition "连续随机变量的期望" open %}
 设连续随机变量 $X$ 的密度函数为 $p(x)$，若
 
 $$
@@ -405,7 +406,8 @@ $$
 $$
 
 为连续随机变量 $X$ 的数学期望。
-</details>
+{% enddetails %}
+
 
 若无穷积分\eqref{eq:连续分布要求}不收敛，则连续随机变量 $X$ 的数学期望不存在！
 
@@ -415,8 +417,7 @@ $$
 
 按照随机变量 $X$ 的数学期望 $\mathbb{E}(X)$ 的定义，$\mathbb{E}(X)$ 由其分布唯一确定.若要求随机变量 $X$ 的一个函数 $g(X)$ (仍是随机变量)的数学期望，当然要先求出 $Y=g(X)$ 的分布，再用此分布来求 $\mathbb{E}(Y)$。
 
-<details class="details-theorem" markdown="1" open>
-<summary>定理 2</summary>
+{% details theorem "定理 2" open %}
 若随机变量 $X$ 的分布用分布列 $p(x_i)$ 或用密度函数 $p(x)$ 表示，则 $X$ 的某一函数 $g(X)$ 的数学期望为
 
 $$
@@ -430,10 +431,10 @@ $$
 $$
 
 这里所涉及的数学期望都假定存在。
-</details>
+{% enddetails %}
 
-<details class="details-proposition" markdown="1" open>
-<summary>命题 3</summary>
+
+{% details proposition "命题 3" open %}
 假定随机变量 $X$ 与随机变量函数 $g(X)$ 的数学期望存在，则
   <ol>
     <li>
@@ -449,14 +450,14 @@ $$
       $$
     </li>
   </ol>
-</details>
+{% enddetails %}
+
 
 ### 方差
 
 随机变量的数学期望无法反映出随机变量取值的“波动大小”，即距 $\mathbb{E}(X)$ 的偏离程度。要考察随机变量 $X$ 到它的数学期望 $\mathbb{E}(X)$ 的偏离程度，最自然的想法是考虑 $\|X-\mathbb{E}(X)\|$ 的值，但是这种做法很有可能会导致正负偏离有所抵消，因此我们一般考虑的是 $[X-\mathbb{E}(X)]^2$ 的值。由于 $[X-\mathbb{E}(X)]^2$ 依旧是随机变量，于是可以取其期望 $\mathbb{E}[X-\mathbb{E}(X)]^2$，就可以刻画 $X$ 的“波动”程度了。
 
-<details class="details-definition" markdown="1" open>
-<summary>随机变量的方差</summary>
+{% details definition "随机变量的方差" open %}
 若随机变量 $X^2$ 的数学期望 $\mathbb{E}(X^2)$ 存在，则称偏差平方 $[X-\mathbb{E}(X)]^2$ 的数学期望 $\mathbb{E}[X-\mathbb{E}(X)]^2$ 为随机变量 $X$(或相应分布)的方差，即
 
 $$
@@ -469,7 +470,8 @@ $$
 $$
 
 记作 $Var(X)$。称方差的正平方根 $\sqrt{Var(X)}$ 为随机变量 $X$(或相应分布)的标准差，记为 $\sigma(X)$。
-</details>
+{% enddetails %}
+
 
 方差与标准差的功能相似，它们都是用来描述随机变量取值的集中与分散程度的两个特征数。方差与标准差愈小，随机变量的取值愈集中；方差与标准差愈大，随机变量的取值愈分散。
 
@@ -477,8 +479,7 @@ $$
 
 另外要指出的是：如果随机变量 $X$ 的数学期望存在，其方差不一定存在；而当 $X$ 的方差存在时，则 $\mathbb{E}(X)$ 必定存在，其原因在于 $\|x\|\leqslant x^2+1$ 总是成立的，从而\eqref{eq:离散分布要求}式和\eqref{eq:连续分布要求}式必定收敛！
 
-<details class="details-proposition" markdown="1" open>
-<summary>命题 4</summary>
+{% details proposition "命题 4" open %}
 假定随机变量 $X$ 的方差是存在的，则
 <ol>
   <li>
@@ -497,17 +498,18 @@ $$
     $$
   </li>
 </ol>
-</details>
+{% enddetails %}
+
 
 > 从性质(1) 可以看出，若 $\mathbb{E}(X^2)=0$，则 $\mathbb{E}(X)=0$，并且 $Var(X)=0$；若 $\mathbb{E}(X^2)\neq0$，则 $\mathbb{E}(X)$ 与 $Var(X)$ 必存在，并且 $Var(X)\geqslant0$(由定义可知)。
 {: .prompt-info}
+
 
 当 $\mathbb{E}(X^2)=0$ 时，即随机变量 $X^2$ “几乎处处”为 0，于是随机变量 $X$ 同样也“几乎处处”为 0，从而 $\mathbb{E}(X)=0$，并且 $Var(X)=0$。
 
 下面给出随机变量 $X$ 超过某一正数的概率上界：
 
-<details class="details-theorem" markdown="1" open>
-<summary>Markov 不等式</summary>
+{% details theorem "Markov 不等式" open %}
 设非负随机变量 $X$ 的数学期望存在，则 $\forall\alpha>0$，有
 
 $$
@@ -515,10 +517,10 @@ $$
     P(X\geqslant\alpha)\leqslant\frac{\mathbb{E}(X)}{\alpha}
   \end{equation}
 $$
-</details>
+{% enddetails %}
 
-<details class="details-theorem" markdown="1">
-<summary>证明</summary>
+
+{% details theorem "证明" %}
 证法一&nbsp;&nbsp; 设随机变量 $X$ 是非负的，并且它的数学期望存在，令
 
 $$
@@ -576,7 +578,8 @@ $$
 $$
 
 结论得证。
-</details>
+{% enddetails %}
+
 
 我们假设在超市排队结账时，所需要等待的平均时间为 $\mathbb{E}(X)=5$ (分钟)，那么排队时间超过 10 分钟的概率约为
 
@@ -588,8 +591,7 @@ $$
 
 Markov 不等式的美妙之处在于，只需要知道数学期望 $\mathrm{E}(X)$，不需要知道排队时间的具体分布，因此在信息有限时非常实用。
 
-<details class="details-theorem" markdown="1" open>
-<summary>推论 1</summary>
+{% details theorem "推论 1" open %}
 设 $\varphi(x)$ 是随机变量 $X$ 取值的集合上的非负不减函数，并且 $\mathbb{E}[\varphi(X)]$ 存在，则 $\forall\alpha>0$，有
 
 $$
@@ -597,12 +599,12 @@ $$
     P(X\geqslant\alpha)\leqslant\frac{\mathbb{E}[\varphi(X)]}{\varphi(\alpha)}
   \end{equation}
 $$
-</details>
+{% enddetails %}
+
 
 下面给出随机变量 $X$($X$ 的方差存在) 偏离其数学期望的概率上界：
 
-<details class="details-theorem" markdown="1" open>
-<summary>Chebyshev 不等式</summary>
+{% details theorem "Chebyshev 不等式" open %}
 设随机变量 $X$ 的数学期望与方差都存在，则 $\forall\varepsilon>0$，有
 
 $$
@@ -618,10 +620,10 @@ $$
   P(|X-\mathbb{E}(X)|\geqslant k\sigma(X))\leqslant\frac{1}{k^2}
 \end{equation}
 $$
-</details>
+{% enddetails %}
 
-<details class="details-theorem" markdown="1" open>
-<summary>证明</summary>
+
+{% details theorem "证明" open %}
 证法一&nbsp;&nbsp; 设随机变量 $X$ 的数学期望与方差都存在，那么由 Markov 不等式，$\forall\alpha>0$，有
 
 $$
@@ -647,7 +649,8 @@ $$
 $$
 
 令 $k=\frac{\varepsilon}{\sigma(X)}$，于是结论得证。
-</details>
+{% enddetails %}
+
 
 在概率论中，事件 $\{\|X-\mathbb{E}(X)\|>\varepsilon\}$ 称为大偏差，其概率 $P(\|X-\mathbb{E}(X)\|>\varepsilon)$ 称为大偏差发生概率。Chebyshev 不等式给出大偏差发生概率的上界，这个上界与方差成正比，方差愈大上界也愈大。
 
@@ -667,13 +670,12 @@ Chebyshev不等式关注的是偏离均值的概率(双侧)，而 Markov 不等�
 
 下面的定理进一步说明了方差为 0 就意味着随机变量的取值几乎集中在一点上。
 
-<details class="details-theorem" markdown="1" open>
-<summary>定理 5</summary>
+{% details theorem "定理 5" open %}
 若随机变量 $X$ 的方差存在，那么 $Var(X)=0$ 的充分必要条件是：$X$ 几乎处处等于常数 $a$，即 $P(X=a)=1$。
-</details>
+{% enddetails %}
 
-<details class="details-theorem" markdown="1">
-<summary>证明</summary>
+
+{% details theorem "证明" %}
 充分性是显然的，下面证明必要性。
 
 对于 $Var(X)=0$，因此 $\mathbb{E}(X)$ 必存在。由于 $\forall\varepsilon>0$，有
@@ -705,12 +707,12 @@ $$
 $$
 
 即 $X$ 几乎处处等于它的数学期望 $\mathbb{E}(X)$，结论得证。
-</details>
+{% enddetails %}
+
 
 ### 其他的数字特征
 
-<details class="details-definition" markdown="1" open>
-<summary>$k$ 阶矩</summary>
+{% details definition "$k$ 阶矩" open %}
 设 $X$ 为随机变量，$k$ 为正整数。如果以下的数学期望都存在，则称
 
 $$
@@ -728,7 +730,8 @@ $$
 $$
 
 为 $X$ 的 $k$ 阶中心矩。
-</details>
+{% enddetails %}
+
 
 显然一阶原点矩就是数学期望，二阶中心矩就是方差。由于 $\|X\|^{k-1}\leqslant\|X\|^k+1$，故 $k$ 阶矩存在时，$k-1$ 阶矩也存在，从而低于 $k$ 的各阶矩都存在。
 
@@ -745,8 +748,7 @@ $$
 
 所以要比较两个随机变量的波动大小时，在有些场合使用以下定义的变异系数来进行比较，更具可比性。
 
-<details class="details-definition" markdown="1" open>
-<summary>变异系数</summary>
+{% details definition "变异系数" open %}
 设随机变量 $X$ 的二阶矩存在，则称比值
 
 $$
@@ -756,12 +758,12 @@ $$
 $$
 
 为 $X$ 的变异系数。
-</details>
+{% enddetails %}
+
 
 因为标准差的量纲与数学期望的量纲是一致的，所以变异系数是一个无量纲的量，从而消除量纲对波动的影响。
 
-<details class="details-definition" markdown="1" open>
-<summary>分位数</summary>
+{% details definition "分位数" open %}
 设连续随机变量 $X$ 的分布函数为 $F(x)$，密度函数为 $p(x)$。对任意 $p\in(0,1)$，称满足条件
 
 $$
@@ -771,12 +773,12 @@ $$
 $$
 
 的 $x_p$ 为此分布的 $p$ 分位数，又称下侧 $p$ 分位数。
-</details>
+{% enddetails %}
+
 
 很多概率统计问题最后都归结为求解满足概率不等式 $F(x)\leqslant p$ 的最大 $x$，其解可用分位数 $x_p$ 表示。
 
-<details class="details-definition" markdown="1" open>
-<summary>中位数</summary>
+{% details definition "中位数" open %}
 设连续随机变量 $X$ 的分布函数为 $F(x)$，密度函数为 $p(x)$。称 $p=0.5$ 时的 $p$ 分位数 $p_{0.5}$ 为此分布的中位数，即 $x_{0.5}$ 满足
 
 $$
@@ -784,17 +786,18 @@ $$
   F(x_{0.5})=\int_{-\infty}^{x_{0.5}}p(x)\mathrm{d}x=0.5
 \end{equation}
 $$
-</details>
+{% enddetails %}
+
 
 > 中位数的位置常在分布的中部。
 {: .prompt-info}
+
 
 对离散分布也可以同样引入分位数和中位数的概念，但遗憾的是：此时对给定的 $p$，有可能 $x_p$ 不存在或不唯一，所以在离散分布场合很少使用分位数。
 
 中位数与均值一样都是随机变量位置的特征数，但在某些场合可能中位数比均值更能说明问题。
 
-<details class="details-definition" markdown="1" open>
-<summary>偏度系数</summary>
+{% details definition "偏度系数" open %}
 设随机变量 $X$ 的前三阶矩存在，则比值
 
 $$
@@ -804,7 +807,8 @@ $$
 $$
 
 称为 $X$(或分布)的偏度系数，简称偏度。当 $\beta_{S}>0$ 时，称该分布为正偏，又称右偏；当 $\beta_{S}<0$ 时，称该分布为负偏，又称左偏。
-</details>
+{% enddetails %}
+
 
 偏度 $\beta_{S}>0$ 是描述分布偏离对称性程度的一个特征数，这可从以下几方面来认识：
 
@@ -812,8 +816,7 @@ $$
 2. 当偏度 $\beta_{S}\neq0$ 时，该分布为偏态分布，偏态分布常有不对称的两个尾部，重尾在右侧(变量在高值处比低值处有较大的偏离中心趋势)必导致 $\beta_{S}>0$，故此分布又称为右偏分布；重尾在左侧(变量在低值处比高值处有较大的偏离中心趋势)必导致 $\beta_{S}<0$，故又称为左偏分布。
 3. 偏度 $\beta_{S}$ 是以各自的标准差的三次方 $[\sigma(X)]^3$ 为单位来度量三阶中心矩大小的，从而消去了量纲，使其更具有可比性。简单地说，分布的三阶中心矩 $\nu_3$ 决定偏度的符号，而分布的标准差 $\sigma(X)$ 决定偏度的大小。
 
-<details class="details-definition" markdown="1" open>
-<summary>峰度系数</summary>
+{% details definition "峰度系数" open %}
 设随机变量 $X$ 的前四阶矩存在，则
 
 $$
@@ -823,7 +826,8 @@ $$
 $$
 
 称为 $X$(或分布)的峰度系数，简称峰度。
-</details>
+{% enddetails %}
+
 
 峰度是描述分布尖峭程度和(或)尾部粗细的一个特征数，这可从以下几方面来认识：
 
@@ -1175,13 +1179,12 @@ $$
   </tbody>
 </table>
 
-<details class="details-proposition" markdown="1" open>
-<summary>命题 5</summary>
+{% details proposition "命题 5" open %}
 设有两个随机变量 $X_1\sim P(\lambda_1)$，$X_2\sim P(\lambda_2)$，并且 $X_1$ 与 $X_2$ 是相互独立的，则 $X_1+X_2\sim P(\lambda_1+\lambda_2)$。
-</details>
+{% enddetails %}
 
-<details class="details-proposition" markdown="1">
-<summary>证明</summary>
+
+{% details proposition "证明" %}
 由假设 $X_1\sim P(\lambda_1)$，$X_2\sim P(\lambda_2)$，并且 $X_1$ 与 $X_2$ 是相互独立的，按照定义
 
 $$
@@ -1195,22 +1198,21 @@ $$
 $$
 
 即 $X_1+X_2\sim P(\lambda_1+\lambda_2)$，结论得证。
-</details>
+{% enddetails %}
+
 
 泊松分布可以推导为二项分布的一种极限情况，即试验次数趋于无穷大，而成功的预期次数保持固定。因此，当 $n$ 足够大，$p$ 足够小时，它可以用作二项分布的近似。当 $n\geqslant20$ 且 $p\leqslant0.05$ 时，泊松分布是二项分布的良好近似值；当 $n\geqslant100$ 且 $np\leqslant10$ 时，泊松分布是良好近似值。
 
-<details class="details-theorem" markdown="1" open>
-<summary>泊松定理</summary>
+{% details theorem "泊松定理" open %}
 在 $n$ 重伯努利试验中，记事件 $A$ 在一次试验中发生的概率为 $p_n$ (与试验次数 $n$ 有关)，当 $n\to\infty$ 时，由 $np_n\to\lambda$，则
 
 $$
   \lim_{n\to\infty}\binom{n}{k}p_n^k(1-p_n)^{n-k}=\frac{\lambda^k}{k!}e^{-\lambda}
 $$
+{% enddetails %}
 
-</details>
 
-<details class="details-theorem" markdown="1">
-<summary>证明</summary>
+{% details theorem "证明" %}
 令 $np_n=\lambda_n$，即 $p_n=\frac{\lambda_n}{n}$，那么则有
 
 $$
@@ -1243,8 +1245,8 @@ $$
 $$
   \lim_{n\to\infty}\binom{n}{k}\left(\frac{\lambda}{n}\right)^k\left(1-\frac{\lambda}{n}\right)^{n-k}=\frac{\lambda^k}{k!}e^{-\lambda}
 $$
+{% enddetails %}
 
-</details>
 
 由于泊松定理是在 $np_n=\lambda$ 的条件下成立的，故在计算二项分布 $b(n,p)$ 时，当 $n$ 很大，$p$ 很小，并且乘积 $np$ 适中的时候，可以用泊松分布近似，即
 

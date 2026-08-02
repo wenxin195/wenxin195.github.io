@@ -1,0 +1,102 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+
+html {
+  --pagefind-ui-scale: 0.9;
+  --pagefind-ui-primary: #{variables.$main-color-1};
+  --pagefind-ui-text: #{variables.$text-color};
+  --pagefind-ui-background: #{variables.$background-color};
+  --pagefind-ui-border: #{variables.$border-color-l};
+  --pagefind-ui-border-width: 1px;
+  --pagefind-ui-border-radius: #{map.get(variables.$popup, radius)};
+  --pagefind-ui-image-border-radius: #{map.get(variables.$popup, radius)};
+  --pagefind-ui-font: inherit;
+
+  @include media.media-breakpoint-down(md) {
+    --pagefind-ui-scale: 1;
+  }
+}
+
+#pagefind-search {
+  width: 100%;
+
+  .pagefind-ui__search-input {
+    padding: 0.75rem 1rem 0.75rem 2.8em;
+    font-size: 1.1rem;
+
+    @include media.media-breakpoint-down(md) {
+      font-size: 1rem;
+      padding: 0.65rem 0.85rem 0.65rem 2.5em;
+    }
+
+    &::placeholder {
+      color: color-mix(in srgb, #{variables.$text-color} 45%, transparent);
+    }
+
+    &:focus {
+      border-color: variables.$main-color-1;
+      outline: none;
+      box-shadow: 0 0 0 2px color-mix(in srgb, #{variables.$main-color-1} 25%, transparent);
+    }
+  }
+
+  .pagefind-ui__search-clear {
+    color: color-mix(in srgb, #{variables.$text-color} 40%, transparent);
+
+    &:hover {
+      color: color-mix(in srgb, #{variables.$text-color} 75%, transparent);
+    }
+  }
+
+  .pagefind-ui__results-area {
+    max-height: 60vh;
+    overflow-y: auto;
+
+    @include media.media-breakpoint-down(md) {
+      max-height: 50dvh;
+    }
+  }
+
+  .pagefind-ui__message {
+    color: color-mix(in srgb, #{variables.$text-color} 55%, transparent);
+  }
+
+  .pagefind-ui__result {
+    padding: 0.75rem;
+    border-radius: map.get(variables.$base, border-radius);
+    transition: background-color map.get(variables.$animation, duration-xs);
+
+    &:hover {
+      background-color: color-mix(in srgb, #{variables.$main-color-1} 8%, transparent);
+    }
+  }
+
+  .pagefind-ui__result-link {
+    color: variables.$main-color-1;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  mark {
+    background-color: color-mix(in srgb, #{variables.$main-color-1} 20%, transparent);
+    color: inherit;
+    padding: 0.1em 0.2em;
+    border-radius: map.get(variables.$base, border-radius-xs);
+  }
+
+  .pagefind-ui__button {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    text-align: center;
+
+    &:hover {
+      background-color: color-mix(in srgb, #{variables.$main-color-1} 8%, transparent);
+    }
+  }
+}

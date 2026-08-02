@@ -1,14 +1,15 @@
-{%- comment -%} 引用文件：article-footer {%- endcomment -%}
-{%- include snippets/get-locale-string.html key='LICENSE_ANNOUNCE' -%}
-{%- assign _license_announce = __return -%}
+{% capture _license_name %}
+  <a itemprop="license" href="{{ include.license.url }}">
+    {{- include.license.name -}}
+  </a>
+{% endcapture %}
 
-{%- if include.license -%}
-  {%- assign _license_name = '<a itemprop="license" rel="license" href="[URL]" target="_blank">[NAME]</a>'
-    | replace: '[URL]', include.license.url
-    | replace: '[NAME]', include.license.name
-  -%}
+<div class="license">
+  {%- assign _announce = _t.LICENSE_ANNOUNCE | split: ' ' -%}
   
-  <div class="license">
-    <p>{{ _license_announce | replace: '[LICENSE]', _license_name }}</p>
-  </div>
-{%- endif -%}
+  <p>
+    <span>{{- _announce[0] -}}</span>
+    {{- _announce[1] | replace: '[LICENSE]', _license_name -}}
+    <span>{{- _announce[2] -}}</span>
+  </p>
+</div>

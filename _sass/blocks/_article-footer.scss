@@ -1,0 +1,23 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/link" as link;
+
+.article-footer {
+  margin: map.get(variables.$spacers, 4) 0;
+  font-size: map.get(variables.$base, font-size-sm);
+}
+
+.article-footer__license,
+.article-footer__subscribe {
+  a {
+    @include link.link-themed(variables.$text-color, variables.$main-color-1);
+  }
+}
+
+.article-footer__license {
+  color: variables.$text-color-l;
+
+  img {
+    height: map.get(variables.$base, font-size) * 1.6;
+  }
+}

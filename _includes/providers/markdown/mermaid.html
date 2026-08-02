@@ -1,0 +1,13 @@
+{%- assign _sources = site.data.resources.sources -%}
+
+<script type="module">
+  import mermaid from '{{ _sources.mermaid }}';
+  mermaid.initialize({
+    startOnLoad: true,
+    look: 'handDrawn',
+    theme: 'default',
+    themeVariables: {
+      fontFamily: 'Comic Sans MS, cursive, sans-serif'
+    }
+  });
+</script>

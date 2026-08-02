@@ -1,0 +1,56 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/overflow" as overflow;
+
+// Full-screen overlay (search / lightbox): slides in from the end by default.
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: map.get(variables.$z-indexes, modal);
+  width: 100%;
+  height: 100%;
+  color: variables.$text-color-theme-dark;
+  touch-action: none;
+  background-color: variables.$mask-color;
+  opacity: 0;
+
+  transform: translate(100%, 0);
+  transition: #{opacity map.get(variables.$animation, duration) map.get(variables.$animation, timing-function),
+    transform 0s map.get(variables.$animation, duration)
+      map.get(variables.$animation, timing-function)};
+}
+
+.modal--show {
+  opacity: 1;
+  transform: translate(0, 0);
+  transition: #{opacity map.get(variables.$animation, duration) map.get(variables.$animation, timing-function)};
+}
+
+// Drawer overlays: mask fades in place; panel motion owned by shell/nav-drawer
+// or blocks/article-aside (start = left, end = right).
+.modal--drawer-start,
+.modal--drawer-end {
+  z-index: map.get(variables.$z-indexes, drawer);
+  transform: none;
+  // Keep mask; do not slide the viewport layer.
+  transition: #{opacity map.get(variables.$animation, duration) map.get(variables.$animation, timing-function),
+    visibility map.get(variables.$animation, duration) map.get(variables.$animation, timing-function)};
+
+  &.modal--show {
+    transform: none;
+  }
+}
+
+.modal--drawer-start {
+  // Panel alignment hint for flex hosts (e.g. .nav-drawer).
+  justify-content: flex-start;
+}
+
+.modal--drawer-end {
+  justify-content: flex-end;
+}
+
+.modal--overflow {
+  @include overflow.overflow(auto);
+}

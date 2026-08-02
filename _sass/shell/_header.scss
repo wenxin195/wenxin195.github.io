@@ -1,0 +1,186 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/link" as link;
+@use "foundations/utilities/media" as media;
+@use "foundations/utilities/text";
+@use "foundations/utilities/split-line" as split;
+@use "primitives/menu" as menu;
+@use "foundations/utilities/overflow" as overflow;
+
+// Single-row header: brand | nav (≥md) | actions | menu-toggle (<md).
+// Mobile nav lives in shell/nav-drawer — not a column stack.
+
+.site-header {
+  background: variables.$header-background;
+
+  a {
+    font-weight: map.get(variables.$base, font-weight);
+    text-decoration: none !important;
+
+    @include link.link-colors(
+      variables.$header-text-color,
+      variables.$main-color-1,
+      variables.$main-color-1,
+      variables.$main-color-1,
+      $disabled-alpha: 0.2
+    );
+  }
+}
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: map.get(variables.$spacers, 2);
+  min-height: map.get(variables.$layout, header-height);
+
+  @include media.media-breakpoint-down(md) {
+    min-height: map.get(variables.$layout, header-height-sm);
+  }
+}
+
+.site-header--dark {
+  background: rgba(#000, 0.15);
+
+  @extend .text--dark;
+
+  .navigation__item--active {
+    &::after {
+      @include split.split-line(bottom, 4px, variables.$text-color-theme-dark);
+    }
+  }
+}
+
+.site-header--light {
+  background: rgba(#fff, 0.15);
+
+  @extend .text--light;
+
+  .navigation__item--active {
+    &::after {
+      @include split.split-line(bottom, 4px, variables.$text-color-theme-light);
+    }
+  }
+}
+
+.site-header__brand {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+
+  & > svg,
+  & > .site-header__logo {
+    width: map.get(variables.$base, font-size-h4) * 1.6;
+    height: map.get(variables.$base, font-size-h4) * 1.6;
+    margin-right: map.get(variables.$spacers, 3);
+    vertical-align: middle;
+    flex-shrink: 0;
+
+    @include media.media-breakpoint-down(md) {
+      width: map.get(variables.$base, font-size-h4) * 1.2;
+      height: map.get(variables.$base, font-size-h4) * 1.2;
+      margin-right: map.get(variables.$spacers, 2);
+    }
+  }
+
+  & > a {
+    display: inline-block;
+    font-size: map.get(variables.$base, font-size-h4);
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include media.media-breakpoint-down(md) {
+      font-size: map.get(variables.$base, font-size-h4-sm);
+    }
+  }
+}
+
+.site-header__actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: map.get(variables.$spacers, 1);
+}
+
+// Beat .button--circle { display: inline-flex } (same 0,1,0 otherwise leaves toggle visible ≥ md).
+.site-header__menu-toggle.button--circle {
+  display: none;
+  flex-shrink: 0;
+
+  @include media.media-breakpoint-down(md) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.navigation {
+  flex: 0 1 auto;
+  min-width: 0;
+  @include overflow.overflow(auto, "x");
+
+  @include media.media-breakpoint-down(md) {
+    display: none;
+  }
+
+  & > ul {
+    display: flex;
+    align-items: center;
+    height: map.get(variables.$layout, header-height);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    @include menu.menu(3, 2, nowrap);
+  }
+}
+
+.navigation__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: invert(variables.$filter-invert);
+}
+
+.navigation__group {
+  display: flex;
+  align-items: center;
+  gap: map.get(variables.$spacers, 1);
+  margin-right: map.get(variables.$spacers, 2);
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.navigation__item {
+  display: flex;
+  align-items: center;
+
+  i {
+    margin-right: 1px;
+    font-size: 1.2em;
+  }
+
+  &::after {
+    display: block;
+    margin-bottom: -4px;
+    content: "";
+
+    @include split.split-line(bottom, 4px, transparent);
+  }
+}
+
+.navigation__item--active {
+  @include link.link-colors(
+    variables.$main-color-1,
+    variables.$main-color-1,
+    variables.$main-color-1,
+    variables.$main-color-1,
+    $disabled-alpha: 0.2
+  );
+
+  &::after {
+    @include split.split-line(bottom, 4px, variables.$main-color-1);
+  }
+}

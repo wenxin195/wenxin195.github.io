@@ -1,0 +1,19 @@
+{%- assign _chart = page.chart | default: site.data.layout.enhancements.chart -%}
+{%- if _chart == true -%}
+  {%- include providers/markdown/chart.html -%}
+{%- endif -%}
+
+{%- assign _mathjax = page.mathjax | default: site.data.layout.enhancements.mathjax -%}
+{%- if _mathjax == true -%}
+  {%- include providers/markdown/mathjax.html -%}
+{%- endif -%}
+
+{%- assign _mermaid = page.mermaid | default: site.data.layout.enhancements.mermaid -%}
+{%- if _mermaid == true -%}
+  {%- include providers/markdown/mermaid.html -%}
+{%- endif -%}
+
+{%- assign _katex = page.katex | default: site.data.layout.enhancements.katex -%}
+{%- if _katex == true -%}
+  {%- include providers/markdown/katex.html -%}
+{%- endif -%}

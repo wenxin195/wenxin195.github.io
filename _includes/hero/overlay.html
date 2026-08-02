@@ -1,0 +1,64 @@
+{%- assign _align = page.hero.align | default: site.data.layout.article.hero.align -%}
+{%- assign _theme = page.hero.theme | default: site.data.layout.article.hero.theme -%}
+{%- assign _excerpt_truncate = 200 -%}
+
+{%- if page.hero.background_image.src -%}
+  {%- assign _bg_src = page.hero.background_image.src -%}
+{%- elsif page.hero.background_image != false and page.cover -%}
+  {%- assign _bg_src = page.cover -%}
+{%- endif -%}
+
+{%- if page.hero.background_image.gradient -%}
+  {%- assign _bg = page.hero.background_image.gradient -%}
+  {%- if _bg_src -%}
+    {%- assign _bg = _bg | append: ',' -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if _bg_src -%}
+  {%- assign _bg_src = _bg_src | prepend: site.baseurl -%}
+  {%- assign _bg = _bg | append: 'url(' | append: _bg_src | append: ')' -%}
+{%- endif -%}
+
+{%- assign _style = 'background-image:' | append: _bg | append: ';' -%}
+{%- if page.hero.background_color -%}
+  {%- assign _style = _style | append: ' background-color:' | append: page.hero.background_color | append: ';' -%}
+{%- endif -%}
+{%- if page.hero.height -%}
+  {%- assign _style = _style | append: ' min-height:' | append: page.hero.height | append: ';' -%}
+{%- endif -%}
+
+{%- assign _hero_class = 'article-hero article-hero--overlay' -%}
+{%- if _align == 'center' -%}
+  {%- assign _hero_class = _hero_class | append: ' article-hero--center' -%}
+{%- endif -%}
+{%- if _theme -%}
+  {%- assign _hero_class = _hero_class | append: ' article-hero--' | append: _theme -%}
+{%- endif -%}
+
+<div class="{{ _hero_class }}" style="{{ _style }}">
+  <div class="article-hero__content">
+    <div class="article-hero__inner">
+      {%- include article/info.html article=page semantic=false -%}
+      {%- include article/header.html article=page semantic=false -%}
+
+      {%- if page.excerpt -%}
+        <p class="article-hero__excerpt">
+          {{- page.excerpt | strip_html | strip_newlines | strip | truncate: _excerpt_truncate -}}
+        </p>
+      {%- endif -%}
+
+      {%- if page.hero.actions -%}
+        <ul class="menu">
+          {%- for _action in page.hero.actions -%}
+            <li>
+              <a class="button button--{{ _action.type | default: 'info' }} button--rounded button--xl" href="{{ _action.url | prepend: site.baseurl }}">
+                {{- _action.text -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

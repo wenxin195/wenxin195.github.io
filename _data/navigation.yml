@@ -9,25 +9,23 @@ header:
   - titles:
       en      : About
       zh-CN   : 关于我
-    url : /about.html
-    icon: person
+    url   : /about
+    icon  : about
 
   - titles:
-      # @start locale config
       en      : Archive
       zh-CN   : 归档
-      # @end locale config
-    url : /archive.html
-    icon: article
+    url   : /archive
+    icon  : article
   
   - titles:
       en      : Donate
       zh-CN   : 捐赠
-    url : /donate.html
-    icon: donate
+    url   : /donate
+    icon  : donate
   
   - titles:
       en      : Contact
       zh-CN   : 联系我
-    url : /contact.html
-    icon: contact
+    url   : /contact
+    icon  : contact

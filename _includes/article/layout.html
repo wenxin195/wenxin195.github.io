@@ -1,0 +1,46 @@
+{%- assign _has_aside = false -%}
+{%- if page.aside.toc == true -%}
+  {%- assign _has_aside = true -%}
+{%- endif -%}
+
+{%- assign _hero_type = page.hero.type -%}
+{%- assign _is_overlay = false -%}
+{%- if _hero_type == 'overlay' -%}
+  {%- assign _is_overlay = true -%}
+{%- endif -%}
+
+<div class="article-layout">
+  <div class="article-layout__inner{% if page.full_width and _has_aside == false %} article-layout__inner--flush{% endif %}">
+    <div class="article-layout__main">
+      <article class="article" itemscope itemtype="https://schema.org/BlogPosting">
+        {%- unless _is_overlay -%}
+          {%- assign _show_title = page.show_title | default: site.data.layout.article.show_title -%}
+          {%- if _show_title == false -%}
+            {%- include article/header.html article=page visible=false sr_only=true -%}
+            {%- include article/info.html article=page visible=false -%}
+          {%- else -%}
+            {%- include article/header.html article=page -%}
+            {%- include article/info.html article=page -%}
+          {%- endif -%}
+        {%- else -%}
+          {%- include article/header.html article=page visible=false semantic=true -%}
+          {%- include article/info.html article=page visible=false semantic=true -%}
+        {%- endunless -%}
+
+        {%- include article/toolbar.html -%}
+
+        <div class="article-body js-article-body" itemprop="articleBody" data-pagefind-body>
+          {{ include.body }}
+        </div>
+
+        {%- include article/footer.html -%}
+        {%- include article/nav.html -%}
+        {%- include article/comments.html -%}
+      </article>
+    </div>
+
+    {%- if _has_aside -%}
+      {%- include article/aside.html -%}
+    {%- endif -%}
+  </div>
+</div>

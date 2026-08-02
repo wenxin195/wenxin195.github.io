@@ -6,10 +6,6 @@ tags:
   - Power BI
 author: Wenxin Zhong
 layout: article
-download: false
-videos: false
-refactor: true
-mathjax: false
 mermaid: true
 modify_date: "2025-01-20 00:40:00"
 ---
@@ -403,14 +399,16 @@ Power Pivot 将指标(Indicator)定义成**度量值**(Measures)，也被称作�
 DAX 中的表函数，例如 FILTER 函数、ALL 函数等，都是基于 Filter context 进行操作的。
 
 > 所有度量值都可以看作是 Filter context 的函数。
-{: .prompt-danger }
+{: .prompt-danger}
+
 
 而行上下文(Row context)是指对每一行数据进行计算时产生的 Context。它通常出现在计算列中。在每一行添加计算时，DAX 引擎会自动为每一行提供 Row context。简单来说 Row context 就是对表进行迭代。
 
 DAX 中的迭代函数，例如 SUMX 函数、AVERAGEX 函数等，都是基于 Row context 进行操作的。
 
 > CALCULATE 函数可以将 Row context 转换为 Filter context。
-{: .prompt-tip }
+{: .prompt-tip}
+
 
 在某些情况下，Row context 和 Filter context 可能会结合在一起。在 Power BI 中，DAX 的计算是动态的，它们会基于当前的上下文来调整结果。
 

@@ -1,0 +1,3 @@
+{%- comment -%} M7 locale — unique resolution; include at top of each layout that needs copy {%- endcomment -%}
+{%- assign _locale_key = site.locale | default: site.lang | default: 'zh-CN' -%}
+{%- assign _t = site.data.locale[_locale_key] | default: site.data.locale['zh-CN'] -%}

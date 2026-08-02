@@ -1,0 +1,22 @@
+{%- assign _previous = page.previous -%}
+{%- assign _next = page.next -%}
+
+{%- if _next or _previous -%}
+  <nav class="article-nav flow-root d-print-none" aria-label="上下篇">
+    {%- if _previous -%}
+      {%- assign _href = _previous.url | prepend: site.baseurl -%}
+      <div class="article-nav__previous">
+        <span>{{- _t.PREVIOUS -}}</span>
+        <a href="{{ _href }}">{{- _previous.title -}}</a>
+      </div>
+    {%- endif -%}
+
+    {%- if _next -%}
+      {%- assign _href = _next.url | prepend: site.baseurl -%}
+      <div class="article-nav__next">
+        <span>{{- _t.NEXT -}}</span>
+        <a href="{{ _href }}">{{- _next.title -}}</a>
+      </div>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

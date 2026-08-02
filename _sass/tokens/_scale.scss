@@ -1,0 +1,213 @@
+@use "sass:map";
+@use "sass:math";
+
+// Scale tiers in $base / $button / $image (xs…xl): type, radius, control sizes — NOT viewports.
+// Viewports: see $responsive (sm / md / lg / xl). There is no viewport xs.
+$base: (
+  font-family: (
+    -apple-system,
+    BlinkMacSystemFont,
+    "Times New Roman",
+    "SimSun",
+    "Segoe UI",
+    Helvetica,
+    Arial,
+    sans-serif,
+  ),
+  font-family-code: (
+    "DejaVu Sans Mono",
+    "SimSun",
+    Menlo,
+    Monaco,
+    Consolas,
+    Andale Mono,
+    lucida console,
+    Courier New,
+    monospace,
+  ),
+
+  font-size-root: 16px,
+  font-size-root-sm: 14px,
+
+  font-size-xl: 1.5rem,
+  font-size-lg: 1.25rem,
+  font-size: 1rem,
+  font-size-sm: 0.85rem,
+  font-size-xs: 0.7rem,
+
+  font-size-h1-xl: 3.5rem,
+  font-size-h2-xl: 2.5rem,
+  font-size-h3-xl: 2rem,
+  font-size-h4-xl: 1.75rem,
+  font-size-h5-xl: 1.5rem,
+  font-size-h6-xl: 1.5rem,
+
+  font-size-h1-lg: 3rem,
+  font-size-h2-lg: 2rem,
+  font-size-h3-lg: 1.75rem,
+  font-size-h4-lg: 1.5rem,
+  font-size-h5-lg: 1.25rem,
+  font-size-h6-lg: 1.25rem,
+
+  font-size-h1: 2.5rem,
+  font-size-h2: 1.9rem,
+  font-size-h3: 1.5rem,
+  font-size-h4: 1.2rem,
+  font-size-h5: 1rem,
+  font-size-h6: 1rem,
+
+  font-size-h1-sm: 2rem,
+  font-size-h2-sm: 1.5rem,
+  font-size-h3-sm: 1.35rem,
+  font-size-h4-sm: 1.15rem,
+  font-size-h5-sm: 1rem,
+  font-size-h6-sm: 1rem,
+
+  font-size-h1-xs: 1.05rem,
+  font-size-h2-xs: 1rem,
+  font-size-h3-xs: 0.95rem,
+  font-size-h4-xs: 0.9rem,
+  font-size-h5-xs: 0.85rem,
+  font-size-h6-xs: 0.85rem,
+
+  font-weight: 400,
+  font-weight-bold: 700,
+
+  line-height-xl: 2,
+  line-height-lg: 1.8,
+  line-height: 1.6,
+  line-height-sm: 1.4,
+  line-height-xs: 1.2,
+
+  spacer: 1rem,
+
+  // Radius ladder (finite tiers; merge near-duplicate px literals at call sites).
+  border-radius-xs: 0.125rem, // ~2px
+  border-radius-sm: 0.25rem, // ~4px (absorbs former 0.2rem / 4px / 5px)
+  border-radius: 0.4rem, // ~6px
+  border-radius-md: 0.625rem, // ~10px — popup / flyout (absorbs 8px / 10px)
+  border-radius-lg: 0.8rem,
+);
+
+$spacers: (
+  0: 0,
+  1: map.get($base, spacer) * 0.25,
+  2: map.get($base, spacer) * 0.5,
+  3: map.get($base, spacer),
+  4: map.get($base, spacer) * 1.5,
+  5: map.get($base, spacer) * 3,
+);
+
+// Stacking: FAB < mask < drawer panels < modal (search/lightbox).
+$z-indexes: (
+  tooltip: 50,
+  popup: 100,
+  actions: 996,
+  mask: 997,
+  drawer: 998,
+  modal: 999,
+);
+
+// 布局尺寸（限宽装配只在 shell/width；aside 宽在 article-aside + width）
+$layout: (
+  header-height: 5rem,
+  header-height-sm: 3rem,
+  // Non-immersive: header → main content inset (assembled only in shell/main).
+  main-inset-top: map.get($spacers, 5),
+  main-inset-top-md: map.get($spacers, 4),
+  content-max-width: 950px,
+  content-max-width-xl: 1100px,
+  aside-width: 220px,
+  aside-width-xl: 260px,
+  // Preferred drawer width; consumers use min(<token>, 86vw).
+  nav-drawer-width: 20rem,
+  toc-drawer-width: 20rem,
+  drawer-viewport-max: 86vw,
+  // Keep in sync with blocks/floating-actions (btn size + right offset + gap).
+  floating-actions-gutter: 2.75rem + map.get($spacers, 3) + map.get($spacers, 2),
+  floating-actions-gutter-sm: 2.5rem + map.get($spacers, 2) + map.get($spacers, 2),
+);
+
+// Viewports (min-width). Keep in sync with assets/scripts/utils/breakpoints.js
+//     sm        md         lg          xl
+// | ------- | -------- | --------- | --------- |
+// 0        768       1024        1440         -
+
+$responsive: (
+  sm: 0,
+  md: 768px,
+  lg: 1024px,
+  xl: 1440px,
+);
+
+$animation: (
+  duration-xs: 0.15s,
+  duration-sm: 0.2s,
+  duration-md: 0.3s, // absorbs former 0.25s / 0.3s
+  duration: 0.4s,
+  duration-lg: 0.5s,
+  timing-function: ease-in-out,
+);
+
+// Avoid color/background in transition — theme variable swaps would wash the whole page.
+// Quoted: Sass maps treat unquoted commas as entry separators.
+$clickable: (
+  transition:
+    "opacity #{map.get($animation, duration-sm)} ease-in-out, transform #{map.get($animation, duration-sm)} ease-in-out, box-shadow #{map.get($animation, duration-sm)} ease-in-out",
+);
+
+// Flyout / QR geometry (shadow tiers land in foundations/_shadow — package E).
+$popup: (
+  radius: map.get($base, border-radius-md),
+  padding: map.get($spacers, 3),
+);
+
+$qrcode-size: 120px;
+
+// Syntax chrome geometry (token hues: --syntax-* in tokens/_themes).
+$code-chrome: (
+  header-height: 2.25rem,
+  dot-margin: map.get($spacers, 3),
+);
+
+$button-height-xl: 2.8rem;
+$button-height-lg: 2.3rem;
+$button-height: 1.9rem;
+$button-height-sm: 1.5rem;
+$button-height-xs: 1.2rem;
+
+$button: (
+  padding-y-xl: math.div(2.8rem - map.get($base, font-size-xl), 2),
+  padding-x-xl: math.div(2.8rem, 3),
+  padding-y-lg: math.div(2.3rem - map.get($base, font-size-lg), 2),
+  padding-x-lg: math.div(2.3rem, 3),
+  padding-y: math.div(1.9rem - map.get($base, font-size), 2),
+  padding-x: math.div(1.9rem, 3),
+  padding-y-sm: math.div(1.5rem - map.get($base, font-size-sm), 2),
+  padding-x-sm: math.div(1.5rem, 3),
+  padding-y-xs: math.div(1.2rem - map.get($base, font-size-xs), 2),
+  padding-x-xs: math.div(1.2rem, 3),
+
+  pill-radius: 6rem,
+
+  circle-diameter-xl: $button-height-xl,
+  circle-diameter-lg: $button-height-lg,
+  circle-diameter: $button-height,
+  circle-diameter-sm: $button-height-sm,
+  circle-diameter-xs: $button-height-xs,
+
+  font-weight: map.get($base, font-weight-bold),
+);
+
+$image: (
+  width-xl: 20em,
+  width-lg: 16rem,
+  width: 12rem,
+  width-sm: 8rem,
+  width-xs: 4rem,
+);
+
+$menu: (
+  horizontal-spacer: 1,
+  horizontal-item-vertical-spacer: 1,
+);

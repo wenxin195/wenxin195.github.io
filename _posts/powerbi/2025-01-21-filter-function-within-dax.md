@@ -6,10 +6,6 @@ tags:
   - Power BI
 author: Wenxin Zhong
 layout: article
-download: false
-videos: false
-refactor: true
-mathjax: false
 modify_date: "2025-01-21 14:03:00"
 ---
 
@@ -46,6 +42,7 @@ ALL( [<table> | <column>[, <column>[, <column>[,…]]]] )
 
 > ALL 函数不能与表表达式或者列表达式[^column-expression]一起使用！
 {: .prompt-danger}
+
 
 #### 示例 1：计算不同商品成本占总成本的比例
 
@@ -149,6 +146,7 @@ ALLSELECTED( [<tableName> | <columnName>[, <columnName>[, <columnName>[,…]]]] 
 > ALLSELECTED 函数如果有多个参数，则它们必须是来自同一张表的列。
 {: .prompt-danger}
 
+
 ALLSELECTED 函数与 ALL 不同，因为它保留查询中明确设置的所有筛选器，并且保留除行和列筛选器之外的所有 Filter Context。
 
 将 ALL 函数[示例 2](#示例-2计算当月商品成本占总成本的比例) 的 DAX 表达式中的 `ALL` 替换成 `ALLSELECTED`，然后**只筛选 1 至 5 月**，就可以很明显地看出区别：
@@ -238,8 +236,10 @@ CALCULATE( <expression>[, <filter1> [, <filter2> [, …]]] )
 > ALL 函数等既可以用作筛选器修改器，也可以充当返回表对象的函数。若 Power BI 版本支持 REMOVEFILTERS 函数，那么最好使用它来删除筛选器。
 {: .prompt-tip}
 
+
 > 还有 **CALCULATETABLE 函数**，它执行完全相同的功能，只是它的作用是修改 Filter Context 中的表表达式。
 {: .prompt-info}
+
 
 下面的数据表计算了石家庄市的咖啡销售情况：
 
@@ -310,8 +310,10 @@ EARLIER( <column>, <number> )
 > 若在表扫描开始之前有 Row Filter，则 EARLIER 函数执行成功，否则报错。
 {: .prompt-danger}
 
+
 > EARLIER 函数的执行性能很差。
 {: .prompt-warning}
+
 
 下面的 DAX 表达式计算了每笔订单在总的销售数据中的排名情况：
 
@@ -340,6 +342,7 @@ FILTER( <table>, <filter> )
 
 > FILTER 函数不能单独使用，而是作为嵌套函数，嵌入到需要表作为参数的其他函数中。
 {: .prompt-warning}
+
 
 下面的数据表计算了除“美式”之外的咖啡销量：
 
@@ -412,6 +415,7 @@ LOOKUPVALUE (
 > 如果结果列的表与搜索列的表之间存在关系，那么在大多数情况下，使用 RELATED 函数而不是 LOOKUPVALUE 会更高效，并且能提供更好的性能。
 {: .prompt-tip}
 
+
 ## SELECTEDVALUE 函数
 
 SELECTEDVALUE 函数用于从当前 Filter context 中获取列的**唯一值**。如果在 Context 中有多个值，它会返回一个默认值(如果指定了的话)，否则会返回空值。
@@ -455,6 +459,7 @@ OFFSET ( <delta>[, <relation> or <axis>][, <orderBy>][, <blanks>][, <partitionBy
 
 > `relation`参数通常使用 SELECTCOLUMNS 函数提取单列。
 {: .prompt-info}
+
 
 ### RANK 函数
 
@@ -524,6 +529,7 @@ INDEX( <position>[, <relation> or <axis>][, <orderBy>][, <blanks>][, <partitionB
 
 > 以下函数仅能使用在<a href="https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-visual-calculations-overview" target="_blank">可视化计算</a>中！
 {: .prompt-danger}
+
 
 ### MOVINGAVERAGE 函数
 

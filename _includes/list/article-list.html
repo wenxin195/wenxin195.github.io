@@ -1,0 +1,105 @@
+{%- assign _excerpt_truncate = include.excerpt_truncate | default: 350 -%}
+{%- assign _sorted_list = include.articles -%}
+
+{%- if include.group_by == 'year' -%}
+  {%- assign _sorted_list = _sorted_list | sort: 'date' -%}
+{%- endif -%}
+
+{%- if include.reverse -%}
+  {%- assign _sorted_list = _sorted_list | reverse -%}
+{%- endif -%}
+
+{%- assign _type_class = 'article-list' -%}
+{%- if include.type == 'brief' -%}
+  {%- assign _type_class = _type_class | append: ' article-list--brief' -%}
+{%- elsif include.type == 'item' -%}
+  {%- assign _type_class = _type_class | append: ' article-list--item' -%}
+{%- endif -%}
+
+{%- assign _cover_class = 'image' -%}
+{%- if include.cover_size -%}
+  {%- assign _cover_class = _cover_class | append: ' image--' | append: include.cover_size -%}
+{%- endif -%}
+
+<div class="{{ _type_class }}">
+  {%- for _article in _sorted_list -%}
+    {%- assign _article_url = _article.url | prepend: site.baseurl -%}
+    {%- if _article.cover -%}
+      {%- assign _article_cover = _article.cover | prepend: site.baseurl -%}
+    {%- endif -%}
+
+    {%- if include.type == 'item' -%}
+      <article class="article-list__item" itemscope itemtype="https://schema.org/BlogPosting">
+        {%- if _article.cover and include.show_cover -%}
+          <div class="article-list__image">
+            <img class="{{ _cover_class }}" src="{{ _article_cover }}" alt="" />
+          </div>
+        {%- endif -%}
+
+        <div class="article-list__content">
+          <header>
+            <a href="{{ _article_url }}">
+              <h2 itemprop="headline" class="article-list__title">{{- _article.title -}}</h2>
+            </a>
+          </header>
+
+          <div class="article-list__description">
+            {%- if _article.excerpt and include.show_excerpt -%}
+              <div class="article-list__excerpt" itemprop="description">
+                <span>{{- _article.excerpt | strip_html | strip_newlines | strip | truncate: _excerpt_truncate -}}</span>
+              </div>
+            {%- endif -%}
+
+            {%- if include.show_readmore -%}
+              <p>
+                <a href="{{ _article_url }}">{{- _t.READMORE -}}</a>
+              </p>
+            {%- endif -%}
+          </div>
+
+          {%- if include.show_info -%}
+            {%- assign _show_pageview = _article.pageview | default: site.data.layout.article.pageview -%}
+            {%- include article/info.html article=_article show_pageview=_show_pageview -%}
+          {%- endif -%}
+        </div>
+      </article>
+
+    {%- elsif include.type == 'brief' -%}
+      {%- assign _tags = '' -%}
+      {%- for _tag in _article.tags -%}
+        {%- assign _tag_encode = _tag | strip | url_encode -%}
+        {%- if forloop.last -%}
+          {%- assign _tags = _tags | append: _tag_encode -%}
+        {%- else -%}
+          {%- assign _tags = _tags | append: _tag_encode | append: ',' -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if include.group_by == 'year' -%}
+        {%- assign _current_year = _article.date | date: '%Y' -%}
+        {%- if _current_year != _previous_year -%}
+          {%- if forloop.first == false -%}
+            </ul></section>
+          {%- endif -%}
+          <section>
+            <h2 class="article-list__group-header">{{- _current_year -}}</h2>
+            <ul class="article-list__group">
+          {%- assign _previous_year = _current_year -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      <li class="article-list__item" itemscope itemtype="https://schema.org/BlogPosting" data-tags="{{ _tags }}">
+        <div class="article-list__content">
+          <span class="article-list__meta">{{- _article.date | date: _t.ARTICLE_LIST_DATE_FORMAT -}}</span>
+          <a itemprop="headline" class="article-list__title" href="{{ _article_url }}">
+            {{- _article.title -}}
+          </a>
+        </div>
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if include.type == 'brief' and include.group_by == 'year' and _sorted_list.size > 0 -%}
+    </ul></section>
+  {%- endif -%}
+</div>

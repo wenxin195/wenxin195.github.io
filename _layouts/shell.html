@@ -1,0 +1,52 @@
+---
+layout: base
+---
+{%- include utils/locale.html -%}
+{%- assign _page_mode = page.mode | default: layout.mode | default: site.data.layout.shell.mode -%}
+
+{%- assign _full_width = page.full_width | default: layout.full_width | default: site.data.layout.shell.full_width -%}
+{%- assign _has_aside = false -%}
+{%- if page.aside.toc == true -%}
+  {%- assign _has_aside = true -%}
+{%- endif -%}
+
+{%- comment -%} G4: full_width + aside → ignore full_width {%- endcomment -%}
+{%- if _has_aside -%}
+  {%- assign _full_width = false -%}
+{%- endif -%}
+
+{%- assign _shell_main_class = 'shell-main js-shell-main' -%}
+{%- if _page_mode == 'immersive' -%}
+  {%- assign _shell_main_class = _shell_main_class | append: ' shell-main--immersive' -%}
+{%- endif -%}
+{%- if _has_aside -%}
+  {%- assign _shell_main_class = _shell_main_class | append: ' shell-main--has-aside' -%}
+{%- elsif _full_width -%}
+  {%- assign _shell_main_class = _shell_main_class | append: ' shell-main--full-width' -%}
+{%- endif -%}
+
+<div class="layout-shell js-shell">
+  {%- assign _header_theme = page.header.theme | default: layout.header.theme -%}
+  {%- include site/header.html theme=_header_theme background=page.header.background -%}
+
+  <main class="{{ _shell_main_class }}" {% if _full_width %}data-flush="true"{% endif %}>
+    {{ content }}
+  </main>
+
+  {%- include site/footer.html -%}
+
+  {%- include providers/pageview/index.html -%}
+
+  {%- include assets/script-manifest.html -%}
+
+  {%- include site/nav-drawer.html -%}
+
+  {%- if page.lightbox == true -%}
+    {%- include site/lightbox-modal.html -%}
+  {%- endif -%}
+
+  {%- if site.search -%}
+    {%- include site/search-modal.html -%}
+  {%- endif -%}
+
+</div>

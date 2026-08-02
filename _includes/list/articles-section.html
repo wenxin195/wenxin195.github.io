@@ -1,0 +1,41 @@
+{%- assign _data_source = include.data_source | default: page.articles.data_source | default: layout.articles.data_source -%}
+{%- assign _type = include.type | default: page.articles.type | default: layout.articles.type -%}
+{%- assign _show_paginator = include.show_paginator -%}
+
+{%- if _data_source -%}
+  {%- assign _keys = _data_source | split: '.' -%}
+{%- endif -%}
+
+{%- assign _articles = nil -%}
+{%- for _key in _keys -%}
+  {%- if forloop.first -%}
+    {%- case _key -%}
+      {%- when 'site' -%}{%- assign _articles = site -%}
+      {%- when 'page' -%}{%- assign _articles = page -%}
+      {%- when 'layout' -%}{%- assign _articles = layout -%}
+      {%- when 'paginator' -%}{%- assign _articles = paginator -%}
+      {%- else -%}{%- assign _articles = site[_key] -%}
+    {%- endcase -%}
+  {%- else -%}
+    {%- assign _articles = _articles[_key] -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if _articles -%}
+  {%- assign _show_cover = page.articles.show_cover | default: layout.articles.show_cover | default: site.data.layout.list.show_cover -%}
+  {%- assign _show_excerpt = page.articles.show_excerpt | default: layout.articles.show_excerpt | default: site.data.layout.list.show_excerpt -%}
+  {%- assign _show_readmore = page.articles.show_readmore | default: layout.articles.show_readmore | default: site.data.layout.list.show_readmore -%}
+  {%- assign _show_info = page.articles.show_info | default: layout.articles.show_info | default: site.data.layout.list.show_info -%}
+  {%- assign _cover_size = page.articles.cover_size | default: layout.articles.cover_size -%}
+  {%- assign _excerpt_type = page.articles.excerpt_type | default: layout.articles.excerpt_type -%}
+
+  {%- if _type == 'brief' -%}
+    {%- include list/article-list.html articles=_articles type='brief' show_info=_show_info -%}
+  {%- elsif _type == 'item' -%}
+    {%- include list/article-list.html articles=_articles type='item' show_cover=_show_cover cover_size=_cover_size show_excerpt=_show_excerpt excerpt_type=_excerpt_type show_readmore=_show_readmore show_info=_show_info -%}
+  {%- endif -%}
+
+  {%- if _show_paginator -%}
+    {%- include list/paginator.html -%}
+  {%- endif -%}
+{%- endif -%}

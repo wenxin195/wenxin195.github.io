@@ -1,0 +1,23 @@
+<meta charset="utf-8" />
+<meta name="baseurl" content="{{ site.baseurl | default: '' }}">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<script type="importmap">
+{
+  "imports": {
+    "@/": "{{ '/assets/scripts/' | relative_url }}"
+  }
+}
+</script>
+
+{% comment %} 基于 _config.yml 生成 SEO，高级用法：https://jekyll.github.io/jekyll-seo-tag/advanced-usage/ {% endcomment %}
+{% seo %}
+
+<link rel="alternate" type="application/rss+xml" title='{{ site.title }}' href='{{ site.baseurl | append: site.data.path.urls.rss }}' />
+
+{%- include document/favicon.html -%}
+
+{% comment %} TODO: 重新写 {% endcomment %}
+<link rel="stylesheet" href='{{ site.baseurl | append: "/assets/css/main.css" }}' />
+
+<link rel="stylesheet" href='{{ site.data.resources.sources.font_awesome }}' />

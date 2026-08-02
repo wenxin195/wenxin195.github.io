@@ -1,7 +1,3 @@
-# @start locale config
-# 多语言配置
-## => default: English
-########################
 en: &EN
   SUBSCRIBE               : "Subscribe"
   READMORE                : "Read more"
@@ -13,19 +9,19 @@ en: &EN
   NEXT                    : "NEXT"
   ARTICLE_DATE_FORMAT     : "%b %d, %Y"
   ARTICLE_LIST_DATE_FORMAT: "%b %d"
-  STATISTICS              : "[POST_COUNT] post articles, [PAGE_COUNT] pages."
-  LICENSE_ANNOUNCE        : "This work is licensed under a [LICENSE] license."
-  POST_ON_GITHUB          : "Edit on Github"
-  FOLLOW_ME               : "Follow me on [NAME]."
-  EMAIL_ME                : "Send me an Email."
+  STATISTICS              : "A total of [POST_COUNT] articles published across [PAGE_COUNT] pages"
+  LICENSE_ANNOUNCE        : "This work is licensed under a [LICENSE] license"
+  POST_ON_GITHUB          : "Edit on GitHub"
+  FOLLOW_ME               : "Follow me on [NAME]"
+  EMAIL_ME                : "Send me an Email"
   COPYRIGHT_DATES         : "2024"
   UNIT                    : "min"
   PROMPT                  : "read"
   WORDS                   : "words"
   SUCCEED                 : "Copied!"
+  DOWNLOAD                : "Download PDF"
+  VIDEO                   : "Video"
 
-## => Simplified Chinese
-########################
 zh-CN: &ZH_CN
   SUBSCRIBE               : "订阅"
   READMORE                : "阅读更多"
@@ -37,15 +33,15 @@ zh-CN: &ZH_CN
   NEXT                    : "下篇"
   ARTICLE_DATE_FORMAT     : "%Y年%m月%d日"
   ARTICLE_LIST_DATE_FORMAT: "%m月%d日"
-  STATISTICS              : "共计 [POST_COUNT] 篇文章，[PAGE_COUNT] 页。"
-  LICENSE_ANNOUNCE        : "本文遵守 [LICENSE] 许可协议。"
-  POST_ON_GITHUB          : "在 Github 上修改"
-  FOLLOW_ME               : "在 [NAME] 上关注我。"
-  EMAIL_ME                : "给我发邮件。"
+  STATISTICS              : "累计发布 [POST_COUNT] 篇文章，共 [PAGE_COUNT] 页"
+  LICENSE_ANNOUNCE        : "本文遵守 [LICENSE] 许可协议"
+  POST_ON_GITHUB          : "在 GitHub 上修改"
+  FOLLOW_ME               : "在 [NAME] 上关注我"
+  EMAIL_ME                : "给我发邮件"
   COPYRIGHT_DATES         : "2024"
   UNIT                    : "分钟"
   PROMPT                  : "大约阅读"
   WORDS                   : "字"
   SUCCEED                 : "已复制！"
-
-# @end locale config
+  DOWNLOAD                : "下载 PDF"
+  VIDEO                   : "观看视频"

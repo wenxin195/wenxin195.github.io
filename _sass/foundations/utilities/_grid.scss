@@ -1,0 +1,17 @@
+.cell {
+  min-width: 0;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+
+  > .cell--auto {
+    flex: 1 1 0;
+    width: auto;
+  }
+}
+
+.grid--reverse {
+  flex-direction: row-reverse;
+}

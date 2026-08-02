@@ -1,0 +1,21 @@
+comments:
+  giscus:
+    # 启用 comments: giscus 前填齐；均为 giscus 公开配置
+    repo: # owner/repo
+    repo_id:
+    category:
+    category_id:
+    mapping: pathname
+    strict: "0"
+    reactions_enabled: "1"
+    emit_metadata: "0"
+    input_position: bottom
+    theme: preferred_color_scheme
+    lang: zh-CN
+
+analytics:
+  google:
+    tracking_id: G-8KCLGX7719
+    anonymize_ip: false
+  baidu:
+    base_id: 883a4ce3e6ad9013680a082966735ed7

@@ -1,0 +1,26 @@
+<div class="share">
+  <span class="share__label">分享至：</span>
+
+  <div class="share__buttons">
+    <div class="share__qqzone">
+      <a class="share__buttons--qqzone" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{ page.url | absolute_url }}&title={{ page.title }}" title="分享至 QQ 空间">
+        <img class="share__icon" src="{{ '/assets/images/icon/social-color/qqzone.svg' | relative_url }}" alt="qqzone" />
+      </a>
+    </div>
+
+    <div class="share__wechat">
+      <button class="share__buttons--wechat" title="分享至 Wechat">
+        <img class="share__icon" src="{{ 'assets/images/icon/social-color/wechat.svg' | relative_url }}" alt="wechat" />
+      </button>
+      <div class="flyout flyout--offset">
+        <img class="flyout__media" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ page.url | absolute_url }}" alt="wechat-qrcode" />
+      </div>
+    </div>
+
+    <div class="share__weibo">
+      <a class="share__buttons--weibo" href="https://service.weibo.com/share/share.php?url={{ page.url | absolute_url }}&title={{ page.title }}" title="分享至 Weibo">
+        <img class="share__icon" src="{{ '/assets/images/icon/social-color/weibo.svg' | relative_url }}" alt="weibo" />
+      </a>
+    </div>
+  </div>
+</div>

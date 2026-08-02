@@ -1,0 +1,17 @@
+{%- if site.search -%}
+  <div class="search search--dark">
+    <div class="search__inner">
+      <div class="search__header">
+        <span>{{- _t.SEARCH -}}</span>
+        <button type="button" class="button button--theme-dark button--pill search__cancel js-search-toggle">
+          {{- _t.CANCEL -}}
+        </button>
+      </div>
+      <div id="pagefind-search">
+        <div id="pagefind-search-input"></div>
+        <div id="pagefind-search-summary"></div>
+        <div id="pagefind-search-results"></div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

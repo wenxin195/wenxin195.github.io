@@ -1,0 +1,124 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+@use "foundations/utilities/shadow" as shadow;
+
+@mixin hidden-state {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@mixin visible-state {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.floating-actions {
+  position: fixed;
+  right: calc(#{map.get(variables.$spacers, 3)} + env(safe-area-inset-right, 0px));
+  bottom: calc(4.625rem + env(safe-area-inset-bottom, 0px));
+  z-index: map.get(variables.$z-indexes, actions);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: map.get(variables.$spacers, 2);
+
+  @include media.media-breakpoint-down(md) {
+    right: calc(#{map.get(variables.$spacers, 2)} + env(safe-area-inset-right, 0px));
+    bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+.float-btn {
+  text-align: center;
+  line-height: 2.75rem;
+  padding: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid variables.$border-color;
+  border-radius: 50%;
+  @include shadow.box-shadow(float);
+  background-color: variables.$background-color;
+  color: variables.$text-color;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transform: translateY(20px);
+
+  @include hidden-state;
+
+  transition:
+    opacity map.get(variables.$animation, duration-lg) ease-in-out,
+    visibility 0s map.get(variables.$animation, duration-lg),
+    transform map.get(variables.$animation, duration-sm) ease-out,
+    background-color map.get(variables.$animation, duration-sm) ease;
+
+  &.visible {
+    @include visible-state;
+    transform: translateY(0);
+
+    &:hover {
+      transform: translate3d(0, -5px, 0);
+      background-color: variables.$main-color-3;
+    }
+  }
+
+  @include media.media-breakpoint-down(md) {
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    font-size: 1.1rem;
+  }
+}
+
+// TOC FAB: only meaningful < lg; always “armed” when injected (no scroll gate).
+.float-btn--toc {
+  @include visible-state;
+  transform: none;
+
+  @include media.media-breakpoint-up(lg) {
+    display: none !important;
+  }
+
+  &.visible:hover {
+    transform: translate3d(0, -5px, 0);
+  }
+
+  > i {
+    line-height: inherit;
+  }
+}
+
+.float-btn--scroll-top {
+  > i {
+    line-height: inherit;
+    position: relative;
+    bottom: 2px;
+  }
+}
+
+.qrcode__trigger {
+  .float-btn__img {
+    position: relative;
+    top: 2px;
+  }
+}
+
+.float-btn__img {
+  width: 1.25rem;
+  height: 1.25rem;
+  object-fit: contain;
+  pointer-events: none;
+  filter: invert(variables.$filter-invert);
+}
+
+// QR host — panel chrome lives on .flyout (primitives)
+.qrcode {
+  position: relative;
+  pointer-events: none;
+
+  &.visible {
+    pointer-events: auto;
+  }
+}

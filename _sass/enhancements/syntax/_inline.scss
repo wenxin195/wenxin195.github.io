@@ -1,0 +1,31 @@
+@use "sass:map";
+@use "tokens" as tokens;
+
+// Inline backtick code (Kramdown: code.highlighter-rouge).
+
+code {
+  hyphens: none;
+  color: var(--syntax-primary);
+
+  &.highlighter-rouge {
+    font-size: map.get(tokens.$base, font-size-sm);
+    padding: 3px 5px;
+    word-break: break-word;
+    border-radius: map.get(tokens.$base, border-radius);
+    background-color: var(--syntax-inline-bg);
+    color: var(--syntax-inline-fg);
+  }
+
+  a > &.highlighter-rouge {
+    padding-bottom: 0;
+    color: inherit;
+  }
+
+  a:hover > &.highlighter-rouge {
+    border-bottom: none;
+  }
+
+  blockquote & {
+    color: inherit;
+  }
+}

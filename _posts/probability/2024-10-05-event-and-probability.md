@@ -8,8 +8,6 @@ tags:
 author: Wenxin Zhong
 layout: article
 download: true
-videos: false
-refactor: false
 mathjax: true
 modify_date: "2025-01-27 01:50:00"
 ---
@@ -44,13 +42,14 @@ modify_date: "2025-01-27 01:50:00"
 
 要使得概率论有意义，必须明确所探讨的问题的**可能结果**究竟是什么。样本点是抽样(Sample)的最基本单元，认识随机现象首先要列出它的样本空间。
 
-<details class="details-definition" markdown="1" open>
-<summary>样本空间和样本点</summary>
+{% details definition "样本空间和样本点" open %}
 随机现象的一切可能基本结果组成的集合称为样本空间(<a href="https://en.wikipedia.org/wiki/Sample_space" target="_blank">Sample space</a>)，记为 ${\mit\Omega}=\\{\omega\\}$，其中 $\omega$ 表示基本结果，称为样本点(Sample point)。
-</details>
+{% enddetails %}
+
 
 > 样本空间是一个关于试验或者观察的理想化模型。
 {: .prompt-tip}
+
 
 样本点的性质与数学定义是无关的，样本空间(及其定义在样本空间上的概率分布)决定了理想的试验。**一个样本空间就是一个概率数学模型**，同一个样本空间可以允许有多种不同的实际解释。比如一个样本空间为 $\mathbb{Z}^{+}$，它既可以解释为一本书存在的错字个数，也可以解释为商店一天的到店顾客人数。
 
@@ -63,10 +62,10 @@ modify_date: "2025-01-27 01:50:00"
 
 在确定样本空间的时候，不同的试验结果必须是**相互排斥的**，即在试验过程中只能产生**唯一**的一个结果。需要注意的是随机现象的样本空间要包含**至少两个样本点**。若将确定性现象也一并考虑，那么仅含有一个样本点的样本空间，所对应的确定性现象。
 
-<details class="details-definition" markdown="1" open>
-<summary>随机事件</summary>
+{% details definition "随机事件" open %}
 样本空间的一个子集称作随机事件，简称事件(<a href="https://en.wikipedia.org/wiki/Event_(probability_theory)" target="_blank">Event</a>)，通常用大写的英文字母 $A,B,C,\cdots$ 表示。
-</details>
+{% enddetails %}
+
 
 例如掷骰子所出现点数的样本空间为 ${\mit\Omega}=\\{1,2,3,4,5,6\\}$，那么可以定义集合 $\\{1,3,5\\}$ 为事件“掷到奇数点”，也可以定义集合 $\\{4,5,6\\}$ 为事件“掷到的点数大于 3”……
 
@@ -75,7 +74,7 @@ modify_date: "2025-01-27 01:50:00"
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probabity/sample_space.png" alt="sample space" style="width: 500px;">
+       <img src="/assets/images/picture/event_and_probability/sample_space.png" alt="sample space" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 1: 样本空间、样本点与随机事件</p>
@@ -85,20 +84,20 @@ modify_date: "2025-01-27 01:50:00"
 
 **一个复杂事件都可以分解为若干个简单事件的集合**，每个事件都可以通过列举它所对应的样本点来描述。于是当子集 $A$ 中某个样本点出现了，就说事件 $A$ 发生了，或者说：
 
-<details class="details-proposition" markdown="1" open>
-<summary>命题 $1$</summary>
+{% details proposition "命题 1" open %}
 事件 $A$ 发生当且仅当 $A$ 中某个样本点出现了。
-</details>
+{% enddetails %}
 
-<details class="details-proposition" markdown="1">
-<summary>命题 $2$ (样本空间的分割)</summary>
+
+{% details proposition "命题 2 (样本空间的分割)" %}
 在样本空间 ${\mit\Omega}$ 中，若有 $n$ 个事件 $D_1,D_2,\cdots,D_n$，满足：
 <ol>
     <li>$D_1,D_2,\cdots,D_n$ 两两互不相容；</li>
     <li>$\bigcup\limits_{i=1}^{n}D_i={\mit\Omega}$。</li>
 </ol>
 则称 $D_1,D_2,\cdots,D_n$ 为样本空间 ${\mit\Omega}$ 的一个分割(Division)，称事件 $D_1,D_2,\cdots,D_n$ 为样本空间 ${\mit\Omega}$ 的一个完备互斥事件组。
-</details>
+{% enddetails %}
+
 
 可列个互不相容的事件 $D_1,D_2,\cdots,D_n,\cdots$ 若满足 $\bigcup\limits_{i=1}^{\infty}D_i={\mit\Omega}$，那么 $D_1,D_2,\cdots,D_n,\cdots$ 也可以成为样本空间 ${\mit\Omega}$ 的一个分割。
 
@@ -161,11 +160,11 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probabity/including.png" alt="A\subset B" style="width: 300px;">
+       <img src="/assets/images/picture/event_and_probability/including.png" alt="A\subset B" style="width: 300px;">
        <figcaption>(a) $A\subset B$</figcaption>
      </figure>
      <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probabity/incompatibility.png" alt="A 与 B 互不相容" style="width: 300px;">
+       <img src="/assets/images/picture/event_and_probability/incompatibility.png" alt="A 与 B 互不相容" style="width: 300px;">
        <figcaption>(b) $A$ 与 $B$ 互不相容</figcaption>
      </figure>
    </div>
@@ -182,11 +181,11 @@ $$
         <div style="text-align: center;">
            <div style="display: flex; justify-content: center;">
              <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-               <img src="/assets/images/picture/event_and_probabity/difference.png" alt="A-B" style="width: 300px;">
+               <img src="/assets/images/picture/event_and_probability/difference.png" alt="A-B" style="width: 300px;">
                <figcaption>(a) $A-B$</figcaption>
              </figure>
              <figure style="text-align: center; margin-bottom: 0;">
-               <img src="/assets/images/picture/event_and_probabity/difference(including).png" alt="A-B(including)" style="width: 300px;">
+               <img src="/assets/images/picture/event_and_probability/difference(including).png" alt="A-B(including)" style="width: 300px;">
                <figcaption>(b) $A-B(A\supset B)$</figcaption>
              </figure>
            </div>
@@ -207,15 +206,15 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 0px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probabity/cup.png" alt="A\cup B" style="width: 300px;">
+       <img src="/assets/images/picture/event_and_probability/cup.png" alt="A\cup B" style="width: 300px;">
        <figcaption>(a) $A\cup B$</figcaption>
      </figure>
      <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probabity/cap.png" alt="A\cap B" style="width: 300px;">
+       <img src="/assets/images/picture/event_and_probability/cap.png" alt="A\cap B" style="width: 300px;">
        <figcaption>(b) $A-B(A\supset B)$</figcaption>
      </figure>
      <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probabity/oppose.png" alt="oppose" style="width: 300px;">
+       <img src="/assets/images/picture/event_and_probability/oppose.png" alt="oppose" style="width: 300px;">
        <figcaption>(c) $A$ 的对立事件 $\bar{A}$</figcaption>
      </figure>
    </div>
@@ -224,15 +223,16 @@ $$
 
 需要特别注意的是，**对立事件是相互的**，也就是说 $A$ 的对立事件是 $\bar{A}$，而 $\bar{A}$ 的对立事件是 $A$，即 $\bar{\bar{A}}=A$。**必然事件** ${\mit\Omega}$ **与不可能事件** $\boldsymbol{\varnothing}$ **互为对立事件**，即 $\bar{\mit\Omega}=\varnothing$，$\bar{\varnothing}={\mit\Omega}$。
 
-<details class="details-proposition" markdown="1" open>
-<summary>命题 $3$</summary>
+{% details proposition "命题 3" open %}
 $A$ 与 $B$ 互为对立事件的充分必要条件是：$A\cap B=\varnothing$，并且 $A\cup B={\mit\Omega}$。
-</details>
+{% enddetails %}
 
-命题 $3$ 也可作为对立事件的另一种定义，即如果事件 $A$ 与 $B$ 满足：$A\cap B=\varnothing$，且 $A\cup B={\mit\Omega}$，则称 $A$ 与 $B$ 互为对立事件，记为 $\bar{A}=B$，$\bar{B}=A$。
+
+命题 3 也可作为对立事件的另一种定义，即如果事件 $A$ 与 $B$ 满足：$A\cap B=\varnothing$，且 $A\cup B={\mit\Omega}$，则称 $A$ 与 $B$ 互为对立事件，记为 $\bar{A}=B$，$\bar{B}=A$。
 
 > 对立事件一定是互不相容事件，即 $A\cap\bar{A}=\varnothing$，但是互不相容事件不一定是对立事件。
 {: .prompt-warning}
+
 
 ### 事件运算的性质
 
@@ -327,8 +327,7 @@ Kolmogorov 的公理化体系使用了集合论的语言，将概率视为对一
 
 但在这之前，我们必须首先明确哪些集合可以被称为“事件”，并且构造一个包含在样本空间的“事件集合”。直觉上我们所构造的集合应该对事件的各种运算(即余集、交集和并集)封闭，并且样本空间 ${\mit\Omega}$ 本身和它的余集 $\varnothing$ 都应该在这个“事件集合”中。
 
-<details class="details-definition" markdown="1" open>
-<summary>事件域</summary>
+{% details definition "事件域" open %}
 设 ${\mit\Omega}$ 为一个样本空间，$\mathscr{F}$ 是 ${\mit\Omega}$ 的子集所组成的集合类。若 $\mathscr{F}$ 满足：
 <ol>
     <li>${\mit\Omega}\in\mathscr{F}$；</li>
@@ -336,7 +335,8 @@ Kolmogorov 的公理化体系使用了集合论的语言，将概率视为对一
     <li>若 $A_1,A_2,\cdots,A_n,\cdots\in\mathscr{F}$，则可列并 $\bigcup\limits_{i=1}^{\infty}A_i\in\mathscr{F}$。</li>
 </ol>
 则称 $\mathscr{F}$ 是一个<a href="https://en.wikipedia.org/wiki/%CE%A3-algebra" target="_blank">事件域</a>(Event field)，或者 $\sigma\ -$ 域或者 $\sigma\ -$ 代数。
-</details>
+{% enddetails %}
+
 
 在概率论中，称 $({\mit\Omega},\mathscr{F})$ 为可测空间(<a href="https://en.wikipedia.org/wiki/Measurable_space" target="_blank"><strong>Measurable space</strong></a>)，**只有在可测空间上才能定义概率**，这时 $\mathscr{F}$ 上都是有概率可言的事件。
 
@@ -344,6 +344,7 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
 
 > 需要注意的是，在概率论中，$\sigma\ -$ 代数指的就是那些可以定义概率的事件的集合(并且满足余集和可列并封闭)。至于在其他学科中，有其他学科所赋予的内涵。并且由条件 $(2)$ 可知，$\varnothing\in\mathscr{F}$，并且 $\overline{\bigcup\limits_{i=1}^{\infty}A_i}=\bigcap\limits_{i=1}^{\infty}\bar{A}_i\in\mathscr{F}$。
 {: .prompt-warning}
+
 
 一维实数轴 $\mathbb{R}$ 上的 <a href="https://en.wikipedia.org/wiki/Borel_set" target="_blank"><strong>Borel 集</strong></a>是常见的 $\sigma\ -$ 代数，它是由一切有界开区间 $(a,b)$，通过至多可数次的(有限或者可数)余集运算、交集运算和并集运算得到的集合。
 
@@ -353,8 +354,7 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
 
 那些无法精确测量、描述过于复杂或超出我们观察能力的事件，通常不属于 $\sigma\ -$ 代数，因此我们无法为它们赋予概率。这些事件往往涉及**无限小区间、无穷复杂现象或超精确测量**，在实际概率分析中无法处理，属于**不可测事件**。例如一个颜色的 RGB 值精确为某个特定数值、在无穷多次抛硬币结果中，硬币的正反面组成某个非常特定的无穷序列。
 
-<details class="details-definition" markdown="1" open>
-<summary>概率的公理化定义</summary>
+{% details definition "概率的公理化定义" open %}
 设 $\mit\Omega$ 为一个样本空间，$\mathscr{F}$ 为 $\mit\Omega$ 上的事件域，$P(A)$ 为定义在 $\mathscr{F}$ 上的实值函数。若$P(A)$ 满足：
 <ol>
    <li>非负性：$\forall A\in\mathscr{F}$，$P(A)\geqslant0$；</li>
@@ -369,12 +369,14 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
    </li>
 </ol>
 则称 $P(A)$ 为事件 $A$ 的概率(Probability)。
-</details>
+{% enddetails %}
+
 
 称 $({\mit\Omega},\mathscr{F},P)$ 为**概率空间**(<a href="https://en.wikipedia.org/wiki/Probability_space" target="_blank"><strong>Probability space</strong></a>)，它为研究随机现象提供了一个严谨的数学框架，使我们能够合理地处理、计算和分析各种随机事件的概率。无论是处理简单的随机事件，还是处理复杂的随机变量，都可以在这个框架下进行。
 
 > 从定义可以看出，概率 $P$ 是事件 $A$ 的实函数，并且概率 $P(A)$ 是有界的，即 $0\leqslant P(A)\leqslant1$。
 {: .prompt-tip}
+
 
 这一公理化体系与 <a href="https://en.wikipedia.org/wiki/Lebesgue_measure" target="_blank"><strong>Lebesgue 测度</strong></a>相结合，使得概率论的基础变得更加坚实，能够处理复杂的事件和连续概率空间问题。Kolmogorov 的公理化定义克服了以往各个学派的局限性，使得概率论从经验和直觉的框架走向了严谨的数学体系。
 
@@ -393,9 +395,8 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
 
 1. 不可能事件 $\varnothing$ 的概率为 0：即 $P(\varnothing)=0$；
 
-   <details class="details-theorem" markdown="1">
-   <summary>证明</summary>
-   由于
+{% details theorem "证明" %}
+由于
 
    $$
       {\mathit\Omega}={\mathit\Omega}\cup\varnothing\cup\cdots\cup\varnothing\cup\cdots
@@ -414,10 +415,12 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
    $$
 
    又由于概率的非负性，于是 $P(\varnothing)=0$。
-   </details>
+{% enddetails %}
 
-   > 概率为 0 的事件并不意味着它是不可能事件，当一个事件的概率为 0 的时候，它也是有一定机会出现的；但是不可能事件的概率为 0，不可能事件是一定不会出现的！
-    {: .prompt-danger}
+
+> 概率为 0 的事件并不意味着它是不可能事件，当一个事件的概率为 0 的时候，它也是有一定机会出现的；但是不可能事件的概率为 0，不可能事件是一定不会出现的！
+{: .prompt-danger}
+
 
 2. 有限可加性：若有 $n$ 个两两互不相容的事件 $A_1,A_2,\cdots,A_n$，则
    $$
@@ -426,9 +429,8 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
    \end{equation}
    $$
 
-   <details class="details-theorem" markdown="1">
-   <summary>证明</summary>
-   由于
+{% details theorem "证明" %}
+由于
 
    $$
        A_1\cup A_2\cup\cdots\cup A_n=A_1\cup A_2\cup\cdots\cup A_n\cup\varnothing\cup\cdots\cup\varnothing\cup\cdots
@@ -442,7 +444,8 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
            &=P(A_1)+P(A_2)+\cdots+P(A_n)
        \end{aligned}
    $$
-   </details>
+{% enddetails %}
+
 
 3. 对立事件的概率：对任意事件 $A$，其对立事件 $\bar{A}$ 的概率为
    $$
@@ -451,9 +454,8 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
    \end{equation}
    $$
 
-   <details class="details-theorem" markdown="1">
-   <summary>证明</summary>
-   根据对立事件的定义，
+{% details theorem "证明" %}
+根据对立事件的定义，
 
    $$
        {\mathit\Omega}=A\cup\bar{A}\quad(\text{或者}\bar{A}={\mathit\Omega}-A)
@@ -466,12 +468,12 @@ $\sigma\ -$ 代数用于定义哪些集合可以称为“事件”，并确保�
    $$
 
    结论得证。
-   </details>
+{% enddetails %}
+
 
 ### 事件的差的概率
 
-<details class="details-proposition" markdown="1" open>
-<summary>命题 $4$</summary>
+{% details proposition "命题 4" open %}
 对于任意两个事件 $A$ 与 $B$，其差 $A-B$ 的概率为
 
 $$
@@ -479,11 +481,10 @@ $$
        P(A-B)=P(A)-P(AB)
    \end{equation}
 $$
+{% enddetails %}
 
-</details>
 
-<details class="details-proposition" markdown="1">
-<summary>证明</summary>
+{% details proposition "证明" %}
 由事件的结合律，有
 
 $$
@@ -497,14 +498,14 @@ $$
 $$
 
 即 $P(A-B)=P(A)-P(AB)$，结论得证。
+{% enddetails %}
 
-</details>
 
 > 事件 $A-B$ 也可以写作 $A\bar{B}$，$P(A-B)$ 实际上计算的是 $P(A\bar{B})$ 的值。
 {: .prompt-tip}
 
-<details class="details-theorem" markdown="1" open>
-<summary>推论 $1$</summary>
+
+{% details theorem "推论 1" open %}
 对于任意两个事件 $A$ 与 $B$，若 $B\subset A$，则其差 $A-B$ 的概率为
 
 $$
@@ -512,38 +513,36 @@ $$
        P(A-B)=P(A)-P(B)
    \end{equation}
 $$
+{% enddetails %}
 
-</details>
 
-<details class="details-theorem" markdown="1">
-<summary>证明</summary>
+{% details theorem "证明" %}
 由于 $B\subset A$，因此 $AB=B$，于是
 
 $$
    P(A-B)=P(A)-P(B)
 $$
+{% enddetails %}
 
-</details>
 
 从几何直观上看，求事件 $A-B$ (图中灰色部分)的概率只需用事件 $A$ 的“面积”减去事件 $AB$ 的“面积”：
 
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
       <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/picture/event_and_probabity/deduct.png" alt="任意的事件A与B" style="width: 300px;">
+         <img src="/assets/images/picture/event_and_probability/deduct.png" alt="任意的事件A与B" style="width: 300px;">
             <figcaption>(a) 任意的事件 $A$ 与 $B$</figcaption>
             </figure>
             <figure style="text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/picture/event_and_probabity/difference(including).png" alt="A-B(including)" style="width: 300px;">
+         <img src="/assets/images/picture/event_and_probability/difference(including).png" alt="A-B(including)" style="width: 300px;">
          <figcaption>(b) $B\subset A$</figcaption>
       </figure>
    </div>
    <p style="margin-top: 0;">图 5: 事件 $A-B$ 的概率的 Venn 图示意</p>
 </div>
 
-<details class="details-example" markdown="1">
-<summary>最大号码估计问题</summary>
-某城有 $n$ 辆卡车，其车牌号从 $1$ 到 $n$。有一个外地人到该城去，把遇到的 $m$ 辆车子的牌号抄下(可能重复抄到某些车牌号)。设事件 $A_i$ 为遇到的 $m$ 辆车子的的最大牌号为 $k$，下面求抄到的最大号码正好为 $k$ 的概率($1\leqslant k\leqslant n$)。
+{% details example "最大号码估计问题" %}
+某城有 $n$ 辆卡车，其车牌号从 1 到 $n$。有一个外地人到该城去，把遇到的 $m$ 辆车子的牌号抄下(可能重复抄到某些车牌号)。设事件 $A_i$ 为遇到的 $m$ 辆车子的的最大牌号为 $k$，下面求抄到的最大号码正好为 $k$ 的概率($1\leqslant k\leqslant n$)。
 
 若直接计算 $A_k$ 的概率会比较复杂，因此考虑“遇到的 $m$ 辆车子的最大牌号小于等于 $k$”，将其设为事件 $B_k$，那么 $A_k$ 则可以表示为 $A_k=B_k-B_{k-1}$，并且 $B_{k-1}\subset B_k$。事件 $B_k$ 比起 $A_k$ 的概率要好求得多。根据古典概型可求得事件 $B_k$ 的概率为
 
@@ -556,21 +555,21 @@ $$
 $$
   P(A_k)=P(B_k-B_{k-1})=P(B_k)-P(B_kB_{k-1})=P(B_k)-P(B_{k-1})=\frac{k^m-(k-1)^m}{n^m}
 $$
+{% enddetails %}
 
-</details>
 
-<details class="details-theorem" markdown="1" open>
-<summary>推论 $2$ (概率的单调性)</summary>
+{% details theorem "推论 2 (概率的单调性)" open %}
 对于任意两个事件 $A$ 与 $B$，若 $B\subset A$，则 $P(B)\leqslant P(A)$。
-</details>
+{% enddetails %}
+
 
 > 推论 2 的逆命题不成立，即若 $P(B)\leqslant P(A)$ 无法推出 $B\subset A$。
 {: .prompt-danger}
 
+
 ### 加法公式
 
-<details class="details-theorem" markdown="1" open>
-<summary>定理 $1$</summary>
+{% details theorem "定理 1" open %}
 对于任意的两个事件 $A$ 与 $B$，其交事件 $A\cup B$ (即事件 $A$ 或 $B$ 至少发生一个)的概率为
 
 $$
@@ -578,11 +577,10 @@ $$
        P(A\cup B)=P(A)+P(B)-P(AB)
    \end{equation}
 $$
+{% enddetails %}
 
-</details>
 
-<details class="details-theorem" markdown="1">
-<summary>证明</summary>
+{% details theorem "证明" %}
 由于
 
 $$
@@ -594,22 +592,21 @@ $$
 $$
     P(A\cup B)=P(A)+P(B-AB)=P(A)+P(B)-P(AB)
 $$
+{% enddetails %}
 
-</details>
 
 从几何直观上看，求事件 $A\cup B$ 的概率就是把事件 $A$ 的“面积”加事件 $B$ 的“面积，但是由于多加了一次事件 $AB$ (图中蓝色部分)的面积，因此必须再额外减去：
 
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probabity/add.png" alt="事件A\cup B的概率" style="width: 300px;">
+       <img src="/assets/images/picture/event_and_probability/add.png" alt="事件A\cup B的概率" style="width: 300px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 6: 事件 $A\cup B$ 的概率的 Venn 图示意</p>
 </div>
 
-<details class="details-theorem" markdown="1" open>
-<summary>推论 $3$</summary>
+{% details theorem "推论 3" open %}
 对于 $n$ 个任意事件 $A_1,A_2,\cdots,A_n$，其交事件的概率为 $\bigcup\limits_{i=1}^{n}A_i$ 的概率为
 
 $$
@@ -622,10 +619,10 @@ $$
 $$
 
 其中一共包含 $\binom{n}{r}$ 个和项。
-</details>
+{% enddetails %}
 
-<details class="details-theorem" markdown="1" open>
-<summary>推论 $4$ (半可加性)</summary>
+
+{% details theorem "推论 4 (半可加性)" open %}
 对于任意两个事件 $A$ 与 $B$，有
 
 $$
@@ -641,11 +638,12 @@ $$
       P\left(\bigcup_{i=1}^{n}A_i\right)\leqslant \sum_{i=1}^{n}P(A_i)
   \end{equation}
 $$
+{% enddetails %}
 
-</details>
 
-> 推论 $4$ 也被称为 <a href="https://en.wikipedia.org/wiki/Boole%27s_inequality" target="_blank">Boole 不等式</a>。
+> 推论 4 也被称为 <a href="https://en.wikipedia.org/wiki/Boole%27s_inequality" target="_blank">Boole 不等式</a>。
 {: .prompt-info}
+
 
 ## 确定概率的方法
 
@@ -700,6 +698,7 @@ $$
 > 主观给定的概率要符合概率的公理化定义。
 {: .prompt-tip}
 
+
 例如有一个学者以 90% 的把握断言《伊里亚特》和《奥德赛》是由同一作者创作的，所谓概率为 90% 的把握是学者的**主观信念**；再比如周五晚上的热门电影，你可能会觉得电影票已经卖完的概率是 60%，这是判断基于你对这个时间段和电影受欢迎程度的理解。
 
 ### 古典概型
@@ -740,8 +739,7 @@ $$
 
 在古典概型中，求事件 $A$ 的概率归结为计算 $A$ 中含有的样本点的个数和中含有的样本点的总数，所以在计算中经常用到排列组合工具。
 
-<details class="details-example" markdown="1">
-<summary>不放回抽样模型</summary>
+{% details example "不放回抽样模型" %}
 一批产品共有 $N$ 件，其中 $M$ 件是不合格品，$N-M$ 件是合格品。从中随机取出 $n$ 件($n\leqslant N$)，下面求事件 $A_m=\text{“取出的}n\text{件产品中有}m\text{件不合格品”}$ 的概率($m\leqslant M,n-m\leqslant N-M$)。
 
 我们先计算样本空间 ${\mit\Omega}$ 中样本点的个数，从 $N$ 件中抽取 $n$ 件产品，由于不限抽取次数，因此样本点的个数就为 $\binom{N}{n}$。又由于是随机抽取的，因此每一件产品抽取到的可能性都是相等的。
@@ -774,11 +772,10 @@ $$
   P(A_m)=\frac{\binom{M}{m}\binom{N-M}{n-m}}{\frac{N}{n}}, \quad m=1,2,\cdots,r,\quad r=\min\{n,M\}
 \end{equation}
 $$
+{% enddetails %}
 
-</details>
 
-<details class="details-example" markdown="1">
-<summary>盒子模型</summary>
+{% details example "盒子模型" %}
 设有 $n$ 个球，每个球都等可能地被放到 $N$ 个不同盒子中的任一个，每个盒子所放球数不限。下面我们将分别求
 
 1. 在指定的 $n(n\leqslant N)$ 个盒子中各有一球的概率 $p_1$；
@@ -804,12 +801,12 @@ $$
         $$
     </li>
 </ol>
-</details>
+{% enddetails %}
+
 
 下面我们利用盒子模型 $(2)$ 所得的结果考虑下面这个问题：
 
-<details class="details-example" markdown="1">
-<summary>生日问题</summary>
+{% details example "生日问题" %}
 由盒子模型 $(2)$，我们可以计算出 $n$ 个人的生日全不相同的概率 $p_n$ 是多少。易知
 
 $$
@@ -830,7 +827,8 @@ $$
         $$
     </li>
 </ol>
-</details>
+{% enddetails %}
+
 
 例如一个班上 40 人，那么这 40 人的生日都不相同的概率约为 $\exp(-\frac{40\times39}{730})=11.8\%$，也就是说一个班上至少有 2 人生日相同的概率约为 88.2%！进一步计算可知当 $n\geqslant23$ 时，$1-p_n>0.5$，即当人数大于 22 人时，至少有 2 人生日相同的概率已经超过了 50%；当 $n\geqslant60$ 时，几乎可以肯定至少有 2 人生日在同一天！
 
@@ -861,9 +859,8 @@ $$
 
 求几何概率的关键是对样本空间和所求事件 $A$ 用图形描述清楚(一般用平面或空间图形)，然后计算出相关图形的度量(一般为面积或体积)。
 
-<details class="details-example" markdown="1">
-<summary>会面问题</summary>
-甲乙两人约定在下午6时到7时之间在某处会面，并约定先到者应等候另一个人 20 分钟，过时即离去。记事件 $A$ 为甲乙两人能会面，求两人能会面的概率。
+{% details example "会面问题" %}
+甲乙两人约定在下午 6 时到 7 时之间在某处会面，并约定先到者应等候另一个人 20 分钟，过时即离去。记事件 $A$ 为甲乙两人能会面，求两人能会面的概率。
 
 分别用 $x$ 和 $y$ 分别表示甲、乙两人到达约会地点的时间(以 min 为单位)，在平面上建立 $xOy$ 直角坐标系。$(x,y)$ 的所有可能取值在边长为 60 的正方形区域内，其面积为 $S_{\mathit\Omega}=60^2$，而事件 $A=\text{“两人能够会面”}$ 等价于
 
@@ -876,20 +873,19 @@ $$
 $$
   P(A)=\frac{S_A}{S_{\mathit\Omega}}=\frac{60^2-40^2}{60^2}\approx 0.5556
 $$
+{% enddetails %}
 
-</details>
 
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probabity/meeting.png" alt="meeting" style="width: 300px;">
+       <img src="/assets/images/picture/event_and_probability/meeting.png" alt="meeting" style="width: 300px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 7: 会见问题的样本空间</p>
 </div>
 
-<details class="details-example" markdown="1">
-<summary>Buffon 投针问题(估计圆周率 $\pi$)</summary>
+{% details example "Buffon 投针问题(估计圆周率 $\pi$)" %}
 平面上画有间隔为 $d(d>0)$ 的等距平行线，向平面任意投掷一枚长为 $l(l< d)$ 的针。记事件 $A$ 为针与任一平行线相交，下面我们求针与任一平行线相交的概率。
 
 设 $x$ 为针的中点到最近平行线的垂直距离，$\varphi$ 为针与最近平行线所形成的夹角，于是样本空间 $\mit\Omega$ 就为
@@ -909,10 +905,12 @@ $$
 于是由几何概型可知
 
 $$
-  P(A)=\frac{S_A}{S_{\mathit\Omega}}=\frac{\displaystyle\int_{0}^{\pi}\frac{l}{2}\sin{\varphi}}{\frac{d}{2}\pi}=\frac{2l}{d\pi} \ (l<d)
+  \begin{equation}
+    P(A)=\frac{S_A}{S_{\mathit\Omega}}=\frac{\displaystyle\int_{0}^{\pi}\frac{l}{2}\sin{\varphi}}{\frac{d}{2}\pi}=\frac{2l}{d\pi} \ (l<d)
+  \end{equation}
 $$
+{% enddetails %}
 
-</details>
 
 其中 $l,d$ 为已知量，只需将 $\pi$ 代入即可计算出 $P(A)$ 的值；反过来若已经用事件 $A$ 发生的频率 $\frac{n}{N}$ 估计出了 $P(A)$ 的值，则可以反解出 $\pi$ 来，即
 
@@ -925,15 +923,15 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
       <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-        <img src="/assets/images/picture/event_and_probabity/needle.png" alt="Buffon 投针问题" style="width: 300px; margin-top: 56px;">
+        <img src="/assets/images/picture/event_and_probability/needle.png" alt="Buffon 投针问题" style="width: 300px; margin-top: 56px;">
         <figcaption>(a) Buffon 投针问题</figcaption>
       </figure>
       <figure style="text-align: center; margin-bottom: 0;">
-        <img src="/assets/images/picture/event_and_probabity/needle_space.png" alt="Buffon 投针的样本空间" style="width: 300px;">
+        <img src="/assets/images/picture/event_and_probability/needle_space.png" alt="Buffon 投针的样本空间" style="width: 300px;">
         <figcaption>(b) Buffon 投针的样本空间</figcaption>
       </figure>
       <figure style="text-align: center; margin-bottom: 0;">
-        <img src="/assets/images/picture/event_and_probabity/intersect.png" alt="相交的充要条件" style="width: 300px; margin-top: 116px;">
+        <img src="/assets/images/picture/event_and_probability/intersect.png" alt="相交的充要条件" style="width: 300px; margin-top: 116px;">
         <figcaption>(c) 针与平行线相交的充分必要条件</figcaption>
       </figure>
    </div>
@@ -944,27 +942,27 @@ $$
 
 一般来说试验次数越多，则求得的近似解就越精确，随着计算机的出现，人们便可利用计算机来大量重复地模拟所设计的随机试验。这种方法得到了迅速的发展和广泛的应用，人们称这种方法为**随机模拟法**，也称为 <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method" target="_blank"><strong>Monte Carlo 法</strong></a>。Buffon 投针的随机模拟详见<a href="/event-and-probability-simulation.html#buffon投针的计算机模拟" target="_blank"> Buffon 投针的计算机模拟</a>。
 
-<details class="details-example" markdown="1">
-<summary>Bertrand 悖论</summary>
+{% details example "Bertrand 悖论" %}
 在圆内任取一条弦，问其长度超过该圆内接等边三角形的边长的概率是多少？该问题可以有三种不同的解法：
 
 1. 假定弦的中点在直径上均匀分布，直径上的点组成样本空间 ${\mit\Omega}_1$。由于对称性可只考察某指定方向的弦，作一条直径垂直于这个方向。显然只有交直径于 $\frac{1}{4}$ 与 $\frac{3}{4}$ 之间的弦才能超过正三角形的边长，因此概率为 $\frac{1}{2}$。
 2. 假定弦的另一活动端点在圆周上均匀分布，圆周上的点组成样本空间 ${\mit\Omega}_2$。由于对称性可让弦的一端点固定，让另一端点在圆周上作随机移动。若在固定端点作一切线，则与此切线夹角在 $60^{\circ}$ 与 $120^{\circ}$之间的弦才能超过正三角形的边长，因此概率为 $\frac{1}{3}$。
 3. 假定弦的中点在大圆内均匀分布，大圆内的点组成样本空间 ${\mit\Omega}_3$。圆内弦的位置被其中点唯一确定。在圆内作一同心圆，其半径仅为大圆半径的一半,则大圆内弦的中点落在小圆内，此弦长才能超过正三角形的边长，因此概率为 $\frac{1}{4}$。
-</details>
+{% enddetails %}
+
 
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 0px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probabity/Bertrand1.png" alt="Bertrand1" style="width: 200px;">
+       <img src="/assets/images/picture/event_and_probability/Bertrand1.png" alt="Bertrand1" style="width: 200px;">
        <figcaption>(a) 解法一</figcaption>
      </figure>
      <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probabity/Bertrand2.png" alt="Bertrand2" style="width: 200px;">
+       <img src="/assets/images/picture/event_and_probability/Bertrand2.png" alt="Bertrand2" style="width: 200px;">
        <figcaption>(b) 解法二</figcaption>
      </figure>
      <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probabity/Bertrand3.png" alt="Bertrand3" style="width: 185px;">
+       <img src="/assets/images/picture/event_and_probability/Bertrand3.png" alt="Bertrand3" style="width: 185px;">
        <figcaption>(c) 解法三</figcaption>
      </figure>
    </div>
@@ -973,6 +971,7 @@ $$
 
 > 上述三个答案是针对三个不同样本空间引起的，它们都是正确的，Bertrand 悖论启发我们，在定义概率时**要事先明确指出样本空间是什么**！
 {: .prompt-danger}
+
 
 ## 条件概率
 
@@ -996,8 +995,7 @@ $$
 
 解释为“在抽取性别为女性的假设条件下，这个人是色盲的概率”。
 
-<details class="details-definition" markdown="1" open>
-<summary>条件概率</summary>
+{% details definition "条件概率" open %}
 设 $A$ 与 $B$ 是样本空间 $\mit\Omega$ 中的任意两个事件，若 $P(B)>0$，则称
 
 $$
@@ -1007,14 +1005,15 @@ $$
 $$
 
 为“在 $B$ 发生的条件下 $A$ 发生”的概率，简称为条件概率。
-</details>
+{% enddetails %}
+
 
 为了与条件概率相对应，$P(A)$ 可以被称作**无条件概率**(Unconditional probability)。条件概率 $P(A\mid B)$ 可理解为由于事件 $B$ 的发生，**样本空间从** $\boldsymbol{\mit\Omega}$ **变为了** $\boldsymbol{\mit\Omega_{B}=B}$。从几何直观上看，无条件概率 $P(A)$ 就是事件 $A$ (图中灰色部分)占样本空间 ${\mit\Omega}$ 的比例，条件概率 $P(A\mid B)$ 就是事件 $AB$ 的“面积”占事件 $B$ (图中橙色部分加上事件 $AB$ 的灰色部分)的“面积”的比例：
 
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probabity/condition.png" alt="P(A\mid B)" style="width: 300px;">
+       <img src="/assets/images/picture/event_and_probability/condition.png" alt="P(A\mid B)" style="width: 300px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 10: 条件概率 $P(A\mid B)$ 的 Venn 图示意</p>
@@ -1025,22 +1024,21 @@ $$
 > 在通常意义下，若 $P(B)=0$，那么条件概率 $P(A\mid B)$ 则无法定义或者无意义，也就是说若事件 $B$ 根本不可能发生，那么以事件 $B$ 作为前提来讨论事件 $A$ 的发生情况就不再有意义。不过在测度论的框架下，对于**零概率事件**的条件概率有更为复杂的处理方法，如 Radon-Nikodym 导数，但这是在更抽象的数学背景下讨论的。
 {: .prompt-info}
 
-<details class="details-example" markdown="1">
-<summary>肝癌的医学检测问题</summary>
+
+{% details example "肝癌的医学检测问题" %}
 在肝癌普查中发现，某地区的自然人群中，每十万人内平均有 40 人患原发性肝癌，有 34 人甲胎球蛋白高含量，32人既患原发性肝癌又出现甲胎球蛋白高含量。设事件 $A$ 为患肝癌，事件 $B$ 为甲胎球蛋白高含量，那么 $P(A)=0.0004,P(B)=0.00034,P(AB)=0.00032$，从而
 
 $$
   P(A\mid B)=\frac{P(AB)}{P(B)}=\frac{0.00032}{0.00034}=0.9412, \quad P(B\mid A)=\frac{P(AB)}{P(A)}=\frac{0.00032}{0.0004}=0.8
 $$
+{% enddetails %}
 
-</details>
 
 $P(B\mid A)=0.8$ 这说明患肝癌的人群中有 80% 的人会有甲胎球蛋白高含量的症状，因此检测甲胎球蛋白的含量能够很好地判断一个人是否患肝癌；而 $P(A\mid B)=0.9412$ 说明若出现了甲胎球蛋白高含量的症状，那么对一个人患肝癌的概率判断的正确性高达 94.12%。
 
 由于事件 $B$ 的发生，使事件 $A$ 发生的概率由 0.0004 一下子上升到 0.9412。可见**事件发生的概率，与条件有关，也与已知信息有关**。
 
-<details class="details-proposition" markdown="1" open>
-<summary>命题 $5$</summary>
+{% details proposition "命题 5" open %}
 设 $P(B)>0$，若
 <ol>
    <li>$\forall A\in\mathscr{F}$，有 $P(A\mid B)\geqslant0$；</li>
@@ -1055,7 +1053,8 @@ $P(B\mid A)=0.8$ 这说明患肝癌的人群中有 80% 的人会有甲胎球蛋�
    </li>
 </ol>
 则条件概率 $P(A\mid B)$ 是定义在概率空间 $({\mit\Omega},\mathscr{F},P)$ 上的概率。
-</details>
+{% enddetails %}
+
 
 因此类似于无条件概率，条件概率也可由三个基本性质导出其他些性质，例如：
 
@@ -1069,8 +1068,7 @@ $P(B\mid A)=0.8$ 这说明患肝癌的人群中有 80% 的人会有甲胎球蛋�
 
 乘法公式(<a href="https://en.wikipedia.org/wiki/Conditional_probability#As_an_axiom_of_probability" target="_blank">Multiplication formula</a>)是计算**两个事件同时发生的概率**的工具，它将两个事件的联合概率分解为两个步骤：首先计算事件 $B$ 发生的概率，然后计算在 $B$ 发生的前提下事件 $A$ 发生的概率。这种分解能**从局部的角度理解复杂的联合概率**，其意义在于它可以**分步骤计算复杂的联合概率**，揭示了事件之间的相互依赖关系。
 
-<details class="details-theorem" markdown="1" open>
-<summary>乘法公式</summary>
+{% details theorem "乘法公式" open %}
 设 $A$ 与 $B$ 是两个任意事件，若 $P(B)>0$，那么
 
 $$
@@ -1078,8 +1076,8 @@ $$
         P(AB)=P(B)P(A\mid B)
     \end{equation}
 $$
+{% enddetails %}
 
-</details>
 
 由条件概率的定义式可知，
 
@@ -1101,8 +1099,7 @@ $$
 
 若事件 $A$ 与事件 $B$ 之间不是独立发生的两个事件，乘法公式也体现了**一个事件的发生如何影响另一个事件的发生概率**。通过计算条件概率 $P(A\mid B)$ 可以准确估计联合概率。若事件 $A$ 与事件 $B$ 是独立的，即 $P(A\mid B)=P(A)$，则有 $P(AB)=P(A)\cdot P(B)$，这正是独立事件的定义。
 
-<details class="details-theorem" markdown="1" open>
-<summary>推论 $5$</summary>
+{% details theorem "推论 5" open %}
 若 $P(A_1A_2\cdots A_{n-1})>0$，那么
 
 $$
@@ -1110,11 +1107,10 @@ $$
   P(A_1A_2\cdots A_n)=P(A_1)P(A_2\mid A_1)P(A_3\mid A_1A_2)\cdots P(A_n\mid A_1A_2\cdots A_{n-1})
 \end{equation}
 $$
+{% enddetails %}
 
-</details>
 
-<details class="details-theorem" markdown="1">
-<summary>证明</summary>
+{% details theorem "证明" %}
 由于
 
 $$
@@ -1133,10 +1129,10 @@ $$
 $$
 
 因此 $P(A_2\mid A_1),P(A_3\mid A_1A_2),\cdots,P(A_n\mid A_1A_2\cdots A_{n-1})$ 都是有意义的。
-</details>
+{% enddetails %}
 
-<details class="details-example" markdown="1">
-<summary>三门问题</summary>
+
+{% details example "三门问题" %}
 你站在三个封闭的门前，其中一个门后有奖品，当然奖品在哪一个门后是完全随机的。当你选定一个门以后，主持人打开其余两扇门中的一扇空门，显示门后没有奖品。此时你可以有两种选择，保持原来的选择或者改选另一扇没有被打开的门。
 
 当你作出最后选择以后，如果打开的门后有奖品，这个奖品就归你。现在有三种策略：
@@ -1150,11 +1146,12 @@ $$
 1. 此策略赢得奖品的概率完全取决于你初始选择的门，因此赢得奖品的概率为 $P(A_1)=\frac{1}{3}$；
 2. 第一步必须选择一扇门后没有奖品的门，其概率为 $P(\bar{A}_1)=\frac{2}{3}$，第二步你改选另一扇没有没打开的门，其门后有奖品的概率为 $P(A_2\mid \bar{A}_1)=1$，于是由乘法公式，赢得奖品的概率为 $P(\bar{A}_1A_2)=\frac{2}{3}$；
 3. 在此策略中由于提供的信息不够充分(赢得奖品的概率依赖于主持人打开门的方式)，因此再分为以下两种情况讨论：
-    1. 假设主持人始终会打开 2 号门(当奖品在 2 号门时，主持人则会打开其他号门)。假定奖品在 1 号门后(其概率为 $\frac{1}{3}$)，主持人则会打开 2 号门，这时赢得奖品的概率为 $P(A_1)=\frac{1}{3}$；假定奖品在 2 后门后，主持人打开 3 号门，这时赢得奖品的概率为 $P(\bar{A}_1A_2)=\frac{1}{3}$；假定奖品在 3 号门后，主持人打开 2 号门，这时赢得奖品的概率为 $0$。于是由加法原理，赢得奖品的概率为 $\frac{1}{3}+\frac{1}{3}=\frac{2}{3}$。
-    2. 假设主持人会随机地打开 2 号门或者 3 号门。假定奖品在 1 号门后(其概率为 $\frac{1}{3}$)，主持人随机打开 2 号门或者 3 号门(其概率为 $\frac{1}{2}$)，这时赢得奖品的概率为 $P(A_1)=\frac{1}{6}$；假定奖品在 2 号门后，主持人随机打开 2 号门或者 3 号门，这时赢得奖品的概率为 $P(\bar{A}_1A_2)=\frac{1}{3}$；假定奖品在3号门后，主持人随机打开 2 号门或者 3 号门，这时赢得奖品的概率为 $0$。于是由加法原理，赢得奖品的概率为 $\frac{1}{6}+\frac{1}{3}=\frac{1}{2}$。
+    1. 假设主持人始终会打开 2 号门(当奖品在 2 号门时，主持人则会打开其他号门)。假定奖品在 1 号门后(其概率为 $\frac{1}{3}$)，主持人则会打开 2 号门，这时赢得奖品的概率为 $P(A_1)=\frac{1}{3}$；假定奖品在 2 后门后，主持人打开 3 号门，这时赢得奖品的概率为 $P(\bar{A}_1A_2)=\frac{1}{3}$；假定奖品在 3 号门后，主持人打开 2 号门，这时赢得奖品的概率为 0。于是由加法原理，赢得奖品的概率为 $\frac{1}{3}+\frac{1}{3}=\frac{2}{3}$。
+    2. 假设主持人会随机地打开 2 号门或者 3 号门。假定奖品在 1 号门后(其概率为 $\frac{1}{3}$)，主持人随机打开 2 号门或者 3 号门(其概率为 $\frac{1}{2}$)，这时赢得奖品的概率为 $P(A_1)=\frac{1}{6}$；假定奖品在 2 号门后，主持人随机打开 2 号门或者 3 号门，这时赢得奖品的概率为 $P(\bar{A}_1A_2)=\frac{1}{3}$；假定奖品在3号门后，主持人随机打开 2 号门或者 3 号门，这时赢得奖品的概率为 0。于是由加法原理，赢得奖品的概率为 $\frac{1}{6}+\frac{1}{3}=\frac{1}{2}$。
 
 综上所述，当主持人打开了一扇空门之后，最好的策略是改选另一扇没有被打开的门，此时赢得奖品的概率为 $\frac{2}{3}$。
-</details>
+{% enddetails %}
+
 
 三门问题的随机模拟详见<a href="/event-and-probability-simulation.html#三门问题的计算机模拟" target="_blank">三门问题的计算机模拟</a>。
 
@@ -1162,8 +1159,7 @@ $$
 
 全概率公式(<a href="https://en.wikipedia.org/wiki/Law_of_total_probability" target="_blank">Law of total probability</a>)**将事件的概率分解为多个条件下的概率**，从而提供了一种结构化的计算方式，可以更有效地计算复杂情境下的概率。它特别适合处理多个**互不相容**的子事件，在这些不同的子事件中包含另一个事件总的发生概率。
 
-<details class="details-theorem" markdown="1" open>
-<summary>全概率公式</summary>
+{% details theorem "全概率公式" open %}
 设 $A$ 是一个任意事件，若 $B_1,B_2,\cdots,B_n$ 是样本空间 $\mit\Omega$ 的一个分割，即 $B_1,B_2,\cdots,B_n$ 两两之间互不相容，且 $\bigcup\limits_{i=1}^{n}B_i={\mit\Omega}$。若 $P(B_i)>0(i=1,2,\cdots,n)$，则 $A$ 发生的概率为
 
 $$
@@ -1171,11 +1167,10 @@ $$
         P(A)=\sum_{i=1}^{n}P(B_i)P(A\mid B_{i})
     \end{equation}
 $$
+{% enddetails %}
 
-</details>
 
-<details class="details-theorem" markdown="1">
-<summary>证明</summary>
+{% details theorem "证明" %}
 由于 $B_1,B_2,\cdots,B_n$ 构成样本空间 ${\mit\Omega}$ 的一个分割，于是
 
 $$
@@ -1199,33 +1194,34 @@ $$
 $$
     P(A)=\sum_{i=1}^{n}P(B_i)P(A\mid B_i)
 $$
+{% enddetails %}
 
-</details>
 
 可以把全概率公式理解为“**加权平均**”的过程：事件 $A$ 的总概率是基于不同情况 $B_1,B_2,\cdots,B_n$ 下发生的可能性，以及在这些情景下事件 $A$ 发生的条件概率，通过每种情况 $B_i(i=1,2,\cdots,n)$ 下发生的概率 $P(B_i)$ 来对相对应的条件概率 $P(A\mid B)$ “加权”，最终得到事件 $A$ 的总概率。
 
 > 要求 $\sum\limits_{i=1}^{n}P(B_i)=1$，解释为对应的条件概率的权重，体现各条件概率的重要程度或者贡献度。
 {: .prompt-warning}
 
+
 > $B_1,B_2,\cdots,B_n$ 不必为 $\mit\Omega$ 的一个分割，只需 $B_1,B_2,\cdots,B_n$ 是两两互不相容的事件，且 $A\subset\bigcup\limits_{i=1}^{n}B_i$ 即可；另外可列个 $B_1,B_2,\cdots,B_n,\cdots$ 是两两互不相容的事件，且 $A\subset\bigcup\limits_{i=1}^{\infty}B_i$，则全概率公式依旧成立；
 {: .prompt-tip}
+
 
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
       <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/picture/event_and_probabity/full.png" alt="对立事件分割样本" style="width: 300px;">
+         <img src="/assets/images/picture/event_and_probability/full.png" alt="对立事件分割样本" style="width: 300px;">
          <figcaption>(a) 用 $B$ 与 $\bar{B}$ 来分割样本空间</figcaption>
       </figure>
       <figure style="text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/picture/event_and_probabity/full_condition.png" alt="互不相容事件分割样本" style="width: 300px;">
+         <img src="/assets/images/picture/event_and_probability/full_condition.png" alt="互不相容事件分割样本" style="width: 300px;">
          <figcaption>(b) $A\subset \bigcup\limits_{i=1}^{6}B_i$</figcaption>
       </figure>
    </div>
    <p style="margin-top: 0;">图 11: 不同形式的全概率公式</p>
 </div>
 
-<details class="details-example" markdown="1">
-<summary>社会调查中的敏感性调查问题</summary>
+{% details example "社会调查中的敏感性调查问题" %}
 在社会调查中，若调查内容包含有隐私性问题，被调查者通常不愿意直接回答。例如在校园中调查学生接触过黄色书刊或者影像是否会影响其身心健康发展的课题，从调查数据中估计出学生中解出过黄色书刊或者影像的比例 $p$，为此需要制作两份不同的调查问卷：
 
 1. 你的生日是否在 7 月 1 日之前？
@@ -1258,8 +1254,8 @@ $$
 $$
   p=\frac{k/n-0.5(1-\pi)}{\pi}
 $$
+{% enddetails %}
 
-</details>
 
 例如在一次调查中，设置问题 $(2)$ 的比率为 $\pi=0.6$；共回收 1583 份问卷，其中有 389 份答卷回答了“是”，那么就可以估计出 $p$ 的值：
 
@@ -1269,8 +1265,7 @@ $$
 
 即大约有 7.62% 的学生接触过黄色书刊或者影像。
 
-<details class="details-example" markdown="1">
-<summary>双胞胎同性别的估计</summary>
+{% details example "双胞胎同性别的估计" %}
 双胞胎可能是同卵双生或者异卵双生，为了知道双胞胎中同卵双生所占的比例，统计学家首先要求市里每一家医院对双胞胎做记录，同时对是否是同卵双生做标记，然而判断一个新生儿是否是同卵双生并不是一件简单的事，这关系到父母是否愿意自费给孩子做这项复杂而又昂贵的 DNA 检验。而后统计学家只让医院提供标记着双胞胎是否是相同性别的所有双胞胎数据列表。经过计算，当约有 64% 的双胞胎是性别相同时，统计学家就宣称约有 28% 的双胞胎是同卵双生。
 
 下面我们来解释一下其中的原理：首先统计学家假设同卵双生双胞胎性别总是相同的(事实上同卵双生双胞胎几乎总是相同性别的)。又因为异卵双生双胞胎就相当于普通的兄弟姐妹，所以性别相同的概率也有 $\frac{1}{2}$。令事件 $I$ 表示“同卵双生双胞胎”，令事件 $SS$ 表示“双胞胎性别相同”，他在双胞胎是否为同卵双生的条件下计算概率 $P(SS)$，得到
@@ -1284,14 +1279,14 @@ $$
 $$
 
 于是当 $P(SS)\approx0.64$ 时，$P(I)\approx0.28$，即当约有 64% 的双胞胎是性别相同时，则约有 28% 的双胞胎是同卵双生。
-</details>
+{% enddetails %}
+
 
 ### Bayes 公式
 
 首先我们先来探究 $P(A)$ 与 $P(\bar{A})$、$P(A\mid B)$ 与 $P(\bar{A}\mid B)$ 的关系：
 
-<details class="details-definition" markdown="1" open>
-<summary>优势比</summary>
+{% details definition "优势比" open %}
 设事件 $A$ 发生的概率为 $P(A)$，那么事件 $A$ 的优势比(<a href="https://en.wikipedia.org/wiki/Odds_ratio" target="_blank">Odds ratio</a>)则为
 
 $$
@@ -1299,8 +1294,8 @@ $$
         \frac{P(A)}{P(\bar{A})}=\frac{P(A)}{1-P(A)}
     \end{equation}
 $$
+{% enddetails %}
 
-</details>
 
 事件 $A$ 的优势比告诉我们事件 $A$ 发生的可能性是不发生时的可能性的倍数，若 $P(A)=\frac{2}{3}$，那么 $P(A)=2P(\bar{A})$。如果某事件的优势比等于 $\alpha$，那么通常称支持假设(事件)成立的优势比为“$\alpha:1$”。
 
@@ -1326,8 +1321,7 @@ $$
 
 则 $H$ 的优势比值是递增的，反之 $H$ 的优势比是递减的。
 
-<details class="details-example" markdown="1">
-<summary>新证据对假设的影响</summary>
+{% details example "新证据对假设的影响" %}
 一个坛子里装了两枚 $A$ 型硬币和一枚 $B$ 型硬币，当抛 $A$ 型币时，正面向上的概率是 $\frac{1}{4}$。当抛 $B$ 型硬币时，正面向上的概率是 $\frac{3}{4}$。随机从坛子里取一枚硬币掷，假定掷出的结果是正面向上，下面求所掷的是 $A$ 型硬币的概率是多少。
 
 令事件 $A$ 为“投掷的硬币为 $A$ 型硬币”，事件 $B$ 为“投掷的硬币为 $B$ 型硬币”，并且易知 $\bar{A}=B$，用 head 表示“投掷结果为正面向上”，那么事件 $A$ 的优势比为
@@ -1337,7 +1331,8 @@ $$
 $$
 
 即在硬币正面朝上的情况下事件 $A$ 的优势比为 $\frac{2}{3}:1$，或者说在硬币正面朝上的情况下事件 $A$ 发生的概率为 $\frac{2}{5}$。
-</details>
+{% enddetails %}
+
 
 在没有任何信息的情况下，我们判断事件 $A$ 发生的概率为 $\frac{2}{3}$；而在已经知道硬币正面朝上的信息下，我们能用“硬币正面朝上”这个事件的信息量更新判断事件 $A$ 发生的概率为 $\frac{2}{5}<\frac{2}{3}$，这说明“硬币正面朝上”这一个信息对我们判断硬币种类没有任何帮助，反而还会被“硬币正面朝上”这个冗余的信息扰乱我们的视线。
 
@@ -1375,8 +1370,7 @@ $$
 
 \eqref{eq:两个对立事件的Bayes公式}式的分母实际上为 $P(E)=P(H)P(E\mid H)+P(\bar{H})P(E\mid\bar{H})$，只包含了事件 $H$ 与其对立事件 $\bar{H}$；分子实际上为 $P(HE)=P(H)P(E\mid H)$。可以将其推而广之，于是就有下面的 Bayes 公式(<a href="https://en.wikipedia.org/wiki/Bayesian_probability" target="_blank">Bayesian probability</a>)：
 
-<details class="details-theorem" markdown="1" open>
-<summary>Bayes 公式</summary>
+{% details theorem "Bayes 公式" open %}
 设 $B_1,B_2,\cdots,B_n$ 是样本空间 $\mit\Omega$ 的一个分割，即 $B_1,B_2,\cdots,B_n$ 是两两之间互不相容的事件，且 $\bigcup\limits_{i=1}^{n}B_i={\mit\Omega}$。若 $P(A)>0$，且 $P(B_i)>0(i=1,2,\cdots,n)$，那么
 
 $$
@@ -1384,11 +1378,10 @@ $$
         P(B_i\mid A)=\frac{P(B_i)P(A\mid B_i)}{\sum\limits_{j=1}^{n}P(B_j)P(A\mid B_j)}
     \end{equation}
 $$
+{% enddetails %}
 
-</details>
 
-<details class="details-theorem" markdown="1">
-<summary>证明</summary>
+{% details theorem "证明" %}
 由条件概率的定义
 
 $$
@@ -1400,8 +1393,8 @@ $$
 $$
    P(B_i\mid A)=\frac{P(AB_i)}{P(A)}=\frac{P(B_i)P(A\mid B_i)}{\sum\limits_{j=1}^{n}P(B_j)P(A\mid B_j)}, \quad i=1,2,\cdots,n
 $$
+{% enddetails %}
 
-</details>
 
 假定 $B_1,B_2,\cdots,B_n$ 是导致试验结果的各种“原因”，$P(B_i)$ 称之为**先验概率**(<a href="https://en.wikipedia.org/wiki/Prior_probability" target="_blank">Prior probability</a>)，是事件 $B_i$ 没有任何经验或者知识的情况下的概率，它反映了各种“原因”发生的可能性，一般是对以向经验的总结。
 
@@ -1409,8 +1402,7 @@ $$
 
 $P(A\mid B_i)$ 称之为事件 $A$ 发生的**似然概率**[^likelihood](<a href="https://en.wikipedia.org/wiki/Likelihood_function" target="_blank">Likelihood</a>)，似然概率可以看作是对因果关系的一种量化。而 $P(A)$ 则被称为事件 $A$ 发生的边际概率(<a href="https://en.wikipedia.org/wiki/Marginal_likelihood" target="_blank">Marginal likelihood</a>)。
 
-<details class="details-example" markdown="1">
-<summary>肝癌医学检验的可靠性问题</summary>
+{% details example "肝癌医学检验的可靠性问题" %}
 某地区居民的肝癌发病率为 0.0004，现用甲胎蛋白法进行普查。医学研究表明，化验结果是可能存有错误的。已知患有肝癌的人其化验结果 99% 呈阳性，而没患肝癌的人其化验结果 99.9% 呈阴性。现某人的检查结果呈阳性，问他真的患肝癌的概率是多少？
 
 设事件 $A$ 为患肝癌，事件 $B$ 为化验结果为阳性。则
@@ -1424,8 +1416,8 @@ $$
 $$
   P(A\mid B)=\frac{P(AB)}{P(B)}=\frac{P(A)P(B\mid A)}{P(A)P(B\mid A)+P(\bar{A})P(B\mid \bar{A})}=0.2837
 $$
+{% enddetails %}
 
-</details>
 
 这说明在 10000 个人中真正患肝癌的人有 4 个，但是在剩下的 9996 人中会有 $9996\times0.001=9.996$ 人会在化验单上查出自己阳性，并且在真正患肝癌的 4 人中仅有 $4\times0.99=3.96$ 人能够在化验单上查出自己阳性。如果仅从这 $9.996+3.96=13.956$ 个查出自己阳性的人中看，真正患肝癌的比例约为 28.37%。这是由于未患病的人群基数极大，也会有大量的未患病人群产生假阳性结果，因此导致阳性结果中真正患病的人占比相对较低。
 
@@ -1437,8 +1429,7 @@ $$
 
 这就大大提高了甲胎蛋白法的准确率了。
 
-<details class="details-example" markdown="1">
-<summary>保险投保问题</summary>
+{% details example "保险投保问题" %}
 保险公司认为人可以分为两类，一类易出事故，另一类则不易出事故。统计表明一个易出事故者在一年内发生事故的概率为 0.4，而对不易出事故者来说这个概率则减少到 0.2，若假定第一类人占人口的比例为 30%，现有一个新人来投保，那么该人在购买保单后一年内将出事故的概率有多大？再假设一个新投保人在购买保单后一年内出了事故，那么他是易出事故者的概率是多大？
 
 令事件 $A$ 为“投保人一年内出事故”，事件 $B$ 为“投保人为易出事故者”，那么
@@ -1452,11 +1443,10 @@ $$
 $$
   P(B\mid A)=\frac{P(AB)}{P(A)}=\frac{P(B)P(A\mid B)}{P(A)}=0.4615
 $$
+{% enddetails %}
 
-</details>
 
-<details class="details-example" markdown="1">
-<summary>多选题蒙题问题</summary>
+{% details example "多选题蒙题问题" %}
 在回答一道多项选择题时，学生或者知道正确答案(记作事件 $K$)，或者就猜一个。令 $p$ 表示他知道正确答案的概率，则 $1-p$ 表示猜的概率。假定学生猜中正确答案的概率为 $\frac{1}{m}$，其中 $m$ 就是多项选择题的可选择答案数。那么该学生回答正确(记作事件 $C$)的情况下，他知道正确答案的概率则为
 
 $$
@@ -1465,15 +1455,14 @@ $$
       &=\frac{p}{p+(1-p)\frac{1}{m}}=\frac{mp}{1+(m-1)p}
   \end{aligned}
 $$
+{% enddetails %}
 
-</details>
 
 Bayes 公式还可以用来进行因果推理，有许多“原因”可以造成某一“结果”。现在设我们观察到某一结果，希望推断造成这个结果出现的“原因”。当观察到结果 $A$ 的时候，我们希望反推结果 $A$ 是由原因$B_i$ 造成的概率 $P(B_i\mid A)$。$P(B_i\mid A)$ 为由于代表新近得到的信息 $A$ 之后 $B_i$ 出现的概率。
 
 用一句话总结，Bayes 公式告诉我们，在试验之前对这些假设条件所作的判断(即 $P(B_i)$)，可以如何根据试验的结果来进行修正。
 
-<details class="details-example" markdown="1">
-<summary>使用 Bayes 公式逆推原因</summary>
+{% details example "使用 Bayes 公式逆推原因" %}
 早上你突然发现自己感冒了(记作事件 $A$)，其原因可能是：前一天晚上着凉了(记作事件 $B_1$)、其他人感染给你(记作事件 $B_2$)和免疫力下降(记作事件 $B_3$)。已知前一天晚上着凉的概率为 40%，其他人感染给你的概率为 30%，免疫力下降的概率为 30%。并且因为着凉而感冒的概率为 80%，被传染而感冒的概率为 90%，免疫力下降而感冒的概率为 70%。
 
 于是由全概率公式，由于不同原因导致感冒的概率就为
@@ -1495,12 +1484,12 @@ $$
 $$
 
 由此可见，早上引起感冒的原因很有可能是因为前一天晚上着凉而导致的。
-</details>
+{% enddetails %}
+
 
 出现这种情况是由于 $P(B_i\mid A)\propto P(B_i)P(A\mid B_i)$，而先验概率 $P(B_1)$ 与似然概率 $P(A\mid B_1)$ 在三个原因中都较高，因此后验概率 $P(B_1\mid A)$ 自然也比较高。
 
-<details class="details-example" markdown="1">
-<summary>失事飞机搜救问题</summary>
+{% details example "失事飞机搜救问题" %}
 一架飞机失踪了，推测它等可能地坠落在 3 个区域。令 $1-\beta_i(i=1,2,3)$ 表示飞机坠落在第 $i$ 个区域的情况下，飞机被发现的概率($\beta_i$ 称为忽略概率，表示忽略飞机的概率，通常由该区域的地理和环境条件决定)。求在第 1 个区域没有发现飞机的条件下，飞机坠落在第 $i$ 个区域的条件概率 $(i=1,2,3)$。
 
 令事件 $R_i$ 表示“飞机坠落在第 $i$ 个区域”($i=1,2,3$)，事件 $E$ 表示“第 1 个区域没有发现飞机”。我们先来求 $R_1\mid E$ 的概率，此时
@@ -1523,7 +1512,8 @@ $$
 $$
 
 同理可得 $P(R_3\mid E)=P(R_2\mid E)=\frac{1}{\beta_1+2}$。
-</details>
+{% enddetails %}
+
 
 需要指出的是，当搜索了第 1 个区域没有发现飞机时，飞机坠落在第 $j$ 个区域的条件概率会增大($j\ne1$)，而落在第 1 个区域的概率会减小，这是一个常识问题：因为既然在第 1 个区域没有发现飞机，当然飞机坠落在该区域的概率会减少，而落在其他区域的概率会增大，而且飞机坠落在第 1 个区域的条件概率是 $\beta_i$ 的递增函数，当增加时增大了飞机坠落在第 1 个区域的条件概率。类似地，$P(R_j\mid E)$是 $\beta_i$ 的递减函数($j\ne1$)。
 
@@ -1543,8 +1533,7 @@ $$
 
 另外对 $P(B)=0$ 或者 $P(A)=0$，上式仍然成立。为此，我们用该式作为两个事件相互独立的定义。
 
-<details class="details-definition" markdown="1" open>
-<summary>两个事件的独立性</summary>
+{% details definition "两个事件的独立性" open %}
 设事件 $A$ 与 $B$ 是样本空间 ${\mit\Omega}$ 中的任意两个事件，如果
 
 $$
@@ -1554,10 +1543,10 @@ $$
 $$
 
 成立，则称事件 $A$ 与 $B$ 相互独立(<a href="https://en.wikipedia.org/wiki/Independence_(probability_theory)" target="_blank">Independence</a>)，简称 $A$ 与 $B$ 独立。否则称 $A$ 与 $B$ 不独立或相依(Dependence)。
-</details>
+{% enddetails %}
 
-<div class="box-danger" markdown="1">
-<div class="title">两个事件的独立性的定义问题</div>
+
+{% box danger "两个事件的独立性的定义问题" %}
 至于用 $P(AB)=P(A)P(B)$ 作为独立性的定义，而不用 $P(A\mid B)=P(A)$ 的理由如下：
 
 <ol>
@@ -1577,17 +1566,17 @@ $$
         $$
     </li>
 </ol>
-</div>
+{% endbox %}
+
 
 下面是相互独立事件 $A$ 和 $B$ 与它们的对立事件 $\bar{A}$ 和 $\bar{B}$ 之间的关系：
 
-<details class="details-proposition" markdown="1" open>
-<summary>命题 $6$</summary>
+{% details proposition "命题 6" open %}
 若事件 $A$ 与 $B$ 独立，则 $A$ 与 $\bar{B} $独立，$\bar{A}$ 与 $B$ 独立，$\bar{A}$ 与 $\bar{B}$ 独立。
-</details>
+{% enddetails %}
 
-<details class="details-proposition" markdown="1">
-<summary>证明</summary>
+
+{% details proposition "证明" %}
 由于事件 $A$ 与 $B$ 独立，那么
 
 $$
@@ -1609,7 +1598,8 @@ $$
 $$
 
 即事件 $\bar{A}$ 与 $\bar{B}$ 独立，结论得证。
-</details>
+{% enddetails %}
+
 
 在实践中，通常 $P(AB)$ 与 $P(A)P(B)$ 的绝对误差不超过 $10^{-3}$ 或者 $10^{-4}$、相对误差不超过 1% 或者 5%，即
 
@@ -1625,8 +1615,7 @@ $$
 
 即认为事件 $A$ 与 $B$ 相互独立，也可以根据实际需要选择合适的显著性水平。
 
-<details class="details-definition" markdown="1" open>
-<summary>多个事件的独立性</summary>
+{% details definition "多个事件的独立性" open %}
 设 $A,B,C$ 是三个任意的事件，若有
 
 $$
@@ -1648,17 +1637,19 @@ $$
 $$
 
 则称 $A,B,C$ 相互独立
-</details>
+{% enddetails %}
+
 
 > \eqref{eq:三个事件的独立性}式确保了事件 $A$ 与 $B$ 的任意组合都与 $C$ 独立，事件 $A$ 与 $C$ 的任意组合都与 $B$ 独立，事件 $B$ 与 $C$ 的任意组合都与 $A$ 独立。另外事件 $A,B,C$ 两两独立不能推出事件 $A,B,C$ 相互独立；反过来事件 $A,B,C$ 相互独立也不能推出事件 $A,B,C$ 两两独立！
 {: .prompt-danger}
 
+
 ### 试验的独立性
 
-<details class="details-definition" markdown="1" open>
-<summary>试验的独立性</summary>
+{% details definition "试验的独立性" open %}
 设有两个试验 $E_1$ 和 $E_2$，假如试验 $E_1$ 的任一结果(事件)与试验 $E_2$ 的任一结果(事件)都是相互独立的事件，则称这两个试验相互独立。
-</details>
+{% enddetails %}
+
 
 例如掷一枚硬币(试验 $E_1$)与掷一颗骰子(试验 $E_2$)是相互独立的试验。
 

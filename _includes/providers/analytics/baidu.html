@@ -1,0 +1,15 @@
+{%- comment -%} Baidu Analytics — public base ID from M5 integrations {%- endcomment -%}
+{%- if site.data.integrations.analytics.baidu.base_id -%}
+  <!-- Baidu Analytics -->
+  <script>
+    const _hmt = _hmt || [];
+    
+    (function () {
+      const hm = document.createElement('script');
+      hm.src = 'https://hm.baidu.com/hm.js?{{ site.data.integrations.analytics.baidu.base_id }}';
+
+      const s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+{%- endif -%}

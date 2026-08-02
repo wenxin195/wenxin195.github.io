@@ -1,0 +1,49 @@
+@use "sass:map";
+@use "tokens" as variables;
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes backgroundFadeOut {
+  from {
+    background-color: variables.$green;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+%copy-vision-feedback {
+  transition: background-color 1s ease-out;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: color-mix(in srgb, #{variables.$text-color-1} 30%, transparent);
+    animation: fadeOut 1s forwards;
+  }
+
+  animation: backgroundFadeOut 2s forwards;
+}
+
+.copy-error {
+  background-color: variables.$red;
+  @extend %copy-vision-feedback;
+}
+
+.copy-success {
+  background-color: variables.$green;
+  @extend %copy-vision-feedback;
+}

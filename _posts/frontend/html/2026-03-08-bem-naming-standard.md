@@ -8,10 +8,6 @@ tags:
   - 代码风格指南
 author: Wenxin Zhong
 layout: article
-download: false
-videos: false
-refactor: true
-mathjax: false
 modify_date: "2026-03-09 21:08:00"
 ---
 
@@ -32,6 +28,7 @@ BEM 通过严格的命名结构，解决了这些问题，使 CSS 具有类似�
 
 > 随着 [Tailwind CSS](https://tailwindcss.com)、[CSS Modules](https://github.com/css-modules/css-modules)、[Vanilla Extract](https://vanilla-extract.style) 等方案流行，纯 BEM 的使用率有所下降。但在中大型的传统项目、需要严格可维护性的 CSS 的团队中，BEM 仍然是非常主流且有效的方案。
 {: .prompt-info}
+
 
 ## BEM 的基本结构
 
@@ -145,8 +142,9 @@ CSS 样式为：
     menu__link
     ```
 
-    > Element 永远只属于 Block，而不属于另一个 Element。无论 DOM 树有多深，BEM 结构永远是扁平的。
-    {: .prompt-warning}
+> Element 永远只属于 Block，而不属于另一个 Element。无论 DOM 树有多深，BEM 结构永远是扁平的。
+{: .prompt-warning}
+
 
 2. 不得使用标签名
 

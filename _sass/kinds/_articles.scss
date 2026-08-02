@@ -1,0 +1,7 @@
+@use "sass:map";
+@use "tokens" as variables;
+
+// Header→main inset lives in shell/main; kind keeps only trailing rhythm.
+.layout-articles {
+  margin-bottom: map.get(variables.$spacers, 4);
+}

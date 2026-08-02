@@ -1,0 +1,29 @@
+{%- comment -%}
+  Site nav left drawer. Link items from site/nav-links.html (same source as top bar).
+  Behavior: features/nav-drawer (R5); styles: shell/nav-drawer (R3).
+{%- endcomment -%}
+<div
+  class="modal nav-drawer modal--drawer-start js-nav-drawer d-print-none"
+  id="site-nav-drawer"
+  aria-label="站点导航"
+>
+  <div class="nav-drawer__panel">
+    <div class="nav-drawer__header">
+      <p class="nav-drawer__title">菜单</p>
+      <button
+        type="button"
+        class="button button--secondary button--circle nav-drawer__close js-nav-toggle"
+        aria-label="关闭菜单"
+        aria-controls="site-nav-drawer"
+      >
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <nav class="nav-drawer__nav" aria-label="主导航">
+      <ul>
+        {%- include site/nav-links.html -%}
+      </ul>
+    </nav>
+  </div>
+</div>

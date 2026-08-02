@@ -1,0 +1,12 @@
+# CDN 优先 jsDelivr
+sources:
+  font_awesome: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"
+  chart: "https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"
+  mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.1.1/tex-mml-svg.min.js"
+  katex:
+    js: "https://cdn.jsdelivr.net/npm/katex@0.16.38/dist/katex.min.js"
+    css: "https://cdn.jsdelivr.net/npm/katex@0.16.38/dist/katex.min.css"
+    auto_render: "https://cdn.jsdelivr.net/npm/katex@0.16.38/dist/contrib/auto-render.min.js"
+  mermaid: "https://cdn.jsdelivr.net/npm/mermaid@11.13.0/dist/mermaid.esm.min.mjs"
+  giscus: "https://giscus.app/client.js"
+  OSMD: "https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.9/build/opensheetmusicdisplay.min.js"

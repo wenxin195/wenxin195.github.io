@@ -1,0 +1,18 @@
+{%- assign _sources = site.data.resources.sources -%}
+
+<script>
+  window.Lazyload.js('{{ _sources.chart }}', function () {
+    let canvas, ctx, text;
+
+    document.querySelectorAll('.language-chart').forEach(function (el) {
+      canvas = document.createElement('canvas');
+      text = el.textContent;
+
+      el.textContent = '';
+      el.appendChild(canvas);
+
+      ctx = canvas.getContext('2d');
+      ctx && text && new Chart(ctx, JSON.parse(text)) && el.setAttribute('data-processed', 'true');
+    });
+  });
+</script>

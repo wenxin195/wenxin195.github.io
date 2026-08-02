@@ -1,5 +1,5 @@
 ---
-layout: articles
+layout: shell
 articles:
   type: item
   data_source: paginator.posts
@@ -8,8 +8,12 @@ articles:
   show_readmore: true
   show_info: true
 ---
-<div class="layout--home">
-  {%- include paginator.html -%}
+{%- include utils/locale.html -%}
+<div class="layout-home">
+
+  <div class="layout-home__inner">
+    {%- include list/articles-section.html show_paginator=true -%}
+  </div>
 </div>
 
 {{ content }}

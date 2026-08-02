@@ -1,0 +1,37 @@
+{%- assign _tag_max_size = 1 -%}
+{%- assign _tag_min_size = 1 -%}
+{%- assign _tags = site.tags | sort -%}
+
+{%- for _tag in _tags -%}
+  {%- assign _cur = _tag[1].size -%}
+  {%- if _cur < _tag_min_size -%}{%- assign _tag_min_size = _cur -%}{%- endif -%}
+  {%- if _cur > _tag_max_size -%}{%- assign _tag_max_size = _cur -%}{%- endif -%}
+{%- endfor -%}
+
+{%- assign _range = _tag_max_size | minus: _tag_min_size | plus: 1 -%}
+{%- assign _tag_gap_size = _range | divided_by: 4 -%}
+{%- if _tag_gap_size < 1 -%}{%- assign _tag_gap_size = 1 -%}{%- endif -%}
+
+<div class="archive-filters js-archive-filters">
+  <ul class="menu">
+    <li>
+      <button type="button" class="button button--secondary button--pill tag-button tag-button--all" data-encode="">
+        <span>Show All</span>
+        <div class="tag-button__count">{{- site.posts | size -}}</div>
+      </button>
+    </li>
+
+    {%- for _tag in _tags -%}
+      {%- assign _cur_size = _tag[1].size -%}
+      {%- assign _c_index = _cur_size | minus: _tag_min_size | divided_by: _tag_gap_size | plus: 1 -%}
+      {%- if _c_index < 1 -%}{%- assign _c_index = 1 -%}{%- elsif _c_index > 4 -%}{%- assign _c_index = 4 -%}{%- endif -%}
+
+      <li>
+        <button type="button" class="button button--pill tag-button tag-button-{{ _c_index }}" data-encode="{{ _tag[0] | strip | url_encode }}">
+          <span>{{- _tag[0] | strip -}}</span>
+          <div class="tag-button__count">{{- _cur_size -}}</div>
+        </button>
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>

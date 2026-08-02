@@ -1,0 +1,132 @@
+// Rouge token classes → --syntax-* (GitHub Primer prettylights).
+
+@mixin rouge-tokens {
+  .code-block .highlight,
+  .highlight {
+    .w {
+      color: var(--syntax-primary);
+    }
+
+    .k,
+    .kd,
+    .kn,
+    .kp,
+    .kr,
+    .kt,
+    .kv {
+      color: var(--syntax-red);
+    }
+
+    .gr {
+      color: var(--syntax-gray-light);
+    }
+
+    .gd {
+      color: var(--syntax-red-dark);
+      background-color: var(--syntax-red-bg);
+    }
+
+    .nb,
+    .nc,
+    .no,
+    .nn {
+      color: var(--syntax-orange);
+    }
+
+    .sr,
+    .na,
+    .nt {
+      color: var(--syntax-green);
+    }
+
+    .gi {
+      color: var(--syntax-green);
+      background-color: var(--syntax-green-bg);
+    }
+
+    .kc,
+    .l,
+    .ld,
+    .m,
+    .mb,
+    .mf,
+    .mh,
+    .mi,
+    .il,
+    .mo,
+    .mx,
+    .sb,
+    .bp,
+    .ne,
+    .nl,
+    .py,
+    .nv,
+    .vc,
+    .vg,
+    .vi,
+    .vm,
+    .o,
+    .ow {
+      color: var(--syntax-blue);
+    }
+
+    .gh,
+    .gu {
+      color: var(--syntax-blue);
+      font-weight: bold;
+    }
+
+    .s,
+    .sa,
+    .sc,
+    .dl,
+    .sd,
+    .s2,
+    .se,
+    .sh,
+    .sx,
+    .s1,
+    .ss {
+      color: var(--syntax-blue-dark);
+    }
+
+    .nd,
+    .nf,
+    .fm {
+      color: var(--syntax-purple);
+    }
+
+    .err {
+      color: var(--syntax-gray-light);
+      background-color: var(--syntax-red-dark);
+    }
+
+    .c,
+    .ch,
+    .cd,
+    .cm,
+    .cp,
+    .cpf,
+    .c1,
+    .cs,
+    .gl,
+    .gt {
+      color: var(--syntax-gray);
+    }
+
+    .ni,
+    .si {
+      color: var(--syntax-primary);
+    }
+
+    .ge {
+      color: var(--syntax-primary);
+      font-style: italic;
+    }
+
+    .gs {
+      color: var(--syntax-primary);
+      font-weight: bold;
+    }
+  }
+}

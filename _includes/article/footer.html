@@ -1,0 +1,29 @@
+<footer class="article-footer">
+  {%- if page.modify_date -%}
+    <div class="article-footer__date">
+      <span>{{- _t.LAST_UPDATED -}}</span>
+      <time itemprop="dateModified" datetime="{{ page.modify_date | date_to_xmlschema }}">
+        {{- page.modify_date | date: _t.ARTICLE_DATE_FORMAT -}}
+      </time>
+    </div>
+  {%- elsif page.date -%}
+    <meta itemprop="dateModified" content="{{ page.date | date_to_xmlschema }}">
+  {%- endif -%}
+
+  {%- assign _show_subscribe = page.show_subscribe | default: layout.show_subscribe | default: site.data.layout.article.show_subscribe -%}
+  {%- if _show_subscribe -%}
+    <div class="article-footer__subscribe">
+      {%- include article/footer/subscribe.html -%}
+    </div>
+  {%- endif -%}
+
+  {%- assign _show_license = page.show_license | default: layout.show_license | default: site.data.layout.article.show_license -%}
+  {%- if _show_license and site.license -%}
+    {%- assign _license_data = site.data.licenses[site.license] -%}
+    {%- if _license_data -%}
+      <div class="article-footer__license">
+        {%- include article/footer/license.html license=_license_data -%}
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+</footer>

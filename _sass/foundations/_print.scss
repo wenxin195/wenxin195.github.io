@@ -1,0 +1,23 @@
+@use "foundations/utilities/pseudo" as pseudo;
+
+// 控制打印时的样式
+@media print {
+  a {
+    @include pseudo.plain() {
+      text-decoration: none;
+    }
+    @include pseudo.hover() {
+      text-decoration: none;
+    }
+    @include pseudo.active() {
+      text-decoration: none;
+    }
+  }
+
+  img,
+  tr,
+  pre,
+  blockquote {
+    page-break-inside: avoid;
+  }
+}

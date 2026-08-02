@@ -1,0 +1,49 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+@use "foundations/utilities/split-line" as split;
+
+.article-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: map.get(variables.$spacers, 2);
+  font-size: map.get(variables.$base, font-size-sm);
+  color: variables.$text-color-l;
+
+  .article-info__tags {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    > i + li {
+      margin-left: map.get(variables.$spacers, 2);
+    }
+  }
+
+  .article-info__meta {
+    flex: 0 1 auto;
+    margin-left: 0;
+
+    & > li {
+      display: inline-block;
+
+      &:not(:last-child) {
+        @include split.split-line(right, default, variables.$text-color-l);
+
+        padding-right: map.get(variables.$spacers, 2);
+        margin-right: map.get(variables.$spacers, 2);
+        line-height: map.get(variables.$base, line-height-xs);
+      }
+    }
+  }
+
+  @include media.media-breakpoint-down(md) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  i {
+    font-size: map.get(variables.$base, font-size-sm) + 0.375;
+  }
+}

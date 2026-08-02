@@ -1,0 +1,137 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/clickable" as clickable;
+@use "foundations/utilities/media" as media;
+@use "foundations/utilities/pseudo" as pseudo;
+
+.button {
+  display: inline-block;
+  font-weight: map.get(variables.$button, font-weight);
+  line-height: 1 !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+
+  svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .icon {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  @include pseudo.disabled() {
+    cursor: not-allowed;
+  }
+}
+
+.button--primary,
+.button--secondary,
+.button--theme-light,
+.button--theme-dark {
+  @include clickable.clickable;
+}
+
+.button--primary {
+  @include clickable.paint(
+    variables.$text-color-1,
+    variables.$main-color-1,
+    $disabled-alpha: 0.2
+  );
+}
+
+.button--secondary {
+  @include clickable.paint(
+    variables.$text-color-3,
+    variables.$main-color-3,
+    $disabled-alpha: 0.2
+  );
+}
+
+.button--theme-light {
+  @include clickable.paint(
+    variables.$text-color-theme-dark,
+    variables.$main-color-theme-light,
+    $disabled-alpha: 0.4
+  );
+}
+
+.button--theme-dark {
+  @include clickable.paint(
+    variables.$text-color-theme-light-d,
+    variables.$main-color-theme-dark,
+    $disabled-alpha: 0.2
+  );
+}
+
+.button--md {
+  padding: map.get(variables.$button, padding-y) map.get(variables.$button, padding-x);
+  font-size: map.get(variables.$base, font-size);
+
+  &.button--circle {
+    width: map.get(variables.$button, circle-diameter);
+    height: map.get(variables.$button, circle-diameter);
+  }
+}
+
+.button--pill {
+  border-radius: map.get(variables.$button, pill-radius);
+  @extend .button--md;
+}
+
+.button--rounded {
+  border-radius: map.get(variables.$base, border-radius);
+  @extend .button--md;
+}
+
+.button--circle {
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  @extend .button--md;
+
+  // Prefer a comfortable touch target on narrow viewports.
+  @include media.media-breakpoint-down(md) {
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+  }
+}
+
+.brand-button--bili .icon {
+  width: 1.3rem !important;
+  height: 1.3rem !important;
+}
+
+.button--sm {
+  padding: map.get(variables.$button, padding-y-sm) map.get(variables.$button, padding-x-sm);
+  font-size: map.get(variables.$base, font-size-sm);
+
+  &.button--circle {
+    width: map.get(variables.$button, circle-diameter-sm);
+    height: map.get(variables.$button, circle-diameter-sm);
+  }
+}
+
+.button--lg {
+  padding: map.get(variables.$button, padding-y-lg) map.get(variables.$button, padding-x-lg);
+  font-size: map.get(variables.$base, font-size-lg);
+
+  &.button--circle {
+    width: map.get(variables.$button, circle-diameter-lg);
+    height: map.get(variables.$button, circle-diameter-lg);
+  }
+}
+
+.button--xl {
+  padding: map.get(variables.$button, padding-y-xl) map.get(variables.$button, padding-x-xl);
+  font-size: map.get(variables.$base, font-size-xl);
+
+  &.button--circle {
+    width: map.get(variables.$button, circle-diameter-xl);
+    height: map.get(variables.$button, circle-diameter-xl);
+  }
+}

@@ -1,0 +1,16 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/clickable" as clickable;
+
+.author-links {
+  .brand-button {
+    @include clickable.paint(#fff, var(--brand-bg), $auto-tone: true, $disabled-alpha: 0.2);
+    @include clickable.clickable;
+  }
+
+  @each $name, $color in variables.$brand-link-colors {
+    .brand-button--#{$name} {
+      --brand-bg: #{$color};
+    }
+  }
+}

@@ -6,10 +6,6 @@ tags:
   - JavaScript
 author: Wenxin Zhong
 layout: article
-download: false
-videos: false
-refactor: true
-mathjax: false
 modify_date: "2025-01-27 01:50:00"
 ---
 
@@ -56,6 +52,7 @@ let score = 100;
 > JavaScript 建议使用驼峰命名法(camelCase)，例如使用`userName`而不是`username`或`user_name`。JavaScript 严格区分大小写，并支持 Unicode 字符。
 {: .prompt-warning}
 
+
 当我们需要存储一个不会改变的值(例如游戏最高等级、配置常量等)时，应始终优先使用`const`。这能提升代码的可读性，并防止意外修改引发的`TypeError`：
 
 ```javascript
@@ -72,6 +69,7 @@ cart.push({ id: 1, name: '商品A' }); // 可以修改内容
 
 > 大写命名的常量通常用作“硬编码(hard-coded)”值的别名。
 {: .prompt-tip}
+
 
 早期 JavaScript 会使用`var`声明变量。与`let`和`const`不同，`var`具有“函数作用域”，且存在“变量提升”(hoisting)机制，这往往会导致意想不到的逻辑错误。为了代码的严谨性和可维护性，在现代项目中强烈建议避免使用`var`，改用`let`或`const`。
 
@@ -131,6 +129,7 @@ const fish = ["Lion", , "Angel"];  // [ 'Lion', <1 empty item>, 'Angel' ]
 > 数组字面量末尾的逗号会被忽略，这在维护长列表时很方便。
 {: .prompt-tip}
 
+
 每次字面量被求值时，数组字面量都会创建一个新的数组对象，例如在全局作用域中用字面量定义的数组在脚本加载后被创建。若数组字面量位于函数内，每次调用函数时会初始化一个新数组。
 
 #### 对象字面量
@@ -157,6 +156,7 @@ const playerProfile = {
 > 如果属性名包含非法字符或需要动态计算，必须使用方括号访问，例如`playerProfile["is-active"]`。
 {: .prompt-danger}
 
+
 #### 字符串字面量
 
 字符串字面量使用单引号`'`、双引号`"`或反引号<code class="language-plaintext highlighter-rouge">`</code>(模板字符串)，这在处理包含变量的文案时非常高效：
@@ -169,6 +169,7 @@ const message = `欢迎回来，${name}！`;  // 模板字符串，支持插值�
 
 > 模板字符串(仅在 ES6+)特别实用，它能嵌入变量和多行文本。
 {: .prompt-info}
+
 
 并且字符串字面量还支持转义字符，例如`\n`等。
 
@@ -210,6 +211,7 @@ IntBig 类型主要用于金融计算、加密、超大整数等场景。
 > BigInt 不能和 Number 直接混合运算。
 {: .prompt-tip}
 
+
 ### String
 
 String 类型用于表示文本数据，并且 JavaScript 支持模板字符串(反引号)以及插值`${}`语句：
@@ -244,6 +246,7 @@ let str3 = `Hello, ${str2}`;
 > `null`值存在一个历史遗留的 Bug，即`typeof null === "object"`的结果为`true`。
 {: .prompt-info}
 
+
 ### Symbol
 
 Symbol 是一种唯一且不可变的原始类型，通常用于避免属性名冲突：
@@ -273,6 +276,7 @@ let user = {
 > 数组和函数本质上也是对象类型。
 {: .prompt-info}
 
+
 ## 运算符
 
 在 JavaScript 中，表达式(Expression)是可以产生一个值的代码片段，运算符(Operator)是对这些值进行运算的工具。
@@ -286,6 +290,7 @@ let user = {
 
 > 大多数情况下推荐使用**严格比较**，以避免意外的类型转换导致的 Bug。
 {: .prompt-warning}
+
 
 ### 算术运算符
 
@@ -302,6 +307,7 @@ console.log(++x);  // 会输出结果 4，并且 x 值变为4
 
 > 自增/自减会直接修改变量，建议在简单计数场景使用；在复杂表达式中，推荐优先使用`quantity += 1`，使得代码更清晰易读。
 {: .prompt-tip}
+
 
 ### 逻辑运算符
 
@@ -356,6 +362,7 @@ result = value1 && value2 && value3;
 > 与运算`&&`的优先级比或运算`||`要高。
 {: .prompt-tip}
 
+
 ### 三元运算符
 
 当只需要进行简单的“二选一”赋值时，三元运算符`condition ? value1 : value2`是`if-else`的优雅替代方案，可以让代码更简洁，显著减少代码冗余。例如：
@@ -377,6 +384,7 @@ if (isVip === true) {
 
 > 三元运算符适用于简单逻辑，不要滥用！
 {: .prompt-warning}
+
 
 ## 函数
 
@@ -415,6 +423,7 @@ function calculateTax(amount) {
 > 函数应保持“单一职责”，即一个函数最好只做一件事情。并且要避免在函数内部定义过多的全局变量，这会让代码难以追踪。
 {: .prompt-tip}
 
+
 若需要定义一个通用的、可复用的**工具函数**，并且希望它在整个作用域内都可访问时，那么最佳的方式就是使用函数声明，它非常适合定义一些独立的、不依赖于特定上下文的逻辑。
 
 ### 函数表达式
@@ -445,6 +454,7 @@ const fibonacci = function fib(n) {
 
 > 这里的`fib`只在函数内部可见，常用于递归或调试。
 {: .prompt-info}
+
 
 当函数作为参数传递给另一个函数时，它被称为回调函数。在实际开发中非常常见，例如数据处理：
 
@@ -514,6 +524,7 @@ test(); // 正常
 > 实际开发中，推荐优先使用函数表达式或箭头函数，以避免作用域带来的不确定性。
 {: .prompt-tip}
 
+
 ### 箭头函数
 
 箭头函数是 ES6 引入的现代语法，它提供了一种极简的写法。除了语法更短之外，它在处理`this`指向问题时与普通函数有本质区别(箭头函数没有自己的`this`，它会继承父级作用域的`this`)，并且箭头函数不能作为构造函数(不能使用`new`关键字)。
@@ -534,6 +545,7 @@ console.log(names);  // ['Alice', 'Bob']
 
 > 如果函数体只有一行，则可以直接省略大括号和`return`关键字；如果函数参数只有一个，也可以省略参数外的括号。箭头函数的这种特性非常适合简单的转换逻辑。
 {: .prompt-info}
+
 
 若需要编写简短的回调函数，尤其是在数组方法(如`map`、`filter`、`reduce`等)中，或者需要保持外层`this`上下文时，箭头函数是最佳选择。
 

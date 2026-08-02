@@ -1,0 +1,23 @@
+// 控制元素的溢出行为
+@mixin overflow($overflow: auto, $direction: default) {
+  @if $direction == default {
+    overflow: $overflow;
+  } @else if $direction == "x" {
+    @if $overflow == auto {
+      overflow: hidden;
+    }
+
+    overflow-x: $overflow;
+  } @else if $direction == "y" {
+    @if $overflow == auto {
+      overflow: hidden;
+    }
+
+    overflow-y: $overflow;
+  }
+}
+
+// Modal scroll-lock (lib/modal bodyLockClass / lockClass consumers).
+.of-hidden {
+  overflow: hidden !important;
+}

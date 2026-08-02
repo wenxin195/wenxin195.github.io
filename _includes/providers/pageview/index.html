@@ -1,0 +1,8 @@
+{%- comment -%}
+  M3 pageview: falsy → no-op.
+  No browser-secret engines in target architecture (LeanCloud removed).
+  Future zero-secret providers may branch on site.pageview here.
+{%- endcomment -%}
+{%- if site.pageview -%}
+  {%- comment -%} reserved: include providers/pageview/{{ site.pageview }}.html when an engine exists {%- endcomment -%}
+{%- endif -%}

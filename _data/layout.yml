@@ -1,0 +1,30 @@
+# 优先级：page > layout front matter > layout.yml
+shell:
+  mode: normal
+  full_width: false
+
+article:
+  show_title: true
+  show_subscribe: false
+  show_license: true
+  comments: false
+  pageview: false
+  hero:
+    align: center
+    theme: light
+
+list:
+  show_cover: false
+  show_excerpt: true
+  show_readmore: true
+  show_info: true
+
+page:
+  show_title: true
+
+enhancements:
+  mathjax: false
+  mathjax_autoNumber: true
+  mermaid: false
+  chart: false
+  katex: false

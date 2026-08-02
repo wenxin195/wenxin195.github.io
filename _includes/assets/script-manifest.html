@@ -1,0 +1,22 @@
+{%- comment -%} App script manifest — only included from shell; only entries/* {%- endcomment -%}
+<script type="module" src="{{ 'assets/scripts/entries/shell.js' | relative_url }}"></script>
+<script type="module" src="{{ 'assets/scripts/entries/theme.js' | relative_url }}"></script>
+
+{%- if site.search -%}
+  <script type="module" src="{{ 'assets/scripts/entries/search.js' | relative_url }}"></script>
+{%- endif -%}
+
+
+{%- if page.layout == 'article' -%}
+  <script type="module" src="{{ 'assets/scripts/entries/article.js' | relative_url }}"></script>
+
+  {%- if page.aside.toc == true -%}
+    <script type="module" src="{{ 'assets/scripts/entries/article-aside.js' | relative_url }}"></script>
+  {%- endif -%}
+{%- elsif page.layout == 'archive' -%}
+  <script type="module" src="{{ 'assets/scripts/entries/archive.js' | relative_url }}"></script>
+{%- endif -%}
+
+{%- if page.lightbox == true -%}
+  <script type="module" src="{{ 'assets/scripts/entries/lightbox.js' | relative_url }}"></script>
+{%- endif -%}

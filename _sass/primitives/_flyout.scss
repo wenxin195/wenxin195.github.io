@@ -1,0 +1,124 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+@use "foundations/utilities/shadow" as shadow;
+
+// Shared flyout panel (QR / popover chrome). Placement via modifiers; anchors stay on business blocks.
+
+@mixin _hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@mixin _visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.flyout {
+  position: absolute;
+  z-index: map.get(variables.$z-indexes, popup);
+  background: variables.$background-color;
+  border: 1px solid variables.$border-color-l;
+  border-radius: map.get(variables.$popup, radius);
+  @include shadow.box-shadow(popup);
+  padding: map.get(variables.$popup, padding);
+  text-align: center;
+  white-space: nowrap;
+
+  @include _hidden;
+
+  transition:
+    opacity map.get(variables.$animation, duration-md) ease,
+    visibility map.get(variables.$animation, duration-md) ease,
+    transform map.get(variables.$animation, duration-md) ease;
+}
+
+// Below anchor, horizontally centered (appreciate)
+.flyout--drop {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+}
+
+// Left of FAB (floating-actions QR)
+.flyout--rail {
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(10px);
+}
+
+// Offset under share wechat control
+.flyout--offset {
+  right: -70px;
+  top: 100%;
+  transform: translateY(4px);
+
+  @include media.media-breakpoint-down(md) {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+  }
+}
+
+.flyout__title {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: variables.$text-color-3;
+  text-align: center;
+}
+
+.flyout__group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+
+  figure {
+    margin: 0;
+  }
+}
+
+.flyout__media {
+  height: variables.$qrcode-size;
+  width: auto;
+  max-width: min(#{variables.$qrcode-size}, 70vw);
+  border-radius: map.get(variables.$base, border-radius-sm);
+  display: block;
+}
+
+.flyout__caption {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: variables.$text-color-3;
+  text-align: center;
+}
+
+// Reveal when a positioned ancestor is hovered (or carries .is-open)
+:where(.share__wechat, .appreciate, .qrcode):hover > .flyout,
+:where(.share__wechat, .appreciate, .qrcode).is-open > .flyout {
+  @include _visible;
+}
+
+.share__wechat:hover > .flyout--offset,
+.share__wechat.is-open > .flyout--offset {
+  transform: translateY(0);
+
+  @include media.media-breakpoint-down(md) {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.appreciate:hover > .flyout--drop,
+.appreciate.is-open > .flyout--drop {
+  transform: translateX(-50%) translateY(0);
+}
+
+.qrcode:hover > .flyout--rail,
+.qrcode.is-open > .flyout--rail {
+  transform: translateY(-50%) translateX(0);
+}

@@ -1,7 +1,6 @@
 ---
-layout: page
+layout: shell
 titles:
-  # @start locale config
   en      : &EN       Archive
   en-GB   : *EN
   en-US   : *EN
@@ -14,18 +13,17 @@ titles:
   zh-Hant : &ZH_HANT  歸檔
   zh-TW   : *ZH_HANT
   zh-HK   : *ZH_HANT
-  # @end locale config
 ---
+{%- include utils/locale.html -%}
+<div class="layout-archive">
 
-<div class="layout--archive js-all">
-  {%- include tags.html -%}
-  <div class="js-result layout--archive__result d-none">
-    {%- include article-list.html articles=site.posts type='brief' show_info=true reverse=true group_by='year' -%}
+  <div class="layout-archive__inner">
+    {%- include archive/filters.html -%}
+
+    <div class="archive-result js-archive-result d-none">
+      {%- include list/article-list.html articles=site.posts type='brief' show_info=true reverse=true group_by='year' -%}
+    </div>
   </div>
 </div>
-
-<script>
-  {%- include scripts/archieve.js -%}
-</script>
 
 {{ content }}

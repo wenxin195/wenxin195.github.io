@@ -1,0 +1,34 @@
+{%- assign _sources = site.data.resources.sources -%}
+{%- assign _mathjax_autoNumber = page.mathjax_autoNumber | default: site.data.layout.enhancements.mathjax_autoNumber -%}
+
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [
+        ['$', '$'],
+        ['\\(', '\\)'],
+      ],
+      macros: {
+        '\\mit': '\\mathit',
+      },
+      tags: {% if _mathjax_autoNumber %}'ams'{% else %}'none'{% endif %},
+      packages: {
+        '[+]': ['mathtools'],
+      },
+    },
+    mml: {
+      parseAs: 'xml',
+      forceReparse: true,
+    },
+    svg: {
+      fontCache: 'global',
+    },
+    loader: {
+      load: ['ui/lazy', '[tex]/mathtools'],
+    },
+    output: {
+      font: 'mathjax-tex',
+    },
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" src="{{ _sources.mathjax }}" async></script>

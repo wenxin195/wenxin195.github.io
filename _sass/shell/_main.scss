@@ -1,0 +1,57 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+
+.shell-main {
+  width: 100%;
+  flex: 1;
+  color: variables.$text-color;
+
+  @media print {
+    padding-bottom: 0;
+  }
+}
+
+// Header → main inset: sole assembly point (kinds/blocks must not redeclare).
+.shell-main:not(.shell-main--immersive) {
+  padding-top: map.get(variables.$layout, main-inset-top);
+
+  @include media.media-breakpoint-down(md) {
+    padding-top: map.get(variables.$layout, main-inset-top-md);
+  }
+
+  @media print {
+    padding-top: 0;
+  }
+}
+
+// Header is a sibling of main, not a descendant — lift via :has().
+.layout-shell:has(.shell-main--immersive) {
+  .site-header {
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.shell-main--immersive {
+  .article-hero__content {
+    padding-top: map.get(variables.$layout, header-height);
+
+    @include media.media-breakpoint-down(md) {
+      padding-top: map.get(variables.$layout, header-height-sm);
+    }
+  }
+}
+
+// Aside slot on: geometry / drawer chrome lives in blocks/article-aside.
+// < lg: keep display:flex (opacity/visibility hide) — display:none breaks FAB open / transitions.
+.shell-main--has-aside {
+  .article-aside {
+    display: flex;
+    flex-direction: column;
+
+    @include media.media-breakpoint-down(lg) {
+      flex-direction: row;
+    }
+  }
+}

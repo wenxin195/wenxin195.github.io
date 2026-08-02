@@ -1,0 +1,92 @@
+// Semantic color tokens — themeable values alias CSS vars from _themes.scss.
+// Brand / social link colors stay compile-time constants (not site skins).
+
+// main colors
+$main-color-1: var(--color-main-1);
+$text-color-1: var(--color-on-main-1);
+
+$main-color-2: var(--color-main-2);
+$text-color-2: var(--color-on-main-2);
+
+$main-color-3: var(--color-main-3);
+$text-color-3: var(--color-on-main-3);
+
+$main-color-theme-light: var(--color-main-theme-light);
+$main-color-theme-dark: var(--color-main-theme-dark);
+
+// page background
+$background-color: var(--color-bg);
+
+// component contrast states (header --light/--dark); not the site-theme axis
+$text-color-theme-light-d: var(--color-contrast-light-d);
+$text-color-theme-light: var(--color-contrast-light);
+$text-color-theme-light-l: var(--color-contrast-light-l);
+
+$text-color-theme-dark-d: var(--color-contrast-dark-d);
+$text-color-theme-dark: var(--color-contrast-dark);
+$text-color-theme-dark-l: var(--color-contrast-dark-l);
+
+// site body text (follows data-theme)
+$text-color-d: var(--color-text-d);
+$text-color: var(--color-text);
+$text-color-l: var(--color-text-l);
+
+$text-background-color: var(--color-text-bg);
+
+// header and footer
+$header-text-color: var(--color-header-fg);
+$header-background: var(--color-header-bg);
+
+$footer-text-color: var(--color-footer-fg);
+$footer-background: var(--color-footer-bg);
+
+// border and shadow
+$border-color: var(--color-border);
+$border-color-l: var(--color-border-l);
+$decorate-color: var(--color-decorate);
+$mask-color: var(--color-mask);
+$select-color: var(--color-select);
+
+// function colors
+$green: var(--color-fn-green);
+$blue: var(--color-fn-blue);
+$yellow: var(--color-fn-yellow);
+$red: var(--color-fn-red);
+$text-color-function: var(--color-on-fn);
+
+// Prompt / details / box / alert (values in _themes)
+$on-prompt-color: var(--color-on-prompt);
+$prompt-edge-color: var(--color-prompt-edge);
+
+$prompt-colors: (
+  tip-bg: var(--color-prompt-tip-bg),
+  tip-color: var(--color-prompt-tip-color),
+  info-bg: var(--color-prompt-info-bg),
+  info-color: var(--color-prompt-info-color),
+  warning-bg: var(--color-prompt-warning-bg),
+  warning-color: var(--color-prompt-warning-color),
+  danger-bg: var(--color-prompt-danger-bg),
+  danger-color: var(--color-prompt-danger-color),
+);
+
+$table-color: (
+  thead-color: var(--color-table-thead),
+  border-color: var(--color-table-border),
+);
+
+$cutout-fill-color: var(--color-cutout-fill);
+$filter-invert: var(--filter-invert);
+
+// Brand / social link colors (compile-time; not site-theme skins).
+// Keys match brand-button--* modifiers in author-links HTML.
+$brand-link-colors: (
+  "mail": #0072c5,
+  "facebook": #4267b2,
+  "weibo": #e6162d,
+  "zhihu": #0084ff,
+  "linkedin": #1074af,
+  "github": #000,
+  "bili": #ec5d85,
+  "red": #e82429,
+  "csdn": #d81e06,
+);

@@ -1,0 +1,193 @@
+@use "sass:map";
+@use "colors";
+@use "tokens" as tokens;
+@forward "colors";
+
+@mixin code-snippet-padding {
+  padding-left: 1rem;
+  padding-right: 1.5rem;
+}
+
+@mixin reset-last-paragraph {
+  > p:last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+@mixin table-cell {
+  padding: 0.4rem 1rem;
+  font-size: 95%;
+  white-space: nowrap;
+}
+
+@mixin horizontal-margin($value) {
+  margin-left: $value;
+  margin-right: $value;
+}
+
+@mixin text-color($type) {
+  color: map.get(tokens.$prompt-colors, #{$type}-color);
+}
+
+@mixin background-color($type) {
+  background-color: map.get(tokens.$prompt-colors, #{$type}-bg);
+}
+
+@mixin box-base-style($type) {
+  box-shadow: 1px 1px 2px 1px map.get(tokens.$table-color, border-color);
+  padding: 0.6rem 1rem 0.6rem 1.5rem;
+  margin-bottom: 1rem;
+  border-left: 0.2rem solid map.get(tokens.$prompt-colors, #{$type}-color);
+  border-radius: map.get(tokens.$base, border-radius-sm);
+}
+
+@mixin box-title-style(
+  $type,
+  $padding: 0.5rem 1rem,
+  $margin: -0.6rem -1rem 0.6rem -1.5rem
+) {
+  font-weight: 600;
+  padding: $padding;
+  margin: $margin;
+
+  @include text-color($type);
+  @include background-color($type);
+}
+
+@mixin icon-font-adjustments($type) {
+  @if $type == "tip" {
+    font: var(--fa-font-regular) {
+      size: 1.5rem;
+    }
+  } @else {
+    font: var(--fa-font-solid) {
+      size: 1.5rem;
+    }
+  }
+
+  @if $type == "info" {
+    transform: rotate(180deg);
+  }
+}
+
+@mixin icon-base-style($content, $top-offset: 0, $left-offset: 0.25rem) {
+  position: absolute;
+  width: 3rem;
+  text-align: center;
+  content: $content;
+  left: $left-offset;
+  margin-top: $top-offset;
+}
+
+@mixin details($class, $type) {
+  &.details-#{$class} {
+    @include box-base-style($type);
+
+    > summary {
+      position: relative;
+      list-style: none;
+      transition: background-color map.get(tokens.$animation, duration-md) ease;
+
+      @include box-title-style(
+        $type,
+        $padding: 0.5rem 1rem,
+        $margin: -0.6rem -1rem -0.6rem -1.5rem
+      );
+
+      &::after {
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        font: var(--fa-font-solid) {
+          size: 1.1rem;
+        }
+        content: "\f105";
+        transform: translateY(-50%);
+        transition: transform map.get(tokens.$animation, duration-sm) ease;
+      }
+    }
+  }
+}
+
+@mixin box($type, $icon-content) {
+  .box-#{$type} {
+    position: relative;
+
+    @include box-base-style($type);
+
+    .title {
+      @include box-title-style(
+        $type,
+        $padding: 0.5rem 0.6rem 0.5rem 3rem,
+        $margin: -0.6rem -1rem 0.6rem -1.5rem
+      );
+
+      &:empty {
+        display: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      &::before {
+        @include icon-base-style($icon-content, 0.1rem, 0.2rem);
+        @include text-color($type);
+        @include icon-font-adjustments($type);
+      }
+    }
+
+    @include reset-last-paragraph;
+  }
+}
+
+// Short prompts: full tint + leading FA icon (no title).
+@mixin prompt($type, $icon-content) {
+  $pad-y: 0.65rem;
+  $pad-x: 0.85rem;
+  // Match legacy icon slot (3rem) so 1.5rem FA glyphs clear the body text.
+  $icon-slot: 3rem;
+  $line-height: map.get(tokens.$base, line-height-lg);
+
+  blockquote.prompt-#{$type} {
+    position: relative;
+    margin-bottom: 1rem;
+    padding: $pad-y $pad-x $pad-y $icon-slot;
+    border: none;
+    border-left: 0;
+    border-radius: map.get(tokens.$base, border-radius-sm);
+    color: tokens.$on-prompt-color;
+    font-size: inherit;
+    line-height: $line-height;
+    box-shadow: none;
+
+    @include background-color($type);
+
+    &::before {
+      position: absolute;
+      left: 0.25rem;
+      width: 3rem;
+      content: $icon-content;
+      text-align: center;
+      @include text-color($type);
+
+      @if $type == "tip" {
+        font: var(--fa-font-regular);
+      } @else {
+        font: var(--fa-font-solid);
+      }
+
+      font-size: 1.5rem;
+
+      @if $type == "info" {
+        transform: rotate(180deg);
+      }
+    }
+
+    > p {
+      margin: 0 0 0.65rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{%- assign _hero = page.hero -%}
+{%- if _hero.type == 'overlay' -%}
+  {%- include hero/overlay.html -%}
+{%- elsif _hero.type == 'cover' -%}
+  {%- include hero/cover.html -%}
+{%- endif -%}

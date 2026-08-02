@@ -1,0 +1,16 @@
+@use "sass:map";
+@use "tokens" as variables;
+
+.article-header {
+  // Top clearance after site-header is shell/main inset — not this block.
+  margin-bottom: map.get(variables.$spacers, 4);
+
+  header,
+  h1 {
+    display: inline;
+  }
+
+  h1 {
+    word-wrap: break-word;
+  }
+}

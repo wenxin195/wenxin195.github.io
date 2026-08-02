@@ -1,0 +1,23 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/pseudo" as pseudo;
+@use "foundations/utilities/shadow" as shadow;
+
+// .lightbox-modal uses primitives/modal; gallery lives in primitives/gallery.
+
+.lightbox-modal.modal {
+  // Prefer dynamic viewport on mobile browser chrome.
+  height: 100dvh;
+  max-height: 100dvh;
+}
+
+.popup-image {
+  cursor: pointer;
+  max-width: 100%;
+
+  @include pseudo.hover() {
+    @include shadow.box-shadow(2);
+  }
+
+  transition: map.get(variables.$clickable, transition);
+}

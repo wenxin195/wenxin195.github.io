@@ -1,0 +1,11 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+
+.archive-result {
+  margin: map.get(variables.$spacers, 4) 0;
+
+  @include media.media-breakpoint-down(md) {
+    margin: map.get(variables.$spacers, 3) 0;
+  }
+}

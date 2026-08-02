@@ -1,68 +1,12 @@
 ---
 ---
 
-@import
-
-    "skins/default",
-
-    "common/variables",
-    "common/function",
-    "common/classes",
-    "common/reset",
-    "common/print",
-    "common/components/button",
-    "common/components/image",
-    "common/components/gallery",
-    "common/components/hero",
-    "common/components/menu",
-    "common/components/modal",
-    "common/components/toc",
-    "common/components/item",
-    "common/components/swiper",
-
-    "animate/fade-in",
-    "animate/fade-in-down",
-    "animate/fade-in-up",
-
-    "components/main",
-    "components/header",
-    "components/footer",
-    "components/article-list",
-    "components/article-info",
-    "components/article-header",
-    "components/article-content",
-    "components/article-footer",
-    "components/author-links",
-    "components/tags",
-    "components/search",
-    "components/lightbox",
-    "components/extensions",
-
-    "addon/commons",
-    "addon/module",
-    "addon/colors",
-    "addon/syntax",
-    "addon/syntax-light",
-
-    "additional/decorations",
-
-    "layout/base",
-    "layout/page",
-
-    "layout/article",
-    "layout/articles",
-    "layout/archive",
-    "layout/home",
-    "layout/404",
-
-    "donate",
-    "sharing",
-    "multimedia",
-    "appreciate",
-    "scroll-to-top",
-    "clipboard",
-    "email",
-    "article-top",
-    "contact"
-    // "pagefind"
-;
+// Layered entry only — no business rules, no @import.
+@use "tokens";
+@use "foundations";
+@use "shell";
+@use "primitives";
+@use "blocks";
+@use "kinds";
+@use "enhancements";
+@use "motion";

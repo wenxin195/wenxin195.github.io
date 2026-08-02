@@ -1,0 +1,20 @@
+site: _site
+glob: "**/*.html"
+output_subdir: pagefind
+
+root_selector: "html"
+
+# 排除不需要索引的页面(按需调整)
+exclude_selectors:
+  - "nav"
+  - "footer"
+  - ".page__comments"
+  - ".toc-aside"
+  - ".layout--archive"
+  - ".layout--not-found"
+  - ".layout--home"
+  - ".layout--articles"
+
+force_language: "zh"
+keep_index_url: false
+verbose: true

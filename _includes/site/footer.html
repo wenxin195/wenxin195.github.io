@@ -1,0 +1,48 @@
+<footer class="site-footer py-4 js-site-footer d-print-none">
+  <div class="site-footer__inner">
+    {%- assign _site_author = site.data.authors[site.author.name] -%}
+
+    <div itemscope itemtype="https://schema.org/Person">
+      <meta itemprop="name" content="{{ site.author.name }}">
+      <meta itemprop="url" content="{{ _site_author.url | default: '/' }}">
+
+      {%- if _site_author.bio -%}
+        <meta itemprop="description" content="{{ _site_author.bio }}">
+      {%- endif -%}
+
+      <div class="site-footer__author-links">
+        {%- include author-links.html author=_site_author -%}
+      </div>
+    </div>
+
+    <div class="site-info mt-2">
+      <div>
+        <span>©</span>
+        <span>{{- _t.COPYRIGHT_DATES -}}‒{{- site.time | date: '%Y' -}}</span>
+        <span>{{- site.title -}}.</span>
+        <span>All rights reserved.</span>
+        <br>
+        <span>Powered by</span>
+        <a title="Jekyll is a simple, blog-aware, static site generator." href="https://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a>
+        <span>&</span>
+        <a title="TeXt is a super customizable Jekyll theme." href="https://github.com/kitian616/jekyll-TeXt-theme" target="_blank" rel="noopener noreferrer">TeXt Theme</a>
+        <br>
+        <span>Code blocks from</span>
+        <a title="A minimal, responsive, and feature-rich Jekyll theme for technical writing." href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener noreferrer">Chirpy</a>
+        <span>·</span>
+        <span>Callouts adapted from</span>
+        <a title="huanyushi personal site" href="https://github.com/huanyushi/huanyushi.github.io" target="_blank" rel="noopener noreferrer">huanyushi</a>
+      </div>
+    </div>
+
+    {%- if jekyll.environment != 'development' -%}
+      <div class="site-info site-statics">
+        <div>
+          <script src="//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js" defer></script>
+          <a title="Busuanzi — site UV/PV counter" href="https://busuanzi.ibruce.info/" target="_blank" rel="noopener noreferrer">Busuanzi</a>
+          <span id="busuanzi_site_uv"><i class="fa fa-user"></i></span> | <span id="busuanzi_site_pv"><i class="fa fa-eye"></i></span>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</footer>

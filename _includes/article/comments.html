@@ -1,0 +1,9 @@
+{%- assign _comments = page.comments | default: layout.comments | default: site.data.layout.article.comments -%}
+
+{%- if _comments != false and site.comments -%}
+  <section class="article-comments d-print-none">
+    {%- if jekyll.environment != 'development' -%}
+      {%- include providers/comments/{{ site.comments }}.html -%}
+    {%- endif -%}
+  </section>
+{%- endif -%}

@@ -1,0 +1,15 @@
+// Type maps only — color values live in tokens/_themes + tokens/_colors.
+
+$addon-types: (
+  "tip": "\f0eb",
+  "info": "\f06a",
+  "warning": "\f06a",
+  "danger": "\f071",
+);
+
+$math-types: (
+  "definition": "tip",
+  "theorem": "warning",
+  "proposition": "info",
+  "example": "danger",
+);

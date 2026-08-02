@@ -1,0 +1,5 @@
+{%- if jekyll.environment != 'development' -%}
+  {%- if site.analytics -%}
+    {%- include providers/analytics/{{ site.analytics }}.html -%}
+  {%- endif -%}
+{%- endif -%}

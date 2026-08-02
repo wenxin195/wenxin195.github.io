@@ -39,37 +39,37 @@ title: 联系我
 <ul class="contact-list">
   <li class="contact-list__item">
     <div class="contact-social" data-channel="facebook">
-      <img class="contact-social__icon" src="assets/images/icon/facebook.svg" alt="Facebook" />
+      <img class="contact-social__icon" src="assets/images/icon/social-color/facebook.svg" alt="Facebook" />
       <a class="contact-social__link" href="https://www.facebook.com/profile.php?id=61569485184749" title="Facebook">Facebook</a>
     </div>
   </li>
   <li class="contact-list__item">
     <div class="contact-social" data-channel="weiebo">
-      <img class="contact-social__icon" src="assets/images/icon/weibo.svg" alt="weibo" />
+      <img class="contact-social__icon" src="assets/images/icon/social-color/weibo.svg" alt="weibo" />
       <a class="contact-social__link" href="https://weibo.com/2943658367" title="weibo">Weibo</a>
     </div>
   </li>
   <li class="contact-list__item">
     <div class="contact-social" data-channel="linkedin">
-      <img class="contact-social__icon" src="assets/images/icon/linkedin.svg" alt="Linkedin" />
+      <img class="contact-social__icon" src="assets/images/icon/social-color/linkedin.svg" alt="Linkedin" />
       <a class="contact-social__link" href="https://www.linkedin.com/in/钟文鑫" title="Linkedin">Linkedin</a>
     </div>
   </li>
   <li class="contact-list__item">
     <div class="contact-social" data-channel="github">
-      <img class="contact-social__icon" src="assets/images/icon/github.svg" alt="GitHub" />
+      <img class="contact-social__icon" src="assets/images/icon/social-color/github.svg" alt="GitHub" />
       <a class="contact-social__link" href="https://github.com/wenxin195" title="GitHub">GitHub</a>
     </div>
   </li>
   <li class="contact-list__item">
     <div class="contact-social" data-channel="bili">
-      <img class="contact-social__icon" src="assets/images/icon/bili.svg" alt="bilibili" />
+      <img class="contact-social__icon" src="assets/images/icon/social-color/bili.svg" alt="bilibili" />
       <a class="contact-social__link" href="https://space.bilibili.com/10738871" title="bilibili">bilibili</a>
     </div>
   </li>
   <li class="contact-list__item">
     <div class="contact-social" data-channel="csdn">
-      <img class="contact-social__icon" src="assets/images/icon/csdn.svg" alt="CSDN" />
+      <img class="contact-social__icon" src="assets/images/icon/social-color/csdn.svg" alt="CSDN" />
       <a class="contact-social__link" href="https://blog.csdn.net/weixin_46784010" title="CSDN">CSDN</a>
     </div>
   </li>

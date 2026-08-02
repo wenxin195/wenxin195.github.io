@@ -1,0 +1,69 @@
+@use "sass:map";
+@use "tokens" as variables;
+
+@mixin menu-direction($direction: default) {
+  @if $direction == default {
+    $direction: "horizontal";
+  }
+
+  @if $direction == "vertical" {
+    flex-direction: column;
+  } @else {
+    flex-direction: row;
+  }
+}
+
+@mixin menu(
+  $horizontal-spacer: default,
+  $horizontal-item-vertical-spacer: default,
+  $wrap: default
+) {
+  @if $horizontal-spacer == default {
+    $horizontal-spacer: map.get(variables.$menu, horizontal-spacer);
+  }
+
+  @if $horizontal-item-vertical-spacer == default {
+    $horizontal-item-vertical-spacer: map.get(variables.$menu, horizontal-item-vertical-spacer);
+  }
+
+  @if $wrap == default {
+    $wrap: wrap;
+  }
+
+  margin-top: 0;
+  margin-bottom: 0;
+  display: flex;
+  flex-wrap: $wrap;
+
+  & > li {
+    @if $horizontal-item-vertical-spacer {
+      margin-top: map.get(variables.$spacers, $horizontal-item-vertical-spacer);
+      margin-bottom: map.get(variables.$spacers, $horizontal-item-vertical-spacer);
+    }
+
+    margin-right: map.get(variables.$spacers, $horizontal-spacer);
+    list-style-type: none;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.menu {
+  @include menu-direction();
+  align-items: center;
+  @include menu();
+}
+
+.menu--inline {
+  display: inline-flex;
+}
+
+.menu--center {
+  justify-content: center;
+}
+
+.menu--nowrap {
+  flex-wrap: nowrap;
+}

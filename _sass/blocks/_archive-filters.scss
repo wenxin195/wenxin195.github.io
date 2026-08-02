@@ -1,0 +1,82 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/clickable" as clickable;
+@use "foundations/utilities/media" as media;
+
+@mixin _tag-paint($bg) {
+  @include clickable.paint(
+    variables.$text-color-1,
+    $bg,
+    $active-fg: variables.$text-color-1,
+    $active-bg: variables.$main-color-2,
+    $focus-fg: variables.$text-color-1,
+    $focus-bg: variables.$main-color-2,
+    $disabled-alpha: 0.2
+  );
+}
+
+.archive-filters {
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: map.get(variables.$spacers, 2);
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    > li {
+      margin: 0;
+    }
+  }
+
+  .tag-button,
+  .tag-button-1,
+  .tag-button-2,
+  .tag-button-3,
+  .tag-button-4 {
+    @include clickable.clickable;
+  }
+
+  .tag-button {
+    @include clickable.paint(
+      variables.$text-color-3,
+      variables.$main-color-3,
+      $active-fg: variables.$text-color-1,
+      $active-bg: variables.$main-color-2,
+      $focus-fg: variables.$text-color-1,
+      $focus-bg: variables.$main-color-2,
+      $disabled-alpha: 0.2
+    );
+
+    @include media.media-breakpoint-down(md) {
+      padding-top: map.get(variables.$spacers, 1);
+      padding-bottom: map.get(variables.$spacers, 1);
+      font-size: map.get(variables.$base, font-size-sm);
+    }
+
+    & > .tag-button__count {
+      display: inline-block;
+      margin-left: map.get(variables.$spacers, 1);
+      font-size: map.get(variables.$base, font-size-xs);
+      line-height: 1;
+      vertical-align: top;
+    }
+  }
+
+  .tag-button-1 {
+    @include _tag-paint(color-mix(in srgb, #{variables.$main-color-1} 40%, transparent));
+  }
+
+  .tag-button-2 {
+    @include _tag-paint(color-mix(in srgb, #{variables.$main-color-1} 55%, transparent));
+  }
+
+  .tag-button-3 {
+    @include _tag-paint(color-mix(in srgb, #{variables.$main-color-1} 70%, transparent));
+  }
+
+  .tag-button-4 {
+    @include _tag-paint(color-mix(in srgb, #{variables.$main-color-1} 90%, transparent));
+  }
+}

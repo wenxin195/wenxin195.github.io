@@ -1,0 +1,68 @@
+@use "tokens" as variables;
+@use "./link" as link;
+
+@mixin text-light {
+  color: variables.$text-color-theme-light;
+
+  h1,
+  h2,
+  h3 {
+    color: variables.$text-color-theme-light-d;
+  }
+
+  h4,
+  h5 {
+    color: variables.$text-color-theme-light;
+  }
+
+  h6 {
+    color: variables.$text-color-theme-light-l;
+  }
+
+  a:not(.button) {
+    @include link.link-colors(
+      variables.$text-color-theme-light,
+      variables.$main-color-1,
+      variables.$main-color-1,
+      variables.$main-color-1,
+      $disabled-alpha: 0.2
+    );
+  }
+}
+
+@mixin text-dark {
+  color: variables.$text-color-theme-dark;
+
+  h1,
+  h2,
+  h3 {
+    color: variables.$text-color-theme-dark-d;
+  }
+
+  h4,
+  h5 {
+    color: variables.$text-color-theme-dark;
+  }
+
+  h6 {
+    color: variables.$text-color-theme-dark-l;
+  }
+
+  a:not(.button) {
+    @include link.link-colors(
+      variables.$text-color-theme-dark,
+      variables.$main-color-1,
+      variables.$main-color-1,
+      variables.$main-color-1,
+      $disabled-alpha: 0.4
+    );
+  }
+}
+
+.text--light {
+  @include text-light();
+}
+
+.text--dark {
+  @include text-dark();
+}

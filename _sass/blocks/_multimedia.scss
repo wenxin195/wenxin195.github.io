@@ -1,0 +1,40 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+
+.multimedia {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: map.get(variables.$spacers, 2);
+
+  @include media.media-breakpoint-down(lg) {
+    gap: map.get(variables.$spacers, 1);
+  }
+}
+
+.multimedia__pdf,
+.multimedia__video {
+  display: flex;
+  align-items: center;
+
+  > a {
+    display: inline-flex;
+    align-items: center;
+    gap: map.get(variables.$spacers, 1);
+    text-decoration: none;
+    white-space: nowrap;
+
+    > img {
+      width: 2rem;
+      height: auto;
+      flex-shrink: 0;
+      filter: invert(variables.$filter-invert);
+
+      @include media.media-breakpoint-down(md) {
+        width: 1.75rem;
+      }
+    }
+  }
+}

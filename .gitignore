@@ -1,34 +1,41 @@
+# OS / editor
 *~
 ~*
 *.diff
 *.patch
 *.bak
 .DS_Store
+Thumbs.db
 *.swp
 *.swo
 *.log
 *.log.*
-
 /.vscode/
+.idea/
 
-node_modules/
-.sass-cache/
-
-/.bundle/
-/vendor/bundle
-*.gem
-
-yarn.lock
-Gemfile.lock
-
-_site/
-_drifts/
-.jekyll-cache/
-_includes/markdown-enhancements/katex.html
-
-.jekyll-metadata
+# Lint / format (local only)
 .eslintrc
 .prettierrc
 .stylelintignore
 .stylelintrc
-.travis.yml
+
+# Dependencies
+node_modules/
+/.bundle/
+/vendor/bundle
+/vendor/cache
+/vendor/gems
+/vendor/ruby
+*.gem
+
+# Build / cache
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+.codegraph/
+
+# Local content
+_drifts/
+docs/
+_cite/

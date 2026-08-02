@@ -1,0 +1,6 @@
+@use "sass:map";
+@use "tokens" as variables;
+
+.article-comments {
+  margin: map.get(variables.$spacers, 4) 0;
+}

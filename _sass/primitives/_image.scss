@@ -1,0 +1,27 @@
+@use "sass:map";
+@use "tokens" as variables;
+
+.image--md {
+  width: map.get(variables.$image, width);
+}
+
+.image--xl {
+  width: map.get(variables.$image, width-xl);
+}
+
+.image--lg {
+  width: map.get(variables.$image, width-lg);
+}
+
+.image--sm {
+  width: map.get(variables.$image, width-sm);
+}
+
+.image--xs {
+  width: map.get(variables.$image, width-xs);
+}
+
+.image {
+  max-width: 100%;
+  @extend .image--md;
+}

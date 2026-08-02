@@ -1,0 +1,51 @@
+{%- assign _header_class = 'site-header d-print-none' -%}
+{%- if include.theme -%}
+  {%- assign _header_class = _header_class | append: ' site-header--' | append: include.theme -%}
+{%- endif -%}
+
+{%- assign _site_theme = site.site_theme | default: 'default' -%}
+{%- unless _site_theme == 'default' or _site_theme == 'dark' -%}
+  {%- assign _site_theme = 'default' -%}
+{%- endunless -%}
+{%- if _site_theme == 'dark' -%}
+  {%- assign _theme_toggle_label = '切换为亮色主题' -%}
+{%- else -%}
+  {%- assign _theme_toggle_label = '切换为暗色主题' -%}
+{%- endif -%}
+
+<header class="{{ _header_class }}" {% if include.background %} style="background: {{ include.background }};" {% endif %}>
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <img class="site-header__logo" src="{{ '/assets/images/icon/logo.svg' | relative_url }}" alt="" width="128" height="128" />
+      <a title="{{ site.description | strip_newlines }}" href="{{ site.data.path.urls.root }}">{{- site.title -}}</a>
+    </div>
+
+    <nav class="navigation js-site-nav" aria-label="主导航">
+      <ul>
+        {%- include site/nav-links.html -%}
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <button type="button" class="button button--secondary button--circle theme-toggle js-theme-toggle" aria-label="{{ _theme_toggle_label }}">
+        <i class="fas fa-circle-half-stroke" aria-hidden="true"></i>
+      </button>
+
+      {%- if site.search -%}
+        <button type="button" class="button button--secondary button--circle search-button js-search-toggle" aria-label="搜索">
+          <i class="fas fa-search" aria-hidden="true"></i>
+        </button>
+      {%- endif -%}
+    </div>
+
+    <button
+      type="button"
+      class="button button--secondary button--circle site-header__menu-toggle js-nav-toggle"
+      aria-label="打开菜单"
+      aria-controls="site-nav-drawer"
+      aria-expanded="false"
+    >
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+  </div>
+</header>

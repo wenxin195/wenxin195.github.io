@@ -1,0 +1,17 @@
+{%- assign _show_title = include.article.show_title | default: layout.show_title | default: site.data.layout.article.show_title -%}
+{%- assign _visible = include.visible -%}
+{%- if _visible == nil -%}
+  {%- assign _visible = true -%}
+{%- endif -%}
+
+{%- if _visible and _show_title -%}
+  <header class="article-header">
+    <h1 {% if page.layout == 'article' %}data-pagefind-meta="title"{% endif %}>{{- include.article.title -}}</h1>
+  </header>
+{%- elsif include.sr_only -%}
+  <h1 class="u-sr-only">{{- include.article.title -}}</h1>
+{%- endif -%}
+
+{%- if include.semantic != false -%}
+  <meta itemprop="headline" content="{{ include.article.title }}">
+{%- endif -%}

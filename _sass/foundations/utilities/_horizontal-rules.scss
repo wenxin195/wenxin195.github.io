@@ -1,0 +1,17 @@
+@use "sass:map";
+@use "tokens" as variables;
+
+@mixin horizontal-rules() {
+  &::before {
+    display: block;
+    font-size: map.get(variables.$base, font-size-h2);
+    color: variables.$text-color-l;
+    text-align: center;
+    letter-spacing: map.get(variables.$spacers, 4);
+    content: "...";
+  }
+}
+
+.horizontal-rules {
+  @include horizontal-rules();
+}

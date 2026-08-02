@@ -1,0 +1,15 @@
+{%- assign _show_title = page.show_title | default: layout.show_title | default: site.data.layout.page.show_title -%}
+
+<section class="page-content">
+  {%- if _show_title -%}
+    <header class="page-content__header">
+      <h1>{{- page.title -}}</h1>
+    </header>
+  {%- elsif page.title -%}
+    <h1 class="u-sr-only">{{- page.title -}}</h1>
+  {%- endif -%}
+
+  <div class="page-content__body">
+    {{ include.content }}
+  </div>
+</section>

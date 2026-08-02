@@ -1,0 +1,22 @@
+@use "sass:map";
+@use "tokens" as variables;
+
+@mixin media-breakpoint-down($name, $breakpoints: default) {
+  @if $breakpoints == default {
+    $breakpoints: variables.$responsive;
+  }
+
+  @media (max-width: (map.get($breakpoints, $name) - 1)) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-up($name, $breakpoints: default) {
+  @if $breakpoints == default {
+    $breakpoints: variables.$responsive;
+  }
+
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}

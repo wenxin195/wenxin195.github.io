@@ -1,0 +1,6 @@
+// Force CJK punctuation (incl. “ ”) onto Song; Latin/digits stay on Western fonts.
+@font-face {
+  font-family: "CJK Quotes";
+  src: local("SimSun"), local("Songti SC"), local("STSong"), local("Noto Serif CJK SC");
+  unicode-range: U+2018-201F, U+3000-303F, U+FF00-FFEF;
+}

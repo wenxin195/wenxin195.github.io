@@ -1,0 +1,32 @@
+# 作者社交平台配置（数组顺序即页面显示顺序）
+- key: facebook
+  name: Facebook
+  url: "https://www.facebook.com/profile.php?id="
+
+- key: weibo
+  name: Weibo
+  url: "https://weibo.com/"
+
+- key: zhihu
+  name: 知乎
+  url: "https://www.zhihu.com/people/"
+
+- key: linkedin
+  name: Linkedin
+  url: "https://www.linkedin.com/in/"
+
+- key: github
+  name: GitHub
+  url: "https://github.com/"
+
+- key: bili
+  name: bilibili
+  url: "https://space.bilibili.com/"
+
+- key: red
+  name: 小红书
+  url: "https://www.xiaohongshu.com/user/profile/"
+
+- key: csdn
+  name: CSDN
+  url: "https://blog.csdn.net/"

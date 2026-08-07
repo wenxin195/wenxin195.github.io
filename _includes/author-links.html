@@ -1,14 +1,21 @@
-﻿{%- assign _author = include.author -%}
+﻿{%- comment -%}
+  作者社交链接：email 单独渲染；其余平台按 _data/social.yml 顺序循环。
+  依赖：include.author（作者数据）、_t（utils/locale.html）。
+{%- endcomment -%}
+{%- assign _author = include.author -%}
 {%- assign _locale_string_follow = _t.FOLLOW_ME -%}
 
 <div class="author-links">
   <ul class="menu menu--nowrap menu--inline">
 
+    {%- comment -%} 站点 / 个人主页 URL（结构化数据，不渲染为按钮） {%- endcomment -%}
     {%- if _author.url -%}
       <link itemprop="url" href="{{ _author.url }}">
     {%- endif -%}
 
+    {%- comment -%} 邮箱：mailto + Font Awesome，与社交平台结构不同 {%- endcomment -%}
     {%- if _author.email -%}
+      <!-- 邮箱 -->
       <li title="{{ _t.EMAIL_ME }}">
         <a class="button button--circle brand-button brand-button--mail" itemprop="email" href="mailto:{{ _author.email }}">
           <i class="fas fa-envelope"></i>
@@ -16,68 +23,18 @@
       </li>
     {%- endif -%}
 
-    {%- if _author.facebook -%}
-      <li title="{{ _locale_string_follow | replace: '[NAME]', 'Facebook' }}">
-        <a class="button button--circle brand-button brand-button--facebook" itemprop="sameAs" href="https://www.facebook.com/profile.php?id={{ _author.facebook }}">
-          <span class="icon" style="--icon: url('{{ '/assets/images/icon/social/facebook.svg' | relative_url }}')" aria-hidden="true"></span>
-        </a>
-      </li>
-    {%- endif -%}
-
-    {%- if _author.weibo -%}
-      <li title="{{ _locale_string_follow | replace: '[NAME]', 'Weibo' }}">
-        <a class="button button--circle brand-button brand-button--weibo" itemprop="sameAs" href="https://weibo.com/{{ _author.weibo }}">
-          <span class="icon" style="--icon: url('{{ '/assets/images/icon/social/weibo.svg' | relative_url }}')" aria-hidden="true"></span>
-        </a>
-      </li>
-    {%- endif -%}
-
-    {%- if _author.zhihu -%}
-      <li title="{{ _locale_string_follow | replace: '[NAME]', '知乎' }}">
-        <a class="button button--circle brand-button brand-button--zhihu" itemprop="sameAs" href="https://www.zhihu.com/people/{{ _author.zhihu }}">
-          <span class="icon" style="--icon: url('{{ '/assets/images/icon/social/zhihu.svg' | relative_url }}')" aria-hidden="true"></span>
-        </a>
-      </li>
-    {%- endif -%}
-
-    {%- if _author.linkedin -%}
-      <li title="{{ _locale_string_follow | replace: '[NAME]', 'Linkedin' }}">
-        <a class="button button--circle brand-button brand-button--linkedin" itemprop="sameAs" href="https://www.linkedin.com/in/{{ _author.linkedin }}">
-          <span class="icon" style="--icon: url('{{ '/assets/images/icon/social/linkedin.svg' | relative_url }}')" aria-hidden="true"></span>
-        </a>
-      </li>
-    {%- endif -%}
-
-    {%- if _author.github -%}
-      <li title="{{ _locale_string_follow | replace: '[NAME]', 'GitHub' }}">
-        <a class="button button--circle brand-button brand-button--github" itemprop="sameAs" href="https://github.com/{{ _author.github }}">
-          <span class="icon" style="--icon: url('{{ '/assets/images/icon/social/github.svg' | relative_url }}')" aria-hidden="true"></span>
-        </a>
-      </li>
-    {%- endif -%}
-
-    {%- if _author.bili -%}
-      <li title="{{ _locale_string_follow | replace: '[NAME]', 'bilibili' }}">
-        <a class="button button--circle brand-button brand-button--bili" itemprop="sameAs" href="https://space.bilibili.com/{{ _author.bili }}">
-          <span class="icon" style="--icon: url('{{ '/assets/images/icon/social/bili.svg' | relative_url }}')" aria-hidden="true"></span>
-        </a>
-      </li>
-    {%- endif -%}
-
-    {%- if _author.red -%}
-      <li title="{{ _locale_string_follow | replace: '[NAME]', '小红书' }}">
-        <a class="button button--circle brand-button brand-button--red" itemprop="sameAs" href="https://www.xiaohongshu.com/user/profile/{{ _author.red }}">
-          <span class="icon" style="--icon: url('{{ '/assets/images/icon/social/red.svg' | relative_url }}')" aria-hidden="true"></span>
-        </a>
-      </li>
-    {%- endif -%}
-
-    {%- if _author.csdn -%}
-      <li title="{{ _locale_string_follow | replace: '[NAME]', 'CSDN' }}">
-        <a class="button button--circle brand-button brand-button--csdn" itemprop="sameAs" href="https://blog.csdn.net/{{ _author.csdn }}">
-          <span class="icon" style="--icon: url('{{ '/assets/images/icon/social/csdn.svg' | relative_url }}')" aria-hidden="true"></span>
-        </a>
-      </li>
-    {%- endif -%}
+    {%- comment -%} 社交平台：key 对应 authors.yml 字段 / 样式 / 图标，显示顺序同 social.yml {%- endcomment -%}
+    <!-- 社交平台 -->
+    {%- for _platform in site.data.social -%}
+      {%- assign _id = _author[_platform.key] -%}
+      {%- if _id -%}
+        {%- assign _icon_url = '/assets/images/icon/social/' | append: _platform.key | append: '.svg' | relative_url -%}
+        <li title="{{ _locale_string_follow | replace: '[NAME]', _platform.name }}">
+          <a class="button button--circle brand-button brand-button--{{ _platform.key }}" itemprop="sameAs" href="{{ _platform.url }}{{ _id }}">
+            <span class="icon" style="--icon: url('{{ _icon_url }}')" aria-hidden="true"></span>
+          </a>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
   </ul>
 </div>

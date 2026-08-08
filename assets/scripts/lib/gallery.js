@@ -1,4 +1,5 @@
 import { Swiper } from './swiper.js';
+import { iconEl } from '@/lib/icons.js';
 
 /**
  * 图片图库：支持滑动切换与捏合/双击缩放。
@@ -157,12 +158,14 @@ export class Gallery {
 
     const btnPrev = this._createElement(
       'div',
-      'swiper__button swiper__button--prev fas fa-chevron-left'
+      'swiper__button swiper__button--prev'
     );
+    btnPrev.appendChild(iconEl('chevron-left'));
     const btnNext = this._createElement(
       'div',
-      'swiper__button swiper__button--next fas fa-chevron-right'
+      'swiper__button swiper__button--next'
     );
+    btnNext.appendChild(iconEl('chevron-right'));
 
     this._swiperEl.append(this._wrapper, btnPrev, btnNext);
 

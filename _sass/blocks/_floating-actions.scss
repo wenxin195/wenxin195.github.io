@@ -54,6 +54,14 @@
     transform map.get(variables.$animation, duration-sm) ease-out,
     background-color map.get(variables.$animation, duration-sm) ease;
 
+  // Lucide mask 不跟 font-size；单独加大以接近原 FA 观感。
+  .icon-lucide {
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle;
+    top: -4px;
+  }
+
   &.visible {
     @include visible-state;
     transform: translateY(0);
@@ -69,6 +77,11 @@
     height: 2.5rem;
     line-height: 2.5rem;
     font-size: 1.1rem;
+
+    .icon-lucide {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
   }
 }
 
@@ -84,17 +97,12 @@
   &.visible:hover {
     transform: translate3d(0, -5px, 0);
   }
-
-  > i {
-    line-height: inherit;
-  }
 }
 
 .float-btn--scroll-top {
-  > i {
-    line-height: inherit;
+  .icon-lucide {
     position: relative;
-    bottom: 2px;
+    bottom: 1px;
   }
 }
 

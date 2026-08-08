@@ -41,12 +41,16 @@
   line-height: map.get(tokens.$code-chrome, header-height);
   margin-left: math.div((map.get(tokens.$code-chrome, dot-margin) + 0.75rem), 2) * -1;
 
-  i {
-    font-size: 1rem;
+  svg.icon-lucide,
+  .icon-lucide {
+    width: 1rem;
+    height: 1rem;
     color: var(--syntax-gray);
+    vertical-align: -0.15em;
 
-    &.small {
-      font-size: 70%;
+    &.icon-lucide--sm {
+      width: 0.7rem;
+      height: 0.7rem;
     }
   }
 
@@ -70,7 +74,8 @@
   transition: background-color map.get(tokens.$animation, duration-md) ease;
   position: relative;
 
-  i {
+  svg.icon-lucide,
+  .icon-lucide {
     color: var(--syntax-gray);
   }
 
@@ -86,7 +91,8 @@
   &:hover {
     background-color: tokens.$decorate-color;
 
-    i {
+    svg.icon-lucide,
+    .icon-lucide {
       color: tokens.$text-color-d;
     }
   }

@@ -16,7 +16,7 @@
     flex: 1 1 auto;
     min-width: 0;
 
-    > i + li {
+    > .icon-lucide + li {
       margin-left: map.get(variables.$spacers, 2);
     }
   }
@@ -26,7 +26,8 @@
     margin-left: 0;
 
     & > li {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
 
       &:not(:last-child) {
         @include split.split-line(right, default, variables.$text-color-l);
@@ -43,7 +44,9 @@
     align-items: flex-start;
   }
 
-  i {
-    font-size: map.get(variables.$base, font-size-sm) + 0.375;
+  .icon-lucide {
+    width: map.get(variables.$base, font-size-sm) + 0.375;
+    height: map.get(variables.$base, font-size-sm) + 0.375;
+    margin-right: 0.25rem;
   }
 }

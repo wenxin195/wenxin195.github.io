@@ -54,29 +54,15 @@
   @include background-color($type);
 }
 
-@mixin icon-font-adjustments($type) {
-  @if $type == "tip" {
-    font: var(--fa-font-regular) {
-      size: 1.5rem;
-    }
-  } @else {
-    font: var(--fa-font-solid) {
-      size: 1.5rem;
-    }
-  }
-
-  @if $type == "info" {
-    transform: rotate(180deg);
-  }
-}
-
-@mixin icon-base-style($content, $top-offset: 0, $left-offset: 0.25rem) {
-  position: absolute;
-  width: 3rem;
-  text-align: center;
-  content: $content;
-  left: $left-offset;
-  margin-top: $top-offset;
+@mixin lucide-mask-icon($name, $size: 1.5rem) {
+  content: "";
+  display: inline-block;
+  width: $size;
+  height: $size;
+  background-color: currentColor;
+  mask: url("#{colors.$lucide-icon-base}/#{$name}.svg") center / contain no-repeat;
+  -webkit-mask: url("#{colors.$lucide-icon-base}/#{$name}.svg") center / contain
+    no-repeat;
 }
 
 @mixin details($class, $type) {
@@ -98,18 +84,15 @@
         position: absolute;
         top: 50%;
         right: 1rem;
-        font: var(--fa-font-solid) {
-          size: 1.1rem;
-        }
-        content: "\f105";
         transform: translateY(-50%);
         transition: transform map.get(tokens.$animation, duration-sm) ease;
+        @include lucide-mask-icon("chevron-right", 1.5rem);
       }
     }
   }
 }
 
-@mixin box($type, $icon-content) {
+@mixin box($type, $icon-name) {
   .box-#{$type} {
     position: relative;
 
@@ -129,9 +112,11 @@
       }
 
       &::before {
-        @include icon-base-style($icon-content, 0.1rem, 0.2rem);
+        position: absolute;
+        left: 0.9rem;
+        margin-top: 0.1rem;
+        @include lucide-mask-icon($icon-name, 1.5rem);
         @include text-color($type);
-        @include icon-font-adjustments($type);
       }
     }
 
@@ -139,11 +124,10 @@
   }
 }
 
-// Short prompts: full tint + leading FA icon (no title).
-@mixin prompt($type, $icon-content) {
+// 短提示块：整块底色 + 前导 Lucide mask 图标（无标题）。
+@mixin prompt($type, $icon-name) {
   $pad-y: 0.65rem;
   $pad-x: 0.85rem;
-  // Match legacy icon slot (3rem) so 1.5rem FA glyphs clear the body text.
   $icon-slot: 3rem;
   $line-height: map.get(tokens.$base, line-height-lg);
 
@@ -163,23 +147,10 @@
 
     &::before {
       position: absolute;
-      left: 0.25rem;
-      width: 3rem;
-      content: $icon-content;
-      text-align: center;
+      left: 0.9rem;
+      top: $pad-y;
+      @include lucide-mask-icon($icon-name, 1.5rem);
       @include text-color($type);
-
-      @if $type == "tip" {
-        font: var(--fa-font-regular);
-      } @else {
-        font: var(--fa-font-solid);
-      }
-
-      font-size: 1.5rem;
-
-      @if $type == "info" {
-        transform: rotate(180deg);
-      }
     }
 
     > p {

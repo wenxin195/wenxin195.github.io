@@ -25,16 +25,18 @@
     gap: map.get(variables.$spacers, 1);
     text-decoration: none;
     white-space: nowrap;
+  }
+}
 
-    > img {
-      width: 2rem;
-      height: auto;
-      flex-shrink: 0;
-      filter: invert(variables.$filter-invert);
+// Lucide 以 <img> 引用：保留原生描边（不用 mask/currentColor 染色）；主题靠 invert。
+.multimedia__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  filter: invert(variables.$filter-invert);
 
-      @include media.media-breakpoint-down(md) {
-        width: 1.75rem;
-      }
-    }
+  @include media.media-breakpoint-down(md) {
+    width: 1.1rem;
+    height: 1.1rem;
   }
 }

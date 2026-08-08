@@ -1,23 +1,21 @@
 # frozen_string_literal: true
 
 require "nokogiri"
+require_relative "../icons"
 
 module Jekyll
   module Content
     module Transforms
-      # Replace GFM task-list checkboxes with Font Awesome icons.
+      # Replace GFM task-list checkboxes with Lucide icons.
       module TaskLists
         module_function
 
-        def apply!(frag)
+        def apply!(frag, site)
           frag.css('input.task-list-item-checkbox[type="checkbox"]').each do |input|
-            icon = Nokogiri::XML::Node.new("i", frag)
-            icon["class"] = if input["checked"]
-                              "fas fa-check-circle fa-fw checked"
-                            else
-                              "far fa-circle fa-fw"
-                            end
-            input.replace(icon)
+            name = input["checked"] ? "circle-check" : "circle"
+            extra = input["checked"] ? "checked" : nil
+            html = Icons.span_html(site, name, extra_class: extra)
+            input.replace(Nokogiri::HTML::DocumentFragment.parse(html))
           end
         end
       end

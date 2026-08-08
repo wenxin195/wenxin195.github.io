@@ -1,10 +1,10 @@
-// Type maps only — color values live in tokens/_themes + tokens/_colors.
+// 仅类型映射；具体颜色在 tokens/_themes 与 tokens/_colors。
 
 $addon-types: (
-  "tip": "\f0eb",
-  "info": "\f06a",
-  "warning": "\f06a",
-  "danger": "\f071",
+  "tip": "lightbulb",
+  "info": "circle-alert",
+  "warning": "circle-alert",
+  "danger": "triangle-alert",
 );
 
 $math-types: (
@@ -13,3 +13,5 @@ $math-types: (
   "proposition": "info",
   "example": "danger",
 );
+
+$lucide-icon-base: "/assets/images/icon/lucide";

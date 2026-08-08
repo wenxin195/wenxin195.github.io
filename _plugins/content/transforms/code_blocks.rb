@@ -2,6 +2,7 @@
 
 require "nokogiri"
 require_relative "../language_name"
+require_relative "../icons"
 
 module Jekyll
   module Content
@@ -147,16 +148,10 @@ module Jekyll
 
             if file
               label["data-label-text"] = file
-              icon = Nokogiri::XML::Node.new("i", frag)
-              icon["class"] = "far fa-file-code fa-fw"
-              icon["aria-hidden"] = "true"
-              label.add_child(icon)
+              Icons.append_span!(label, @site, "file-code")
             else
               label["data-label-text"] = LanguageName.resolve(@site, lang)
-              icon = Nokogiri::XML::Node.new("i", frag)
-              icon["class"] = "fas fa-code fa-fw small"
-              icon["aria-hidden"] = "true"
-              label.add_child(icon)
+              Icons.append_span!(label, @site, "code", extra_class: "icon-lucide--sm")
             end
 
             button = Nokogiri::XML::Node.new("button", frag)
@@ -164,10 +159,7 @@ module Jekyll
             button["class"] = "code-block__copy"
             button["aria-label"] = "复制代码"
             button["data-code-copy"] = ""
-            btn_icon = Nokogiri::XML::Node.new("i", frag)
-            btn_icon["class"] = "far fa-clipboard"
-            btn_icon["aria-hidden"] = "true"
-            button.add_child(btn_icon)
+            Icons.append_span!(button, @site, "clipboard")
 
             header.add_child(label)
             header.add_child(button)

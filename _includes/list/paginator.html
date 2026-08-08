@@ -18,11 +18,11 @@
             {%- assign prev_href = paginator.previous_page_path | prepend: site.baseurl -%}
 
             <a class="button button--secondary button--circle" href="{{ prev_href }}" rel="prev" aria-label="上一页">
-              <i class="fas fa-angle-left"></i>
+              {% include utils/icon.html name="chevron-left" %}
             </a>
           {%- else -%}
             <div class="button button--secondary button--circle disabled" aria-hidden="true">
-              <i class="fas fa-angle-left"></i>
+              {% include utils/icon.html name="chevron-left" %}
             </div>
           {%- endif -%}
         </li>
@@ -71,7 +71,7 @@
               </li>
             {%- elsif page_num == 2 or page_num == total - 1 -%}
               <!-- 只在省略号位置显示一次 ... -->
-              <li><span class="pagination__omit" aria-hidden="true"><i class="fas fa-ellipsis-h"></i></span></li>
+              <li><span class="pagination__omit" aria-hidden="true">{% include utils/icon.html name="ellipsis" %}</span></li>
             {%- endif -%}
           {%- endif -%}
         {%- endfor -%}
@@ -82,11 +82,11 @@
             {%- assign next_href = paginator.next_page_path | prepend: site.baseurl -%}
 
             <a class="button button--secondary button--circle" href="{{ next_href }}" rel="next" aria-label="下一页">
-              <i class="fas fa-angle-right"></i>
+              {% include utils/icon.html name="chevron-right" %}
             </a>
           {%- else -%}
             <div class="button button--secondary button--circle disabled" aria-hidden="true">
-              <i class="fas fa-angle-right"></i>
+              {% include utils/icon.html name="chevron-right" %}
             </div>
           {%- endif -%}
         </li>

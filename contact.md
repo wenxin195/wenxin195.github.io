@@ -9,21 +9,21 @@ title: 联系我
 <form class="contact-form" action="https://formspree.io/f/mrbgzrdg" method="POST">
   <div class="form-group">
     <label class="form-label" for="name">
-      <i class="fas fa-user"></i><span> 姓名</span>
+      {% include utils/icon.html name="user" %}<span> 姓名</span>
     </label>
     <input class="form-input" type="text" id="name" name="name" autocomplete="name" required>
   </div>
 
   <div class="form-group">
     <label class="form-label" for="email">
-      <i class="fas fa-envelope"></i><span> 电子邮件</span>
+      {% include utils/icon.html name="mail" %}<span> 电子邮件</span>
     </label>
     <input class="form-input" type="email" id="email" name="_replyto" autocomplete="email" required>
   </div>
 
   <div class="form-group">
     <label class="form-label" for="message">
-      <i class="fa-solid fa-comment"></i><span> 消息</span>
+      {% include utils/icon.html name="message-circle" %}<span> 消息</span>
     </label>
     <textarea class="form-textarea" id="message" name="message" required></textarea>
   </div>
@@ -31,7 +31,7 @@ title: 联系我
   <input type="hidden" name="_subject" value="博客联系表单">
 
   <button class="form-button" type="submit">
-    <i class="fas fa-paper-plane"></i><span> 发送</span>
+    {% include utils/icon.html name="send" %}<span> 发送</span>
   </button>
 </form>
 

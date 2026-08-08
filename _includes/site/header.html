@@ -1,8 +1,16 @@
+{%- comment -%}
+  站点顶栏：品牌区、主导航、操作按钮、窄屏菜单开关。
+  链接项来自 site/nav-links.html（与抽屉同源）。
+  可选参数：include.theme、include.background。
+{%- endcomment -%}
+
+{%- comment -%} 顶栏 class：可选 theme 修饰符 {%- endcomment -%}
 {%- assign _header_class = 'site-header d-print-none' -%}
 {%- if include.theme -%}
   {%- assign _header_class = _header_class | append: ' site-header--' | append: include.theme -%}
 {%- endif -%}
 
+{%- comment -%} 主题切换文案：仅 default / dark，其余回退 default {%- endcomment -%}
 {%- assign _site_theme = site.site_theme | default: 'default' -%}
 {%- unless _site_theme == 'default' or _site_theme == 'dark' -%}
   {%- assign _site_theme = 'default' -%}
@@ -15,29 +23,37 @@
 
 <header class="{{ _header_class }}" {% if include.background %} style="background: {{ include.background }};" {% endif %}>
   <div class="site-header__inner">
+    <!-- 品牌区：logo + 站点标题 -->
     <div class="site-header__brand">
       <img class="site-header__logo" src="{{ '/assets/images/icon/logo.svg' | relative_url }}" alt="" width="128" height="128" />
       <a title="{{ site.description | strip_newlines }}" href="{{ site.data.path.urls.root }}">{{- site.title -}}</a>
     </div>
 
+    {%- comment -%} 宽屏主导航：复用 nav-links.html {%- endcomment -%}
+    <!-- 顶栏导航链接 -->
     <nav class="navigation js-site-nav" aria-label="主导航">
       <ul>
         {%- include site/nav-links.html -%}
       </ul>
     </nav>
 
+    <!-- 操作区：主题切换、搜索 -->
     <div class="site-header__actions">
       <button type="button" class="button button--secondary button--circle theme-toggle js-theme-toggle" aria-label="{{ _theme_toggle_label }}">
-        <i class="fas fa-circle-half-stroke" aria-hidden="true"></i>
+        {% include utils/icon.html name="moon" class="theme-toggle__icon theme-toggle__icon--moon" %}
+        {% include utils/icon.html name="sun" class="theme-toggle__icon theme-toggle__icon--sun" %}
       </button>
 
+      {%- comment -%} 搜索按钮：仅 site.search 开启时渲染 {%- endcomment -%}
       {%- if site.search -%}
         <button type="button" class="button button--secondary button--circle search-button js-search-toggle" aria-label="搜索">
-          <i class="fas fa-search" aria-hidden="true"></i>
+          {% include utils/icon.html name="search" %}
         </button>
       {%- endif -%}
     </div>
 
+    {%- comment -%} 窄屏汉堡按钮：js-nav-toggle 打开 site-nav-drawer {%- endcomment -%}
+    <!-- 打开抽屉菜单 -->
     <button
       type="button"
       class="button button--secondary button--circle site-header__menu-toggle js-nav-toggle"
@@ -45,7 +61,7 @@
       aria-controls="site-nav-drawer"
       aria-expanded="false"
     >
-      <i class="fas fa-bars" aria-hidden="true"></i>
+      {% include utils/icon.html name="menu" %}
     </button>
   </div>
 </header>

@@ -1,0 +1,46 @@
+# Lucide UI 图标清单；文件位于 assets/images/icon/lucide/<file>.svg
+# 必须与 assets/scripts/lib/icons.js 中的 ICON_FILES 保持同步。
+
+base: /assets/images/icon/lucide
+
+icons:
+  menu: menu
+  x: x
+  search: search
+  moon: moon
+  sun: sun
+  user: user
+  eye: eye
+  mail: mail
+  message-circle: message-circle
+  send: send
+  tags: tags
+  calendar: calendar
+  clock: clock
+  chevron-left: chevron-left
+  chevron-right: chevron-right
+  chevron-up: chevron-up
+  ellipsis: ellipsis
+  rss: rss
+  list: list
+  anchor: anchor
+  clipboard: clipboard
+  check: check
+  file-code: file-code
+  code: code
+  circle-check: circle-check
+  circle: circle
+  lightbulb: lightbulb
+  circle-alert: circle-alert
+  triangle-alert: triangle-alert
+  download: download
+  video: video
+  home: home
+  file-text: file-text
+  heart: heart
+  circle-user: circle-user
+  # 导航别名（对应 navigation.yml 的 icon 字段）
+  about: user
+  article: file-text
+  donate: heart
+  contact: mail

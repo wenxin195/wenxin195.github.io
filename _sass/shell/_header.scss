@@ -102,6 +102,31 @@
   flex-shrink: 0;
   align-items: center;
   gap: map.get(variables.$spacers, 1);
+
+  .button.button--secondary {
+    transition: box-shadow map.get(variables.$animation, duration-md) ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+  }
+}
+
+// Light → moon (switch to dark); dark → sun (switch to light).
+.theme-toggle {
+  .theme-toggle__icon--sun {
+    display: none;
+  }
+}
+
+html[data-theme="dark"] .theme-toggle {
+  .theme-toggle__icon--moon {
+    display: none;
+  }
+
+  .theme-toggle__icon--sun {
+    display: inline-block;
+  }
 }
 
 // Beat .button--circle { display: inline-flex } (same 0,1,0 otherwise leaves toggle visible ≥ md).
@@ -139,7 +164,7 @@
 .navigation__icon {
   width: 1.5rem;
   height: 1.5rem;
-  filter: invert(variables.$filter-invert);
+  color: inherit;
 }
 
 .navigation__group {
@@ -156,11 +181,6 @@
 .navigation__item {
   display: flex;
   align-items: center;
-
-  i {
-    margin-right: 1px;
-    font-size: 1.2em;
-  }
 
   &::after {
     display: block;

@@ -1,7 +1,13 @@
+{%- comment -%}
+  站点页脚：作者社交链接、版权与致谢、访问统计（非 development）。
+  依赖：_t（utils/locale.html）、site.data.authors。
+{%- endcomment -%}
 <footer class="site-footer js-site-footer d-print-none">
   <div class="site-footer__inner">
     {%- assign _site_author = site.data.authors[site.author.name] -%}
 
+    {%- comment -%} 作者 Person 结构化数据 + 社交链接 {%- endcomment -%}
+    <!-- 作者信息与社交链接 -->
     <div itemscope itemtype="https://schema.org/Person">
       <meta itemprop="name" content="{{ site.author.name }}">
       <meta itemprop="url" content="{{ _site_author.url | default: '/' }}">
@@ -15,6 +21,7 @@
       </div>
     </div>
 
+    <!-- 版权与致谢 -->
     <div class="site-info">
       <div>
         <span>©</span>
@@ -35,15 +42,17 @@
       </div>
     </div>
 
+    {%- comment -%} 不蒜子 UV/PV：开发环境不加载，避免干扰本地预览 {%- endcomment -%}
     {%- if jekyll.environment != 'development' -%}
+      <!-- 站点访问统计 -->
       <div class="site-info site-statics">
         <div>
           <script src="//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js" defer></script>
           <a title="Busuanzi — site UV/PV counter" href="https://busuanzi.ibruce.info/" target="_blank" rel="noopener noreferrer">Busuanzi</a>
-          <i class="fas fa-user" aria-hidden="true"></i>
+          {% include utils/icon.html name="user" %}
           <span id="busuanzi_site_uv"></span>
           |
-          <i class="fas fa-eye" aria-hidden="true"></i>
+          {% include utils/icon.html name="eye" %}
           <span id="busuanzi_site_pv"></span>
         </div>
       </div>

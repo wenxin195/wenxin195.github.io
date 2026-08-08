@@ -1,6 +1,5 @@
 # CDN 优先 jsDelivr
 sources:
-  font_awesome: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"
   chart: "https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"
   mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.1.1/tex-mml-svg.min.js"
   katex:

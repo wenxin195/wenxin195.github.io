@@ -1,0 +1,23 @@
+{%- comment -%}
+  Lucide UI 图标（CSS mask）。
+  参数：name（必填）、class、label、icon_size。
+  勿使用参数名 size——Liquid 会把 include.size 当成哈希长度。
+  name 经 site.data.icons.icons 解析（支持别名）。
+{%- endcomment -%}
+{%- assign _icon_file = site.data.icons.icons[include.name] | default: include.name -%}
+{%- assign _icon_path = site.data.icons.base | append: '/' | append: _icon_file | append: '.svg' -%}
+{%- assign _icon_class = 'icon-lucide' -%}
+{%- if include.class -%}
+  {%- assign _icon_class = _icon_class | append: ' ' | append: include.class -%}
+{%- endif -%}
+<span
+  class="{{ _icon_class }}"
+  style="--icon: url('{{ _icon_path | relative_url }}'){% if include.icon_size %}; --icon-size: {{ include.icon_size }}{% endif %}"
+  data-icon="{{ include.name }}"
+  {%- if include.label %}
+  role="img"
+  aria-label="{{ include.label }}"
+  {%- else %}
+  aria-hidden="true"
+  {%- endif %}
+></span>

@@ -1,19 +1,58 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+
+// Fill remaining main height so the 404 block can vertically center.
+.shell-main:has(.layout-not-found) {
+  display: flex;
+  flex-direction: column;
+}
+
 .layout-not-found {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding-block: map.get(variables.$spacers, 4);
+}
+
+.layout-not-found__inner {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) minmax(0, 400px);
+  align-items: center;
+  gap: map.get(variables.$spacers, 5);
+
+  @include media.media-breakpoint-down(md) {
+    grid-template-columns: 1fr;
+    gap: map.get(variables.$spacers, 4);
+    text-align: center;
+  }
 }
 
 .not-found__content {
+  min-width: 0;
+
   .sign {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: map.get(variables.$spacers, 2);
+    margin-bottom: map.get(variables.$spacers, 3);
 
-    & > img {
+    & > img,
+    & > .icon-lucide {
       width: 50px;
       height: 50px;
+      flex-shrink: 0;
+    }
+
+    .not-found__icon {
+      color: map.get(variables.$prompt-colors, danger-color);
+    }
+
+    @include media.media-breakpoint-down(md) {
+      justify-content: center;
     }
   }
 
@@ -25,10 +64,14 @@
 }
 
 .not-found__image {
-  margin-left: 20px;
+  min-width: 0;
 
   & > img {
-    width: 400px;
-    height: 400px;
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    margin-inline: auto;
   }
 }

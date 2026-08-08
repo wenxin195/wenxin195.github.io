@@ -1,3 +1,5 @@
+import { setIcon } from '@/lib/icons.js';
+
 /**
  * @param {string} text
  * @return {!Promise<boolean>}
@@ -36,9 +38,7 @@ async function copyToClipboard(text) {
  * @param {boolean} success
  */
 function showFeedback(btn, success) {
-  const icon = btn.querySelector('.fa-clipboard, .fa-check, .fa-xmark');
-  const feedbackIconStyle = 'fas';
-  const feedbackIconType = success ? 'fa-check' : 'fa-xmark';
+  const icon = btn.querySelector('[data-icon], .icon-lucide, svg.icon-lucide');
   const feedbackClass = success ? 'copy-success' : 'copy-error';
   const feedbackText = success ? '已复制！' : '复制失败';
 
@@ -47,14 +47,12 @@ function showFeedback(btn, success) {
     return;
   }
 
-  icon.classList.remove('far', 'fas', 'fa-clipboard', 'fa-check', 'fa-xmark');
-  icon.classList.add(feedbackIconStyle, feedbackIconType);
+  setIcon(icon, success ? 'check' : 'x');
   btn.classList.add(feedbackClass);
   btn.setAttribute('aria-label', feedbackText);
 
   setTimeout(() => {
-    icon.classList.remove(feedbackIconStyle, feedbackIconType);
-    icon.classList.add('far', 'fa-clipboard');
+    setIcon(icon, 'clipboard');
     btn.classList.remove(feedbackClass);
     btn.setAttribute('aria-label', '复制代码');
     btn.disabled = false;

@@ -1,5 +1,6 @@
 import { getBaseUrl } from '@/utils/baseUrl.js';
 import { throttle } from '@/utils/throttle.js';
+import { iconEl } from '@/lib/icons.js';
 
 /**
  * 挂载回到顶部与微信二维码悬浮操作。
@@ -47,7 +48,7 @@ export function init(options = {}) {
   const scrollButton = document.createElement('button');
   scrollButton.type = 'button';
   scrollButton.className = 'float-btn float-btn--scroll-top';
-  scrollButton.innerHTML = '<i class="fas fa-angle-up" aria-hidden="true"></i>';
+  scrollButton.appendChild(iconEl('chevron-up'));
   scrollButton.setAttribute('aria-label', '返回顶部');
 
   floatingActions.appendChild(qrcode);

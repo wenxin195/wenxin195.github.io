@@ -1,5 +1,5 @@
 <div class="subscribe">
-  <i class="fas fa-rss"></i>
+  {% include utils/icon.html name="rss" %}
   <a type="application/rss+xml" href="{{ site.data.path.urls.rss | prepend: site.baseurl }}" target="_blank">
     {{- _t.SUBSCRIBE -}}
   </a>

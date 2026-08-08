@@ -9,7 +9,7 @@
   <div class="article-info flow-root">
     <ul class="article-info__tags menu">
       {%- if include.article.tags -%}
-        <i class="fa-solid fa-tags" aria-hidden="true"></i>
+        {% include utils/icon.html name="tags" %}
       {%- endif -%}
 
       {%- for _tag in include.article.tags -%}
@@ -27,15 +27,15 @@
     {%- if include.article.layout == 'article' or page.layout == 'article' -%}
       <ul class="article-info__meta menu">
         <li>
-          <i class="fas fa-user" aria-hidden="true"></i>
+          {% include utils/icon.html name="user" %}
           <span>{{- _author_name -}}</span>
         </li>
         <li>
-          <i class="far fa-calendar-alt" aria-hidden="true"></i>
+          {% include utils/icon.html name="calendar" %}
           <span>{{- include.article.date | date: _t.ARTICLE_DATE_FORMAT -}}</span>
         </li>
         <li>
-          <i class="fa-regular fa-clock" aria-hidden="true"></i>
+          {% include utils/icon.html name="clock" %}
           <span class="readtime" title="{{ include.article.char_count }}{{ _t.WORDS }}">
             {{- _t.PROMPT -}}<em>{{- include.article.reading_time -}}</em>{{- _t.UNIT -}}
           </span>

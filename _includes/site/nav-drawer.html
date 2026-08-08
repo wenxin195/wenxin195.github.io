@@ -1,13 +1,16 @@
 {%- comment -%}
-  Site nav left drawer. Link items from site/nav-links.html (same source as top bar).
-  Behavior: features/nav-drawer (R5); styles: shell/nav-drawer (R3).
+  站点左侧抽屉导航。链接项来自 site/nav-links.html（与顶栏同源）。
+  行为：features/nav-drawer（R5）；样式：shell/nav-drawer（R3）。
 {%- endcomment -%}
+<!-- 抽屉根节点：遮罩 + 面板 -->
 <div
   class="modal nav-drawer modal--drawer-start js-nav-drawer d-print-none"
   id="site-nav-drawer"
   aria-label="站点导航"
 >
   <div class="nav-drawer__panel">
+    {%- comment -%} 标题栏 + 关闭按钮（js-nav-toggle 切换开合） {%- endcomment -%}
+    <!-- 抽屉标题栏 -->
     <div class="nav-drawer__header">
       <p class="nav-drawer__title">菜单</p>
       <button
@@ -16,10 +19,12 @@
         aria-label="关闭菜单"
         aria-controls="site-nav-drawer"
       >
-        <i class="fas fa-times" aria-hidden="true"></i>
+        {% include utils/icon.html name="x" %}
       </button>
     </div>
 
+    {%- comment -%} 主导航列表：复用 nav-links.html {%- endcomment -%}
+    <!-- 抽屉导航链接 -->
     <nav class="nav-drawer__nav" aria-label="主导航">
       <ul>
         {%- include site/nav-links.html -%}

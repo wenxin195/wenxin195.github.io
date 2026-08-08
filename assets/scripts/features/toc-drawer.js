@@ -1,6 +1,7 @@
 import { Modal } from '@/lib/modal.js';
 import { SITE_EVENTS } from '@/features/events.js';
 import { matches, subscribe } from '@/utils/breakpoints.js';
+import { iconEl } from '@/lib/icons.js';
 
 /** Match `$animation.duration` (panel slide) so focus lands after motion. */
 const TOC_DRAWER_FOCUS_DELAY_MS = 400;
@@ -89,7 +90,7 @@ export function init(options = {}) {
   tocButton.setAttribute('aria-label', '打开目录');
   tocButton.setAttribute('aria-controls', 'article-toc-panel');
   tocButton.setAttribute('aria-expanded', 'false');
-  tocButton.innerHTML = '<i class="fas fa-list-ul" aria-hidden="true"></i>';
+  tocButton.appendChild(iconEl('list'));
   floatingHost.insertBefore(tocButton, floatingHost.firstChild);
 
   /**

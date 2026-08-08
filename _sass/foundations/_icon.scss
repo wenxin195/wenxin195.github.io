@@ -14,3 +14,22 @@
   -webkit-mask-position: center;
   -webkit-mask-size: contain;
 }
+
+// Lucide 描边 SVG：用 CSS mask 染色（currentColor 填充遮罩轮廓）。
+.icon-lucide {
+  display: inline-block;
+  flex-shrink: 0;
+  width: var(--icon-size, 1.1rem);
+  height: var(--icon-size, 1.1rem);
+  vertical-align: -0.125em;
+  background-color: currentColor;
+  mask-image: var(--icon);
+  mask-mode: alpha;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: var(--icon);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}

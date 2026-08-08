@@ -1,3 +1,5 @@
+import { iconEl } from '@/lib/icons.js';
+
 /** @const {string} */
 export const HEADING_SELECTOR = 'h1[id], h2[id], h3[id], h4[id]';
 
@@ -69,7 +71,7 @@ export function initHeadingAnchors(container, options = {}) {
 
     anchor.className = 'anchor d-print-none';
     anchor.setAttribute('aria-hidden', 'true');
-    anchor.innerHTML = '<i class="fas fa-anchor"></i>';
+    anchor.appendChild(iconEl('anchor'));
     anchor.href = '#' + heading.id;
   });
 

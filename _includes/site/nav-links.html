@@ -1,18 +1,14 @@
 {%- comment -%}
-  Single source for header + nav-drawer link items (theme/search stay in header actions).
-  Expects `_locale_key` from utils/locale.html.
+  顶栏与抽屉导航的链接列表（主题切换、搜索仍在 header actions）。
+  依赖：_locale_key（utils/locale.html）。
 {%- endcomment -%}
 {%- if site.data.navigation.header -%}
   {%- for _item in site.data.navigation.header -%}
+    <!-- 导航分组：图标 + 链接 -->
     <li class="navigation__group navigation__group--{{ _item.icon }}">
-      <img
-        class="navigation__icon"
-        src="{{ '/assets/images/icon/navigation/' | append: _item.icon | append: '.svg' | relative_url }}"
-        alt=""
-        width="24"
-        height="24"
-      />
+      {% include utils/icon.html name=_item.icon class="navigation__icon" icon_size="1.5rem" %}
 
+      {%- comment -%} 当前页高亮：规范化 URL 后做 contains 匹配 {%- endcomment -%}
       {%- assign _active_class = 'navigation__item' -%}
       {%- assign current_url = page.url | append: '/' | replace: '.html', '' -%}
       {%- assign item_url = _item.url | append: '/' -%}
@@ -21,6 +17,7 @@
         {%- assign _active_class = _active_class | append: ' navigation__item--active' -%}
       {%- endif -%}
 
+      {%- comment -%} 标题按 locale 取值，缺省回退到 zh-CN {%- endcomment -%}
       {%- assign _nav_title = _item.titles[_locale_key] | default: _item.titles['zh-CN'] -%}
       <a class="{{ _active_class }}" href="{{ _item.url }}">{{- _nav_title -}}</a>
     </li>

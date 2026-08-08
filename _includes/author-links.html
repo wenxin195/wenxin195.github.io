@@ -1,4 +1,4 @@
-﻿{%- comment -%}
+{%- comment -%}
   作者社交链接：email 单独渲染；其余平台按 _data/social.yml 顺序循环。
   依赖：include.author（作者数据）、_t（utils/locale.html）。
 {%- endcomment -%}
@@ -13,12 +13,12 @@
       <link itemprop="url" href="{{ _author.url }}">
     {%- endif -%}
 
-    {%- comment -%} 邮箱：mailto + Font Awesome，与社交平台结构不同 {%- endcomment -%}
+    {%- comment -%} 邮箱：mailto + Lucide mail {%- endcomment -%}
     {%- if _author.email -%}
       <!-- 邮箱 -->
       <li title="{{ _t.EMAIL_ME }}">
         <a class="button button--circle brand-button brand-button--mail" itemprop="email" href="mailto:{{ _author.email }}">
-          <i class="fas fa-envelope"></i>
+          {% include utils/icon.html name="mail" %}
         </a>
       </li>
     {%- endif -%}

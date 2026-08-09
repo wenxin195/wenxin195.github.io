@@ -48,6 +48,21 @@
       }
     }
   }
+
+  // Busuanzi UV/PV: keep Lucide icons on the same line as counts.
+  .site-statics > div {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: map.get(variables.$spacers, 1);
+    row-gap: map.get(variables.$spacers, 1);
+
+    .icon-lucide {
+      width: 1em;
+      height: 1em;
+    }
+  }
 }
 
 .site-footer__author-links {

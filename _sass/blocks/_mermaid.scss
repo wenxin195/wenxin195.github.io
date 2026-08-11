@@ -1,0 +1,72 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/overflow" as overflow;
+
+// Mermaid diagram surface: intrinsic SVG + JS contain fit (see features/mermaid.js).
+// CSS vars are the contract for rem-based font size and viewport max-height.
+
+.article-body {
+  --mermaid-font-size: #{map.get(variables.$mermaid, font-size)};
+  --mermaid-font-family: #{map.get(variables.$mermaid, font-family)};
+  --mermaid-max-height: #{map.get(variables.$mermaid, max-height)};
+
+  .mermaid,
+  .language-mermaid {
+    display: none;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background: transparent;
+
+    &[data-processed] {
+      display: block;
+      @include overflow.overflow(auto, "x");
+    }
+
+    svg {
+      display: inline-block;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      vertical-align: middle;
+    }
+  }
+
+  // Chart stays full-bleed in its host; do not share Mermaid SVG rules.
+  .language-chart {
+    display: none;
+    max-width: 100%;
+    @include overflow.overflow(auto, "x");
+
+    &[data-processed] {
+      display: block;
+    }
+
+    canvas {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}
+
+.mermaidTooltip {
+  display: none;
+}
+
+@media print {
+  .article-body {
+    .mermaid,
+    .language-mermaid {
+      &[data-processed] {
+        overflow: visible;
+        break-inside: avoid;
+      }
+
+      svg {
+        max-height: none;
+      }
+    }
+  }
+}

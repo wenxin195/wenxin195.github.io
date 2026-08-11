@@ -108,19 +108,6 @@
       padding: 0;
       word-wrap: normal;
       background-color: transparent;
-
-      &.language-mermaid,
-      &.language-chart {
-        svg {
-          width: 100%;
-        }
-
-        display: none;
-
-        &[data-processed] {
-          display: block;
-        }
-      }
     }
   }
 
@@ -186,13 +173,6 @@
         margin-left: map.get(variables.$spacers, 3);
       }
     }
-  }
-
-  // Wide embeds / diagrams (skipped by CodeBlocks pipeline)
-  .language-mermaid,
-  .language-chart {
-    max-width: 100%;
-    @include overflow.overflow(auto, "x");
   }
 
   table {

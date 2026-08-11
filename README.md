@@ -92,6 +92,21 @@ Optional Kramdown IAL (on the line after the closing fence):
 
 `mermaid` / `chart` fences are left for their client providers (no code chrome).
 
+##### Mermaid sizing
+
+Enable with `mermaid: true` in front matter (or `layout.enhancements.mermaid`).
+
+Diagrams keep intrinsic SVG size (`useMaxWidth: false`), then **contain**-fit into the article column: scale ≤ 1 against container width and `--mermaid-max-height` (default `70vh`). Font size tracks body type via `--mermaid-font-size` (`1rem`, resolved to px at render). Root rem changes (e.g. narrow breakpoints) trigger a full re-render.
+
+| Author control | Effect |
+|----------------|--------|
+| `flowchart LR` / `TD` (etc.) | Direction by meaning; fit handles both |
+| `data-mermaid-fit="contain"` | Default: fit width and max-height |
+| `data-mermaid-fit="width"` | Fit width only |
+| `data-mermaid-fit="none"` | Intrinsic size (horizontal scroll if needed) |
+
+Prefer short node labels; split deep vertical flows rather than relying on endless page height.
+
 #### Styles (SCSS)
 
 - Upgraded to a modern Sass toolchain (Dart Sass / `@use` · `@forward`); TeXt still relies on the older `@import`-based stack
@@ -237,6 +252,21 @@ let score = 100;
 | `{: .nolineno }` | 关闭行号（不生成行号 DOM） |
 
 `mermaid` / `chart` 围栏交给对应客户端，不套代码块 chrome。
+
+##### Mermaid 尺寸
+
+在 front matter 写 `mermaid: true`（或依赖 `layout.enhancements.mermaid`）启用。
+
+图保留内在 SVG 尺寸（`useMaxWidth: false`），再按文章栏 **contain** 缩放：缩放系数 ≤ 1，同时受容器宽度与 `--mermaid-max-height`（默认 `70vh`）约束。字号通过 `--mermaid-font-size`（`1rem`）跟随正文，渲染时解析为 px。根 rem 变化（如窄屏断点）会触发整图重渲染。
+
+| 作者控制 | 效果 |
+|----------|------|
+| `flowchart LR` / `TD` 等 | 按语义选方向；适配同时覆盖横纵 |
+| `data-mermaid-fit="contain"` | 默认：同时适配宽度与最大高度 |
+| `data-mermaid-fit="width"` | 只适配宽度 |
+| `data-mermaid-fit="none"` | 保持内在尺寸（过宽可横向滚动） |
+
+节点文案宜短；过深的纵向流程应拆图，而不是依赖页面无限变高。
 
 #### 样式（SCSS）
 

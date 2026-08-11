@@ -5,8 +5,11 @@
 @use "foundations/utilities/shadow" as shadow;
 
 // Two presentations (shell/main only toggles display via .shell-main--has-aside):
-//   ≥ lg  — in-flow sidebar + affix (js adds .fixed)
+//   ≥ lg  — in-flow sidebar + affix (js adds .fixed / inline bottom pin)
 //   < lg  — .modal drawer (in markup like nav-drawer); portaled onto .js-shell
+//
+// Invariant: TOC layout box ≤ available viewport band; overflow scrolls inside
+// `.aside-toc`. Document scrollHeight must not depend on TOC content height.
 
 .article-aside {
   display: none;
@@ -22,8 +25,8 @@
 }
 
 // —— Desktop sidebar (≥ lg) ——
-// Neutralize .modal chrome; TOC absolute in the stretch column for affix.
-// Affix targets `.aside-toc` (not the stretch aside), so FIXED lives on toc.
+// Stretch column is the Affix container; `.aside-toc` is the pinned panel
+// (absolute TOP/BOTTOM, fixed while scrolling). Internal overflow only.
 @include media.media-breakpoint-up(lg) {
   .article-aside,
   .article-aside.modal {
@@ -67,19 +70,29 @@
     }
 
     .aside-toc {
+      // Force CSS min() — Sass min() cannot mix % with calc(dvh).
+      $toc-viewport-max: calc(
+        100dvh - #{2 * map.get(variables.$layout, aside-toc-viewport-inset)}
+      );
+
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
+      box-sizing: border-box;
+      max-height: #{"min(100%, #{$toc-viewport-max})"};
       padding:
         map.get(variables.$spacers, 5) 0
         map.get(variables.$spacers, 3)
         map.get(variables.$spacers, 5);
-      @include overflow.overflow(hidden);
+      overscroll-behavior: contain;
+      @include overflow.overflow(auto);
 
       // Affix FIXED — beat `position: absolute` above (same specificity, later wins).
       &.fixed {
         position: fixed;
+        // Fixed CB is the viewport; 100% of aside no longer applies.
+        max-height: $toc-viewport-max;
       }
     }
   }
@@ -154,6 +167,7 @@
     min-height: 0;
     padding: 0 map.get(variables.$spacers, 3);
     padding-bottom: map.get(variables.$spacers, 3);
+    overscroll-behavior: contain;
     @include overflow.overflow(auto);
   }
 }

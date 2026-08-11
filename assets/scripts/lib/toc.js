@@ -176,7 +176,7 @@ export class Toc {
   // 构建扁平列表
   _buildFlatList() {
     const ul = document.createElement('ul');
-    ul.className = 'toc toc--flat toc--ellipsis';
+    ul.className = 'toc toc--flat';
 
     this.headings.forEach((heading) => {
       const li = this._createTocItem(heading);
@@ -191,7 +191,7 @@ export class Toc {
   // 构建嵌套列表(h1 > h2 > h3 多级嵌套)
   _buildNestedList() {
     const rootUl = document.createElement('ul');
-    rootUl.className = 'toc toc--nested toc--ellipsis';
+    rootUl.className = 'toc toc--nested';
 
     // stack: { level, ul }
     const stack = [{ level: 0, ul: rootUl }];

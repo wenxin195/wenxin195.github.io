@@ -118,8 +118,12 @@ $layout: (
   main-inset-top-md: map.get($spacers, 4),
   content-max-width: 950px,
   content-max-width-xl: 1100px,
-  aside-width: 220px,
-  aside-width-xl: 260px,
+  // Room for multi-line Chinese TOC titles; shell/width adds these into content max.
+  aside-width: 280px,
+  aside-width-xl: 320px,
+  // Desktop TOC panel: max-height = min(100% of stretch aside, 100dvh − 2×inset).
+  // Keeps document scrollHeight independent of TOC content length.
+  aside-toc-viewport-inset: map.get($spacers, 3),
   // Preferred drawer width; consumers use min(<token>, 86vw).
   nav-drawer-width: 20rem,
   toc-drawer-width: 20rem,
@@ -206,6 +210,13 @@ $image: (
   width: 12rem,
   width-sm: 8rem,
   width-xs: 4rem,
+);
+
+// Mermaid diagrams: font tracks body rem; layout uses contain against max-height.
+$mermaid: (
+  font-size: map.get($base, font-size), // 1rem — same as body type
+  font-family: '"Comic Sans MS", cursive, sans-serif',
+  max-height: 70vh,
 );
 
 $menu: (

@@ -1,8 +1,9 @@
 {%- comment -%}
-  Desktop: flow sidebar beside article.
-  < lg: .modal is in the markup (nav-drawer parity) so the closed state is paintable
-  before the first open; toc-drawer portals the root onto .js-shell.
-  Single .js-aside-toc — see responsive-architecture.md.
+  Desktop (≥ lg): stretch column beside article; .aside-toc is the Affix panel
+  (viewport-clamped + internal scroll; BOTTOM pins absolute inside this aside).
+  < lg: .modal in markup (nav-drawer parity) so closed state is paintable;
+  toc-drawer portals the root onto .js-shell.
+  Single .js-aside-toc for both presentations.
 {%- endcomment -%}
 <aside
   class="modal article-aside js-article-aside js-toc-drawer modal--drawer-end d-print-none"

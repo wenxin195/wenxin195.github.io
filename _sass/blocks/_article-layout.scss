@@ -2,7 +2,7 @@
 
 // Content width for .article-layout__inner lives in shell/width.
 // Do not set position:relative here — it would steal the containing block from
-// .article-aside and park .aside-toc at the bottom of the article (static pos).
+// .article-aside (Affix TOP/BOTTOM absolute pin targets that column).
 
 .article-layout__inner {
   display: flex;

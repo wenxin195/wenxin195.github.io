@@ -1,16 +1,21 @@
 import { Affix } from '@/lib/affix.js';
-import { throttle } from '@/utils/throttle.js';
 import { SITE_EVENTS } from '@/features/events.js';
 import { matches, subscribe } from '@/utils/breakpoints.js';
 
 /**
- * TOC 相对页脚的吸顶（affix）。仅 `≥ lg` 启用。
- * 必须挂在 `.js-aside-toc`（内容高度），不能挂 stretch 的 aside 列。
+ * TOC 侧栏吸顶。仅 `≥ lg` 启用。
+ *
+ * 契约：
+ * - Affix 挂在 `.js-aside-toc`（视口钳制后的面板），container 为 `.js-article-aside`
+ *   （与正文同高的 stretch 列）。
+ * - TOC 内容再长也只在面板内滚动；BOTTOM 为列内 absolute 贴底，不拉长文档滚动。
  *
  * @param {{
  *   element: (?Element|undefined),
  *   aside: (?Element|undefined),
- *   footer: (?Element|undefined)
+ *   container: (?Element|undefined),
+ *   offsetTop: (number|undefined),
+ *   offsetBottom: (number|undefined)
  * }=} options
  * @return {{
  *   destroy: function(): undefined,
@@ -20,38 +25,26 @@ import { matches, subscribe } from '@/utils/breakpoints.js';
  * }|null}
  */
 export function init(options = {}) {
-  // Prefer TOC root — aside column is stretch-tall and breaks FIXED math.
   const affixEl = options.element
+    ?? document.querySelector('.js-aside-toc');
+  const container = options.container
     ?? options.aside
-    ?? document.querySelector('.js-aside-toc')
     ?? document.querySelector('.js-article-aside');
-  const pageFooter = options.footer
-    ?? document.querySelector('.js-site-footer');
 
-  if (!affixEl || !pageFooter) return null;
+  if (!affixEl || !container) return null;
 
   let affix = null;
-  let footerObserver = null;
 
   try {
     affix = new Affix(affixEl, {
-      offsetBottom: pageFooter.offsetHeight,
+      container,
+      offsetTop: options.offsetTop ?? 0,
+      offsetBottom: options.offsetBottom ?? 0,
       disabled: !matches('upLg'),
     });
   } catch (e) {
     console.warn('[affix] init failed', e);
     return null;
-  }
-
-  if (typeof ResizeObserver !== 'undefined') {
-    footerObserver = new ResizeObserver(
-      throttle(function () {
-        if (!affix) return;
-        affix.offsetBottom = pageFooter.offsetHeight;
-        affix.refresh();
-      }, 200),
-    );
-    footerObserver.observe(pageFooter);
   }
 
   const onRefreshRequest = () => {
@@ -67,6 +60,11 @@ export function init(options = {}) {
     } else {
       affix.disable();
     }
+  });
+
+  // Panel size can change after TOC render / font load — refresh once laid out.
+  requestAnimationFrame(() => {
+    affix?.refresh();
   });
 
   return {
@@ -85,10 +83,6 @@ export function init(options = {}) {
       if (affix) {
         affix.destroy();
         affix = null;
-      }
-      if (footerObserver) {
-        footerObserver.disconnect();
-        footerObserver = null;
       }
     },
   };

@@ -15,9 +15,11 @@ ul.toc {
     margin: math.div(map.get(variables.$spacers, 1), 2) 0;
 
     a {
-      display: inline-block;
+      display: block;
+      max-width: 100%;
       margin: math.div(map.get(variables.$spacers, 1), 4) 0;
       text-decoration: none !important;
+      overflow-wrap: break-word;
     }
   }
 
@@ -105,6 +107,14 @@ ul.toc--ellipsis {
 
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    a {
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 }
 

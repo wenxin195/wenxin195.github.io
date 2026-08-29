@@ -1,5 +1,5 @@
 /**
- * @fileoverview Mermaid 入口——rem 字号、contain 适配，主题切换时重渲染。
+ * @fileoverview Mermaid 入口——rem 字号、viewBox 裁切、CSS contain，主题切换时重渲染。
  */
 import { init as initMermaid } from '@/features/mermaid.js';
 

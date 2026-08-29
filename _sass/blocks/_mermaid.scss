@@ -2,34 +2,53 @@
 @use "tokens" as variables;
 @use "foundations/utilities/overflow" as overflow;
 
-// Mermaid diagram surface: intrinsic SVG + JS contain fit (see features/mermaid.js).
-// CSS vars are the contract for rem-based font size and viewport max-height.
+// Mermaid: CSS contain against the article column. JS only tightens viewBox
+// (see features/mermaid.js). Do not set inline SVG height from JS.
 
 .article-body {
   --mermaid-font-size: #{map.get(variables.$mermaid, font-size)};
   --mermaid-font-family: #{map.get(variables.$mermaid, font-family)};
   --mermaid-max-height: #{map.get(variables.$mermaid, max-height)};
+  --mermaid-viewbox-padding: #{map.get(variables.$mermaid, viewbox-padding)};
 
-  .mermaid,
-  .language-mermaid {
+  .mermaid {
     display: none;
     max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+    margin: map.get(variables.$spacers, 3) 0;
+    padding: 0;
+    font: inherit;
+    line-height: inherit;
+    white-space: normal;
+    text-align: unset;
     background: transparent;
+    overflow: visible;
 
     &[data-processed] {
       display: block;
-      @include overflow.overflow(auto, "x");
     }
 
     svg {
-      display: inline-block;
-      max-width: 100%;
+      display: block;
       width: auto;
       height: auto;
-      vertical-align: middle;
+      max-width: 100%;
+      max-height: var(--mermaid-max-height);
+      margin-inline: auto;
+      overflow: visible;
+    }
+
+    &[data-mermaid-fit="width"] svg {
+      max-height: none;
+    }
+
+    &[data-mermaid-fit="none"] {
+      @include overflow.overflow(auto, "x");
+
+      svg {
+        max-width: none;
+        max-height: none;
+        margin-inline: 0;
+      }
     }
   }
 
@@ -57,8 +76,9 @@
 
 @media print {
   .article-body {
-    .mermaid,
-    .language-mermaid {
+    .mermaid {
+      margin: map.get(variables.$spacers, 2) 0;
+
       &[data-processed] {
         overflow: visible;
         break-inside: avoid;

@@ -40,11 +40,11 @@ _plugins/
     guard.rb                     # Skip non-article Pages (e.g. assets/*.scss)
     reading_time.rb              # Strip HTML → mixed CJK/English stats (posts only)
     language_name.rb             # Rouge lang ids → display names
-    transforms/                  # tables, task_lists, code_blocks
+    transforms/                  # diagrams, tables, task_lists, code_blocks
   callouts/tags.rb               # {% box %} / {% details %}
 ```
 
-- HTML enhancement (Nokogiri): posts and pages share `Content::Guard`; transforms wrap tables, replace task-list icons, and rebuild code blocks
+- HTML enhancement (Nokogiri): posts and pages share `Content::Guard`; transforms unwrap mermaid to `div.mermaid`, wrap tables, replace task-list icons, and rebuild code blocks
 - Code blocks: Rouge at build time → canonical `<figure class="code-block">` (line numbers, header, copy)
 - `{% box TYPE "Title" %}` (title required) and `{% details … %}` (unknown types fail the build)
 - Language display names via `_data/language_aliases.yml`
@@ -90,18 +90,18 @@ Optional Kramdown IAL (on the line after the closing fence):
 | `{: file="app.js"}` | Header shows the filename instead of the language name |
 | `{: .nolineno }` | Hide line numbers (no line-number DOM) |
 
-`mermaid` / `chart` fences are left for their client providers (no code chrome).
+`chart` fences are left for their client provider (no code chrome). `mermaid` fences (and `<pre class="mermaid">`) are unwrapped at build time to `<div class="mermaid">`.
 
 ##### Mermaid sizing
 
 Enable with `mermaid: true` in front matter (or `layout.enhancements.mermaid`).
 
-Diagrams keep intrinsic SVG size (`useMaxWidth: false`), then **contain**-fit into the article column: scale ≤ 1 against container width and `--mermaid-max-height` (default `70vh`). Font size tracks body type via `--mermaid-font-size` (`1rem`, resolved to px at render). Root rem changes (e.g. narrow breakpoints) trigger a full re-render.
+Build-time HTML is a single host (`div.mermaid`). After Mermaid draws, JS crops the SVG `viewBox` to the painted content (plus `--mermaid-viewbox-padding`) and leaves **no inline height**. CSS then contain-fits the diagram as a replaced element: `width: auto; height: auto; max-width: 100%; max-height: var(--mermaid-max-height)` (default `70vh`). Intrinsic width is the viewBox width, so diagrams do not upscale. Font size tracks body type via `--mermaid-font-size` (`1rem`, resolved to px at render). Theme or root rem changes trigger a full re-render; viewport resize is CSS-only.
 
 | Author control | Effect |
 |----------------|--------|
-| `flowchart LR` / `TD` (etc.) | Direction by meaning; fit handles both |
-| `data-mermaid-fit="contain"` | Default: fit width and max-height |
+| `flowchart LR` / `TD` (etc.) | Direction by meaning; CSS contain covers both |
+| (default) | Fit column width and max-height |
 | `data-mermaid-fit="width"` | Fit width only |
 | `data-mermaid-fit="none"` | Intrinsic size (horizontal scroll if needed) |
 
@@ -201,11 +201,11 @@ _plugins/
     guard.rb                     # 跳过非文章 Page（如 assets/*.scss）
     reading_time.rb              # 去 HTML → 中英混合统计（仅 posts）
     language_name.rb             # Rouge 语言 id → 显示名
-    transforms/                  # tables、task_lists、code_blocks
+    transforms/                  # diagrams、tables、task_lists、code_blocks
   callouts/tags.rb               # {% box %} / {% details %}
 ```
 
-- HTML 增强（Nokogiri）：posts 与 pages 共用 `Content::Guard`；变换含表格横向滚动、任务列表图标、代码块重建
+- HTML 增强（Nokogiri）：posts 与 pages 共用 `Content::Guard`；变换含 mermaid 收成 `div.mermaid`、表格横向滚动、任务列表图标、代码块重建
 - 代码块：构建期 Rouge → 规范 `<figure class="code-block">`（行号、标题栏、复制）
 - `{% box TYPE "标题" %}`（标题必填）与 `{% details … %}`（未知类型构建失败）
 - 语言显示名：`_data/language_aliases.yml`
@@ -251,18 +251,18 @@ let score = 100;
 | `{: file="app.js"}` | 标题栏显示文件名（优先于语言名） |
 | `{: .nolineno }` | 关闭行号（不生成行号 DOM） |
 
-`mermaid` / `chart` 围栏交给对应客户端，不套代码块 chrome。
+`chart` 围栏交给客户端，不套代码块 chrome。`mermaid` 围栏（以及 `<pre class="mermaid">`）在构建期收成 `<div class="mermaid">`。
 
 ##### Mermaid 尺寸
 
 在 front matter 写 `mermaid: true`（或依赖 `layout.enhancements.mermaid`）启用。
 
-图保留内在 SVG 尺寸（`useMaxWidth: false`），再按文章栏 **contain** 缩放：缩放系数 ≤ 1，同时受容器宽度与 `--mermaid-max-height`（默认 `70vh`）约束。字号通过 `--mermaid-font-size`（`1rem`）跟随正文，渲染时解析为 px。根 rem 变化（如窄屏断点）会触发整图重渲染。
+构建期 HTML 是单一宿主（`div.mermaid`）。Mermaid 画完后，JS 把 SVG `viewBox` 收到实际绘制内容（外加 `--mermaid-viewbox-padding`），**不写内联 height**。随后由 CSS 把图当 replaced 元素做 contain：`width: auto; height: auto; max-width: 100%; max-height: var(--mermaid-max-height)`（默认 `70vh`）。内在宽度等于 viewBox 宽，因此不会被放大。字号通过 `--mermaid-font-size`（`1rem`）跟随正文，渲染时解析为 px。主题或根 rem 变化会整图重渲染；视口缩放只走 CSS。
 
 | 作者控制 | 效果 |
 |----------|------|
-| `flowchart LR` / `TD` 等 | 按语义选方向；适配同时覆盖横纵 |
-| `data-mermaid-fit="contain"` | 默认：同时适配宽度与最大高度 |
+| `flowchart LR` / `TD` 等 | 按语义选方向；CSS contain 同时覆盖横纵 |
+| （默认） | 适配栏宽与最大高度 |
 | `data-mermaid-fit="width"` | 只适配宽度 |
 | `data-mermaid-fit="none"` | 保持内在尺寸（过宽可横向滚动） |
 

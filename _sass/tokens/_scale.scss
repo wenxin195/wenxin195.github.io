@@ -212,11 +212,12 @@ $image: (
   width-xs: 4rem,
 );
 
-// Mermaid diagrams: font tracks body rem; layout uses contain against max-height.
+// Mermaid: rem type + CSS contain (max-height). JS crops viewBox, does not scale.
 $mermaid: (
   font-size: map.get($base, font-size), // 1rem — same as body type
   font-family: '"Comic Sans MS", cursive, sans-serif',
   max-height: 70vh,
+  viewbox-padding: 8px,
 );
 
 $menu: (

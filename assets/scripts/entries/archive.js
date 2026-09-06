@@ -3,9 +3,7 @@
  */
 import { init as initArchiveFilter } from '@/features/archive-filter.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-  initArchiveFilter({
-    filtersRoot: document.querySelector('.js-archive-filters'),
-    resultRoot: document.querySelector('.js-archive-result'),
-  });
+initArchiveFilter({
+  filtersRoot: document.querySelector('.js-archive-filters'),
+  resultRoot: document.querySelector('.js-archive-result'),
 });

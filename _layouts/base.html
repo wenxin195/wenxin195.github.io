@@ -26,13 +26,8 @@
 
     <script>
       (function () {
-        var r = document.documentElement;
         var t = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        r.classList.add(t ? 'is-touch' : 'is-not-touch');
-        document.addEventListener('DOMContentLoaded', function () {
-          var root = document.querySelector('.root');
-          if (root) root.dataset.isTouch = t ? 'true' : 'false';
-        });
+        document.documentElement.classList.add(t ? 'is-touch' : 'is-not-touch');
       })();
     </script>
 
@@ -40,6 +35,14 @@
   </head>
   <body>
     <div class="root">
+      <script>
+        (function () {
+          var root = document.querySelector('.root');
+          if (!root) return;
+          var t = document.documentElement.classList.contains('is-touch');
+          root.dataset.isTouch = t ? 'true' : 'false';
+        })();
+      </script>
       {{ content }}
     </div>
   </body>

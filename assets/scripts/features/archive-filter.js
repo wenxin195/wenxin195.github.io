@@ -57,30 +57,38 @@ export function init(options = {}) {
 
   function setActiveButton(btn) {
     if (activeButton === btn) return;
-    activeButton?.classList.remove('focus');
+    if (activeButton) {
+      activeButton.classList.remove('focus');
+    } else {
+      tagsContainer.querySelectorAll('button.focus').forEach((el) => {
+        if (el !== btn) el.classList.remove('focus');
+      });
+    }
     btn?.classList.add('focus');
     activeButton = btn;
   }
 
   function filterByTag(tag, { button, historyMode = 'push' } = {}) {
-    const isShowAll = !tag;
-    const nextVisible = isShowAll ? allArticles : (tagIndex.get(tag) || []);
+    const nextVisible = !tag ? allArticles : (tagIndex.get(tag) || []);
 
-    for (const a of currentVisible) {
-      a.element.classList.add('d-none');
+    if (nextVisible !== currentVisible) {
+      for (const a of currentVisible) {
+        a.element.classList.add('d-none');
+      }
+
+      sectionVisibleCount.fill(0);
+      for (const a of nextVisible) {
+        a.element.classList.remove('d-none');
+        sectionVisibleCount[a.sectionIdx]++;
+      }
+
+      for (let i = 0; i < sections.length; i++) {
+        sections[i].classList.toggle('d-none', sectionVisibleCount[i] === 0);
+      }
+
+      currentVisible = nextVisible;
     }
 
-    sectionVisibleCount.fill(0);
-    for (const a of nextVisible) {
-      a.element.classList.remove('d-none');
-      sectionVisibleCount[a.sectionIdx]++;
-    }
-
-    for (let i = 0; i < sections.length; i++) {
-      sections[i].classList.toggle('d-none', sectionVisibleCount[i] === 0);
-    }
-
-    currentVisible = nextVisible;
     setActiveButton(button || buttonMap.get(tag) || showAllButton);
 
     if (historyMode !== 'none') {
@@ -89,7 +97,6 @@ export function init(options = {}) {
   }
 
   filterByTag(getTagFromURL(), { historyMode: 'replace' });
-  resultContainer.classList.remove('d-none');
 
   const onClick = (event) => {
     const btn = event.target.closest('button');

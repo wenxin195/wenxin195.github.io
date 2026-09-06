@@ -38,8 +38,8 @@ export function init(options = {}) {
   const qrcodePopup = document.createElement('div');
   qrcodePopup.className = 'flyout flyout--rail';
   qrcodePopup.innerHTML = `
-    <p class="flyout__title">扫描关注微信</p>
-    <img class="flyout__media" src="${baseUrl}/assets/images/picture/donate/wechat.png" alt="微信二维码" />
+    <p class="flyout__title">扫码关注公众号</p>
+    <img class="flyout__media" src="${baseUrl}/assets/images/wechat oa.jpg" alt="微信二维码" />
   `;
 
   qrcode.appendChild(qrcodeTrigger);

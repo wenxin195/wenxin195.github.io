@@ -1,10 +1,6 @@
 {%- assign _excerpt_truncate = include.excerpt_truncate | default: 350 -%}
 {%- assign _sorted_list = include.articles -%}
 
-{%- if include.group_by == 'year' -%}
-  {%- assign _sorted_list = _sorted_list | sort: 'date' -%}
-{%- endif -%}
-
 {%- if include.reverse -%}
   {%- assign _sorted_list = _sorted_list | reverse -%}
 {%- endif -%}

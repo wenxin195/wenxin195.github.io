@@ -124,10 +124,10 @@ $layout: (
   // Desktop TOC panel: max-height = min(100% of stretch aside, 100dvh − 2×inset).
   // Keeps document scrollHeight independent of TOC content length.
   aside-toc-viewport-inset: map.get($spacers, 3),
-  // Preferred drawer width; consumers use min(<token>, 86vw).
-  nav-drawer-width: 20rem,
-  toc-drawer-width: 20rem,
-  drawer-viewport-max: 86vw,
+  // Preferred drawer width; consumers use min(<token>, drawer-viewport-max).
+  nav-drawer-width: 12rem,
+  toc-drawer-width: 14rem,
+  drawer-viewport-max: 64vw,
   // Keep in sync with blocks/floating-actions (btn size + right offset + gap).
   floating-actions-gutter: 2.75rem + map.get($spacers, 3) + map.get($spacers, 2),
   floating-actions-gutter-sm: 2.5rem + map.get($spacers, 2) + map.get($spacers, 2),

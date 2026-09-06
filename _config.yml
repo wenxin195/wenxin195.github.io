@@ -52,6 +52,10 @@ exclude:
   - README.md
   - package.json
   - package-lock.json
+  - playwright.config.js
+  - e2e
+  - playwright-report
+  - test-results
   - .sass-cache/
   - .jekyll-cache/
   - node_modules/

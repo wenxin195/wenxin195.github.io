@@ -19,6 +19,16 @@ Thumbs.db
 .stylelintignore
 .stylelintrc
 
+# Local Playwright e2e (not published)
+/e2e/
+/playwright.config.js
+/package.json
+/package-lock.json
+/playwright-report/
+/test-results/
+/blob-report/
+/playwright/.cache/
+
 # Dependencies
 node_modules/
 /.bundle/

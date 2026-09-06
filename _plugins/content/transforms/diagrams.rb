@@ -5,52 +5,54 @@ require "nokogiri"
 module Jekyll
   module Content
     module Transforms
-      # Collapse every mermaid authoring form into one host: div.mermaid.
+      # ```mermaid fences → one host: div.mermaid.
       # Chart fences stay as Rouge / GFM output for the chart client.
       module Diagrams
         module_function
 
         def apply!(frag)
           unwrap_highlighter_fences!(frag)
-          unwrap_gfm_fences!(frag)
-          normalize_mermaid_pres!(frag)
+          unwrap_remaining_fences!(frag)
         end
 
         def unwrap_highlighter_fences!(frag)
           frag.css("div.highlighter-rouge").each do |shell|
-            code = shell.at_css("code.language-mermaid")
-            next unless language_of(shell) == "mermaid" || code
+            next unless mermaid_language?(shell)
 
-            source = mermaid_source(code || shell)
+            source = mermaid_source(code_from(shell) || shell)
             next if source.empty?
 
             shell.replace(mermaid_host(frag, source, shell))
           end
         end
 
-        # GFM + Rouge with no mermaid lexer: <pre><code class="language-mermaid">
-        def unwrap_gfm_fences!(frag)
-          frag.css("code.language-mermaid").each do |code|
-            pre = code.parent
-            next unless pre&.name == "pre"
-            next if pre.ancestors(".code-block").any?
+        # Leftovers when Rouge has no mermaid lexer:
+        # <pre><code class="language-mermaid"> or <pre class="language-mermaid">.
+        def unwrap_remaining_fences!(frag)
+          seen = {}
 
-            source = mermaid_source(code)
+          frag.css("code.language-mermaid, pre.language-mermaid").each do |node|
+            pre = node.name == "pre" ? node : node.ancestors("pre").first
+            next unless pre
+            next if pre.ancestors(".code-block, .mermaid").any?
+
+            target = pre.ancestors("div.highlighter-rouge").first || pre
+            next if seen[target]
+
+            seen[target] = true
+            source = mermaid_source(code_from(target) || target)
             next if source.empty?
 
-            pre.replace(mermaid_host(frag, source, pre))
+            target.replace(mermaid_host(frag, source, target))
           end
         end
 
-        def normalize_mermaid_pres!(frag)
-          frag.css("pre.mermaid").each do |pre|
-            next if pre.ancestors("code, .code-block").any?
+        def mermaid_language?(node)
+          language_of(node) == "mermaid" || !node.at_css("code.language-mermaid").nil?
+        end
 
-            source = mermaid_source(pre)
-            next if source.empty?
-
-            pre.replace(mermaid_host(frag, source, pre))
-          end
+        def code_from(node)
+          node.at_css("code.language-mermaid") || node.at_css("code")
         end
 
         def mermaid_host(frag, source, from)
@@ -58,21 +60,26 @@ module Jekyll
           host["class"] = host_class(from)
           host["id"] = from["id"] if from["id"] && !from["id"].empty?
 
+          copy_mermaid_data!(host, from)
+          from.css("pre, code").each { |inner| copy_mermaid_data!(host, inner) }
+
+          host.content = source
+          host
+        end
+
+        def copy_mermaid_data!(host, from)
           from.attribute_nodes.each do |attr|
             name = attr.name
             next unless name.start_with?("data-mermaid-")
 
             host[name] = attr.value
           end
-
-          host.content = source
-          host
         end
 
         def mermaid_source(node)
           copy = node.dup
           copy.css("br").each do |br|
-            br.replace(Nokogiri::XML::Text.new("<br/>", br.document))
+            br.replace(Nokogiri::XML::Text.new("\n", br.document))
           end
           copy.text.strip
         end
@@ -84,8 +91,8 @@ module Jekyll
           (["mermaid"] + extra).join(" ")
         end
 
-        def language_of(shell)
-          shell["class"].to_s.split
+        def language_of(node)
+          node["class"].to_s.split
                         .find { |c| c.start_with?("language-") }
                         &.sub(/\Alanguage-/, "")
                         .to_s

@@ -13,7 +13,8 @@ module Jekyll
       #   {: file="path.ext"}  — header shows filename
       #   {: .nolineno }       — omit line numbers (default: on, from 1)
       #
-      # Skipped languages (left as Rouge output for client providers): mermaid, chart.
+      # Chart stays as Rouge output for the chart client. ```mermaid fences are
+      # unwrapped earlier (Transforms::Diagrams); kept here only as a guard.
       module CodeBlocks
         SKIP_LANGS = %w[mermaid chart].freeze
 

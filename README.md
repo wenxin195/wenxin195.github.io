@@ -90,7 +90,7 @@ Optional Kramdown IAL (on the line after the closing fence):
 | `{: file="app.js"}` | Header shows the filename instead of the language name |
 | `{: .nolineno }` | Hide line numbers (no line-number DOM) |
 
-`chart` fences are left for their client provider (no code chrome). `mermaid` fences (and `<pre class="mermaid">`) are unwrapped at build time to `<div class="mermaid">`.
+`chart` fences are left for their client provider (no code chrome). `mermaid` fences are unwrapped at build time to `<div class="mermaid">`.
 
 ##### Mermaid sizing
 
@@ -102,8 +102,8 @@ Build-time HTML is a single host (`div.mermaid`). After Mermaid draws, JS crops 
 |----------------|--------|
 | `flowchart LR` / `TD` (etc.) | Direction by meaning; CSS contain covers both |
 | (default) | Fit column width and max-height |
-| `data-mermaid-fit="width"` | Fit width only |
-| `data-mermaid-fit="none"` | Intrinsic size (horizontal scroll if needed) |
+| `{: data-mermaid-fit="width"}` | Fit width only (IAL after the fence) |
+| `{: data-mermaid-fit="none"}` | Intrinsic size (horizontal scroll if needed) |
 
 Prefer short node labels; split deep vertical flows rather than relying on endless page height.
 
@@ -251,7 +251,7 @@ let score = 100;
 | `{: file="app.js"}` | 标题栏显示文件名（优先于语言名） |
 | `{: .nolineno }` | 关闭行号（不生成行号 DOM） |
 
-`chart` 围栏交给客户端，不套代码块 chrome。`mermaid` 围栏（以及 `<pre class="mermaid">`）在构建期收成 `<div class="mermaid">`。
+`chart` 围栏交给客户端，不套代码块 chrome。`mermaid` 围栏在构建期收成 `<div class="mermaid">`。
 
 ##### Mermaid 尺寸
 
@@ -263,8 +263,8 @@ let score = 100;
 |----------|------|
 | `flowchart LR` / `TD` 等 | 按语义选方向；CSS contain 同时覆盖横纵 |
 | （默认） | 适配栏宽与最大高度 |
-| `data-mermaid-fit="width"` | 只适配宽度 |
-| `data-mermaid-fit="none"` | 保持内在尺寸（过宽可横向滚动） |
+| `{: data-mermaid-fit="width"}` | 只适配宽度（写在结束围栏下一行） |
+| `{: data-mermaid-fit="none"}` | 保持内在尺寸（过宽可横向滚动） |
 
 节点文案宜短；过深的纵向流程应拆图，而不是依赖页面无限变高。
 

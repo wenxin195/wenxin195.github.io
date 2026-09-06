@@ -107,7 +107,7 @@
     transition: box-shadow map.get(variables.$animation, duration-md) ease;
 
     &:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 4px 12px color-mix(in srgb, #{variables.$text-color-d} 35%, transparent);
     }
   }
 }

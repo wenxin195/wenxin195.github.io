@@ -57,7 +57,7 @@ ALL( [<table> | <column>[, <column>[, <column>[,…]]]] )
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/filter_functions/all_practice1.png" alt="all_practice1" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/filter_functions/all_practice1.png" alt="all_practice1" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 1: ALL 函数示例 1 结果</p>
@@ -80,7 +80,7 @@ DIVIDE (
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/filter_functions/all_practice2.png" alt="all_practice2" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/filter_functions/all_practice2.png" alt="all_practice2" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 2: ALL 函数示例 2 结果</p>
@@ -103,7 +103,7 @@ DIVIDE (
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/filter_functions/all_practice3.png" alt="all_practice3" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/filter_functions/all_practice3.png" alt="all_practice3" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 3: ALL 函数示例 3 结果</p>
@@ -154,7 +154,7 @@ ALLSELECTED 函数与 ALL 不同，因为它保留查询中明确设置的所有
 <div style="text-align: center;">
     <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/filter_functions/all_practice4.png" alt="all_practice4" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/filter_functions/all_practice4.png" alt="all_practice4" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 4: ALL 函数和 ALLSELECTED 函数的对比</p>
@@ -252,7 +252,7 @@ CALCULATE( <expression>[, <filter1> [, <filter2> [, …]]] )
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/filter_functions/calculate_practice1.png" alt="calculate_practice1" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/filter_functions/calculate_practice1.png" alt="calculate_practice1" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 5: CALCULATE 函数示例 1 结果</p>
@@ -273,7 +273,7 @@ DIVIDE (
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/filter_functions/calculate_practice2.png" alt="calculate_practice2" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/filter_functions/calculate_practice2.png" alt="calculate_practice2" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 6: CALCULATE 函数示例 2 结果</p>
@@ -353,7 +353,7 @@ FILTER( <table>, <filter> )
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/filter_functions/filter_function.png" alt="filter_function" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/filter_functions/filter_function.png" alt="filter_function" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 7: FILTER 函数示例结果</p>

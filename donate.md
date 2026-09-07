@@ -17,12 +17,12 @@ title: 捐赠支持
 <div class="payment-container">
   <div class="payment-item">
     <p>微信支付</p>
-    <img src="/assets/images/picture/donate/wechat.png" alt="微信支付二维码">
+    <img src="/assets/images/site/donate/wechat.png" alt="微信支付二维码">
   </div>
 
   <div class="payment-item">
     <p>支付宝</p>
-    <img src="/assets/images/picture/donate/alipay.jpg" alt="支付宝二维码">
+    <img src="/assets/images/site/donate/alipay.jpg" alt="支付宝二维码">
   </div>
 </div>
 

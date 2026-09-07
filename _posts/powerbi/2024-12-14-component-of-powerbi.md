@@ -31,7 +31,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/title.png" alt="title" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/title.png" alt="title" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 1: 将第一行作为标题</p>
@@ -44,11 +44,11 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/data_categories.png" alt="data_categories" style="width: 350px;">
+       <img src="/assets/images/posts/powerbi/component/data_categories.png" alt="data_categories" style="width: 350px;">
        <figcaption>(a) 手动修改数据类型</figcaption>
      </figure>
      <figure style="text-align: center; margin-top:121px;">
-       <img src="/assets/images/picture/DAX/component/data_categories2.png" alt="data_categories2" style="width: 350px;">
+       <img src="/assets/images/posts/powerbi/component/data_categories2.png" alt="data_categories2" style="width: 350px;">
        <figcaption>(b) 自动检测数据类型</figcaption>
      </figure>
    </div>
@@ -66,7 +66,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/delete_row.png" alt="delete_row" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/delete_row.png" alt="delete_row" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 3: 删除重复值、空值和 Error 值</p>
@@ -77,7 +77,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/null_values.png" alt="null_values" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/null_values.png" alt="null_values" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 4: 填充缺失值</p>
@@ -88,7 +88,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/alter.png" alt="alter" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/alter.png" alt="alter" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 5: 内容替换</p>
@@ -99,7 +99,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/letter_operation.png" alt="letter_operation" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/letter_operation.png" alt="letter_operation" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 6: 对字段中的英文进行操作</p>
@@ -112,7 +112,7 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/split_merge.png" alt="split_merge" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/split_merge.png" alt="split_merge" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 7: 对字段进行拆分合并</p>
@@ -123,7 +123,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/extract.png" alt="extract" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/extract.png" alt="extract" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 8: 对字段的值进行提取</p>
@@ -136,7 +136,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/group.png" alt="group" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/group.png" alt="group" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 9: 分组聚合统计</p>
@@ -149,7 +149,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/pivot.png" alt="pivot" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/pivot.png" alt="pivot" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 10: 透视表与逆透视表</p>
@@ -166,7 +166,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/condition_column.png" alt="condition_column" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/condition_column.png" alt="condition_column" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 11: 条件列</p>
@@ -177,7 +177,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/indicator_column.png" alt="indicator_column" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/indicator_column.png" alt="indicator_column" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 12: 索引列</p>
@@ -190,7 +190,7 @@ Power Query 还能够根据我们的需求提取字段的内容。
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/custom_column.png" alt="custom_column" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/custom_column.png" alt="custom_column" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 13: 自定义列</p>
@@ -203,7 +203,7 @@ Power Query 中的“日期”和“时间”命令可以设置“日期”/“�
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/time.png" alt="time" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/time.png" alt="time" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 14: 日期&时间列</p>
@@ -218,11 +218,11 @@ Power Query 中的“日期”和“时间”命令可以设置“日期”/“�
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-top: 264px;">
-       <img src="/assets/images/picture/DAX/component/consolidation1.png" alt="consolidation1" style="width: 350px;">
+       <img src="/assets/images/posts/powerbi/component/consolidation1.png" alt="consolidation1" style="width: 350px;">
        <figcaption>(a) 合并查询命令</figcaption>
      </figure>
      <figure style="text-align: center; margin-top:0px;">
-       <img src="/assets/images/picture/DAX/component/consolidation2.png" alt="consolidation2" style="width: 350px;">
+       <img src="/assets/images/posts/powerbi/component/consolidation2.png" alt="consolidation2" style="width: 350px;">
        <figcaption>(b) 设置连接方式</figcaption>
      </figure>
    </div>
@@ -234,11 +234,11 @@ Power Query 中的“日期”和“时间”命令可以设置“日期”/“�
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-top: 77px;">
-       <img src="/assets/images/picture/DAX/component/addition1.png" alt="addition1" style="width: 350px;">
+       <img src="/assets/images/posts/powerbi/component/addition1.png" alt="addition1" style="width: 350px;">
        <figcaption>(a) 追加查询命令</figcaption>
      </figure>
      <figure style="text-align: center; margin-top:0px;">
-       <img src="/assets/images/picture/DAX/component/addition2.png" alt="addition2" style="width: 350px;">
+       <img src="/assets/images/posts/powerbi/component/addition2.png" alt="addition2" style="width: 350px;">
        <figcaption>(b) 选择追加数据表</figcaption>
      </figure>
    </div>
@@ -287,7 +287,7 @@ Power Pivot 是 Power BI 中的核心组件之一。它是一种数据建模工�
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/data_model1.png" alt="data_model1" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/data_model1.png" alt="data_model1" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 17: 星型模型</p>
@@ -304,7 +304,7 @@ Power Pivot 是 Power BI 中的核心组件之一。它是一种数据建模工�
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/data_model2.png" alt="data_model2" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/data_model2.png" alt="data_model2" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 18: 雪花模型</p>
@@ -319,7 +319,7 @@ Power Pivot 是 Power BI 中的核心组件之一。它是一种数据建模工�
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/DAX/component/data_model3.png" alt="data_model3" style="width: 500px;">
+       <img src="/assets/images/posts/powerbi/component/data_model3.png" alt="data_model3" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 19: 星座模型</p>

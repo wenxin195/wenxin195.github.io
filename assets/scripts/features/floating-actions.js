@@ -33,13 +33,13 @@ export function init(options = {}) {
   qrcodeTrigger.type = 'button';
   qrcodeTrigger.className = 'float-btn qrcode__trigger';
   qrcodeTrigger.setAttribute('aria-label', '微信二维码');
-  qrcodeTrigger.innerHTML = `<img class="float-btn__img" src="${baseUrl}/assets/qrcode.svg" alt="二维码" />`;
+  qrcodeTrigger.innerHTML = `<img class="float-btn__img" src="${baseUrl}/assets/images/icon/ui/qrcode.svg" alt="二维码" />`;
 
   const qrcodePopup = document.createElement('div');
   qrcodePopup.className = 'flyout flyout--rail';
   qrcodePopup.innerHTML = `
     <p class="flyout__title">扫码关注公众号</p>
-    <img class="flyout__media" src="${baseUrl}/assets/images/wechat oa.jpg" alt="微信二维码" />
+    <img class="flyout__media" src="${baseUrl}/assets/images/site/wechat-oa.jpg" alt="微信二维码" />
   `;
 
   qrcode.appendChild(qrcodeTrigger);

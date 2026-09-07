@@ -51,11 +51,11 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
    <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-     <img src="/assets/images/picture/event_and_probability/needle.png" alt="needle" style="width: 300px;">
+     <img src="/assets/images/posts/probability/needle.png" alt="needle" style="width: 300px;">
      <figcaption>(a) Buffon 投针问题</figcaption>
    </figure>
    <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-     <img src="/assets/images/picture/event_and_probability/intersect.png" alt="相交的充要条件" style="width: 300px; margin-top: 68px;">
+     <img src="/assets/images/posts/probability/intersect.png" alt="相交的充要条件" style="width: 300px; margin-top: 68px;">
      <figcaption>(b) 针与平行线相交的充分必要条件</figcaption>
    </figure>
    </div>

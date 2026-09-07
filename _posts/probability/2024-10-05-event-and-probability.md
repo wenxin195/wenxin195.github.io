@@ -74,7 +74,7 @@ modify_date: "2025-01-27 01:50:00"
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probability/sample_space.png" alt="sample space" style="width: 500px;">
+       <img src="/assets/images/posts/probability/sample_space.png" alt="sample space" style="width: 500px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 1: 样本空间、样本点与随机事件</p>
@@ -160,11 +160,11 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probability/including.png" alt="A\subset B" style="width: 300px;">
+       <img src="/assets/images/posts/probability/including.png" alt="A\subset B" style="width: 300px;">
        <figcaption>(a) $A\subset B$</figcaption>
      </figure>
      <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probability/incompatibility.png" alt="A 与 B 互不相容" style="width: 300px;">
+       <img src="/assets/images/posts/probability/incompatibility.png" alt="A 与 B 互不相容" style="width: 300px;">
        <figcaption>(b) $A$ 与 $B$ 互不相容</figcaption>
      </figure>
    </div>
@@ -181,11 +181,11 @@ $$
         <div style="text-align: center;">
            <div style="display: flex; justify-content: center;">
              <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-               <img src="/assets/images/picture/event_and_probability/difference.png" alt="A-B" style="width: 300px;">
+               <img src="/assets/images/posts/probability/difference.png" alt="A-B" style="width: 300px;">
                <figcaption>(a) $A-B$</figcaption>
              </figure>
              <figure style="text-align: center; margin-bottom: 0;">
-               <img src="/assets/images/picture/event_and_probability/difference(including).png" alt="A-B(including)" style="width: 300px;">
+               <img src="/assets/images/posts/probability/difference-including.png" alt="A-B(including)" style="width: 300px;">
                <figcaption>(b) $A-B(A\supset B)$</figcaption>
              </figure>
            </div>
@@ -206,15 +206,15 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 0px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probability/cup.png" alt="A\cup B" style="width: 300px;">
+       <img src="/assets/images/posts/probability/cup.png" alt="A\cup B" style="width: 300px;">
        <figcaption>(a) $A\cup B$</figcaption>
      </figure>
      <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probability/cap.png" alt="A\cap B" style="width: 300px;">
+       <img src="/assets/images/posts/probability/cap.png" alt="A\cap B" style="width: 300px;">
        <figcaption>(b) $A-B(A\supset B)$</figcaption>
      </figure>
      <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probability/oppose.png" alt="oppose" style="width: 300px;">
+       <img src="/assets/images/posts/probability/oppose.png" alt="oppose" style="width: 300px;">
        <figcaption>(c) $A$ 的对立事件 $\bar{A}$</figcaption>
      </figure>
    </div>
@@ -530,11 +530,11 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
       <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/picture/event_and_probability/deduct.png" alt="任意的事件A与B" style="width: 300px;">
+         <img src="/assets/images/posts/probability/deduct.png" alt="任意的事件A与B" style="width: 300px;">
             <figcaption>(a) 任意的事件 $A$ 与 $B$</figcaption>
             </figure>
             <figure style="text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/picture/event_and_probability/difference(including).png" alt="A-B(including)" style="width: 300px;">
+         <img src="/assets/images/posts/probability/difference-including.png" alt="A-B(including)" style="width: 300px;">
          <figcaption>(b) $B\subset A$</figcaption>
       </figure>
    </div>
@@ -600,7 +600,7 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probability/add.png" alt="事件A\cup B的概率" style="width: 300px;">
+       <img src="/assets/images/posts/probability/add.png" alt="事件A\cup B的概率" style="width: 300px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 6: 事件 $A\cup B$ 的概率的 Venn 图示意</p>
@@ -879,7 +879,7 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probability/meeting.png" alt="meeting" style="width: 300px;">
+       <img src="/assets/images/posts/probability/meeting.png" alt="meeting" style="width: 300px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 7: 会见问题的样本空间</p>
@@ -923,15 +923,15 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
       <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-        <img src="/assets/images/picture/event_and_probability/needle.png" alt="Buffon 投针问题" style="width: 300px; margin-top: 56px;">
+        <img src="/assets/images/posts/probability/needle.png" alt="Buffon 投针问题" style="width: 300px; margin-top: 56px;">
         <figcaption>(a) Buffon 投针问题</figcaption>
       </figure>
       <figure style="text-align: center; margin-bottom: 0;">
-        <img src="/assets/images/picture/event_and_probability/needle_space.png" alt="Buffon 投针的样本空间" style="width: 300px;">
+        <img src="/assets/images/posts/probability/needle_space.png" alt="Buffon 投针的样本空间" style="width: 300px;">
         <figcaption>(b) Buffon 投针的样本空间</figcaption>
       </figure>
       <figure style="text-align: center; margin-bottom: 0;">
-        <img src="/assets/images/picture/event_and_probability/intersect.png" alt="相交的充要条件" style="width: 300px; margin-top: 116px;">
+        <img src="/assets/images/posts/probability/intersect.png" alt="相交的充要条件" style="width: 300px; margin-top: 116px;">
         <figcaption>(c) 针与平行线相交的充分必要条件</figcaption>
       </figure>
    </div>
@@ -954,15 +954,15 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 0px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probability/Bertrand1.png" alt="Bertrand1" style="width: 200px;">
+       <img src="/assets/images/posts/probability/Bertrand1.png" alt="Bertrand1" style="width: 200px;">
        <figcaption>(a) 解法一</figcaption>
      </figure>
      <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probability/Bertrand2.png" alt="Bertrand2" style="width: 200px;">
+       <img src="/assets/images/posts/probability/Bertrand2.png" alt="Bertrand2" style="width: 200px;">
        <figcaption>(b) 解法二</figcaption>
      </figure>
      <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probability/Bertrand3.png" alt="Bertrand3" style="width: 185px;">
+       <img src="/assets/images/posts/probability/Bertrand3.png" alt="Bertrand3" style="width: 185px;">
        <figcaption>(c) 解法三</figcaption>
      </figure>
    </div>
@@ -1013,7 +1013,7 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/picture/event_and_probability/condition.png" alt="P(A\mid B)" style="width: 300px;">
+       <img src="/assets/images/posts/probability/condition.png" alt="P(A\mid B)" style="width: 300px;">
      </figure>
    </div>
    <p style="margin-top: 0;">图 10: 条件概率 $P(A\mid B)$ 的 Venn 图示意</p>
@@ -1210,11 +1210,11 @@ $$
 <div style="text-align: center;">
    <div style="display: flex; justify-content: center;">
       <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/picture/event_and_probability/full.png" alt="对立事件分割样本" style="width: 300px;">
+         <img src="/assets/images/posts/probability/full.png" alt="对立事件分割样本" style="width: 300px;">
          <figcaption>(a) 用 $B$ 与 $\bar{B}$ 来分割样本空间</figcaption>
       </figure>
       <figure style="text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/picture/event_and_probability/full_condition.png" alt="互不相容事件分割样本" style="width: 300px;">
+         <img src="/assets/images/posts/probability/full_condition.png" alt="互不相容事件分割样本" style="width: 300px;">
          <figcaption>(b) $A\subset \bigcup\limits_{i=1}^{6}B_i$</figcaption>
       </figure>
    </div>

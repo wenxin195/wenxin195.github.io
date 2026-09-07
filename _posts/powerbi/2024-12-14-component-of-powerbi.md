@@ -249,7 +249,7 @@ Power Query 中的“日期”和“时间”命令可以设置“日期”/“�
 
 Power Query 允许批量导入文件夹的数据集，后续只需往文件夹中添加新的文件即可，Power Query 会自动更新数据。
 
-<pre class="mermaid">
+```mermaid
   flowchart LR
     A@{ shape: circle, label: 获取数据 }
     B@{ shape: documents, label: 选择从“文件夹” }
@@ -258,7 +258,7 @@ Power Query 允许批量导入文件夹的数据集，后续只需往文件夹�
     E@{ shape: rounded, label: 选择“合并并转换数据” }
     F@{ shape: processes, label: 进行数据 ETL 流程 }
     A --> B --> C --> D --> E --> F
-</pre>
+```
 
 但是需要注意的是，文件夹下的数据集的格式必须保持一致，否则 Power Query 会因为格式混乱而报错。
 

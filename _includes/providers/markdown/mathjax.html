@@ -1,5 +1,10 @@
 {%- assign _sources = site.data.resources.sources -%}
 {%- assign _mathjax_autoNumber = page.mathjax_autoNumber | default: site.data.layout.enhancements.mathjax_autoNumber -%}
+{%- if _mathjax_autoNumber -%}
+  {%- assign _mathjax_tags = 'ams' -%}
+{%- else -%}
+  {%- assign _mathjax_tags = 'none' -%}
+{%- endif -%}
 
 <script>
   MathJax = {
@@ -11,7 +16,7 @@
       macros: {
         '\\mit': '\\mathit',
       },
-      tags: {% if _mathjax_autoNumber %}'ams'{% else %}'none'{% endif %},
+      tags: '{{ _mathjax_tags }}',
       packages: {
         '[+]': ['mathtools'],
       },

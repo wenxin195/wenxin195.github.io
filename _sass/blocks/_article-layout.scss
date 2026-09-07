@@ -11,6 +11,19 @@
   @include media.media-breakpoint-down(lg) {
     display: block;
   }
+
+  // Aside is first in DOM (streaming paint reserves the TOC column early);
+  // ≥ lg: keep article visually left, aside right. < lg the aside is fixed —
+  // order is irrelevant there.
+  @include media.media-breakpoint-up(lg) {
+    .article-layout__main {
+      order: 1;
+    }
+
+    .article-aside {
+      order: 2;
+    }
+  }
 }
 
 .article-layout__main {

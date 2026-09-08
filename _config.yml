@@ -56,6 +56,9 @@ exclude:
   - e2e
   - playwright-report
   - test-results
+  - test
+  - Rakefile
+  - .npmrc
   - .sass-cache/
   - .jekyll-cache/
   - node_modules/

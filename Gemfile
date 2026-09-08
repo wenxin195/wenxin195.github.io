@@ -20,3 +20,8 @@ platforms :mingw, :x64_mingw, :mswin, :jruby do
   gem "tzinfo"
   gem "tzinfo-data"
 end
+
+group :test do
+  gem "minitest"
+  gem "rake"
+end

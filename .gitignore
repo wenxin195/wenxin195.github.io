@@ -19,11 +19,14 @@ Thumbs.db
 .stylelintignore
 .stylelintrc
 
-# Local Playwright e2e (not published)
+# Local tests (not published)
 /e2e/
+/test/
 /playwright.config.js
 /package.json
 /package-lock.json
+/Rakefile
+/.npmrc
 /playwright-report/
 /test-results/
 /blob-report/

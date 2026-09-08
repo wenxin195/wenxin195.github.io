@@ -1,0 +1,17 @@
+{%- comment -%} Discover first-party entry graphs early; do not preload CDN / Pagefind. {%- endcomment -%}
+<link rel="modulepreload" href="{{ 'assets/scripts/entries/shell.js' | relative_url }}" />
+<link rel="modulepreload" href="{{ 'assets/scripts/entries/theme.js' | relative_url }}" />
+{%- if site.search -%}
+  <link rel="modulepreload" href="{{ 'assets/scripts/entries/search.js' | relative_url }}" />
+{%- endif -%}
+{%- if page.layout == 'article' -%}
+  <link rel="modulepreload" href="{{ 'assets/scripts/entries/article.js' | relative_url }}" />
+  {%- if page.aside.toc == true -%}
+    <link rel="modulepreload" href="{{ 'assets/scripts/entries/article-aside.js' | relative_url }}" />
+  {%- endif -%}
+{%- elsif page.layout == 'archive' -%}
+  <link rel="modulepreload" href="{{ 'assets/scripts/entries/archive.js' | relative_url }}" />
+{%- endif -%}
+{%- if page.lightbox == true -%}
+  <link rel="modulepreload" href="{{ 'assets/scripts/entries/lightbox.js' | relative_url }}" />
+{%- endif -%}

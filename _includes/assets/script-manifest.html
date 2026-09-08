@@ -1,4 +1,5 @@
-{%- comment -%} App script manifest — only included from shell; only entries/* {%- endcomment -%}
+{%- comment -%} App script manifest — only included from shell; only entries/* plus Lazyload boot for Pagefind. {%- endcomment -%}
+<script defer src="{{ 'assets/scripts/boot/lazyload.js' | relative_url }}"></script>
 <script type="module" src="{{ 'assets/scripts/entries/shell.js' | relative_url }}"></script>
 <script type="module" src="{{ 'assets/scripts/entries/theme.js' | relative_url }}"></script>
 

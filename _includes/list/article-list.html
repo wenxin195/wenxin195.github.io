@@ -28,7 +28,7 @@
       <article class="article-list__item" itemscope itemtype="https://schema.org/BlogPosting">
         {%- if _article.cover and include.show_cover -%}
           <div class="article-list__image">
-            <img class="{{ _cover_class }}" src="{{ _article_cover }}" alt="" />
+            <img class="{{ _cover_class }}" src="{{ _article_cover }}" alt="" loading="lazy" decoding="async" />
           </div>
         {%- endif -%}
 

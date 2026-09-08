@@ -12,37 +12,22 @@
       (function () {
         var KEY = 'site-theme';
         var allowed = { default: true, dark: true };
+        var root = document.documentElement;
         try {
           var stored = localStorage.getItem(KEY);
           if (stored && allowed[stored]) {
-            document.documentElement.setAttribute('data-theme', stored);
+            root.setAttribute('data-theme', stored);
           }
         } catch (e) {}
-      })();
-    </script>
-
-    {%- include providers/analytics.html -%}
-    {%- include document/head.html -%}
-
-    <script>
-      (function () {
         var t = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        document.documentElement.classList.add(t ? 'is-touch' : 'is-not-touch');
+        root.classList.add(t ? 'is-touch' : 'is-not-touch');
       })();
     </script>
 
-    <script src="{{ 'assets/scripts/boot/lazyload.js' | relative_url }}"></script>
+    {%- include document/head.html -%}
   </head>
   <body>
-    <div class="root">
-      <script>
-        (function () {
-          var root = document.querySelector('.root');
-          if (!root) return;
-          var t = document.documentElement.classList.contains('is-touch');
-          root.dataset.isTouch = t ? 'true' : 'false';
-        })();
-      </script>
+    <div class="root" data-is-touch>
       {{ content }}
     </div>
   </body>

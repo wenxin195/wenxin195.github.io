@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const articleBody = document.querySelector('.js-article-body');
   const shellMain = document.querySelector('.js-shell-main');
 
-  // Drawer first (strip modal on ≥ lg), then TOC render, then Affix on toc panel.
+  // Drawer first (strip modal on ≥ lg), then TOC hydrate, then Affix on toc panel.
   initTocDrawer({
     drawerEl: aside,
     mountRoot: shellMain,

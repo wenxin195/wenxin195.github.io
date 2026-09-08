@@ -2,6 +2,22 @@ import { throttle } from '@/utils/throttle.js';
 import { scrollToHeading } from './anchor.js';
 
 /**
+ * Decode a TOC href (`#id`) to a heading id. Percent-encoded SSR hrefs
+ * must match `element.id` (decoded).
+ * @param {string} href
+ * @return {string}
+ */
+function headingIdFromHref(href) {
+  if (!href || href.charAt(0) !== '#') return '';
+  const raw = href.slice(1);
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
+}
+
+/**
  * 为文章标题构建并同步目录。
  */
 export class Toc {
@@ -84,7 +100,7 @@ export class Toc {
     }
   }
 
-  /** 初始化：渲染 → 测量 → 绑定 → 激活。 */
+  /** 初始化：hydrate 或渲染 → 测量 → 绑定 → 激活。 */
   init() {
     if (this._inited) return;
 
@@ -155,22 +171,55 @@ export class Toc {
     }
   }
 
-  // 渲染 TOC DOM
+  // 渲染 TOC DOM：优先复用构建期 HTML，对不上再客户端重建。
   _render() {
     if (this._rendered) return;
 
-    // 空状态
     if (this.headings.length === 0) {
+      this._removeExistingList();
       this._renderEmpty();
       this._rendered = true;
       return;
     }
 
+    if (this._hydrateFromDom()) {
+      this._rendered = true;
+      return;
+    }
+
+    this._removeExistingList();
     this.tocItems = [];
     this.tocUl = this._options.nested ? this._buildNestedList() : this._buildFlatList();
     this.root.appendChild(this.tocUl);
 
     this._rendered = true;
+  }
+
+  /**
+   * Bind to a server-rendered `ul.toc` when items line up with headings.
+   * @return {boolean}
+   */
+  _hydrateFromDom() {
+    const existing = this.root.querySelector(':scope > ul.toc');
+    if (!existing) return false;
+
+    const items = Array.from(existing.querySelectorAll('li.toc-item'));
+    if (items.length !== this.headings.length) return false;
+
+    for (let i = 0; i < items.length; i++) {
+      const href = items[i].querySelector('a')?.getAttribute('href') || '';
+      if (headingIdFromHref(href) !== this.headings[i].id) return false;
+    }
+
+    this.tocUl = existing;
+    this.tocItems = items;
+    return true;
+  }
+
+  _removeExistingList() {
+    const existing = this.root.querySelector(':scope > ul.toc');
+    if (existing) existing.remove();
+    if (this.tocUl === existing) this.tocUl = null;
   }
 
   // 构建扁平列表

@@ -13,7 +13,8 @@ function resolveHeadingSelectors(tocRoot) {
 
 /**
  * 初始化文章目录（TOC）。
- * 窄屏抽屉显隐由 toc-drawer 负责；此处只要有 heading 即启用 scroll-spy。
+ * 列表优先由构建期 HTML 提供；此处 hydrate 后做 scroll-spy。
+ * 窄屏抽屉显隐由 toc-drawer 负责。
  *
  * @param {{
  *   tocRoot: (?Element|undefined),

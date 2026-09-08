@@ -113,19 +113,28 @@
 }
 
 // Light → moon (switch to dark); dark → sun (switch to light).
-.theme-toggle {
+// Stack both icons with opacity (not display:none) so CSS mask SVGs load
+// before the first toggle — display:none skips mask-image fetches.
+.theme-toggle.button--circle {
+  display: inline-grid;
+  place-items: center;
+
+  .theme-toggle__icon {
+    grid-area: 1 / 1;
+  }
+
   .theme-toggle__icon--sun {
-    display: none;
+    opacity: 0;
   }
 }
 
 html[data-theme="dark"] .theme-toggle {
   .theme-toggle__icon--moon {
-    display: none;
+    opacity: 0;
   }
 
   .theme-toggle__icon--sun {
-    display: inline-block;
+    opacity: 1;
   }
 }
 

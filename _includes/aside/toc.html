@@ -1,4 +1,8 @@
+{%- comment -%}
+  List HTML is generated at post_convert (`page.toc_html`). JS hydrates for
+  scroll-spy; if the list is missing it still builds the same markup client-side.
+{%- endcomment -%}
 <div
   class="aside-toc js-aside-toc"
   data-toc-selectors="{{ site.toc.selectors }}"
-></div>
+>{{- page.toc_html -}}</div>

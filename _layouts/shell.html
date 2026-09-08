@@ -36,8 +36,13 @@ layout: base
   {%- include site/footer.html -%}
 
   {%- include providers/pageview/index.html -%}
+  {%- include providers/analytics.html -%}
 
   {%- include assets/script-manifest.html -%}
+
+  {%- if page.layout == 'article' -%}
+    {%- include providers/markdown/index.html -%}
+  {%- endif -%}
 
   {%- include site/nav-drawer.html -%}
 

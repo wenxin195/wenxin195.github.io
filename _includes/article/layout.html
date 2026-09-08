@@ -12,16 +12,9 @@
 <div class="article-layout">
   <div class="article-layout__inner{% if page.full_width and _has_aside == false %} article-layout__inner--flush{% endif %}">
     {%- comment -%}
-      Aside precedes the article so the TOC column is reserved from first paint:
-      the aside markup is a few hundred bytes and arrives long before the article
-      body finishes streaming, preventing a full-width→narrow reflow flash.
-      Visual order (article left, aside right) is restored with flex `order`
-      in blocks/_article-layout.scss (≥ lg); < lg the aside is a fixed drawer.
+      Main precedes the TOC aside so the title streams before the directory.
+      ≥ lg: flex row is article left, aside right. < lg the aside is a drawer.
     {%- endcomment -%}
-    {%- if _has_aside -%}
-      {%- include article/aside.html -%}
-    {%- endif -%}
-
     <div class="article-layout__main">
       <article class="article" itemscope itemtype="https://schema.org/BlogPosting">
         {%- unless _is_overlay -%}
@@ -49,5 +42,9 @@
         {%- include article/comments.html -%}
       </article>
     </div>
+
+    {%- if _has_aside -%}
+      {%- include article/aside.html -%}
+    {%- endif -%}
   </div>
 </div>

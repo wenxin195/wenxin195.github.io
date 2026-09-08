@@ -14,68 +14,75 @@ Site: https://wenxin195.github.io
 
 ### About
 
-**StatSphere** is a personal Jekyll blog. The site structure is based on [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme).
+**StatSphere** is a personal Jekyll blog. It started from [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme): the code block UI and the `prompt-*` callouts are borrowed from [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy), and the titled `box-*` / `details-*` callouts and the Liquid-tag authoring style are borrowed from [huanyushi.github.io](https://github.com/huanyushi/huanyushi.github.io).
 
-### Credits
+On top of that, the theme has been rebuilt quite a bit. The notes below describe how the site is put together today, and what you need to know to write content for it.
 
-- Based on [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme)
-- Code block UI and `prompt-*` short tips adapted from [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy)
-- Titled `box-*` / `details-*` callouts and Liquid-tag authoring adapted from [huanyushi.github.io](https://github.com/huanyushi/huanyushi.github.io)
+### How the site is built
 
-### Upgrades (by area)
+#### Layouts
 
-#### HTML & layouts
+Layouts are split into a shell layer and page kinds: `base` → `shell` → `home` / `articles` / `article` / `archive` / `page` / `404`.
 
-- Clear shell / page-kind split: `base` → `shell` → `home` / `articles` / `article` / `archive` / `page` / `404`
-- Article hero extracted from the old page shell (`hero` instead of burying header logic in `page`)
-- Documentation-style sidebar layout and `landing` layout are not used
+```mermaid
+flowchart TB
+    base --> shell
+    shell --> home & articles & article & archive & page & notfound["404"]
+```
 
-#### Ruby plugins (`_plugins/`)
+The article header lives in its own `hero` layout instead of being buried inside the page shell. The documentation-style sidebar and `landing` layouts from TeXt are not used.
+
+#### Ruby plugins
 
 ```
 _plugins/
-  hooks/post_convert.rb          # Jekyll entry: Guard → enhance; posts → reading time
+  hooks/post_convert.rb     # entry point: filter, then enhance; reading time for posts
+  hooks/posts_sort.rb       # post ordering: date, then title, then path
   content/
-    enhancer.rb                  # Single parse/serialize orchestrator
-    guard.rb                     # Skip non-article Pages (e.g. assets/*.scss)
-    reading_time.rb              # Strip HTML → mixed CJK/English stats (posts only)
-    language_name.rb             # Rouge lang ids → display names
-    transforms/                  # diagrams, tables, task_lists, code_blocks
-  callouts/tags.rb               # {% box %} / {% details %}
+    enhancer.rb             # runs the whole parse/serialize pipeline once
+    guard.rb                # skips non-article pages (e.g. assets/*.scss)
+    toc.rb                  # build-time article TOC (hydrated client-side)
+    reading_time.rb         # reading time from HTML-stripped text (posts only)
+    language_name.rb        # maps Rouge language ids to display names
+    icons.rb                # local Lucide icons (see _data/icons.yml)
+    transforms/             # diagrams, images, tables, task_lists, code_blocks
+  callouts/tags.rb          # {% box %} / {% details %}
 ```
 
-- HTML enhancement (Nokogiri): posts and pages share `Content::Guard`; transforms unwrap mermaid to `div.mermaid`, wrap tables, replace task-list icons, and rebuild code blocks
-- Code blocks: Rouge at build time → canonical `<figure class="code-block">` (line numbers, header, copy)
-- `{% box TYPE "Title" %}` (title required) and `{% details … %}` (unknown types fail the build)
-- Language display names via `_data/language_aliases.yml`
-- Mixed CJK/English reading time on **posts only** (`reading_time`, `char_count`), from HTML-stripped text after enhancement
+- Posts and pages are enhanced with Nokogiri in a single pass: Mermaid fences become plain `<div class="mermaid">` elements, tables get a horizontal-scroll wrapper, task-list markers are replaced with icons, and code blocks are rebuilt from scratch.
+- Images get loading hints at build time: the first image keeps `fetchpriority="high"` for the LCP, the rest get `loading="lazy"` and `decoding="async"` (images inside code blocks are skipped).
+- Code blocks are highlighted with Rouge at build time and rendered as a uniform `<figure class="code-block">` with a header, line numbers, and a copy button.
+- `{% box TYPE "Title" %}` requires a title; `{% details … %}` fails the build on unknown types.
+- Language display names come from `_data/language_aliases.yml`.
+- Reading time (`reading_time`, `char_count`) is computed for posts only, from the HTML-stripped text after enhancement, using mixed CJK/English statistics.
+- Pages with `aside.toc: true` get their TOC list generated at build time (`page.toc_html`); the client hydrates the same markup for scroll-spy instead of waiting for JS to render it.
 
-#### Callout authoring
+### Writing content
 
-Two first-class systems — do not mix roles:
+#### Callouts
 
-| System | Use for | Author API |
-|--------|---------|------------|
-| **prompt** | Untitled short tips | Blockquote + `{: .prompt-tip\|info\|warning\|danger}` |
-| **box** | Titled callouts | `{% box tip\|info\|warning\|danger "Title" %}…{% endbox %}` |
-| **details** | Collapsible notes | `{% details definition\|theorem\|proposition\|example "Summary" [open] %}` |
+There are two callout systems with distinct roles — please don't mix them:
+
+| System | Use for | How to write |
+|--------|---------|--------------|
+| **prompt** | short untitled tips | blockquote + `{: .prompt-tip\|info\|warning\|danger}` |
+| **box** | titled callouts | `{% box tip\|info\|warning\|danger "Title" %}…{% endbox %}` |
+| **details** | collapsible notes | `{% details definition\|theorem\|proposition\|example "Summary" [open] %}` |
 
 ```markdown
 > Short tip body.
 {: .prompt-tip}
 
 {% box danger "Independence caveat" %}
-Longer titled explanation…
+A longer, titled explanation…
 {% endbox %}
 ```
 
-Untitled `{% box tip %}` is a build error — use `prompt-*` instead.
+An untitled `{% box tip %}` is a build error — use `prompt-*` instead. The paragraph decorations `{:.success}` / `{:.info}` / `{:.warning}` / `{:.danger}` are a separate TeXt-style feature (background color only, no icon).
 
-Paragraph decorations `{:.success}` / `{:.info}` / `{:.warning}` / `{:.danger}` are a separate TeXt-style path (background only, no FA icon).
+#### Code blocks
 
-#### Code block authoring
-
-Fenced blocks are highlighted with Rouge. Defaults: language label, line numbers from 1, copy button.
+Fenced code blocks are highlighted with Rouge. By default each block shows a language label, line numbers starting from 1, and a copy button:
 
 ````markdown
 ```javascript
@@ -83,87 +90,88 @@ let score = 100;
 ```
 ````
 
-Optional Kramdown IAL (on the line after the closing fence):
+You can tweak a block with a Kramdown IAL on the line after the closing fence:
 
 | IAL | Effect |
 |-----|--------|
-| `{: file="app.js"}` | Header shows the filename instead of the language name |
-| `{: .nolineno }` | Hide line numbers (no line-number DOM) |
+| `{: file="app.js"}` | the header shows the filename instead of the language name |
+| `{: .nolineno }` | no line numbers (the line-number markup isn't generated) |
 
-`chart` fences are left for their client provider (no code chrome). `mermaid` fences are unwrapped at build time to `<div class="mermaid">`.
+`chart` fences are rendered by a client-side provider, so they get no code-block wrapper. `mermaid` fences are turned into `<div class="mermaid">` at build time.
 
-##### Mermaid sizing
+#### Mermaid diagrams
 
-Enable with `mermaid: true` in front matter (or `layout.enhancements.mermaid`).
+Enable per page with `mermaid: true` in front matter (or rely on `layout.enhancements.mermaid`).
 
-Build-time HTML is a single host (`div.mermaid`). After Mermaid draws, JS crops the SVG `viewBox` to the painted content (plus `--mermaid-viewbox-padding`) and leaves **no inline height**. CSS then contain-fits the diagram as a replaced element: `width: auto; height: auto; max-width: 100%; max-height: var(--mermaid-max-height)` (default `70vh`). Intrinsic width is the viewBox width, so diagrams do not upscale. Font size tracks body type via `--mermaid-font-size` (`1rem`, resolved to px at render). Theme or root rem changes trigger a full re-render; viewport resize is CSS-only.
+Sizing works like this: at build time the only markup is a single `div.mermaid`. After Mermaid draws the diagram, a small script crops the SVG `viewBox` down to what was actually drawn (plus `--mermaid-viewbox-padding`) and leaves no inline height. From there, scaling is pure CSS: the diagram is treated like an image and fits within `width: auto; height: auto; max-width: 100%; max-height: var(--mermaid-max-height)` (default `70vh`). Since the intrinsic width equals the viewBox width, diagrams are never upscaled. The font size follows the body text via `--mermaid-font-size` (`1rem`, resolved to pixels at render time). Switching themes or changing the root font size triggers a full re-render; a plain viewport resize is handled by CSS alone.
 
-| Author control | Effect |
-|----------------|--------|
-| `flowchart LR` / `TD` (etc.) | Direction by meaning; CSS contain covers both |
-| (default) | Fit column width and max-height |
-| `{: data-mermaid-fit="width"}` | Fit width only (IAL after the fence) |
-| `{: data-mermaid-fit="none"}` | Intrinsic size (horizontal scroll if needed) |
+| Control | Effect |
+|---------|--------|
+| `flowchart LR` / `TD` (etc.) | pick the direction that fits the content; CSS handles both |
+| (default) | fit the column width and the max height |
+| `{: data-mermaid-fit="width"}` | fit the width only (IAL after the fence) |
+| `{: data-mermaid-fit="none"}` | keep the intrinsic size (scrolls horizontally if too wide) |
 
-Prefer short node labels; split deep vertical flows rather than relying on endless page height.
+Keep node labels short, and split very deep flows into several diagrams rather than relying on endless page height.
 
-#### Styles (SCSS)
+#### Styles
 
-- Upgraded to a modern Sass toolchain (Dart Sass / `@use` · `@forward`); TeXt still relies on the older `@import`-based stack
-- Layered Sass with `@use`: `tokens` → `foundations` → `primitives` → `shell` → `blocks` → `kinds` → `enhancements` → `motion`
-- Design tokens as the single source for scale, color, and breakpoints
-- Runtime `default` / `dark` themes via CSS variables and `html[data-theme]` (syntax highlighting follows the site theme)
+- The Sass toolchain was moved to Dart Sass with `@use` / `@forward` (TeXt still uses the older `@import` stack).
+- Stylesheets are layered: `tokens` → `foundations` → `primitives` → `shell` → `blocks` → `kinds` → `enhancements` → `motion`.
+- Design tokens are the single source of truth for scale, color, and breakpoints.
+- Light and dark themes switch at runtime via CSS variables and `html[data-theme]`; syntax highlighting follows the site theme.
 
-#### Scripts (JS)
+#### Scripts
 
-- Pure ESM modules under `assets/scripts/` (`entries` / `features` / `lib` / `utils` / `boot`)
-- No bundler; no jQuery-centered boot bag
-- Feature boundaries for TOC, drawers, search, clipboard, archive filters, etc.
+- Pure ES modules under `assets/scripts/`, organized as `entries` / `features` / `lib` / `utils` / `boot`.
+- No bundler, no jQuery, no large global configuration object.
+- Features are split by responsibility: TOC, drawers, search, clipboard, archive filters, link prefetching, deferred flyout images, and so on.
+- Entry module graphs are preloaded via `modulepreload`, selected per page.
 
-#### Search & integrations
+#### Search and third-party services
 
-- Site search via [Pagefind](https://pagefind.app/)
-- Comments path: Giscus (off by default)
-- Site UV/PV via [Busuanzi](https://busuanzi.ibruce.info/) in the footer
-- Markdown extras retained where useful: MathJax / Mermaid / Chart / KaTeX (per-page or layout defaults)
+- Site search runs on [Pagefind](https://pagefind.app/).
+- Comments via Giscus (disabled by default).
+- Visitor and pageview counts via [Busuanzi](https://busuanzi.ibruce.info/) in the footer.
+- MathJax / Mermaid / Chart / KaTeX are kept where useful, enabled per page or by layout defaults; their scripts load only when idle (Mermaid also waits until a diagram is near the viewport).
 
-#### Config
+#### Configuration
 
-- Slim `_config.yml`
-- Presentation defaults in `_data/layout.yml`
-- Public third-party IDs in `_data/integrations.yml` (no secrets in the static site)
+- `_config.yml` stays lean.
+- Presentation defaults live in `_data/layout.yml`.
+- Public third-party ids live in `_data/integrations.yml` (no secrets in a static site).
 
-#### Responsive
+#### Responsive behavior
 
-- Breakpoints: `sm` / `md` / `lg` / `xl`
-- Narrow viewports: hamburger nav drawer; article TOC as a drawer + floating action
-- Drawers share the modal primitive and stay mutually exclusive with search
+- Breakpoints: `sm` / `md` / `lg` / `xl`.
+- On narrow screens the nav collapses into a hamburger drawer, and the article TOC becomes a drawer with a floating action button; the TOC list itself is rendered at build time, so it is visible before any JS runs.
+- Drawers share the same modal primitive and are mutually exclusive with search.
 
 ### Local development
 
-Requirements: Ruby, Bundler, and [Pagefind](https://pagefind.app/) (CLI or `npx`).
+You'll need Ruby, Bundler, and [Pagefind](https://pagefind.app/) (CLI or `npx`).
 
 ```bash
-# Install gems
-bundle install
+bundle install               # install gems
+bundle exec jekyll build     # build the site
+npx pagefind --site _site    # build the search index into _site/pagefind
 
-# Build the site
-bundle exec jekyll build
-
-# Build the search index into _site/pagefind
-npx pagefind --site _site
-
-# Serve (rebuild search after content changes if you need local search)
-bundle exec jekyll serve
-# then: npx pagefind --site _site
+bundle exec jekyll serve     # serve locally
+npx pagefind --site _site    # re-run after content changes if you need local search
 ```
+
+### Deployment
+
+The site is deployed to GitHub Pages by GitHub Actions (`.github/workflows/jekyll.yml`). Every push to `main` triggers it (changes to README, LICENSE, and issue templates are excluded), and it can also be run manually from the Actions tab.
+
+The `build` job sets up Ruby and Node, runs the plugin unit tests (`bundle exec rake test`), builds the site with `JEKYLL_ENV=production`, generates the Pagefind index, and runs the Playwright e2e suite against the built site (system Chrome, no browser download). Only after all of that passes does the `deploy` job publish the artifact to Pages.
 
 ### License
 
-- Site code: MIT (see `LICENSE`)
-- Post content: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) unless a post says otherwise
+- Site code: MIT (see `LICENSE`).
+- Post content: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) unless a post says otherwise.
 
-Please keep the copyright and license notices of TeXt, Chirpy, and other upstream MIT components when redistributing substantial portions of their code.
+If you redistribute substantial portions of the code, please keep the copyright and license notices of TeXt, Chirpy, and other upstream MIT components.
 
 ---
 
@@ -173,49 +181,58 @@ Please keep the copyright and license notices of TeXt, Chirpy, and other upstrea
 
 ### 关于
 
-**StatSphere** 是钟文鑫的个人博客，主要记录统计学、数据分析及相关工程实践。
+**StatSphere** 是钟文鑫的个人博客，记录统计学、数据分析及相关工程实践的笔记。
 
 站点：https://wenxin195.github.io
 
-### 致谢
+站点基于 [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme) 搭建：代码块界面和 `prompt-*` 短提示参考了 [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy)，带标题的 `box-*` / `details-*` 提示块和 Liquid 标签的写法参考了 [huanyushi.github.io](https://github.com/huanyushi/huanyushi.github.io)。在此之上，我对主题做了不少改造，下面记录的是站点目前的结构，以及写内容时需要遵循的约定。
 
-- Based on [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme)
-- 代码块与 `prompt-*` 短提示参考 [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy)
-- 带标题的 `box-*` / `details-*` 与 Liquid 标签写法参考 [huanyushi.github.io](https://github.com/huanyushi/huanyushi.github.io)
+### 站点是怎么搭起来的
 
-### 升级点（分模块）
+#### 布局
 
-#### HTML 与布局
+布局分为外壳和页面两层：`base` → `shell` → `home` / `articles` / `article` / `archive` / `page` / `404`。
 
-- 壳层与页型分离：`base` → `shell` → `home` / `articles` / `article` / `archive` / `page` / `404`
-- 文章头图从 page 壳中抽出（`hero`）
-- 不使用文档站式 sidebar，也不使用 `landing` 布局
+```mermaid
+flowchart TB
+    base --> shell
+    shell --> home & articles & article & archive & page & notfound["404"]
+```
 
-#### Ruby 插件（`_plugins/`）
+文章页头单独抽成了 `hero` 布局，不再放在页面外壳中。TeXt 的文档站式 sidebar 布局和 `landing` 布局没有使用。
+
+#### Ruby 插件
 
 ```
 _plugins/
-  hooks/post_convert.rb          # 入口：Guard → 增强；posts → 阅读时间
+  hooks/post_convert.rb     # 入口：先过滤，再增强；posts 额外计算阅读时间
+  hooks/posts_sort.rb       # 文章排序：日期、标题、路径
   content/
-    enhancer.rb                  # 单次 parse/serialize 编排
-    guard.rb                     # 跳过非文章 Page（如 assets/*.scss）
-    reading_time.rb              # 去 HTML → 中英混合统计（仅 posts）
-    language_name.rb             # Rouge 语言 id → 显示名
-    transforms/                  # diagrams、tables、task_lists、code_blocks
-  callouts/tags.rb               # {% box %} / {% details %}
+    enhancer.rb             # 整个解析/序列化流程在此编排，只执行一次
+    guard.rb                # 跳过非文章页面（如 assets/*.scss）
+    toc.rb                  # 构建期生成文章 TOC（供前端 hydrate）
+    reading_time.rb         # 去掉 HTML 后统计中英文（仅 posts）
+    language_name.rb        # Rouge 语言 id 转显示名
+    icons.rb                # 本地 Lucide 图标（见 _data/icons.yml）
+    transforms/             # diagrams、images、tables、task_lists、code_blocks
+  callouts/tags.rb          # {% box %} / {% details %}
 ```
 
-- HTML 增强（Nokogiri）：posts 与 pages 共用 `Content::Guard`；变换含 mermaid 收成 `div.mermaid`、表格横向滚动、任务列表图标、代码块重建
-- 代码块：构建期 Rouge → 规范 `<figure class="code-block">`（行号、标题栏、复制）
-- `{% box TYPE "标题" %}`（标题必填）与 `{% details … %}`（未知类型构建失败）
-- 语言显示名：`_data/language_aliases.yml`
-- 中英混合阅读时间仅写入 **posts**（`reading_time`、`char_count`），在增强后对去 HTML 的正文计算
+- posts 和 pages 的 HTML 都由 Nokogiri 一次性完成增强：mermaid 围栏转换为 `<div class="mermaid">`，表格加上横向滚动容器，任务列表标记替换为图标，代码块则完全重建。
+- 图片在构建期加上加载提示：首图保持 `fetchpriority="high"`（保证 LCP），其余图片设 `loading="lazy"` 和 `decoding="async"`（跳过代码块内的图片）。
+- 代码块在构建期用 Rouge 高亮，统一渲染成 `<figure class="code-block">`，带标题栏、行号和复制按钮。
+- `{% box TYPE "标题" %}` 的标题是必填的；`{% details … %}` 遇到未知类型会使构建失败。
+- 语言显示名来自 `_data/language_aliases.yml`。
+- 阅读时间（`reading_time`、`char_count`）只在 **posts** 上计算：增强完成后去掉 HTML，再按中英文混合的方式统计。
+- 开启 `aside.toc: true` 的页面会在构建期生成 TOC 列表（写入 `page.toc_html`），前端 hydrate 同一份 HTML 做滚动高亮，不用等 JS 渲染。
 
-#### 提示块写法
+### 写内容
 
-两套分工明确的系统，不要混用：
+#### 提示块
 
-| 系统 | 用途 | 写法 |
+提示块有两套体系，分工不同，请不要混用：
+
+| 体系 | 用途 | 写法 |
 |------|------|------|
 | **prompt** | 无标题短提示 | 引用块 + `{: .prompt-tip\|info\|warning\|danger}` |
 | **box** | 带标题说明 | `{% box tip\|info\|warning\|danger "标题" %}…{% endbox %}` |
@@ -230,13 +247,11 @@ _plugins/
 {% endbox %}
 ```
 
-无标题的 `{% box tip %}` 会构建失败——请改用 `prompt-*`。
+无标题的 `{% box tip %}` 会构建失败，这种情况请改用 `prompt-*`。`{:.success}` / `{:.info}` / `{:.warning}` / `{:.danger}` 是另一套 TeXt 风格的段落装饰，仅设置背景色，没有图标。
 
-`{:.success}` / `{:.info}` / `{:.warning}` / `{:.danger}` 是另一套 TeXt 段落装饰（仅底色，无 FA 图标）。
+#### 代码块
 
-#### 代码块写法
-
-围栏代码块由 Rouge 高亮。默认：语言标签、行号从 1 起、复制按钮。
+围栏代码块由 Rouge 高亮。默认会显示语言标签、从 1 开始的行号和复制按钮：
 
 ````markdown
 ```javascript
@@ -244,84 +259,85 @@ let score = 100;
 ```
 ````
 
-可选 Kramdown IAL（写在结束围栏的下一行）：
+可以在结束围栏的下一行加 Kramdown IAL 来微调：
 
 | IAL | 作用 |
 |-----|------|
-| `{: file="app.js"}` | 标题栏显示文件名（优先于语言名） |
-| `{: .nolineno }` | 关闭行号（不生成行号 DOM） |
+| `{: file="app.js"}` | 标题栏显示文件名，优先于语言名 |
+| `{: .nolineno }` | 关闭行号（不生成行号的 DOM） |
 
-`chart` 围栏交给客户端，不套代码块 chrome。`mermaid` 围栏在构建期收成 `<div class="mermaid">`。
+`chart` 围栏由客户端脚本渲染，不会套代码块的外壳；`mermaid` 围栏在构建期转换为 `<div class="mermaid">`。
 
-##### Mermaid 尺寸
+#### Mermaid 图
 
-在 front matter 写 `mermaid: true`（或依赖 `layout.enhancements.mermaid`）启用。
+在 front matter 里写 `mermaid: true`（或依赖 `layout.enhancements.mermaid`）即可启用。
 
-构建期 HTML 是单一宿主（`div.mermaid`）。Mermaid 画完后，JS 把 SVG `viewBox` 收到实际绘制内容（外加 `--mermaid-viewbox-padding`），**不写内联 height**。随后由 CSS 把图当 replaced 元素做 contain：`width: auto; height: auto; max-width: 100%; max-height: var(--mermaid-max-height)`（默认 `70vh`）。内在宽度等于 viewBox 宽，因此不会被放大。字号通过 `--mermaid-font-size`（`1rem`）跟随正文，渲染时解析为 px。主题或根 rem 变化会整图重渲染；视口缩放只走 CSS。
+尺寸的处理方式是：构建期只输出一个 `div.mermaid`；Mermaid 画完之后，脚本把 SVG 的 `viewBox` 裁剪到实际绘制的内容（加上 `--mermaid-viewbox-padding`），并且不写入内联 height。之后的缩放完全交给 CSS，将图作为图片处理：`width: auto; height: auto; max-width: 100%; max-height: var(--mermaid-max-height)`（默认 `70vh`）。内在宽度就是 viewBox 的宽度，所以图不会被放大。字号通过 `--mermaid-font-size`（`1rem`，渲染时换算成像素）跟随正文。切换主题或修改根字号会整图重新渲染；单纯改变窗口大小则只由 CSS 处理。
 
-| 作者控制 | 效果 |
-|----------|------|
-| `flowchart LR` / `TD` 等 | 按语义选方向；CSS contain 同时覆盖横纵 |
-| （默认） | 适配栏宽与最大高度 |
+| 控制 | 效果 |
+|------|------|
+| `flowchart LR` / `TD` 等 | 按内容选方向即可，CSS 两种都覆盖 |
+| （默认） | 适配栏宽和最大高度 |
 | `{: data-mermaid-fit="width"}` | 只适配宽度（写在结束围栏下一行） |
-| `{: data-mermaid-fit="none"}` | 保持内在尺寸（过宽可横向滚动） |
+| `{: data-mermaid-fit="none"}` | 保持原始尺寸（过宽可横向滚动） |
 
-节点文案宜短；过深的纵向流程应拆图，而不是依赖页面无限变高。
+节点文案尽量简短；过深的流程建议拆成几张图，不要依赖页面无限向下延伸。
 
-#### 样式（SCSS）
+#### 样式
 
-- 升级到现代 Sass 工具链（Dart Sass / `@use` · `@forward`）；TeXt 仍使用基于 `@import` 的旧栈
-- 使用 `@use` 分层：`tokens` → `foundations` → `primitives` → `shell` → `blocks` → `kinds` → `enhancements` → `motion`
-- 设计令牌统一管理尺寸、颜色与断点
-- 运行时 `default` / `dark` 主题（CSS 变量 + `html[data-theme]`），语法高亮跟随站点主题
+- Sass 工具链已迁移到 Dart Sass，全面使用 `@use` / `@forward`（TeXt 仍使用基于 `@import` 的旧写法）。
+- 样式按 `tokens` → `foundations` → `primitives` → `shell` → `blocks` → `kinds` → `enhancements` → `motion` 分层组织。
+- 尺寸、颜色、断点都由设计令牌统一管理。
+- 亮色/暗色主题在运行时切换，通过 CSS 变量和 `html[data-theme]` 实现，语法高亮也跟随站点主题。
 
-#### 脚本（JS）
+#### 脚本
 
-- `assets/scripts/` 下纯 ESM（`entries` / `features` / `lib` / `utils` / `boot`）
-- 无 bundler；不以 jQuery + 全局配置袋为中心
-- TOC、抽屉、搜索、复制、归档筛选等按能力拆分
+- `assets/scripts/` 下均为原生 ES 模块，按 `entries` / `features` / `lib` / `utils` / `boot` 分目录。
+- 没有打包工具，没有 jQuery，也没有集中维护的全局配置对象。
+- TOC、抽屉、搜索、复制、归档筛选、链接预取、弹层图片延迟加载等功能各自独立，按职责拆分。
+- 入口模块图通过 `modulepreload` 提前声明，按页面条件选择。
 
-#### 搜索与集成
+#### 搜索与第三方服务
 
-- 站内搜索使用 [Pagefind](https://pagefind.app/)
-- 评论走 Giscus（默认关闭）
-- 站级 UV/PV 使用页脚 [不蒜子](https://busuanzi.ibruce.info/)
-- 按需保留 MathJax / Mermaid / Chart / KaTeX 等增强
+- 站内搜索基于 [Pagefind](https://pagefind.app/)。
+- 评论用 Giscus（默认关闭）。
+- 页脚通过[不蒜子](https://busuanzi.ibruce.info/)统计访问量和阅读量。
+- MathJax / Mermaid / Chart / KaTeX 按需保留，可按页面或按布局开启；脚本推迟到空闲时才加载（Mermaid 还会等图接近视口）。
 
 #### 配置
 
-- `_config.yml` 保持精简
-- 展示默认放在 `_data/layout.yml`
-- 第三方公开参数放在 `_data/integrations.yml`（静态站不放机密）
+- `_config.yml` 保持精简。
+- 展示相关的默认值放在 `_data/layout.yml`。
+- 第三方的公开参数放在 `_data/integrations.yml`（静态站点中不存放机密信息）。
 
 #### 响应式
 
-- 断点：`sm` / `md` / `lg` / `xl`
-- 窄屏：汉堡导航抽屉；文章 TOC 为抽屉 + 浮动入口
-- 抽屉复用 modal，并与搜索互斥
+- 断点：`sm` / `md` / `lg` / `xl`。
+- 窄屏下导航折叠为汉堡抽屉，文章 TOC 以抽屉加悬浮按钮的形式提供；TOC 列表由构建期生成，JS 加载前即可见。
+- 各抽屉复用同一个 modal 基础组件，且和搜索互斥。
 
-### 本地构建
+### 本地开发
 
-需要：Ruby、Bundler，以及 [Pagefind](https://pagefind.app/)（CLI 或 `npx`）。
+需要 Ruby、Bundler 和 [Pagefind](https://pagefind.app/)（CLI 或 `npx`）。
 
 ```bash
-# 安装依赖
-bundle install
+bundle install               # 安装依赖
+bundle exec jekyll build     # 构建站点
+npx pagefind --site _site    # 生成搜索索引到 _site/pagefind
 
-# 构建站点
-bundle exec jekyll build
-
-# 生成搜索索引到 _site/pagefind
-npx pagefind --site _site
-
-# 本地预览（若要验证搜索，内容变更后请重新跑 Pagefind）
-bundle exec jekyll serve
-# 然后：npx pagefind --site _site
+bundle exec jekyll serve     # 本地预览
+npx pagefind --site _site    # 内容有变动后重新运行一次，本地搜索才会生效
 ```
+
+### 部署
+
+站点由 GitHub Actions 部署到 GitHub Pages（`.github/workflows/jekyll.yml`）。推送到 `main` 分支即会触发（README、LICENSE 和 issue 模板的改动除外），也可以在 Actions 页面手动触发。
+
+`build` 任务先安装 Ruby 和 Node，运行插件单元测试（`bundle exec rake test`），再以 `JEKYLL_ENV=production` 构建站点、生成 Pagefind 索引，并对构建产物运行一遍 Playwright 端到端测试（使用系统 Chrome，不下载浏览器）。全部通过后，`deploy` 任务才将产物发布到 Pages。
 
 ### 许可
 
-- 站点代码：MIT（见 `LICENSE`）
-- 文章内容：除非单篇另有说明，适用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+- 站点代码：MIT（见 `LICENSE`）。
+- 文章内容：除非单篇另有说明，均采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)。
 
-再分发时请保留 TeXt、Chirpy 等上游 MIT 组件的版权与许可声明。
+若再分发较大篇幅的代码，请保留 TeXt、Chirpy 等上游 MIT 组件的版权与许可声明。

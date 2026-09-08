@@ -2,6 +2,7 @@
 
 require "nokogiri"
 require_relative "transforms/diagrams"
+require_relative "transforms/images"
 require_relative "transforms/tables"
 require_relative "transforms/task_lists"
 require_relative "transforms/code_blocks"
@@ -22,9 +23,11 @@ module Jekyll
 
         frag = Nokogiri::HTML::DocumentFragment.parse(html)
         Transforms::Diagrams.apply!(frag)
+        Transforms::Images.apply!(frag)
         Transforms::Tables.apply!(frag)
         Transforms::TaskLists.apply!(frag, @site)
         @code_blocks.apply!(frag)
+        yield frag if block_given?
         frag.to_html
       end
     end

@@ -47,7 +47,14 @@
       <!-- 站点访问统计 -->
       <div class="site-info site-statics">
         <div>
-          <script src="//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js" defer></script>
+          <script>
+            window.addEventListener('load', function () {
+              var s = document.createElement('script');
+              s.src = 'https://cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js';
+              s.async = true;
+              document.head.appendChild(s);
+            });
+          </script>
           <a title="Busuanzi — site UV/PV counter" href="https://busuanzi.ibruce.info/" target="_blank" rel="noopener noreferrer">Busuanzi</a>
           {% include utils/icon.html name="user" %}
           <span id="busuanzi_site_uv"></span>

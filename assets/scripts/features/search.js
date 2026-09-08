@@ -8,7 +8,7 @@ const SEARCH_HOTKEYS = new Set(['s', 'S', '/']);
 const SEARCH_PLACEHOLDER = '搜索文章标题和内容...';
 
 /**
- * 站点搜索弹层（Pagefind Modular UI，预加载 + 占位输入框）。
+ * 站点搜索弹层（Pagefind Modular UI）。库仅在打开/悬停/快捷键时加载，不空闲预拉。
  * @param {{
  *   modalEl: (?Element|undefined),
  *   lockRoot: (?Element|undefined),
@@ -38,8 +38,6 @@ export function init(options = {}) {
 
   /** @type {?Promise<undefined>} */
   let pagefindLoadPromise = null;
-  let idleCallbackId = 0;
-  let idleTimeoutId = 0;
 
   function getPagefindInput() {
     return document.querySelector('#pagefind-search-input input');
@@ -172,12 +170,6 @@ export function init(options = {}) {
   window.addEventListener('keydown', handleGlobalKeydown);
   window.addEventListener('keyup', handleGlobalKeyup);
 
-  if (typeof requestIdleCallback === 'function') {
-    idleCallbackId = requestIdleCallback(() => prefetchPagefind(), { timeout: 2000 });
-  } else {
-    idleTimeoutId = setTimeout(prefetchPagefind, 1500);
-  }
-
   return {
     destroy() {
       searchModal.off('afterShow', onAfterShow);
@@ -185,10 +177,6 @@ export function init(options = {}) {
       searchModal.destroy();
       window.removeEventListener('keydown', handleGlobalKeydown);
       window.removeEventListener('keyup', handleGlobalKeyup);
-      if (idleCallbackId && typeof cancelIdleCallback === 'function') {
-        cancelIdleCallback(idleCallbackId);
-      }
-      if (idleTimeoutId) clearTimeout(idleTimeoutId);
       searchToggleEls.forEach((el) => {
         el.removeEventListener('click', handleToggleClick);
         el.removeEventListener('pointerenter', handlePrefetch);

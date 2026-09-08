@@ -3,6 +3,7 @@
 require_relative "../content/guard"
 require_relative "../content/enhancer"
 require_relative "../content/reading_time"
+require_relative "../content/toc"
 
 module Jekyll
   module Content
@@ -13,7 +14,9 @@ module Jekyll
       def enhance!(doc)
         return unless Guard.enhancable?(doc)
 
-        doc.content = Enhancer.new(doc.site).enhance(doc.content)
+        doc.content = Enhancer.new(doc.site).enhance(doc.content) do |frag|
+          Toc.assign!(doc, frag)
+        end
       end
 
       def assign_reading_time!(post)

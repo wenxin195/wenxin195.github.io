@@ -13,7 +13,7 @@
         <img class="share__icon" src="{{ 'assets/images/icon/social-color/wechat.svg' | relative_url }}" alt="wechat" />
       </button>
       <div class="flyout flyout--offset">
-        <img class="flyout__media" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ page.url | absolute_url }}" alt="wechat-qrcode" />
+        <img class="flyout__media" data-src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ page.url | absolute_url }}" alt="wechat-qrcode" fetchpriority="low" />
       </div>
     </div>
 

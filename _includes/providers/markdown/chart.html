@@ -1,18 +1,45 @@
 {%- assign _sources = site.data.resources.sources -%}
 
-<script>
-  window.Lazyload.js('{{ _sources.chart }}', function () {
-    let canvas, ctx, text;
+<script type="module">
+  const src = '{{ _sources.chart }}';
 
-    document.querySelectorAll('.language-chart').forEach(function (el) {
-      canvas = document.createElement('canvas');
-      text = el.textContent;
+  function whenIdle(callback) {
+    if (typeof requestIdleCallback === 'function') {
+      requestIdleCallback(callback, { timeout: 2000 });
+    } else {
+      setTimeout(callback, 1);
+    }
+  }
 
+  function loadScript(url) {
+    return new Promise((resolve, reject) => {
+      const el = document.createElement('script');
+      el.src = url;
+      el.async = true;
+      el.onload = () => resolve();
+      el.onerror = () => reject(new Error('[chart] failed to load'));
+      document.head.appendChild(el);
+    });
+  }
+
+  whenIdle(async () => {
+    const blocks = document.querySelectorAll('.language-chart');
+    if (!blocks.length) return;
+
+    await loadScript(src);
+    const ChartCtor = window.Chart;
+    if (typeof ChartCtor !== 'function') return;
+
+    blocks.forEach((el) => {
+      const canvas = document.createElement('canvas');
+      const text = el.textContent;
       el.textContent = '';
       el.appendChild(canvas);
-
-      ctx = canvas.getContext('2d');
-      ctx && text && new Chart(ctx, JSON.parse(text)) && el.setAttribute('data-processed', 'true');
+      const ctx = canvas.getContext('2d');
+      if (ctx && text) {
+        new ChartCtor(ctx, JSON.parse(text));
+        el.setAttribute('data-processed', 'true');
+      }
     });
   });
 </script>

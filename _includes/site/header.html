@@ -25,7 +25,7 @@
   <div class="site-header__inner">
     <!-- 品牌区：logo + 站点标题 -->
     <div class="site-header__brand">
-      <img class="site-header__logo" src="{{ '/assets/images/icon/logo.svg' | relative_url }}" alt="" width="128" height="128" />
+      <img class="site-header__logo" src="{{ '/assets/images/icon/logo.svg' | relative_url }}" alt="" width="128" height="128" fetchpriority="high" decoding="async" />
       <a title="{{ site.description | strip_newlines }}" href="{{ site.data.path.urls.root }}">{{- site.title -}}</a>
     </div>
 

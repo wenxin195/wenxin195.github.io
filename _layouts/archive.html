@@ -25,31 +25,5 @@ titles:
     </div>
   </div>
 </div>
-<script>
-  (function () {
-    var tag = new URLSearchParams(location.search).get('tag');
-    if (!tag) return;
-
-    var filters = document.querySelector('.js-archive-filters');
-    var result = document.querySelector('.js-archive-result');
-    if (!filters || !result) return;
-
-    filters.querySelectorAll('button').forEach(function (btn) {
-      btn.classList.toggle('focus', (btn.getAttribute('data-encode') || '') === tag);
-    });
-
-    result.querySelectorAll('.article-list__item').forEach(function (el) {
-      var tags = (el.getAttribute('data-tags') || '').split(',');
-      el.classList.toggle('d-none', tags.indexOf(tag) === -1);
-    });
-
-    result.querySelectorAll('section').forEach(function (section) {
-      section.classList.toggle(
-        'd-none',
-        !section.querySelector('.article-list__item:not(.d-none)'),
-      );
-    });
-  })();
-</script>
 
 {{ content }}

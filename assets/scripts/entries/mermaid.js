@@ -20,19 +20,33 @@ function whenIdle(callback) {
 if (mermaidSrc) {
   document.addEventListener('DOMContentLoaded', () => {
     const root = document.querySelector('.js-article-body') ?? document;
+    let started = false;
+
     const run = () => {
-      initMermaid({ src: mermaidSrc, root });
+      if (started) return;
+      started = true;
+      initMermaid({ src: mermaidSrc, root }).catch((error) => {
+        console.error('[mermaid] failed to render', error);
+      });
     };
 
     if (typeof IntersectionObserver === 'function') {
       const diagrams = root.querySelectorAll('.mermaid');
       if (!diagrams.length) return;
 
+      /** @type {number} */
+      let fallback = 0;
       const observer = new IntersectionObserver((entries, obs) => {
         if (!entries.some((entry) => entry.isIntersecting)) return;
         obs.disconnect();
+        window.clearTimeout(fallback);
         whenIdle(run);
       }, { rootMargin: '200px 0px' });
+
+      fallback = window.setTimeout(() => {
+        observer.disconnect();
+        whenIdle(run);
+      }, 2500);
 
       diagrams.forEach((el) => observer.observe(el));
       return;

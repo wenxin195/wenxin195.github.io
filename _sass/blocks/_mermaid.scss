@@ -12,7 +12,7 @@
   --mermaid-viewbox-padding: #{map.get(variables.$mermaid, viewbox-padding)};
 
   .mermaid {
-    display: none;
+    display: block;
     max-width: 100%;
     margin: map.get(variables.$spacers, 3) 0;
     padding: 0;
@@ -23,8 +23,14 @@
     background: transparent;
     overflow: visible;
 
-    &[data-processed] {
-      display: block;
+    // Keep a 1px box so IntersectionObserver can see below-fold diagrams.
+    // display:none has no intersection rect and deadlocks lazy load.
+    &:not([data-processed]) {
+      height: 1px;
+      margin: 0;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
     }
 
     svg {

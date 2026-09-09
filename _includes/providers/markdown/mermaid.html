@@ -5,3 +5,17 @@
   src="{{ 'assets/scripts/entries/mermaid.js' | relative_url }}"
   data-mermaid-src="{{ _sources.mermaid }}"
 ></script>
+
+<div
+  class="modal mermaid-zoom-modal d-print-none js-mermaid-zoom-modal"
+  aria-label="放大的图表"
+>
+  <button
+    type="button"
+    class="button button--secondary button--circle mermaid-zoom-modal__close js-mermaid-zoom-close"
+    aria-label="关闭"
+  >
+    {% include utils/icon.html name="x" %}
+  </button>
+  <div class="mermaid-zoom-modal__stage js-mermaid-zoom-stage"></div>
+</div>

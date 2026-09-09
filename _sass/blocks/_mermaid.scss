@@ -33,6 +33,10 @@
       pointer-events: none;
     }
 
+    &[data-processed] {
+      cursor: zoom-in;
+    }
+
     svg {
       display: block;
       width: auto;
@@ -84,6 +88,7 @@
   .article-body {
     .mermaid {
       margin: map.get(variables.$spacers, 2) 0;
+      cursor: default;
 
       &[data-processed] {
         overflow: visible;

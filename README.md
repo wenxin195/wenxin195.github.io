@@ -30,8 +30,7 @@ flowchart TB
     shell --> home & articles & article & archive & page & notfound["404"]
 ```
 
-The article header lives in its own `hero` layout instead of being buried inside the page shell. The documentation-style sidebar and `landing` layouts from TeXt are not used.
-
+The article header lives in its own `hero` layout instead of being buried inside the page shell.
 #### Ruby plugins
 
 ```
@@ -45,14 +44,19 @@ _plugins/
     reading_time.rb         # reading time from HTML-stripped text (posts only)
     language_name.rb        # maps Rouge language ids to display names
     icons.rb                # local Lucide icons (see _data/icons.yml)
-    transforms/             # diagrams, images, tables, task_lists, code_blocks
+    transforms/             # diagrams, figures, images, tables, task_lists, code_blocks
+    markup_attrs.rb         # shared Liquid keyword attrs / ids
   callouts/tags.rb          # {% box %} / {% details %}
+  figures/tags.rb           # {% figures %} / {% panel %} / {% figref %}
+  tables/tags.rb            # {% table %} / {% tabref %}
 ```
 
 - Posts and pages are enhanced with Nokogiri in a single pass: Mermaid fences become plain `<div class="mermaid">` elements, tables get a horizontal-scroll wrapper, task-list markers are replaced with icons, and code blocks are rebuilt from scratch.
 - Images get loading hints at build time: the first image keeps `fetchpriority="high"` for the LCP, the rest get `loading="lazy"` and `decoding="async"` (images inside code blocks are skipped).
 - Code blocks are highlighted with Rouge at build time and rendered as a uniform `<figure class="code-block">` with a header, line numbers, and a copy button.
 - `{% box TYPE "Title" %}` requires a title; `{% details … %}` fails the build on unknown types.
+- `{% figures %}` groups one or more `{% panel %}` images; `{% figref id %}` is filled with 图 N in document order at build time.
+- `{% table %}` wraps a Markdown or HTML table; `{% tabref id %}` is filled with 表 N the same way. Figure and table counters are independent.
 - Language display names come from `_data/language_aliases.yml`.
 - Reading time (`reading_time`, `char_count`) is computed for posts only, from the HTML-stripped text after enhancement, using mixed CJK/English statistics.
 - Pages with `aside.toc: true` get their TOC list generated at build time (`page.toc_html`); the client hydrates the same markup for scroll-spy instead of waiting for JS to render it.
@@ -79,6 +83,56 @@ A longer, titled explanation…
 ```
 
 An untitled `{% box tip %}` is a build error — use `prompt-*` instead. The paragraph decorations `{:.success}` / `{:.info}` / `{:.warning}` / `{:.danger}` are a separate TeXt-style feature (background color only, no icon).
+
+#### Figures
+
+One `{% figures %}` block is one numbered caption (图 N). Extra panels in the same block become a grid; subcaptions get (a)(b)(c) when there is more than one panel.
+
+```markdown
+{% figures id="buffon-needle" caption="比丰投针" cols=2 %}
+{% panel src="/assets/images/posts/probability/needle.png" caption="Buffon 投针问题" width=300 %}
+{% panel src="/assets/images/posts/probability/intersect.png" caption="针与平行线相交的充分必要条件" width=300 %}
+{% endfigures %}
+
+See {% figref buffon-needle %}.
+```
+
+| Attribute | Where | Notes |
+|-----------|--------|--------|
+| `id` | figures | required; unique in the page |
+| `caption` | figures | required; becomes `图 N: …` |
+| `cols` | figures | 1–12; CSS grid, collapses to 1 column below 768px |
+| `align` | figures | `start` / `center` / `end` (default `end`) for unequal heights |
+| `src` | panel | required |
+| `caption` | panel | optional panel label |
+| `alt` | panel | defaults to caption, then the filename |
+| `width` | panel | optional pixel width |
+
+In prose, write `{% figref id %}` in place of a literal 「图 4」(the tag already includes 图 and the number). Math in a caption is written as in the body (`$A\subset B$`). `{% figref %}` may appear before the figure; numbering is assigned after Markdown convert.
+
+#### Tables
+
+One `{% table %}` block is one numbered caption (表 N). The body can be a pipe table or an HTML `<table>` (without its own caption).
+
+```markdown
+{% table id="sample-data" caption="示例数据集" %}
+
+| 交易 ID | 牛奶 | 面包 |
+| ------ | ---: | ---: |
+| 1 | 1 | 1 |
+
+{% endtable %}
+
+See {% tabref sample-data %}.
+```
+
+| Attribute | Notes |
+|-----------|--------|
+| `id` | required; unique among tables on the page (independent of figure ids) |
+| `caption` | required; becomes `表 N: …` |
+| `align` | optional `center` / `left`; omit to keep the existing table-wrapper cell styles |
+
+In prose, write `{% tabref id %}` in place of a literal 「表 1」. Math in a caption is fine. Unwrapped tables still get the scroll wrapper, but they are not numbered.
 
 #### Code blocks
 
@@ -199,7 +253,7 @@ flowchart TB
     shell --> home & articles & article & archive & page & notfound["404"]
 ```
 
-文章页头单独抽成了 `hero` 布局，不再放在页面外壳中。TeXt 的文档站式 sidebar 布局和 `landing` 布局没有使用。
+文章页头单独抽成了 `hero` 布局，不再放在页面外壳中。
 
 #### Ruby 插件
 
@@ -214,14 +268,19 @@ _plugins/
     reading_time.rb         # 去掉 HTML 后统计中英文（仅 posts）
     language_name.rb        # Rouge 语言 id 转显示名
     icons.rb                # 本地 Lucide 图标（见 _data/icons.yml）
-    transforms/             # diagrams、images、tables、task_lists、code_blocks
+    transforms/             # diagrams、figures、images、tables、task_lists、code_blocks
+    markup_attrs.rb         # Liquid 关键字参数 / id 共用解析
   callouts/tags.rb          # {% box %} / {% details %}
+  figures/tags.rb           # {% figures %} / {% panel %} / {% figref %}
+  tables/tags.rb            # {% table %} / {% tabref %}
 ```
 
 - posts 和 pages 的 HTML 都由 Nokogiri 一次性完成增强：mermaid 围栏转换为 `<div class="mermaid">`，表格加上横向滚动容器，任务列表标记替换为图标，代码块则完全重建。
 - 图片在构建期加上加载提示：首图保持 `fetchpriority="high"`（保证 LCP），其余图片设 `loading="lazy"` 和 `decoding="async"`（跳过代码块内的图片）。
 - 代码块在构建期用 Rouge 高亮，统一渲染成 `<figure class="code-block">`，带标题栏、行号和复制按钮。
 - `{% box TYPE "标题" %}` 的标题是必填的；`{% details … %}` 遇到未知类型会使构建失败。
+- `{% figures %}` 将一组 `{% panel %}` 组合为一张编号图；`{% figref id %}` 在构建期按文中顺序填成「图 N」。
+- `{% table %}` 包裹 Markdown 或 HTML 表格；`{% tabref id %}` 同样填成「表 N」。图和表各自从 1 编号。
 - 语言显示名来自 `_data/language_aliases.yml`。
 - 阅读时间（`reading_time`、`char_count`）只在 **posts** 上计算：增强完成后去掉 HTML，再按中英文混合的方式统计。
 - 开启 `aside.toc: true` 的页面会在构建期生成 TOC 列表（写入 `page.toc_html`），前端 hydrate 同一份 HTML 做滚动高亮，不用等 JS 渲染。
@@ -248,6 +307,56 @@ _plugins/
 ```
 
 无标题的 `{% box tip %}` 会构建失败，这种情况请改用 `prompt-*`。`{:.success}` / `{:.info}` / `{:.warning}` / `{:.danger}` 是另一套 TeXt 风格的段落装饰，仅设置背景色，没有图标。
+
+#### 插图
+
+一组 `{% figures %}` 对应一个编号（图 N）；同一组里的多个 `{% panel %}` 排成网格，多于一张时自动加 (a)(b)(c)。
+
+```markdown
+{% figures id="buffon-needle" caption="比丰投针" cols=2 %}
+{% panel src="/assets/images/posts/probability/needle.png" caption="Buffon 投针问题" width=300 %}
+{% panel src="/assets/images/posts/probability/intersect.png" caption="针与平行线相交的充分必要条件" width=300 %}
+{% endfigures %}
+
+示意图见 {% figref buffon-needle %}。
+```
+
+| 属性 | 位置 | 说明 |
+|------|------|------|
+| `id` | figures | 必填，全文唯一 |
+| `caption` | figures | 必填，渲染为 `图 N: …` |
+| `cols` | figures | 1–12；小于 768px 时改单列 |
+| `align` | figures | `start` / `center` / `end`（默认 `end`），用来对齐不同高度 |
+| `src` | panel | 必填 |
+| `caption` | panel | 可选子图说明 |
+| `alt` | panel | 默认用 caption，再退回文件名 |
+| `width` | panel | 可选，像素宽度 |
+
+正文里用 `{% figref id %}` 代替手写的「图 4」（标签本身已包含「图」和序号）。caption 里的公式按正文那样写即可（`$A\subset B$`）。引用可以写在图前面，编号在 Markdown 转换之后按 DOM 顺序填写。
+
+#### 表格
+
+一组 `{% table %}` 对应一个编号（表 N）。表体可以是管道表，也可以是不带 caption 的 HTML `<table>`。
+
+```markdown
+{% table id="sample-data" caption="示例数据集" %}
+
+| 交易 ID | 牛奶 | 面包 |
+| ------ | ---: | ---: |
+| 1 | 1 | 1 |
+
+{% endtable %}
+
+见 {% tabref sample-data %}。
+```
+
+| 属性 | 说明 |
+|------|------|
+| `id` | 必填，在本文表格中唯一（与图的 id 互不占用） |
+| `caption` | 必填，渲染为 `表 N: …` |
+| `align` | 可选 `center` / `left`；不写则沿用原来的 `.table-wrapper` 单元格样式 |
+
+正文里用 `{% tabref id %}` 代替手写的「表 1」。caption 里可以写公式。未包 `{% table %}` 的表仍会加上横向滚动容器，但不编号。
 
 #### 代码块
 

@@ -212,6 +212,11 @@ $image: (
   width-xs: 4rem,
 );
 
+// Figure / table titles share this type (placement stays in each block).
+$caption: (
+  font-size: map.get($base, font-size-sm), // smaller than body; color is $caption-color
+);
+
 // Mermaid: rem type + CSS contain (max-height). JS crops viewBox, does not scale.
 $mermaid: (
   font-size: map.get($base, font-size), // 1rem — same as body type

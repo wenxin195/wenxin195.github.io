@@ -262,7 +262,8 @@ function afterPaint() {
 /**
  * @param {{
  *   src: string,
- *   root: (?ParentNode|undefined)
+ *   root: (?ParentNode|undefined),
+ *   onRendered: ((function(): undefined)|undefined)
  * }} options
  * @return {!Promise<{
  *   destroy: function(): undefined,
@@ -272,6 +273,9 @@ function afterPaint() {
 export async function init(options) {
   const src = options.src;
   if (!src) return null;
+  const onRendered = typeof options.onRendered === 'function'
+    ? options.onRendered
+    : null;
 
   const root = options.root ?? document;
   const tokenRoot =
@@ -317,6 +321,7 @@ export async function init(options) {
         await mermaid.run({ nodes });
         await afterPaint();
         prepareAll(nodes, tokens.viewboxPaddingPx);
+        onRendered?.();
       } while (queued);
     } finally {
       rendering = false;

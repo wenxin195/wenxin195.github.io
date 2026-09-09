@@ -1,0 +1,37 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/overflow" as overflow;
+
+.mermaid-zoom-modal.modal {
+  height: 100dvh;
+  max-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: map.get(variables.$spacers, 5);
+}
+
+.mermaid-zoom-modal__close {
+  position: absolute;
+  top: map.get(variables.$spacers, 3);
+  right: map.get(variables.$spacers, 3);
+  z-index: 1;
+}
+
+.mermaid-zoom-modal__stage {
+  max-width: 100%;
+  max-height: 100%;
+  touch-action: auto;
+  @include overflow.overflow(auto);
+
+  svg {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 96vw;
+    max-height: 92dvh;
+    margin: 0 auto;
+    overflow: visible;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,47 @@
+@use "sass:map";
+@use "tokens" as variables;
+
+.post-table {
+  margin: map.get(variables.$spacers, 4) 0;
+}
+
+.post-table__caption {
+  margin: 0 0 map.get(variables.$spacers, 1);
+  font-size: map.get(variables.$caption, font-size);
+  color: variables.$caption-color;
+  text-align: center;
+}
+
+.post-table__body {
+  .table-wrapper {
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+
+    // Beat .article-body table and .table-wrapper > table (enhancements load later).
+    > table {
+      display: table;
+      width: auto;
+      min-width: 0;
+      max-width: 100%;
+      margin-block: 0;
+      margin-inline: auto;
+    }
+  }
+}
+
+.post-table--center {
+  .post-table__body table {
+    text-align: center;
+  }
+}
+
+.post-table--left {
+  .post-table__body table {
+    text-align: left;
+  }
+}
+
+.tab-ref {
+  white-space: nowrap;
+}

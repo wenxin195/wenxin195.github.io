@@ -2,6 +2,7 @@
  * @fileoverview Mermaid 入口——首屏空闲后再拉 CDN，避免挡住进页。
  */
 import { init as initMermaid } from '@/features/mermaid.js';
+import { init as initMermaidZoom } from '@/features/mermaid-zoom.js';
 
 const entryScript = document.querySelector('script[data-mermaid-src]');
 const mermaidSrc = entryScript?.getAttribute('data-mermaid-src');
@@ -25,7 +26,21 @@ if (mermaidSrc) {
     const run = () => {
       if (started) return;
       started = true;
-      initMermaid({ src: mermaidSrc, root }).catch((error) => {
+
+      const zoom = initMermaidZoom({
+        root,
+        modalEl: document.querySelector('.js-mermaid-zoom-modal'),
+        stageEl: document.querySelector('.js-mermaid-zoom-stage'),
+        closeEl: document.querySelector('.js-mermaid-zoom-close'),
+        lockRoot: document.querySelector('.js-shell'),
+        scrollElement: document.querySelector('.js-shell-main'),
+      });
+
+      initMermaid({
+        src: mermaidSrc,
+        root,
+        onRendered: () => zoom?.refresh(),
+      }).catch((error) => {
         console.error('[mermaid] failed to render', error);
       });
     };

@@ -1,0 +1,66 @@
+@use "sass:map";
+@use "tokens" as variables;
+@use "foundations/utilities/media" as media;
+
+.post-figure {
+  margin: map.get(variables.$spacers, 4) 0;
+  text-align: center;
+}
+
+.post-figure__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 1), minmax(0, 1fr));
+  gap: map.get(variables.$spacers, 3);
+  justify-items: center;
+
+  &--start {
+    align-items: start;
+  }
+
+  &--center {
+    align-items: center;
+  }
+
+  &--end {
+    align-items: end;
+  }
+
+  @include media.media-breakpoint-down(md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.post-figure__panel {
+  margin: 0;
+  min-width: 0;
+  max-width: 100%;
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-inline: auto;
+  }
+}
+
+.post-figure__sub {
+  margin: map.get(variables.$spacers, 1) 0 0;
+  font-size: map.get(variables.$caption, font-size);
+  color: variables.$caption-color;
+}
+
+.post-figure__caption {
+  margin-top: map.get(variables.$spacers, 2);
+  font-size: map.get(variables.$caption, font-size);
+  color: variables.$caption-color;
+}
+
+.fig-ref {
+  white-space: nowrap;
+}
+
+.article-body {
+  .post-figure__panel {
+    margin: 0;
+  }
+}

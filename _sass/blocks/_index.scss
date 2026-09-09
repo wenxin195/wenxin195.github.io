@@ -9,7 +9,10 @@
 @use "./article-hero";
 @use "./article-info";
 @use "./article-body";
+@use "./post-figure";
+@use "./post-table";
 @use "./mermaid";
+@use "./mermaid-zoom";
 @use "./article-footer";
 @use "./article-toolbar";
 @use "./article-nav";

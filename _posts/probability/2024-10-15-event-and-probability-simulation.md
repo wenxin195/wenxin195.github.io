@@ -48,21 +48,12 @@ $$
 
 其中 $n$ 为针与任一平行线相交的次数。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-   <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-     <img src="/assets/images/posts/probability/needle.png" alt="needle" style="width: 300px;">
-     <figcaption>(a) Buffon 投针问题</figcaption>
-   </figure>
-   <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-     <img src="/assets/images/posts/probability/intersect.png" alt="相交的充要条件" style="width: 300px; margin-top: 68px;">
-     <figcaption>(b) 针与平行线相交的充分必要条件</figcaption>
-   </figure>
-   </div>
-   <p style="margin-top: 0;">图 1: 比丰投针</p>
-</div>
+{% figures id="buffon-needle" caption="比丰投针" cols=2 %}
+{% panel src="/assets/images/posts/probability/needle.png" caption="Buffon 投针问题" width=300 %}
+{% panel src="/assets/images/posts/probability/intersect.png" caption="针与平行线相交的充分必要条件" alt="相交的充要条件" width=300 %}
+{% endfigures %}
 
-我们用 R 语言来模拟 Buffon 投针的整个过程：
+示意图见 {% figref buffon-needle %}。我们用 R 语言来模拟 Buffon 投针的整个过程：
 
 ```R
 buffon <- function(toss_nums, needle_lengths, line_spacing) {
@@ -267,10 +258,10 @@ $$
 \end{equation}
 $$
 
-下面我们用 R 语言来模拟这一调查过程。表 1 为我们模拟的调查数据表：
+下面我们用 R 语言来模拟这一调查过程。{% tabref sensitivity-survey %} 为我们模拟的调查数据表：
 
-<table style="text-align: center;">
-  <caption>表 1: 敏感性调查模拟数据表</caption>
+{% table id="sensitivity-survey" caption="敏感性调查模拟数据表" align=center %}
+<table>
   <thead>
     <tr>
       <th>ID</th>
@@ -330,6 +321,7 @@ $$
     </tr>
   </tbody>
 </table>
+{% endtable %}
 
 其中 Naire 是我们在正常调查中不可知的，这里只是方便我们验证最后的模拟结果而生成的。其余变量 Age、Gender、Region、Average daily internet usage time(AIT) 和 Social network usage frequency(SNF) 用来模拟被调查者的社会行为，通过这 5 个变量来预测被调查者是否会回答”是“或者”否“。
 

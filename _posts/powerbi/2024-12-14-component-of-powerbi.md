@@ -28,32 +28,18 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 
 有时候由于 Power Query 识别失败的原因，数据集的第一行并不会作为列名，这是就需要我们手动设置“将第一行作为标题”命令。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/title.png" alt="title" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 1: 将第一行作为标题</p>
-</div>
+{% figures id="title" caption="将第一行作为标题" %}
+{% panel src="/assets/images/posts/powerbi/component/title.png" alt="title" width=500 %}
+{% endfigures %}
 
 ### 格式转换
 
 在字段的左侧会看到数据类型的下拉按钮，单击此按钮在下拉列表就直接可以选择修改数据类型。除了手动修改字段的数据类型，Power Query 还支持自动检测字段的数据类型。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/data_categories.png" alt="data_categories" style="width: 350px;">
-       <figcaption>(a) 手动修改数据类型</figcaption>
-     </figure>
-     <figure style="text-align: center; margin-top:121px;">
-       <img src="/assets/images/posts/powerbi/component/data_categories2.png" alt="data_categories2" style="width: 350px;">
-       <figcaption>(b) 自动检测数据类型</figcaption>
-     </figure>
-   </div>
-   <p style="margin-top: -26px;">图 2: 修改数据类型</p>
-</div>
+{% figures id="data_categories" caption="修改数据类型" cols=2 %}
+{% panel src="/assets/images/posts/powerbi/component/data_categories.png" caption="手动修改数据类型" alt="data_categories" width=350 %}
+{% panel src="/assets/images/posts/powerbi/component/data_categories2.png" caption="自动检测数据类型" alt="data_categories2" width=350 %}
+{% endfigures %}
 
 ### 数据清洗
 
@@ -63,97 +49,57 @@ Power Query 是 Power BI 实现数据 ETL(Extract-Transform-Load)的重要工具
 
 当选择某一字段时，执行“删除行”命令则会保留该列的唯一值或者非空值。删除空值的方法还可以直接对字段进行筛选。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/delete_row.png" alt="delete_row" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 3: 删除重复值、空值和 Error 值</p>
-</div>
+{% figures id="delete_row" caption="删除重复值、空值和 Error 值" %}
+{% panel src="/assets/images/posts/powerbi/component/delete_row.png" alt="delete_row" width=500 %}
+{% endfigures %}
 
 对于缺失值的处理，可以选择“填充”命令，向上或者向下填充缺失值。Power Query 有着很强的扩展性，可以选择直接执行 Python/R 脚本选择符合我们需求的缺失值填充方式。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/null_values.png" alt="null_values" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 4: 填充缺失值</p>
-</div>
+{% figures id="null_values" caption="填充缺失值" %}
+{% panel src="/assets/images/posts/powerbi/component/null_values.png" alt="null_values" width=500 %}
+{% endfigures %}
 
 有时候我们需要替换数据集中的某些文本内容，这就可以使用“替换值”命令进行替换。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/alter.png" alt="alter" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 5: 内容替换</p>
-</div>
+{% figures id="alter" caption="内容替换" %}
+{% panel src="/assets/images/posts/powerbi/component/alter.png" alt="alter" width=500 %}
+{% endfigures %}
 
 除此之外，我们还可以在“格式”命令中对字段中的英文进行转换。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/letter_operation.png" alt="letter_operation" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 6: 对字段中的英文进行操作</p>
-</div>
+{% figures id="letter_operation" caption="对字段中的英文进行操作" %}
+{% panel src="/assets/images/posts/powerbi/component/letter_operation.png" alt="letter_operation" width=500 %}
+{% endfigures %}
 
 ### 字段拆分合并
 
 在数据清洗过程中，对字段进行拆解合并也是一项十分重要的步骤，这些操作都可以在 Power Query 的“拆分列”和“合并列”选项实现。其中“拆分列”命令支持按分隔符、字符数和指定位置对字段进行拆分。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/split_merge.png" alt="split_merge" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 7: 对字段进行拆分合并</p>
-</div>
+{% figures id="split_merge" caption="对字段进行拆分合并" %}
+{% panel src="/assets/images/posts/powerbi/component/split_merge.png" alt="split_merge" width=500 %}
+{% endfigures %}
 
 Power Query 还能够根据我们的需求提取字段的内容。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/extract.png" alt="extract" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 8: 对字段的值进行提取</p>
-</div>
+{% figures id="extract" caption="对字段的值进行提取" %}
+{% panel src="/assets/images/posts/powerbi/component/extract.png" alt="extract" width=500 %}
+{% endfigures %}
 
 ### 统计聚合
 
 “分组依据”命令可以按照字段和聚合类型，对数据进行分组统计操作。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/group.png" alt="group" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 9: 分组聚合统计</p>
-</div>
+{% figures id="group" caption="分组聚合统计" %}
+{% panel src="/assets/images/posts/powerbi/component/group.png" alt="group" width=500 %}
+{% endfigures %}
 
 另外在 Power Query 中，还可以制作透视表和逆透视表。透视表就是一张二维的列联表，而逆透视表就是将二维列联表转换成一维表。
 
 例如一张二维列联表，它的行是不同的咖啡种类，列是不同的杯型。那么该二维列联表的逆透视表就是一张包含\[咖啡种类、杯型、数量\]的一维表。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/pivot.png" alt="pivot" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 10: 透视表与逆透视表</p>
-</div>
+{% figures id="pivot" caption="透视表与逆透视表" %}
+{% panel src="/assets/images/posts/powerbi/component/pivot.png" alt="pivot" width=500 %}
+{% endfigures %}
 
 若想制作一张“咖啡种类——杯型”的逆透视表，只需选中关于杯型字段的“大杯数量”、“中杯数量”和“小杯数量”，然后选择“逆透视列”即可；反过来若想制作“咖啡种类——杯型”的透视表，只需选中“杯型”字段，然后选中“透视列”即可。
 
@@ -163,51 +109,31 @@ Power Query 还能够根据我们的需求提取字段的内容。
 
 “添加列”命令支持“条件列”、“索引列”、“自定义列”和“示例列”。“条件列”类似于 Excel 中的`IF`函数，可以设置多个条件，并为每个条件指定对应的输出值。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/condition_column.png" alt="condition_column" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 11: 条件列</p>
-</div>
+{% figures id="condition_column" caption="条件列" %}
+{% panel src="/assets/images/posts/powerbi/component/condition_column.png" alt="condition_column" width=500 %}
+{% endfigures %}
 
 “索引列”用于为数据集中的每一行分配一个唯一的编号，这个编号可以是从 0 开始、从 1 开始，也可以根据已有的列进行递增或递减。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/indicator_column.png" alt="indicator_column" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 12: 索引列</p>
-</div>
+{% figures id="indicator_column" caption="索引列" %}
+{% panel src="/assets/images/posts/powerbi/component/indicator_column.png" alt="indicator_column" width=500 %}
+{% endfigures %}
 
 “示例列”是是一个智能功能，只需输入满足需求的值，之后 Power Query 会解决后续的操作问题。例如在“城市”字段中想提取“市”之前的城市名，那么只需在第一行内输入“北京”，然后会看到整个列都出现了想要的结果了。
 
 “自定义列”则是通过自定义公式或表达式，可以基于现有列的数据进行计算生成新的列。这种列的计算通常是基于 M 语言来实现的，可以包括数学运算、文本操作、日期计算等。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/custom_column.png" alt="custom_column" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 13: 自定义列</p>
-</div>
+{% figures id="custom_column" caption="自定义列" %}
+{% panel src="/assets/images/posts/powerbi/component/custom_column.png" alt="custom_column" width=500 %}
+{% endfigures %}
 
 ### 日期/时间操作
 
 Power Query 中的“日期”和“时间”命令可以设置“日期”/“时间”值格式或提取”日期”/“时间”值的元素，“持续时间”命令可以设置“持续时间”值的格式。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/time.png" alt="time" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 14: 日期&时间列</p>
-</div>
+{% figures id="time" caption="日期&时间列" %}
+{% panel src="/assets/images/posts/powerbi/component/time.png" alt="time" width=500 %}
+{% endfigures %}
 
 ### 数据合并
 
@@ -215,35 +141,17 @@ Power Query 中的“日期”和“时间”命令可以设置“日期”/“�
 
 合并查询中两张数据表的连接方式与 SQL 中的 JOIN 操作类似，需要设置左连接、右连接、内连接以及全连接。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-top: 264px;">
-       <img src="/assets/images/posts/powerbi/component/consolidation1.png" alt="consolidation1" style="width: 350px;">
-       <figcaption>(a) 合并查询命令</figcaption>
-     </figure>
-     <figure style="text-align: center; margin-top:0px;">
-       <img src="/assets/images/posts/powerbi/component/consolidation2.png" alt="consolidation2" style="width: 350px;">
-       <figcaption>(b) 设置连接方式</figcaption>
-     </figure>
-   </div>
-   <p style="margin-top: -25px;">图 15: 合并查询</p>
-</div>
+{% figures id="consolidation1" caption="合并查询" cols=2 %}
+{% panel src="/assets/images/posts/powerbi/component/consolidation1.png" caption="合并查询命令" alt="consolidation1" width=350 %}
+{% panel src="/assets/images/posts/powerbi/component/consolidation2.png" caption="设置连接方式" alt="consolidation2" width=350 %}
+{% endfigures %}
 
 除了合并查询之外，还能够想数据表的纵向追加数据行，这可以通过“追加查询”命令完成。注意，这需要两张表的字段完全相同！
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-top: 77px;">
-       <img src="/assets/images/posts/powerbi/component/addition1.png" alt="addition1" style="width: 350px;">
-       <figcaption>(a) 追加查询命令</figcaption>
-     </figure>
-     <figure style="text-align: center; margin-top:0px;">
-       <img src="/assets/images/posts/powerbi/component/addition2.png" alt="addition2" style="width: 350px;">
-       <figcaption>(b) 选择追加数据表</figcaption>
-     </figure>
-   </div>
-   <p style="margin-top: -16px;">图 16: 追加查询</p>
-</div>
+{% figures id="addition1" caption="追加查询" cols=2 %}
+{% panel src="/assets/images/posts/powerbi/component/addition1.png" caption="追加查询命令" alt="addition1" width=350 %}
+{% panel src="/assets/images/posts/powerbi/component/addition2.png" caption="选择追加数据表" alt="addition2" width=350 %}
+{% endfigures %}
 
 ### 汇总数据集
 
@@ -284,14 +192,9 @@ Power Pivot 是 Power BI 中的核心组件之一。它是一种数据建模工�
 
 星型模型中只有一张事实表，以及 0 张或多张维表，事实表与维表通过主键外键相关联，维表之间不存在关联关系，当所有维表都关联到事实表时，整个图形非常像一种星星的结构，所以称之为“星型模型”。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/data_model1.png" alt="data_model1" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 17: 星型模型</p>
-</div>
+{% figures id="data_model1" caption="星型模型" %}
+{% panel src="/assets/images/posts/powerbi/component/data_model1.png" alt="data_model1" width=500 %}
+{% endfigures %}
 
 星型模型是最简单最常用的模型。星型模型本质是一张大表，相比于其他数据模型更合适于大数据处理。其他模型可以通过一定的转换，变为星型模型。
 
@@ -301,14 +204,9 @@ Power Pivot 是 Power BI 中的核心组件之一。它是一种数据建模工�
 
 当一个或多个维表没有直接连接到事实表上，而是通过其他维表连接到事实表上时，其图解就像多个雪花连接在一起，故称雪花模型。雪花模型是对星型模型的扩展。它对星型模型的维表进一步层次化，原有的各维表可能被扩展为小的事实表，形成一些局部的"层次"区域，这些被分解的表都连接到主维表而不是事实表。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/data_model2.png" alt="data_model2" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 18: 雪花模型</p>
-</div>
+{% figures id="data_model2" caption="雪花模型" %}
+{% panel src="/assets/images/posts/powerbi/component/data_model2.png" alt="data_model2" width=500 %}
+{% endfigures %}
 
 其优点是通过最大限度地减少数据存储量以及联合较小的维表来改善查询性能，避免了数据冗余。其缺点是增加了主键-外键关联的几率，导致查询效率低于星型模型，并且不利于开发。
 
@@ -316,14 +214,9 @@ Power Pivot 是 Power BI 中的核心组件之一。它是一种数据建模工�
 
 星座模型也是星型模型的扩展。区别是星座模型中存在多张事实表，不同事实表之间共享维表信息，常用于数据关系更复杂的场景。其经常被称为星系模型。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/component/data_model3.png" alt="data_model3" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 19: 星座模型</p>
-</div>
+{% figures id="data_model3" caption="星座模型" %}
+{% panel src="/assets/images/posts/powerbi/component/data_model3.png" alt="data_model3" width=500 %}
+{% endfigures %}
 
 ### 数据分析表达式
 

@@ -54,14 +54,9 @@ ALL( [<table> | <column>[, <column>[, <column>[,…]]]] )
 
 于是得到结果如下图所示：
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/filter_functions/all_practice1.png" alt="all_practice1" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 1: ALL 函数示例 1 结果</p>
-</div>
+{% figures id="all_practice1" caption="ALL 函数示例 1 结果" %}
+{% panel src="/assets/images/posts/powerbi/filter_functions/all_practice1.png" alt="all_practice1" width=500 %}
+{% endfigures %}
 
 #### 示例 2：计算当月商品成本占总成本的比例
 
@@ -77,14 +72,9 @@ DIVIDE (
 
 于是得到结果如下图所示：
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/filter_functions/all_practice2.png" alt="all_practice2" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 2: ALL 函数示例 2 结果</p>
-</div>
+{% figures id="all_practice2" caption="ALL 函数示例 2 结果" %}
+{% panel src="/assets/images/posts/powerbi/filter_functions/all_practice2.png" alt="all_practice2" width=500 %}
+{% endfigures %}
 
 #### 示例 3：计算每月商品成本对该月成本的占比
 
@@ -100,14 +90,9 @@ DIVIDE (
 
 于是得到结果如下图所示：
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/filter_functions/all_practice3.png" alt="all_practice3" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 3: ALL 函数示例 3 结果</p>
-</div>
+{% figures id="all_practice3" caption="ALL 函数示例 3 结果" %}
+{% panel src="/assets/images/posts/powerbi/filter_functions/all_practice3.png" alt="all_practice3" width=500 %}
+{% endfigures %}
 
 ### ALLEXCEPT 函数
 
@@ -151,16 +136,11 @@ ALLSELECTED 函数与 ALL 不同，因为它保留查询中明确设置的所有
 
 将 ALL 函数[示例 2](#示例-2计算当月商品成本占总成本的比例) 的 DAX 表达式中的 `ALL` 替换成 `ALLSELECTED`，然后**只筛选 1 至 5 月**，就可以很明显地看出区别：
 
-<div style="text-align: center;">
-    <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/filter_functions/all_practice4.png" alt="all_practice4" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 4: ALL 函数和 ALLSELECTED 函数的对比</p>
-</div>
+{% figures id="all_practice4" caption="ALL 函数和 ALLSELECTED 函数的对比" %}
+{% panel src="/assets/images/posts/powerbi/filter_functions/all_practice4.png" alt="all_practice4" width=500 %}
+{% endfigures %}
 
-图 4 左边的透视表使用了 ALL 函数，右边的透视表则使用了 ALLSELECTED 函数。可以看出左图的占比数据是基于所有月份计算的，而右图的占比数据是基于筛选条件后的月份计算。
+{% figref all_practice4 %} 左边的透视表使用了 ALL 函数，右边的透视表则使用了 ALLSELECTED 函数。可以看出左图的占比数据是基于所有月份计算的，而右图的占比数据是基于筛选条件后的月份计算。
 
 ### ALLCROSSFILTERED 函数
 
@@ -249,14 +229,9 @@ CALCULATE( <expression>[, <filter1> [, <filter2> [, …]]] )
 
 计算结果如下图所示：
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/filter_functions/calculate_practice1.png" alt="calculate_practice1" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 5: CALCULATE 函数示例 1 结果</p>
-</div>
+{% figures id="calculate_practice1" caption="CALCULATE 函数示例 1 结果" %}
+{% panel src="/assets/images/posts/powerbi/filter_functions/calculate_practice1.png" alt="calculate_practice1" width=500 %}
+{% endfigures %}
 
 下面的数据表计算了不同性别的销售量及其比例情况：
 
@@ -270,14 +245,9 @@ DIVIDE (
 
 计算结果如下图所示：
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/filter_functions/calculate_practice2.png" alt="calculate_practice2" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 6: CALCULATE 函数示例 2 结果</p>
-</div>
+{% figures id="calculate_practice2" caption="CALCULATE 函数示例 2 结果" %}
+{% panel src="/assets/images/posts/powerbi/filter_functions/calculate_practice2.png" alt="calculate_practice2" width=500 %}
+{% endfigures %}
 
 下面的 DAX 的表达式定义了低成本商品和高成本商品，当商品成本 < 21.82 时定义该商品为低成本商品，否则定义该商品为高成本商品：
 
@@ -350,14 +320,9 @@ FILTER( <table>, <filter> )
 除美式之外的销量 = SUMX ( FILTER ( '销售表', RELATED ( '商品表'[名称] ) <> "美式" ), '销售表'[数量] )
 ```
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/powerbi/filter_functions/filter_function.png" alt="filter_function" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 7: FILTER 函数示例结果</p>
-</div>
+{% figures id="filter_function" caption="FILTER 函数示例结果" %}
+{% panel src="/assets/images/posts/powerbi/filter_functions/filter_function.png" alt="filter_function" width=500 %}
+{% endfigures %}
 
 ### KEEPFILTERS 函数
 

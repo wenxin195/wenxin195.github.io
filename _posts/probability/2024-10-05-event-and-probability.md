@@ -71,14 +71,9 @@ modify_date: "2025-01-27 01:50:00"
 
 由样本空间 $\mit\Omega$ 中的**单个元素**组成的子集称为**基本事件**(<a href="https://en.wikipedia.org/wiki/Elementary_event" target="_blank">Elementary event</a>)，而样本空间 $\mit\Omega$ 的最大子集(即 $\mit\Omega$ 本身)称为**必然事件**(Certain event)，样本空间 $\mit\Omega$ 的最小子集(即空集 $\varnothing$)称为**不可能事件**(Impossible event)。
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/probability/sample_space.png" alt="sample space" style="width: 500px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 1: 样本空间、样本点与随机事件</p>
-</div>
+{% figures id="sample_space" caption="样本空间、样本点与随机事件" %}
+{% panel src="/assets/images/posts/probability/sample_space.png" alt="sample space" width=500 %}
+{% endfigures %}
 
 基本事件具有**不可分解**的特性，因此也将它称作**简单事件**(Simple event)。简单事件不必定义，它是随着试验而自然存在的，从而我们可以用所有的简单事件反过来定义理想的试验。
 
@@ -157,19 +152,10 @@ $$
     </li>
 </ol>
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/probability/including.png" alt="A\subset B" style="width: 300px;">
-       <figcaption>(a) $A\subset B$</figcaption>
-     </figure>
-     <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/probability/incompatibility.png" alt="A 与 B 互不相容" style="width: 300px;">
-       <figcaption>(b) $A$ 与 $B$ 互不相容</figcaption>
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 2: 事件间的关系</p>
-</div>
+{% figures id="including" caption="事件间的关系" cols=2 %}
+{% panel src="/assets/images/posts/probability/including.png" caption="$A\subset B$" alt="A\subset B" width=300 %}
+{% panel src="/assets/images/posts/probability/incompatibility.png" caption="$A$ 与 $B$ 互不相容" alt="A 与 B 互不相容" width=300 %}
+{% endfigures %}
 
 #### 事件的运算
 
@@ -178,19 +164,10 @@ $$
 <ol>
     <li>
         事件 $A$ 与 $B$ 的差：记为 $A-B$，也可以记作 $A\setminus B$ 或者 $A\bar{B}$。其含义为“由在事件 $A$ 中而不在 $B$ 中的样本点组成的新事件”，或用概率论的语言说“事件 $A$ 发生而 $B$ 不发生”；
-        <div style="text-align: center;">
-           <div style="display: flex; justify-content: center;">
-             <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-               <img src="/assets/images/posts/probability/difference.png" alt="A-B" style="width: 300px;">
-               <figcaption>(a) $A-B$</figcaption>
-             </figure>
-             <figure style="text-align: center; margin-bottom: 0;">
-               <img src="/assets/images/posts/probability/difference-including.png" alt="A-B(including)" style="width: 300px;">
-               <figcaption>(b) $A-B(A\supset B)$</figcaption>
-             </figure>
-           </div>
-           <p style="margin-top: 0;">图 3: 事件的差集运算</p>
-        </div>
+        {% figures id="difference" caption="事件的差集运算" cols=2 %}
+{% panel src="/assets/images/posts/probability/difference.png" caption="$A-B$" alt="A-B" width=300 %}
+{% panel src="/assets/images/posts/probability/difference-including.png" caption="$A-B(A\supset B)$" alt="A-B(including)" width=300 %}
+{% endfigures %}
     </li>
     <li>
         事件 $A$ 与 $B$ 的并：记为 $A\cup B$，也可以记作 $A+B$。其含义为“由事件 $A$ 与 $B$ 中所有的样本点(相同的只计一次)组成的新事件”，或用概率论的语言说“事件 $A$ 与 $B$ 中<strong>至少有一个发生</strong>”；
@@ -203,23 +180,11 @@ $$
     </li>
 </ol>
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 0px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/probability/cup.png" alt="A\cup B" style="width: 300px;">
-       <figcaption>(a) $A\cup B$</figcaption>
-     </figure>
-     <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/probability/cap.png" alt="A\cap B" style="width: 300px;">
-       <figcaption>(b) $A-B(A\supset B)$</figcaption>
-     </figure>
-     <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/probability/oppose.png" alt="oppose" style="width: 300px;">
-       <figcaption>(c) $A$ 的对立事件 $\bar{A}$</figcaption>
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 4: 事件的交、并与余集运算</p>
-</div>
+{% figures id="cup" caption="事件的交、并与余集运算" cols=3 %}
+{% panel src="/assets/images/posts/probability/cup.png" caption="$A\cup B$" alt="A\cup B" width=300 %}
+{% panel src="/assets/images/posts/probability/cap.png" caption="$A-B(A\supset B)$" alt="A\cap B" width=300 %}
+{% panel src="/assets/images/posts/probability/oppose.png" caption="$A$ 的对立事件 $\bar{A}$" alt="oppose" width=300 %}
+{% endfigures %}
 
 需要特别注意的是，**对立事件是相互的**，也就是说 $A$ 的对立事件是 $\bar{A}$，而 $\bar{A}$ 的对立事件是 $A$，即 $\bar{\bar{A}}=A$。**必然事件** ${\mit\Omega}$ **与不可能事件** $\boldsymbol{\varnothing}$ **互为对立事件**，即 $\bar{\mit\Omega}=\varnothing$，$\bar{\varnothing}={\mit\Omega}$。
 
@@ -527,19 +492,10 @@ $$
 
 从几何直观上看，求事件 $A-B$ (图中灰色部分)的概率只需用事件 $A$ 的“面积”减去事件 $AB$ 的“面积”：
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/posts/probability/deduct.png" alt="任意的事件A与B" style="width: 300px;">
-            <figcaption>(a) 任意的事件 $A$ 与 $B$</figcaption>
-            </figure>
-            <figure style="text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/posts/probability/difference-including.png" alt="A-B(including)" style="width: 300px;">
-         <figcaption>(b) $B\subset A$</figcaption>
-      </figure>
-   </div>
-   <p style="margin-top: 0;">图 5: 事件 $A-B$ 的概率的 Venn 图示意</p>
-</div>
+{% figures id="deduct" caption="事件 $A-B$ 的概率的 Venn 图示意" cols=2 %}
+{% panel src="/assets/images/posts/probability/deduct.png" caption="任意的事件 $A$ 与 $B$" alt="任意的事件A与B" width=300 %}
+{% panel src="/assets/images/posts/probability/difference-including.png" caption="$B\subset A$" alt="A-B(including)" width=300 %}
+{% endfigures %}
 
 {% details example "最大号码估计问题" %}
 某城有 $n$ 辆卡车，其车牌号从 1 到 $n$。有一个外地人到该城去，把遇到的 $m$ 辆车子的牌号抄下(可能重复抄到某些车牌号)。设事件 $A_i$ 为遇到的 $m$ 辆车子的的最大牌号为 $k$，下面求抄到的最大号码正好为 $k$ 的概率($1\leqslant k\leqslant n$)。
@@ -597,14 +553,9 @@ $$
 
 从几何直观上看，求事件 $A\cup B$ 的概率就是把事件 $A$ 的“面积”加事件 $B$ 的“面积，但是由于多加了一次事件 $AB$ (图中蓝色部分)的面积，因此必须再额外减去：
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/probability/add.png" alt="事件A\cup B的概率" style="width: 300px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 6: 事件 $A\cup B$ 的概率的 Venn 图示意</p>
-</div>
+{% figures id="add" caption="事件 $A\cup B$ 的概率的 Venn 图示意" %}
+{% panel src="/assets/images/posts/probability/add.png" alt="事件A\cup B的概率" width=300 %}
+{% endfigures %}
 
 {% details theorem "推论 3" open %}
 对于 $n$ 个任意事件 $A_1,A_2,\cdots,A_n$，其交事件的概率为 $\bigcup\limits_{i=1}^{n}A_i$ 的概率为
@@ -876,14 +827,9 @@ $$
 {% enddetails %}
 
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/probability/meeting.png" alt="meeting" style="width: 300px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 7: 会见问题的样本空间</p>
-</div>
+{% figures id="meeting" caption="会见问题的样本空间" %}
+{% panel src="/assets/images/posts/probability/meeting.png" alt="meeting" width=300 %}
+{% endfigures %}
 
 {% details example "Buffon 投针问题(估计圆周率 $\pi$)" %}
 平面上画有间隔为 $d(d>0)$ 的等距平行线，向平面任意投掷一枚长为 $l(l< d)$ 的针。记事件 $A$ 为针与任一平行线相交，下面我们求针与任一平行线相交的概率。
@@ -920,23 +866,11 @@ $$
 \end{equation}
 $$
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-        <img src="/assets/images/posts/probability/needle.png" alt="Buffon 投针问题" style="width: 300px; margin-top: 56px;">
-        <figcaption>(a) Buffon 投针问题</figcaption>
-      </figure>
-      <figure style="text-align: center; margin-bottom: 0;">
-        <img src="/assets/images/posts/probability/needle_space.png" alt="Buffon 投针的样本空间" style="width: 300px;">
-        <figcaption>(b) Buffon 投针的样本空间</figcaption>
-      </figure>
-      <figure style="text-align: center; margin-bottom: 0;">
-        <img src="/assets/images/posts/probability/intersect.png" alt="相交的充要条件" style="width: 300px; margin-top: 116px;">
-        <figcaption>(c) 针与平行线相交的充分必要条件</figcaption>
-      </figure>
-   </div>
-   <p style="margin-top: 0;">图 8: Buffon 投针</p>
-</div>
+{% figures id="needle" caption="Buffon 投针" cols=3 %}
+{% panel src="/assets/images/posts/probability/needle.png" caption="Buffon 投针问题" width=300 %}
+{% panel src="/assets/images/posts/probability/needle_space.png" caption="Buffon 投针的样本空间" width=300 %}
+{% panel src="/assets/images/posts/probability/intersect.png" caption="针与平行线相交的充分必要条件" alt="相交的充要条件" width=300 %}
+{% endfigures %}
 
 这是一个颇为奇妙的方法：只要设计一个随机试验，使一个事件的概率与某个未知数有关，然后通过重复试验，以频率估计概率，即可求得未知数的近似解。
 
@@ -951,23 +885,11 @@ $$
 {% enddetails %}
 
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 0px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/probability/Bertrand1.png" alt="Bertrand1" style="width: 200px;">
-       <figcaption>(a) 解法一</figcaption>
-     </figure>
-     <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/probability/Bertrand2.png" alt="Bertrand2" style="width: 200px;">
-       <figcaption>(b) 解法二</figcaption>
-     </figure>
-     <figure style="text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/probability/Bertrand3.png" alt="Bertrand3" style="width: 185px;">
-       <figcaption>(c) 解法三</figcaption>
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 9: Bertrand 悖论的三种解法</p>
-</div>
+{% figures id="Bertrand1" caption="Bertrand 悖论的三种解法" cols=3 %}
+{% panel src="/assets/images/posts/probability/Bertrand1.png" caption="解法一" alt="Bertrand1" width=200 %}
+{% panel src="/assets/images/posts/probability/Bertrand2.png" caption="解法二" alt="Bertrand2" width=200 %}
+{% panel src="/assets/images/posts/probability/Bertrand3.png" caption="解法三" alt="Bertrand3" width=185 %}
+{% endfigures %}
 
 > 上述三个答案是针对三个不同样本空间引起的，它们都是正确的，Bertrand 悖论启发我们，在定义概率时**要事先明确指出样本空间是什么**！
 {: .prompt-danger}
@@ -1010,14 +932,9 @@ $$
 
 为了与条件概率相对应，$P(A)$ 可以被称作**无条件概率**(Unconditional probability)。条件概率 $P(A\mid B)$ 可理解为由于事件 $B$ 的发生，**样本空间从** $\boldsymbol{\mit\Omega}$ **变为了** $\boldsymbol{\mit\Omega_{B}=B}$。从几何直观上看，无条件概率 $P(A)$ 就是事件 $A$ (图中灰色部分)占样本空间 ${\mit\Omega}$ 的比例，条件概率 $P(A\mid B)$ 就是事件 $AB$ 的“面积”占事件 $B$ (图中橙色部分加上事件 $AB$ 的灰色部分)的“面积”的比例：
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-     <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-       <img src="/assets/images/posts/probability/condition.png" alt="P(A\mid B)" style="width: 300px;">
-     </figure>
-   </div>
-   <p style="margin-top: 0;">图 10: 条件概率 $P(A\mid B)$ 的 Venn 图示意</p>
-</div>
+{% figures id="condition" caption="条件概率 $P(A\mid B)$ 的 Venn 图示意" %}
+{% panel src="/assets/images/posts/probability/condition.png" alt="P(A\mid B)" width=300 %}
+{% endfigures %}
 
 显然，每一个子总体本身总可以被考虑为一个总体。为了语言上的方便，在说一个子总体时，意思就是说背后还有一个较大的总体。
 
@@ -1207,19 +1124,10 @@ $$
 {: .prompt-tip}
 
 
-<div style="text-align: center;">
-   <div style="display: flex; justify-content: center;">
-      <figure style="margin-right: 20px; text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/posts/probability/full.png" alt="对立事件分割样本" style="width: 300px;">
-         <figcaption>(a) 用 $B$ 与 $\bar{B}$ 来分割样本空间</figcaption>
-      </figure>
-      <figure style="text-align: center; margin-bottom: 0;">
-         <img src="/assets/images/posts/probability/full_condition.png" alt="互不相容事件分割样本" style="width: 300px;">
-         <figcaption>(b) $A\subset \bigcup\limits_{i=1}^{6}B_i$</figcaption>
-      </figure>
-   </div>
-   <p style="margin-top: 0;">图 11: 不同形式的全概率公式</p>
-</div>
+{% figures id="full" caption="不同形式的全概率公式" cols=2 %}
+{% panel src="/assets/images/posts/probability/full.png" caption="用 $B$ 与 $\bar{B}$ 来分割样本空间" alt="对立事件分割样本" width=300 %}
+{% panel src="/assets/images/posts/probability/full_condition.png" caption="$A\subset \bigcup\limits_{i=1}^{6}B_i$" alt="互不相容事件分割样本" width=300 %}
+{% endfigures %}
 
 {% details example "社会调查中的敏感性调查问题" %}
 在社会调查中，若调查内容包含有隐私性问题，被调查者通常不愿意直接回答。例如在校园中调查学生接触过黄色书刊或者影像是否会影响其身心健康发展的课题，从调查数据中估计出学生中解出过黄色书刊或者影像的比例 $p$，为此需要制作两份不同的调查问卷：

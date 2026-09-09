@@ -48,11 +48,14 @@ html {
     }
   }
 
-  .pagefind-ui__search-clear {
-    color: color-mix(in srgb, #{variables.$text-color} 40%, transparent);
+  .pagefind-ui__search-clear,
+  .pagefind-modular-input-clear {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--pagefind-ui-text);
 
     &:hover {
-      color: color-mix(in srgb, #{variables.$text-color} 75%, transparent);
+      color: variables.$main-color-1;
     }
   }
 
@@ -87,6 +90,11 @@ html {
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  .pagefind-ui__result-excerpt,
+  .pagefind-modular-list-excerpt {
+    display: none;
   }
 
   mark {

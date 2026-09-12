@@ -78,6 +78,9 @@ $table-color: (
 $cutout-fill-color: var(--color-cutout-fill);
 $filter-invert: var(--filter-invert);
 
+// Article AI-usage notice surface (values in _themes)
+$ai-usage-bg: var(--color-ai-usage-bg);
+
 // Brand / social link colors (compile-time; not site-theme skins).
 // Keys match brand-button--* modifiers in author-links HTML.
 $brand-link-colors: (

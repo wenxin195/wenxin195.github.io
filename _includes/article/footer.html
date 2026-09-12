@@ -17,6 +17,13 @@
     </div>
   {%- endif -%}
 
+  {%- assign _show_ai_usage = page.show_ai_usage | default: layout.show_ai_usage | default: site.data.layout.article.show_ai_usage -%}
+  {%- if _show_ai_usage -%}
+    <div class="article-footer__ai-usage">
+      {%- include article/footer/ai-usage.html -%}
+    </div>
+  {%- endif -%}
+
   {%- assign _show_license = page.show_license | default: layout.show_license | default: site.data.layout.article.show_license -%}
   {%- if _show_license and site.license -%}
     {%- assign _license_data = site.data.licenses[site.license] -%}

@@ -55,6 +55,9 @@
   --color-on-prompt: rgba(46, 46, 46, 0.77);
   --color-prompt-edge: #eeeeee;
 
+  // AI usage notice — dedicated cool surface (not cream / not brand tint)
+  --color-ai-usage-bg: #e8edf2;
+
   --color-table-thead: rgba(210, 215, 217, 0.75);
   --color-table-border: #ececec;
 
@@ -135,6 +138,9 @@
   --color-prompt-danger-color: #cd0202;
   --color-on-prompt: rgba(255, 255, 255, 0.82);
   --color-prompt-edge: #4a4a4a;
+
+  // AI usage notice — cool lift above page bg #2a2a2a (avoid warm brown mud)
+  --color-ai-usage-bg: #343a42;
 
   --color-table-thead: rgba(255, 255, 255, 0.1);
   --color-table-border: #4a4a4a;

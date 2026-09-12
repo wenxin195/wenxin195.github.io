@@ -8,16 +8,45 @@
 }
 
 .article-footer__license,
-.article-footer__subscribe {
+.article-footer__subscribe,
+.article-footer__ai-usage {
   a {
     @include link.link-themed(variables.$text-color, variables.$main-color-1);
   }
 }
 
-.article-footer__license {
+.article-footer__license,
+.article-footer__ai-usage {
   color: variables.$text-color-l;
+}
 
+.article-footer__license {
   img {
     height: map.get(variables.$base, font-size) * 1.6;
+  }
+}
+
+.article-footer__ai-usage {
+  margin-top: map.get(variables.$spacers, 2);
+  padding: map.get(variables.$spacers, 3) map.get(variables.$spacers, 4);
+  background-color: variables.$ai-usage-bg;
+  border-radius: map.get(variables.$base, border-radius-sm);
+
+  .ai-usage {
+    p {
+      margin: 0;
+      display: flex;
+      align-items: flex-start;
+      gap: map.get(variables.$spacers, 2);
+      line-height: 1.6;
+    }
+  }
+
+  .ai-usage__icon {
+    flex-shrink: 0;
+    width: map.get(variables.$base, font-size-sm) + 0.375;
+    height: map.get(variables.$base, font-size-sm) + 0.375;
+    margin-top: 0.125em;
+    opacity: 0.7;
   }
 }

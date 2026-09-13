@@ -55,7 +55,7 @@ _plugins/
 - Images get loading hints at build time: the first image keeps `fetchpriority="high"` for the LCP, the rest get `loading="lazy"` and `decoding="async"` (images inside code blocks are skipped).
 - Code blocks are highlighted with Rouge at build time and rendered as a uniform `<figure class="code-block">` with a header, line numbers, and a copy button.
 - `{% box TYPE "Title" %}` requires a title; `{% details … %}` fails the build on unknown types.
-- `{% figures %}` groups one or more `{% panel %}` images; `{% figref id %}` is filled with 图 N in document order at build time.
+- `{% figures %}` groups one or more `{% panel %}` images, or wraps a mermaid fence as the figure body; `{% figref id %}` is filled with 图 N in document order at build time.
 - `{% table %}` wraps a Markdown or HTML table; `{% tabref id %}` is filled with 表 N the same way. Figure and table counters are independent.
 - Language display names come from `_data/language_aliases.yml`.
 - Reading time (`reading_time`, `char_count`) is computed for posts only, from the HTML-stripped text after enhancement, using mixed CJK/English statistics.
@@ -86,7 +86,7 @@ An untitled `{% box tip %}` is a build error — use `prompt-*` instead. The par
 
 #### Figures
 
-One `{% figures %}` block is one numbered caption (图 N). Extra panels in the same block become a grid; subcaptions get (a)(b)(c) when there is more than one panel.
+One `{% figures %}` block is one numbered caption (图 N). Extra panels in the same block become a grid; subcaptions get (a)(b)(c) when there is more than one panel. A mermaid fence can be the figure body instead of panels (do not mix the two).
 
 ```markdown
 {% figures id="buffon-needle" caption="比丰投针" cols=2 %}
@@ -96,6 +96,17 @@ One `{% figures %}` block is one numbered caption (图 N). Extra panels in the s
 
 See {% figref buffon-needle %}.
 ```
+
+````markdown
+{% figures id="research-cycle" caption="科学研究的问题求解循环" %}
+
+```mermaid
+flowchart LR
+  A[问题界定] --> B[知识与文献整理]
+```
+
+{% endfigures %}
+````
 
 | Attribute | Where | Notes |
 |-----------|--------|--------|
@@ -107,6 +118,8 @@ See {% figref buffon-needle %}.
 | `caption` | panel | optional panel label |
 | `alt` | panel | defaults to caption, then the filename |
 | `width` | panel | optional pixel width |
+
+`cols` and `align` apply to image panels. A markdown body (typically one mermaid fence) cannot be mixed with `{% panel %}`. Unwrapped mermaid fences are not numbered.
 
 In prose, write `{% figref id %}` in place of a literal 「图 4」(the tag already includes 图 and the number). Math in a caption is written as in the body (`$A\subset B$`). `{% figref %}` may appear before the figure; numbering is assigned after Markdown convert.
 
@@ -155,7 +168,7 @@ You can tweak a block with a Kramdown IAL on the line after the closing fence:
 
 #### Mermaid diagrams
 
-Enable per page with `mermaid: true` in front matter (or rely on `layout.enhancements.mermaid`).
+Enable per page with `mermaid: true` in front matter (or rely on `layout.enhancements.mermaid`). Wrap a fence in `{% figures %}` to give it the same numbered caption as an image (`图 N`); a bare fence stays unnumbered. Keep the ` ```mermaid ` fence so Markdown previewers can still render the diagram.
 
 Sizing works like this: at build time the only markup is a single `div.mermaid`. After Mermaid draws the diagram, a small script crops the SVG `viewBox` down to what was actually drawn (plus `--mermaid-viewbox-padding`) and leaves no inline height. From there, scaling is pure CSS: the diagram is treated like an image and fits within `width: auto; height: auto; max-width: 100%; max-height: var(--mermaid-max-height)` (default `70vh`). Since the intrinsic width equals the viewBox width, diagrams are never upscaled. The font size follows the body text via `--mermaid-font-size` (`1rem`, resolved to pixels at render time). Switching themes or changing the root font size triggers a full re-render; a plain viewport resize is handled by CSS alone.
 
@@ -279,7 +292,7 @@ _plugins/
 - 图片在构建期加上加载提示：首图保持 `fetchpriority="high"`（保证 LCP），其余图片设 `loading="lazy"` 和 `decoding="async"`（跳过代码块内的图片）。
 - 代码块在构建期用 Rouge 高亮，统一渲染成 `<figure class="code-block">`，带标题栏、行号和复制按钮。
 - `{% box TYPE "标题" %}` 的标题是必填的；`{% details … %}` 遇到未知类型会使构建失败。
-- `{% figures %}` 将一组 `{% panel %}` 组合为一张编号图；`{% figref id %}` 在构建期按文中顺序填成「图 N」。
+- `{% figures %}` 将一组 `{% panel %}` 组合为一张编号图，也可以直接包一层 mermaid 围栏；`{% figref id %}` 在构建期按文中顺序填成「图 N」。
 - `{% table %}` 包裹 Markdown 或 HTML 表格；`{% tabref id %}` 同样填成「表 N」。图和表各自从 1 编号。
 - 语言显示名来自 `_data/language_aliases.yml`。
 - 阅读时间（`reading_time`、`char_count`）只在 **posts** 上计算：增强完成后去掉 HTML，再按中英文混合的方式统计。
@@ -310,7 +323,7 @@ _plugins/
 
 #### 插图
 
-一组 `{% figures %}` 对应一个编号（图 N）；同一组里的多个 `{% panel %}` 排成网格，多于一张时自动加 (a)(b)(c)。
+一组 `{% figures %}` 对应一个编号（图 N）；同一组里的多个 `{% panel %}` 排成网格，多于一张时自动加 (a)(b)(c)。也可以不写 panel，直接把 mermaid 围栏作为图内容（不要和 panel 混用）。
 
 ```markdown
 {% figures id="buffon-needle" caption="比丰投针" cols=2 %}
@@ -320,6 +333,17 @@ _plugins/
 
 示意图见 {% figref buffon-needle %}。
 ```
+
+````markdown
+{% figures id="research-cycle" caption="科学研究的问题求解循环" %}
+
+```mermaid
+flowchart LR
+  A[问题界定] --> B[知识与文献整理]
+```
+
+{% endfigures %}
+````
 
 | 属性 | 位置 | 说明 |
 |------|------|------|
@@ -331,6 +355,8 @@ _plugins/
 | `caption` | panel | 可选子图说明 |
 | `alt` | panel | 默认用 caption，再退回文件名 |
 | `width` | panel | 可选，像素宽度 |
+
+`cols` 和 `align` 只作用于图片 panel。markdown 图体（通常是一块 mermaid 围栏）不能和 `{% panel %}` 混用。未包 `{% figures %}` 的 mermaid 不编号。
 
 正文里用 `{% figref id %}` 代替手写的「图 4」（标签本身已包含「图」和序号）。caption 里的公式按正文那样写即可（`$A\subset B$`）。引用可以写在图前面，编号在 Markdown 转换之后按 DOM 顺序填写。
 
@@ -379,7 +405,7 @@ let score = 100;
 
 #### Mermaid 图
 
-在 front matter 里写 `mermaid: true`（或依赖 `layout.enhancements.mermaid`）即可启用。
+在 front matter 里写 `mermaid: true`（或依赖 `layout.enhancements.mermaid`）即可启用。需要和图片一样的编号标题时，用 `{% figures %}` 包住围栏；裸围栏不编号。围栏本身要保留，预览器才能继续渲染。
 
 尺寸的处理方式是：构建期只输出一个 `div.mermaid`；Mermaid 画完之后，脚本把 SVG 的 `viewBox` 裁剪到实际绘制的内容（加上 `--mermaid-viewbox-padding`），并且不写入内联 height。之后的缩放完全交给 CSS，将图作为图片处理：`width: auto; height: auto; max-width: 100%; max-height: var(--mermaid-max-height)`（默认 `70vh`）。内在宽度就是 viewBox 的宽度，所以图不会被放大。字号通过 `--mermaid-font-size`（`1rem`，渲染时换算成像素）跟随正文。切换主题或修改根字号会整图重新渲染；单纯改变窗口大小则只由 CSS 处理。
 

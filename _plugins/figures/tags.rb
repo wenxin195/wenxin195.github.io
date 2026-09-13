@@ -4,6 +4,7 @@ require_relative "../content/markup_attrs"
 
 module Jekyll
   # Numbered post figures: {% figures %} / {% panel %} / {% figref %}.
+  # Body may be image panels or markdown (typically a mermaid fence).
   # Captions are filled with 图 N in content/transforms/figures.rb.
   module Figures
     ALIGNMENTS = %w[start center end].freeze
@@ -59,16 +60,50 @@ module Jekyll
         stack = (context.registers[PANEL_STACK] ||= [])
         stack.push([])
         begin
-          super
+          body = super.to_s
           panels = stack.last
         ensure
           stack.pop
         end
-        if panels.nil? || panels.empty?
-          raise ArgumentError, "figures #{id.inspect} needs at least one panel"
+
+        has_panels = panels && !panels.empty?
+        has_body = !body.strip.empty?
+        if has_panels && has_body
+          raise ArgumentError,
+                "figures #{id.inspect} cannot mix panel tags with markdown body"
+        end
+        unless has_panels || has_body
+          raise ArgumentError,
+                "figures #{id.inspect} needs at least one panel or a markdown body"
         end
 
-        grid = panels.each_with_index.map do |panel, i|
+        inner =
+          if has_panels
+            grid = panel_grid_html(panels)
+            <<~HTML
+              <div class="post-figure__grid post-figure__grid--#{align}" style="--cols: #{cols}">
+                #{grid}
+              </div>
+            HTML
+          else
+            %(<div class="post-figure__body" markdown="1">#{body}</div>)
+          end
+
+        <<~HTML
+          <figure class="post-figure" id="fig-#{id}" data-figure data-figure-id="#{id}">
+            #{inner}
+            <figcaption class="post-figure__caption">
+              <span class="post-figure__label"></span>
+              <span class="post-figure__title">#{Jekyll::Content::MarkupAttrs.escape(caption)}</span>
+            </figcaption>
+          </figure>
+        HTML
+      end
+
+      private
+
+      def panel_grid_html(panels)
+        panels.each_with_index.map do |panel, i|
           cap = panel[:caption]
           sub =
             if panels.size > 1
@@ -95,18 +130,6 @@ module Jekyll
             </figure>
           HTML
         end.join
-
-        <<~HTML
-          <figure class="post-figure" id="fig-#{id}" data-figure data-figure-id="#{id}">
-            <div class="post-figure__grid post-figure__grid--#{align}" style="--cols: #{cols}">
-              #{grid}
-            </div>
-            <figcaption class="post-figure__caption">
-              <span class="post-figure__label"></span>
-              <span class="post-figure__title">#{Jekyll::Content::MarkupAttrs.escape(caption)}</span>
-            </figcaption>
-          </figure>
-        HTML
       end
     end
 

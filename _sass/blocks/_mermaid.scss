@@ -62,6 +62,10 @@
     }
   }
 
+  .post-figure .mermaid {
+    margin: 0;
+  }
+
   // Chart stays full-bleed in its host; do not share Mermaid SVG rules.
   .language-chart {
     display: none;
@@ -98,6 +102,10 @@
       svg {
         max-height: none;
       }
+    }
+
+    .post-figure .mermaid {
+      margin: 0;
     }
   }
 }

@@ -32,6 +32,11 @@
       td {
         white-space: normal;
       }
+
+      th:first-child,
+      td:first-child {
+        white-space: nowrap;
+      }
     }
   }
 }

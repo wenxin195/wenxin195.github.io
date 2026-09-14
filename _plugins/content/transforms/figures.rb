@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "nokogiri"
+require_relative "tree"
 
 module Jekyll
   module Content
@@ -14,7 +15,7 @@ module Jekyll
           n = 0
 
           frag.css("[data-figure]").each do |node|
-            next if node.ancestors("code, pre, .code-block").any?
+            next if Tree.verbatim?(node)
 
             id = node["data-figure-id"].to_s
             raise ArgumentError, "figure is missing data-figure-id" if id.empty?
@@ -29,7 +30,7 @@ module Jekyll
           end
 
           frag.css("[data-fig-ref]").each do |anchor|
-            next if anchor.ancestors("code, pre, .code-block").any?
+            next if Tree.verbatim?(anchor)
 
             id = anchor["data-fig-ref"].to_s
             num = index[id]

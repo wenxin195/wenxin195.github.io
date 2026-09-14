@@ -14,9 +14,16 @@ module Jekyll
       def enhance!(doc)
         return unless Guard.enhancable?(doc)
 
-        doc.content = Enhancer.new(doc.site).enhance(doc.content) do |frag|
+        doc.content = enhancer_for(doc.site).enhance(doc.content) do |frag|
           Toc.assign!(doc, frag)
         end
+      end
+
+      def enhancer_for(site)
+        enhancer = site.instance_variable_get(:@content_enhancer)
+        return enhancer if enhancer
+
+        site.instance_variable_set(:@content_enhancer, Enhancer.new(site))
       end
 
       def assign_reading_time!(post)

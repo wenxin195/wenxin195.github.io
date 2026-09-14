@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "tree"
+
 module Jekyll
   module Content
     module Transforms
@@ -10,7 +12,7 @@ module Jekyll
         def apply!(frag)
           first = true
           frag.css("img").each do |img|
-            next if img.ancestors("code, pre").any?
+            next if Tree.verbatim?(img)
 
             img["decoding"] = "async" if img["decoding"].to_s.empty?
             if first

@@ -1,6 +1,8 @@
 @use "sass:map";
 @use "tokens" as variables;
+@use "foundations/utilities/clickable" as clickable;
 @use "foundations/utilities/media" as media;
+@use "foundations/utilities/shadow" as shadow;
 
 .payment-container {
   display: flex;
@@ -27,5 +29,71 @@
         height: calc(#{variables.$qrcode-size} * 0.85);
       }
     }
+  }
+}
+
+.donate-channels {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: map.get(variables.$spacers, 3);
+}
+
+.donate-channel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: map.get(variables.$spacers, 2);
+  padding: map.get(variables.$spacers, 2) map.get(variables.$spacers, 4);
+  border-radius: map.get(variables.$base, border-radius-sm);
+  text-decoration: none;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  @include shadow.box-shadow(raised);
+  @include clickable.clickable($fill-svg: false);
+  @include clickable.paint(#fff, var(--donate-channel-bg), $auto-tone: true);
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: none;
+  }
+}
+
+.donate-channel__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.donate-channel--paypal {
+  --donate-channel-bg: #003087;
+}
+
+.donate-channel--kofi {
+  --donate-channel-bg: #ff5e5b;
+}
+
+.donate-channels--page {
+  margin: map.get(variables.$spacers, 4) 0;
+
+  .donate-channel {
+    min-width: 12rem;
+  }
+}
+
+.donate-channels--flyout {
+  flex-direction: column;
+  align-items: stretch;
+  gap: map.get(variables.$spacers, 2);
+  margin-top: map.get(variables.$spacers, 3);
+  white-space: normal;
+
+  .donate-channel {
+    width: 100%;
+    padding: map.get(variables.$spacers, 2) map.get(variables.$spacers, 3);
+    font-size: 0.8125rem;
+    box-shadow: none;
   }
 }

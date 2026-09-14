@@ -1,3 +1,5 @@
+@use "sass:map";
+@use "tokens" as variables;
 @use "foundations/utilities/media" as media;
 
 // Content width for .article-layout__inner lives in shell/width.
@@ -7,13 +9,51 @@
 .article-layout__inner {
   display: flex;
 
-  // < lg: TOC aside is a fixed drawer — leave the flex row so main cannot collapse.
+  // < lg: TOC aside is a fixed drawer — single column so main cannot collapse.
   @include media.media-breakpoint-down(lg) {
     display: block;
   }
 }
 
+.article {
+  min-width: 0;
+  width: 100%;
+  flex: 1;
+}
+
+// Named areas so the directory (2nd in HTML, after the title) sits in the
+// right column while body (3rd) continues the left. Aside width is a token,
+// not auto — the rail exists even before <aside> is parsed.
+.shell-main--has-aside .article {
+  @include media.media-breakpoint-up(lg) {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1fr)
+      map.get(variables.$layout, aside-width);
+    grid-template-areas:
+      "lead aside"
+      "main aside";
+    align-items: stretch;
+  }
+
+  @include media.media-breakpoint-up(xl) {
+    grid-template-columns:
+      minmax(0, 1fr)
+      map.get(variables.$layout, aside-width-xl);
+  }
+}
+
+.article-layout__lead {
+  grid-area: lead;
+  min-width: 0;
+}
+
+.article-aside {
+  grid-area: aside;
+}
+
 .article-layout__main {
+  grid-area: main;
   min-width: 0;
   flex: 1;
 }

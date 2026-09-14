@@ -12,11 +12,12 @@
 <div class="article-layout">
   <div class="article-layout__inner{% if page.full_width and _has_aside == false %} article-layout__inner--flush{% endif %}">
     {%- comment -%}
-      Main precedes the TOC aside so the title streams before the directory.
-      ≥ lg: flex row is article left, aside right. < lg the aside is a drawer.
+      Parse order matches the first viewport: title → TOC → body.
+      Below-the-fold body must not delay the directory. ≥ lg grid lets
+      aside span both rows; < lg the aside is a drawer.
     {%- endcomment -%}
-    <div class="article-layout__main">
-      <article class="article" itemscope itemtype="https://schema.org/BlogPosting">
+    <article class="article" itemscope itemtype="https://schema.org/BlogPosting">
+      <div class="article-layout__lead">
         {%- unless _is_overlay -%}
           {%- assign _show_title = page.show_title | default: site.data.layout.article.show_title -%}
           {%- if _show_title == false -%}
@@ -32,7 +33,13 @@
         {%- endunless -%}
 
         {%- include article/toolbar.html -%}
+      </div>
 
+      {%- if _has_aside -%}
+        {%- include article/aside.html -%}
+      {%- endif -%}
+
+      <div class="article-layout__main">
         <div class="article-body js-article-body" itemprop="articleBody">
           {{ include.body }}
         </div>
@@ -40,11 +47,7 @@
         {%- include article/footer.html -%}
         {%- include article/nav.html -%}
         {%- include article/comments.html -%}
-      </article>
-    </div>
-
-    {%- if _has_aside -%}
-      {%- include article/aside.html -%}
-    {%- endif -%}
+      </div>
+    </article>
   </div>
 </div>

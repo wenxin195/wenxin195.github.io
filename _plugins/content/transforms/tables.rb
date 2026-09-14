@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "nokogiri"
+require_relative "tree"
 
 module Jekyll
   module Content
@@ -16,7 +17,7 @@ module Jekyll
 
         def wrap!(frag)
           frag.css("table").each do |table|
-            next if table.ancestors("code, pre, .table-wrapper, .code-block").any?
+            next if Tree.verbatim?(table)
             next if table.parent&.[]("class").to_s.split.include?("table-wrapper")
 
             wrapper = Nokogiri::XML::Node.new("div", frag)
@@ -31,7 +32,7 @@ module Jekyll
           n = 0
 
           frag.css("[data-table]").each do |node|
-            next if node.ancestors("code, pre, .code-block").any?
+            next if Tree.verbatim?(node)
 
             id = node["data-table-id"].to_s
             raise ArgumentError, "table is missing data-table-id" if id.empty?
@@ -46,7 +47,7 @@ module Jekyll
           end
 
           frag.css("[data-tab-ref]").each do |anchor|
-            next if anchor.ancestors("code, pre, .code-block").any?
+            next if Tree.verbatim?(anchor)
 
             id = anchor["data-tab-ref"].to_s
             num = index[id]

@@ -17,6 +17,7 @@
     margin-bottom: 0;
     display: flex;
     justify-content: center;
+    justify-content: safe center;
 
     // Beat .article-body table and .table-wrapper > table (enhancements load later).
     > table {
@@ -25,7 +26,12 @@
       min-width: 0;
       max-width: 100%;
       margin-block: 0;
-      margin-inline: auto;
+      margin-inline: 0;
+
+      th,
+      td {
+        white-space: normal;
+      }
     }
   }
 }

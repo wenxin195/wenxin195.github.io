@@ -39,11 +39,18 @@ module Jekyll
         %(<span class="#{classes}" style="--icon: url('#{href}')" data-icon="#{name}" aria-hidden="true"></span>)
       end
 
+      def span_node(document, site, name, extra_class: nil)
+        assert_exists!(site, name)
+        span = Nokogiri::XML::Node.new("span", document)
+        span["class"] = ["icon-lucide", extra_class].compact.join(" ").strip
+        span["style"] = "--icon: url('#{url(site, name)}')"
+        span["data-icon"] = name.to_s
+        span["aria-hidden"] = "true"
+        span
+      end
+
       def append_span!(parent, site, name, extra_class: nil)
-        frag = Nokogiri::HTML::DocumentFragment.parse(
-          span_html(site, name, extra_class: extra_class)
-        )
-        parent.add_child(frag)
+        parent.add_child(span_node(parent.document, site, name, extra_class: extra_class))
       end
     end
   end

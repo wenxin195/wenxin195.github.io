@@ -17,13 +17,24 @@ module Jekyll
 
         def unwrap_highlighter_fences!(frag)
           frag.css("div.highlighter-rouge").each do |shell|
-            next unless mermaid_language?(shell)
-
-            source = mermaid_source(code_from(shell) || shell)
-            next if source.empty?
-
-            shell.replace(mermaid_host(frag, source, shell))
+            unwrap_highlighter_shell!(shell, frag)
           end
+        end
+
+        def unwrap_highlighter_shell!(shell, frag)
+          return unless highlighter_mermaid?(shell)
+
+          source = mermaid_source(code_from(shell) || shell)
+          return if source.empty?
+
+          shell.replace(mermaid_host(frag, source, shell))
+        end
+
+        def highlighter_mermaid?(shell)
+          return true if language_of(shell) == "mermaid"
+
+          code = shell.at_css("code")
+          code && language_of(code) == "mermaid"
         end
 
         # Leftovers when Rouge has no mermaid lexer:
@@ -45,10 +56,6 @@ module Jekyll
 
             target.replace(mermaid_host(frag, source, target))
           end
-        end
-
-        def mermaid_language?(node)
-          language_of(node) == "mermaid" || !node.at_css("code.language-mermaid").nil?
         end
 
         def code_from(node)

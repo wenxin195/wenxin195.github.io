@@ -14,54 +14,59 @@ module Jekyll
       #   {: .nolineno }       — omit line numbers (default: on, from 1)
       #
       # Chart stays as Rouge output for the chart client. ```mermaid fences are
-      # unwrapped earlier (Transforms::Diagrams); kept here only as a guard.
+      # unwrapped in the same highlighter-rouge pass (Enhancer) before this runs.
       module CodeBlocks
         SKIP_LANGS = %w[mermaid chart].freeze
 
         class Pipeline
           def initialize(site)
             @site = site
+            %w[file-code code clipboard].each do |name|
+              Icons.assert_exists!(site, name)
+            end
           end
 
           def apply!(frag)
             frag.css("div.highlighter-rouge").each do |shell|
-              next if shell.ancestors("figure.code-block").any?
-              next if shell["class"].to_s.split.include?("code-block")
-
               transform_shell!(shell, frag)
             end
           end
 
-          private
-
           def transform_shell!(shell, frag)
-            lang = extract_lang(shell)
+            classes = shell["class"].to_s.split
+            return if classes.include?("code-block")
+
+            lang = language_from(classes)
             return if SKIP_LANGS.include?(lang)
 
-            classes = shell["class"].to_s.split
+            pre, code = locate_pre_code(shell)
+            return if code.nil?
+
             lineno = !classes.include?("nolineno")
+            wrap_lines!(code) if lineno
+
+            if !lang.empty? && language_from(code["class"].to_s.split).empty?
+              existing = code["class"].to_s
+              code["class"] = ["language-#{lang}", existing].reject(&:empty?).join(" ")
+            end
+
             file = attr_among(shell, %w[file data-file])
-
-            code_html = extract_code_html(shell)
-            return if code_html.nil?
-
-            code_html = wrap_lines(code_html) if lineno
-
-            figure = build_figure(
-              frag,
-              lang: lang,
-              file: file,
-              lineno: lineno,
-              code_html: code_html
+            shell.replace(
+              build_figure(
+                frag,
+                lang: lang,
+                file: file,
+                lineno: lineno,
+                pre: pre,
+                code: code
+              )
             )
-            shell.replace(figure)
           end
 
-          def extract_lang(shell)
-            shell["class"].to_s.split
-                          .find { |c| c.start_with?("language-") }
-                          &.sub(/\Alanguage-/, "")
-                          .to_s
+          private
+
+          def language_from(classes)
+            classes.find { |c| c.start_with?("language-") }&.sub(/\Alanguage-/, "").to_s
           end
 
           def attr_among(node, names)
@@ -72,63 +77,89 @@ module Jekyll
             nil
           end
 
-          # Prefer Rouge <code> inner HTML; unwrap table line-number layout if present.
-          def extract_code_html(shell)
-            if (cell = shell.at_css("td.rouge-code > pre, td.rouge-code"))
-              return cell.inner_html
+          def locate_pre_code(shell)
+            if (cell = shell.at_css("td.rouge-code"))
+              pre = cell.at_css("pre")
+              code = child_named(pre, "code") || child_named(cell, "code") || pre
+              return [pre, code]
             end
 
-            code = shell.at_css("div.highlight pre code, div.highlight > code, pre code, code")
-            return nil unless code
-
-            code.inner_html
+            pre = child_named(shell.at_css("div.highlight"), "pre") || shell.at_css("pre")
+            code = child_named(pre, "code") ||
+                   child_named(shell.at_css("div.highlight"), "code") ||
+                   shell.at_css("code")
+            [pre, code]
           end
 
-          # Rouge often puts the trailing "\n" inside a token span (e.g. Chinese
-          # comments: <span class="c1"># …\n</span>). Splitting on "\n" alone
-          # breaks tags; Nokogiri then nests/repairs lines and layout collapses.
-          # Split on newlines while closing/reopening the open <span> stack.
-          def wrap_lines(inner_html)
-            lines = split_html_lines(inner_html)
-            lines.pop if lines.length > 1 && lines.last.empty?
+          def child_named(node, name)
+            return nil unless node
 
-            lines.each_with_index.map do |line, index|
-              %(<span class="code-block__line" data-line="#{index + 1}"><span class="code-block__code">#{line}</span></span>)
-            end.join("\n")
+            node.element_children.find { |child| child.name == name }
           end
 
-          def split_html_lines(inner_html)
-            lines = []
-            current = +""
-            open_spans = []
+          # Rouge often puts a trailing "\n" inside a token span (e.g. Chinese
+          # comments: <span class="c1"># …\n</span>). Walk the already-parsed
+          # tree so highlighted HTML is never serialized and parsed again.
+          def wrap_lines!(code)
+            lines = split_into_lines(code.children.to_a)
+            lines.pop if lines.length > 1 && line_blank?(lines.last)
 
-            inner_html.split(/(<span\b[^>]*>|<\/span>)/).each do |token|
-              next if token.empty?
+            code.children.each(&:unlink)
+            doc = code.document
+            last = lines.length - 1
+            lines.each_with_index do |kids, index|
+              line = Nokogiri::XML::Node.new("span", doc)
+              line["class"] = "code-block__line"
+              line["data-line"] = (index + 1).to_s
 
-              if token.start_with?("<span")
-                open_spans << token
-                current << token
-              elsif token == "</span>"
-                open_spans.pop
-                current << token
-              else
-                token.split(/\r?\n/, -1).each_with_index do |piece, i|
-                  if i.positive?
-                    open_spans.reverse_each { current << "</span>" }
-                    lines << current
-                    current = +""
-                    open_spans.each { |tag| current << tag }
-                  end
-                  current << piece
-                end
-              end
+              inner = Nokogiri::XML::Node.new("span", doc)
+              inner["class"] = "code-block__code"
+              kids.each { |kid| inner.add_child(kid) }
+
+              line.add_child(inner)
+              code.add_child(line)
+              code.add_child(Nokogiri::XML::Text.new("\n", doc)) unless index == last
             end
+          end
 
-            lines << current
+          def split_into_lines(nodes)
+            lines = [[]]
+            nodes.each do |node|
+              pieces = line_pieces(node)
+              next if pieces.empty?
+
+              lines.last.concat(pieces[0])
+              pieces.drop(1).each { |piece| lines << piece }
+            end
             lines
           end
 
-          def build_figure(frag, lang:, file:, lineno:, code_html:)
+          def line_pieces(node)
+            if node.text?
+              node.content.split(/\r?\n/, -1).map do |part|
+                part.empty? ? [] : [Nokogiri::XML::Text.new(part, node.document)]
+              end
+            elsif node.element?
+              split_into_lines(node.children.to_a).map do |kids|
+                [clone_with_children(node, kids)]
+              end
+            else
+              [[node]]
+            end
+          end
+
+          def clone_with_children(node, kids)
+            copy = Nokogiri::XML::Node.new(node.name, node.document)
+            node.attribute_nodes.each { |attr| copy[attr.name] = attr.value }
+            kids.each { |kid| copy.add_child(kid) }
+            copy
+          end
+
+          def line_blank?(nodes)
+            nodes.all? { |node| node.text.empty? }
+          end
+
+          def build_figure(frag, lang:, file:, lineno:, pre:, code:)
             figure = Nokogiri::XML::Node.new("figure", frag)
             figure["class"] = "code-block"
             figure["data-lang"] = lang unless lang.empty?
@@ -136,7 +167,7 @@ module Jekyll
             figure["data-file"] = file if file
 
             figure.add_child(build_header(frag, lang: lang, file: file))
-            figure.add_child(build_body(frag, lang: lang, code_html: code_html))
+            figure.add_child(build_body(frag, pre: pre, code: code))
             figure
           end
 
@@ -167,20 +198,23 @@ module Jekyll
             header
           end
 
-          def build_body(frag, lang:, code_html:)
+          def build_body(frag, pre:, code:)
             body = Nokogiri::XML::Node.new("div", frag)
             body["class"] = "code-block__body"
             body["tabindex"] = "0"
 
-            pre = Nokogiri::XML::Node.new("pre", frag)
-            pre["class"] = "highlight"
+            if pre
+              pre["class"] = "highlight"
+              pre.unlink
+              body.add_child(pre)
+            else
+              wrapper = Nokogiri::XML::Node.new("pre", frag)
+              wrapper["class"] = "highlight"
+              code.unlink
+              wrapper.add_child(code)
+              body.add_child(wrapper)
+            end
 
-            code = Nokogiri::XML::Node.new("code", frag)
-            code["class"] = "language-#{lang}" unless lang.empty?
-            code.inner_html = code_html
-
-            pre.add_child(code)
-            body.add_child(pre)
             body
           end
         end

@@ -14,8 +14,7 @@ module Jekyll
           frag.css('input.task-list-item-checkbox[type="checkbox"]').each do |input|
             name = input["checked"] ? "circle-check" : "circle"
             extra = input["checked"] ? "checked" : nil
-            html = Icons.span_html(site, name, extra_class: extra)
-            input.replace(Nokogiri::HTML::DocumentFragment.parse(html))
+            input.replace(Icons.span_node(input.document, site, name, extra_class: extra))
           end
         end
       end

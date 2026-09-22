@@ -88,10 +88,10 @@
       overscroll-behavior: contain;
       @include overflow.overflow(auto);
 
-      // Affix FIXED — beat `position: absolute` above (same specificity, later wins).
+      // Affix FIXED — max-height only here. position/left/width are set inline in
+      // one assign so we never paint fixed with this rule's left:0 / width:100%.
       &.fixed {
         position: fixed;
-        // Fixed CB is the viewport; 100% of aside no longer applies.
         max-height: $toc-viewport-max;
       }
     }

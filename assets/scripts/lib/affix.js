@@ -151,25 +151,27 @@ export class Affix {
     this._isUpdating = true;
 
     // Always rewrite pin styles so refresh/resize updates left/width while FIXED.
+    // FIXED must set position+left+width in one assign *before* `.fixed`: CSS
+    // `.aside-toc { left:0; width:100% }` is correct for absolute (aside column)
+    // but means viewport-left + full bleed once `position:fixed` applies.
     switch (newState) {
       case STATE.TOP:
-        this.root.classList.remove('fixed');
         this._clearInlinePinStyles();
+        this.root.classList.remove('fixed');
         break;
 
       case STATE.FIXED:
-        this.root.classList.add('fixed');
         Object.assign(this.root.style, {
-          position: '', // `.fixed` → position:fixed
+          position: 'fixed',
           left: `${this._rootLeft}px`,
           top: `${this.offsetTop}px`,
           bottom: '',
           width: `${this._rootWidth}px`,
         });
+        this.root.classList.add('fixed');
         break;
 
       case STATE.BOTTOM:
-        this.root.classList.remove('fixed');
         Object.assign(this.root.style, {
           position: 'absolute',
           left: '0',
@@ -177,6 +179,7 @@ export class Affix {
           bottom: `${this.offsetBottom}px`,
           width: '100%',
         });
+        this.root.classList.remove('fixed');
         break;
     }
 

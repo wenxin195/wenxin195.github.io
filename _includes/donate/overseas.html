@@ -1,0 +1,22 @@
+{%- comment -%}
+  海外捐赠按钮。variant: page（捐赠页）或 flyout（文章打赏浮层）。
+  账号来自 integrations.donate。
+{%- endcomment -%}
+{%- assign _donate = site.data.integrations.donate -%}
+{%- assign _variant = include.variant | default: "page" -%}
+{%- assign _icon_base = "/assets/images/icon/social-color" | relative_url -%}
+
+<nav class="donate-channels donate-channels--{{ _variant }}" aria-label="海外捐赠">
+  {%- if _donate.paypal -%}
+    <a class="donate-channel donate-channel--paypal" href="https://paypal.me/{{ _donate.paypal }}" target="_blank" rel="noopener noreferrer">
+      <img class="donate-channel__icon" src="{{ _icon_base }}/paypal.svg" alt="" width="20" height="20" />
+      <span>PayPal</span>
+    </a>
+  {%- endif -%}
+  {%- if _donate.kofi -%}
+    <a class="donate-channel donate-channel--kofi" href="https://ko-fi.com/{{ _donate.kofi }}" target="_blank" rel="noopener noreferrer">
+      <img class="donate-channel__icon" src="{{ _icon_base }}/kofi.svg" alt="" width="20" height="20" />
+      <span>Ko-fi</span>
+    </a>
+  {%- endif -%}
+</nav>

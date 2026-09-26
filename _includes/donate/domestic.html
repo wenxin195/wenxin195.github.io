@@ -1,0 +1,30 @@
+{%- comment -%}
+  中国大陆收款码。variant: page（捐赠页）或 flyout（文章打赏浮层）。
+{%- endcomment -%}
+{%- assign _variant = include.variant | default: "page" -%}
+{%- assign _wechat = "/assets/images/site/donate/wechat.png" | relative_url -%}
+{%- assign _alipay = "/assets/images/site/donate/alipay.jpg" | relative_url -%}
+
+{%- if _variant == "flyout" -%}
+  <div class="flyout__group">
+    <figure>
+      <img class="flyout__media" data-src="{{ _wechat }}" alt="微信支付" fetchpriority="low" />
+      <figcaption class="flyout__caption">微信支付</figcaption>
+    </figure>
+    <figure>
+      <img class="flyout__media" data-src="{{ _alipay }}" alt="支付宝" fetchpriority="low" />
+      <figcaption class="flyout__caption">支付宝</figcaption>
+    </figure>
+  </div>
+{%- else -%}
+  <div class="payment-container">
+    <div class="payment-item">
+      <p>微信支付</p>
+      <img src="{{ _wechat }}" alt="微信支付二维码">
+    </div>
+    <div class="payment-item">
+      <p>支付宝</p>
+      <img src="{{ _alipay }}" alt="支付宝二维码">
+    </div>
+  </div>
+{%- endif -%}

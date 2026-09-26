@@ -10,27 +10,22 @@ title: 捐赠支持
 
 您的捐赠将帮助我购买书籍和软件，确保博客内容的持续更新和提供高质量的内容和服务。无论金额大小，您的支持对我来说都是莫大的鼓励。
 
-以下是捐赠方式，请根据您的方便选择：
+以下是捐赠方式，请根据您的方便选择：中国大陆读者可扫码支付，海外读者可通过按钮跳转。
 
-## 捐赠方式
+## 中国大陆
 
-<div class="payment-container">
-  <div class="payment-item">
-    <p>微信支付</p>
-    <img src="/assets/images/site/donate/wechat.png" alt="微信支付二维码">
-  </div>
+{% include donate/domestic.html variant="page" %}
 
-  <div class="payment-item">
-    <p>支付宝</p>
-    <img src="/assets/images/site/donate/alipay.jpg" alt="支付宝二维码">
-  </div>
-</div>
+## 海外
+
+{% include donate/overseas.html variant="page" %}
 
 ## 捐赠说明
 
 1. 捐赠完全自愿，金额不限；
 2. 捐赠后，请留下您的姓名和联系方式(如果愿意)，以便我在捐赠者名单中表示感谢；
-3. 所有捐赠都将用于博客的维护和提升，以及购买相关书籍和工具。
+3. 所有捐赠都将用于博客的维护和提升，以及购买相关书籍和工具；
+4. 中国大陆请使用微信或支付宝；海外可通过 PayPal 或 Ko-fi 支持。
 
 最后，无论您是否选择捐赠，我都想对你说一声：谢谢！感谢你花时间阅读我的文章，感谢你陪伴我走过每一个日夜。让我们继续携手前行，在知识的道路上不断探索。
 

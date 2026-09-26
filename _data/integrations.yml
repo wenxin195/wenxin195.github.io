@@ -19,3 +19,8 @@ analytics:
     anonymize_ip: false
   baidu:
     base_id: 883a4ce3e6ad9013680a082966735ed7
+
+# 海外捐赠公开主页（非密钥）。paypal → paypal.me/ID；kofi → ko-fi.com/ID。
+donate:
+  paypal: zhongwenxin
+  kofi: zhongwenxin

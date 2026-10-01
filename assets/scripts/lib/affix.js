@@ -4,14 +4,15 @@ import { throttle } from '@/utils/throttle.js';
 /**
  * 将元素钉在滚动过程中的上/中/下三段：
  *   TOP    — `position:absolute; top:0`（相对 stretch 列）
- *   PINNED — `position:fixed`（纵向由合成器钉住；left/width 取列的视口几何）
+ *   PINNED — `.is-pinned` → `position:fixed`（left/width/top 来自 CSS 变量，同规则原子生效）
  *   BOTTOM — `position:absolute; bottom:offsetBottom`（相对 stretch 列）
  *
  * 专为侧栏 TOC：container 为 stretch 列；面板须自带 max-height + 内部滚动。
- * PINNED 用 fixed 避免 absolute 追 top 在合成器滚动下的抖动；进入/刷新 PINNED 时
- * 原子写入 position+left+width+top，避免 CSS `left:0; width:100%` 被当成视口语义。
  *
- * 测量使用钳制后的 `offsetHeight`；不插入占位节点。
+ * 左右闪的根因：`.aside-toc { left:0; width:100% }` 在 absolute 下表示「贴右列」，
+ * 一旦先变成 fixed，同一套值就变成「贴视口左边 / 拉满宽」。解决办法是让
+ * `position:fixed` 与正确的 left/width **写在同一条 `.is-pinned` 规则里**
+ * （通过 `--affix-*` 变量），先写变量再挂 class，避免中间帧。
  */
 export class Affix {
   /**
@@ -24,7 +25,7 @@ export class Affix {
     BOTTOM: 'bottom',
   });
 
-  /** CSS class toggled while PINNED (viewport max-height). */
+  /** CSS class toggled while PINNED (fixed + viewport max-height). */
   static PINNED_CLASS = 'is-pinned';
 
   /**
@@ -147,40 +148,29 @@ export class Affix {
     this._rootWidth = Math.round(el.clientWidth) || Math.round(rect.width);
   }
 
-  /** Restore CSS absolute defaults inside the aside column. */
-  _clearInlinePinStyles() {
-    Object.assign(this.root.style, {
-      position: '',
-      left: '',
-      top: '',
-      bottom: '',
-      width: '',
-    });
+  /** Write pin geometry into CSS variables (must run before adding `.is-pinned`). */
+  _setPinnedVars() {
+    this.root.style.setProperty('--affix-left', `${this._rootLeft}px`);
+    this.root.style.setProperty('--affix-width', `${this._rootWidth}px`);
+    this.root.style.setProperty('--affix-top', `${this.offsetTop}px`);
   }
 
-  _applyPinnedStyles() {
-    const left = `${this._rootLeft}px`;
-    const width = `${this._rootWidth}px`;
-    const top = `${this.offsetTop}px`;
+  _clearPinnedVars() {
+    this.root.style.removeProperty('--affix-left');
+    this.root.style.removeProperty('--affix-width');
+    this.root.style.removeProperty('--affix-top');
+  }
 
-    // Single assign: never paint fixed with CSS left:0 / width:100% (viewport semantics).
-    if (
-      this.root.style.position !== 'fixed'
-      || this.root.style.left !== left
-      || this.root.style.width !== width
-      || this.root.style.top !== top
-      || this.root.style.bottom !== ''
-    ) {
-      Object.assign(this.root.style, {
-        position: 'fixed',
-        left,
-        width,
-        top,
-        bottom: '',
-      });
-    }
-
-    this.root.classList.add(Affix.PINNED_CLASS);
+  /** Restore column-absolute defaults (no fixed, no pin vars, no bottom pin). */
+  _clearInlinePinStyles() {
+    this.root.classList.remove(Affix.PINNED_CLASS);
+    this._clearPinnedVars();
+    this.root.style.top = '';
+    this.root.style.bottom = '';
+    // Legacy cleanup if an older session left inline fixed geometry.
+    this.root.style.position = '';
+    this.root.style.left = '';
+    this.root.style.width = '';
   }
 
   /**
@@ -195,27 +185,33 @@ export class Affix {
 
     switch (newState) {
       case STATE.TOP:
-        this.root.classList.remove(Affix.PINNED_CLASS);
+        // Drop `.is-pinned` first → instant return to absolute column `left:0`.
         this._clearInlinePinStyles();
         break;
 
       case STATE.PINNED:
-        // Fresh horizontal box when entering PINNED (column may have shifted).
+        // Fresh horizontal box when entering / after layout measure.
         if (oldState !== STATE.PINNED) {
           this._capturePinnedBox();
         }
-        this._applyPinnedStyles();
+        // Vars first, then class — one cascade applies fixed + left + width together.
+        this._setPinnedVars();
+        this.root.style.top = '';
+        this.root.style.bottom = '';
+        this.root.style.position = '';
+        this.root.style.left = '';
+        this.root.style.width = '';
+        this.root.classList.add(Affix.PINNED_CLASS);
         break;
 
       case STATE.BOTTOM:
         this.root.classList.remove(Affix.PINNED_CLASS);
-        Object.assign(this.root.style, {
-          position: '',
-          left: '',
-          width: '',
-          top: 'auto',
-          bottom: `${this.offsetBottom}px`,
-        });
+        this._clearPinnedVars();
+        this.root.style.position = '';
+        this.root.style.left = '';
+        this.root.style.width = '';
+        this.root.style.top = 'auto';
+        this.root.style.bottom = `${this.offsetBottom}px`;
         break;
     }
 

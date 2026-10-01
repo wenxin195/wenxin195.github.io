@@ -90,9 +90,15 @@
       overscroll-behavior: contain;
       @include overflow.overflow(auto);
 
-      // PINNED — Affix sets position/left/width/top inline in one assign.
-      // max-height drops the 100%-of-aside term (fixed CB is the viewport).
+      // PINNED — position:fixed and column-aligned left/width MUST share this rule
+      // (via --affix-*), so we never paint fixed with the absolute-mode left:0/width:100%.
+      // Affix sets the variables, then adds this class.
       &.is-pinned {
+        position: fixed;
+        top: var(--affix-top, 0px);
+        left: var(--affix-left);
+        width: var(--affix-width);
+        bottom: auto;
         max-height: $toc-viewport-max;
       }
     }

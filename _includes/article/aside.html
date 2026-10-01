@@ -1,7 +1,6 @@
 {%- comment -%}
-  Desktop (≥ lg): stretch column beside article; .aside-toc is the Affix panel
-  (TOP/BOTTOM absolute in column; PINNED position:fixed with column left/width;
-  viewport-clamped + internal scroll).
+  Desktop (≥ lg): stretch column beside article; .aside-toc is position:sticky
+  (viewport-clamped max-height + internal scroll; no Affix / no position:fixed).
   < lg: .modal in markup (nav-drawer parity) so closed state is paintable;
   toc-drawer portals the root onto .js-shell.
   Single .js-aside-toc for both presentations.

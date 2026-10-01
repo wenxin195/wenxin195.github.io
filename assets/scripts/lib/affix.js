@@ -3,13 +3,15 @@ import { throttle } from '@/utils/throttle.js';
 
 /**
  * 将元素钉在滚动过程中的上/中/下三段：
- *   TOP    — `position:absolute; top:0`（相对 container）
- *   FIXED  — `position:fixed`（视口）
- *   BOTTOM — `position:absolute; bottom:0`（相对 container）
+ *   TOP    — `position:absolute; top:0`（相对 stretch 列）
+ *   PINNED — `position:fixed`（纵向由合成器钉住；left/width 取列的视口几何）
+ *   BOTTOM — `position:absolute; bottom:offsetBottom`（相对 stretch 列）
  *
- * 专为侧栏 TOC 设计：container 为 stretch 列；面板须自带 max-height + 内部滚动。
- * 测量使用钳制后的 `offsetHeight`，不使用未裁剪内容高度；不插入占位节点，
- * 也不使用 `relative + top`（避免撑出文档可滚动溢出）。
+ * 专为侧栏 TOC：container 为 stretch 列；面板须自带 max-height + 内部滚动。
+ * PINNED 用 fixed 避免 absolute 追 top 在合成器滚动下的抖动；进入/刷新 PINNED 时
+ * 原子写入 position+left+width+top，避免 CSS `left:0; width:100%` 被当成视口语义。
+ *
+ * 测量使用钳制后的 `offsetHeight`；不插入占位节点。
  */
 export class Affix {
   /**
@@ -18,9 +20,12 @@ export class Affix {
    */
   static STATE = Object.freeze({
     TOP: 'top',
-    FIXED: 'fixed',
+    PINNED: 'pinned',
     BOTTOM: 'bottom',
   });
+
+  /** CSS class toggled while PINNED (viewport max-height). */
+  static PINNED_CLASS = 'is-pinned';
 
   /**
    * @param {!Element} element
@@ -55,7 +60,6 @@ export class Affix {
     this.onChange = null;
 
     this._getScrollTop = null;
-    this._getScrollLeft = null;
 
     this._handleScroll = this._handleScroll.bind(this);
     this._handleResize = throttle(this._handleResize.bind(this), 200);
@@ -86,11 +90,9 @@ export class Affix {
   _bindScrollHelpers() {
     if (this._isOverallScroller) {
       this._getScrollTop = () => window.scrollY;
-      this._getScrollLeft = () => window.scrollX;
     } else {
       const el = this.target;
       this._getScrollTop = () => el.scrollTop;
-      this._getScrollLeft = () => el.scrollLeft;
     }
   }
 
@@ -108,24 +110,24 @@ export class Affix {
     return parent;
   }
 
+  /**
+   * Cache stretch-column geometry. Call on init / resize / layout refresh —
+   * not required every scroll frame while PINNED (fixed handles vertical).
+   */
   _measure() {
     const container = this._resolveContainer();
     const scrollTop = this._getScrollTop();
-    const scrollLeft = this._getScrollLeft();
     const containerRect = container.getBoundingClientRect();
 
     this._containerTop = containerRect.top + scrollTop;
     this._containerBottom = containerRect.bottom + scrollTop;
 
-    // Width follows the stretch column (stable across TOP / FIXED / BOTTOM).
-    this._rootWidth = container.clientWidth;
+    this._capturePinnedBox(container, containerRect);
+
     // Clamped panel height (CSS max-height + overflow); never raw content height.
     this._rootHeight = this.root.offsetHeight;
 
-    this._rootLeft = containerRect.left + (this._isOverallScroller ? 0 : scrollLeft);
-
-    // scrollTop thresholds (document / scroller coordinates).
-    this._fixStart = this._containerTop - this.offsetTop;
+    this._pinStart = this._containerTop - this.offsetTop;
     this._scrollBottomLimit =
       this._containerBottom
       - this.offsetBottom
@@ -133,6 +135,19 @@ export class Affix {
       - this._rootHeight;
   }
 
+  /**
+   * Viewport-horizontal box for PINNED (`position:fixed` containing block).
+   * @param {!Element=} container
+   * @param {DOMRect=} containerRect
+   */
+  _capturePinnedBox(container, containerRect) {
+    const el = container ?? this._resolveContainer();
+    const rect = containerRect ?? el.getBoundingClientRect();
+    this._rootLeft = Math.round(rect.left);
+    this._rootWidth = Math.round(el.clientWidth) || Math.round(rect.width);
+  }
+
+  /** Restore CSS absolute defaults inside the aside column. */
   _clearInlinePinStyles() {
     Object.assign(this.root.style, {
       position: '',
@@ -143,6 +158,34 @@ export class Affix {
     });
   }
 
+  _applyPinnedStyles() {
+    const left = `${this._rootLeft}px`;
+    const width = `${this._rootWidth}px`;
+    const top = `${this.offsetTop}px`;
+
+    // Single assign: never paint fixed with CSS left:0 / width:100% (viewport semantics).
+    if (
+      this.root.style.position !== 'fixed'
+      || this.root.style.left !== left
+      || this.root.style.width !== width
+      || this.root.style.top !== top
+      || this.root.style.bottom !== ''
+    ) {
+      Object.assign(this.root.style, {
+        position: 'fixed',
+        left,
+        width,
+        top,
+        bottom: '',
+      });
+    }
+
+    this.root.classList.add(Affix.PINNED_CLASS);
+  }
+
+  /**
+   * @param {string} newState
+   */
   _applyState(newState) {
     const oldState = this.state;
     const stateChanged = oldState !== newState;
@@ -150,36 +193,29 @@ export class Affix {
 
     this._isUpdating = true;
 
-    // Always rewrite pin styles so refresh/resize updates left/width while FIXED.
-    // FIXED must set position+left+width in one assign *before* `.fixed`: CSS
-    // `.aside-toc { left:0; width:100% }` is correct for absolute (aside column)
-    // but means viewport-left + full bleed once `position:fixed` applies.
     switch (newState) {
       case STATE.TOP:
+        this.root.classList.remove(Affix.PINNED_CLASS);
         this._clearInlinePinStyles();
-        this.root.classList.remove('fixed');
         break;
 
-      case STATE.FIXED:
-        Object.assign(this.root.style, {
-          position: 'fixed',
-          left: `${this._rootLeft}px`,
-          top: `${this.offsetTop}px`,
-          bottom: '',
-          width: `${this._rootWidth}px`,
-        });
-        this.root.classList.add('fixed');
+      case STATE.PINNED:
+        // Fresh horizontal box when entering PINNED (column may have shifted).
+        if (oldState !== STATE.PINNED) {
+          this._capturePinnedBox();
+        }
+        this._applyPinnedStyles();
         break;
 
       case STATE.BOTTOM:
+        this.root.classList.remove(Affix.PINNED_CLASS);
         Object.assign(this.root.style, {
-          position: 'absolute',
-          left: '0',
+          position: '',
+          left: '',
+          width: '',
           top: 'auto',
           bottom: `${this.offsetBottom}px`,
-          width: '100%',
         });
-        this.root.classList.remove('fixed');
         break;
     }
 
@@ -199,10 +235,10 @@ export class Affix {
     const scrollTop = this._getScrollTop();
     const { STATE } = Affix;
 
-    if (scrollTop < this._fixStart) {
+    if (scrollTop < this._pinStart) {
       this._applyState(STATE.TOP);
     } else if (scrollTop <= this._scrollBottomLimit) {
-      this._applyState(STATE.FIXED);
+      this._applyState(STATE.PINNED);
     } else {
       this._applyState(STATE.BOTTOM);
     }
@@ -213,6 +249,7 @@ export class Affix {
 
     this._rafPending = true;
     this._rafId = requestAnimationFrame(() => {
+      // Thresholds are cached; PINNED vertical is compositor-fixed.
       this._updateState();
       this._rafPending = false;
     });
@@ -255,13 +292,9 @@ export class Affix {
     }, 200);
 
     this._resizeObserver = new ResizeObserver(handleResize);
-    this._resizeObserver.observe(this.root);
 
     try {
-      const container = this._resolveContainer();
-      if (container !== this.root) {
-        this._resizeObserver.observe(container);
-      }
+      this._resizeObserver.observe(this._resolveContainer());
     } catch (_) {
       // container missing — init already warned
     }

@@ -5,7 +5,7 @@
 @use "foundations/utilities/shadow" as shadow;
 
 // Two presentations (shell/main only toggles display via .shell-main--has-aside):
-//   ≥ lg  — in-flow sidebar + affix (js adds .fixed / inline bottom pin)
+//   ≥ lg  — in-flow sidebar + Affix (TOP/BOTTOM absolute in column; PINNED fixed)
 //   < lg  — .modal drawer (in markup like nav-drawer); portaled onto .js-shell
 //
 // Invariant: TOC layout box ≤ available viewport band; overflow scrolls inside
@@ -25,8 +25,8 @@
 }
 
 // —— Desktop sidebar (≥ lg) ——
-// Stretch column is the Affix container; `.aside-toc` is the pinned panel
-// (absolute TOP/BOTTOM, fixed while scrolling). Internal overflow only.
+// Stretch column is the Affix container. `.aside-toc` is absolute in the column
+// for TOP/BOTTOM; Affix adds `.is-pinned` + inline fixed box while scrolling.
 @include media.media-breakpoint-up(lg) {
   .article-aside,
   .article-aside.modal {
@@ -80,6 +80,8 @@
       left: 0;
       width: 100%;
       box-sizing: border-box;
+      // 100% = aside column; also clamp to viewport so a tall column cannot
+      // grow the panel past the screen.
       max-height: #{"min(100%, #{$toc-viewport-max})"};
       padding:
         map.get(variables.$spacers, 5) 0
@@ -88,10 +90,9 @@
       overscroll-behavior: contain;
       @include overflow.overflow(auto);
 
-      // Affix FIXED — max-height only here. position/left/width are set inline in
-      // one assign so we never paint fixed with this rule's left:0 / width:100%.
-      &.fixed {
-        position: fixed;
+      // PINNED — Affix sets position/left/width/top inline in one assign.
+      // max-height drops the 100%-of-aside term (fixed CB is the viewport).
+      &.is-pinned {
         max-height: $toc-viewport-max;
       }
     }

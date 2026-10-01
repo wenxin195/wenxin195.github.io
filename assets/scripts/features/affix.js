@@ -8,7 +8,8 @@ import { matches, subscribe } from '@/utils/breakpoints.js';
  * 契约：
  * - Affix 挂在 `.js-aside-toc`（视口钳制后的面板），container 为 `.js-article-aside`
  *   （与正文同高的 stretch 列）。
- * - TOC 内容再长也只在面板内滚动；BOTTOM 为列内 absolute 贴底，不拉长文档滚动。
+ * - TOP/BOTTOM：列内 absolute；PINNED：`position:fixed` + 列的视口 left/width。
+ * - TOC 内容再长也只在面板内滚动；BOTTOM 列内贴底，不拉长文档滚动。
  *
  * @param {{
  *   element: (?Element|undefined),

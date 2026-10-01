@@ -5,8 +5,8 @@ import { SITE_EVENTS } from '@/features/events.js';
 
 /**
  * @fileoverview 文章侧栏入口——吸顶 + 目录 + 窄屏 TOC 抽屉。
- * 契约：`≥ lg` 侧栏 + affix（面板视口钳制、列内贴底）；`< lg` 右抽屉 + FAB。
- * TOC 内容高度不得影响 document.scrollHeight。
+ * 契约：`≥ lg` 侧栏 + Affix（TOP/BOTTOM absolute；PINNED fixed）；
+ * `< lg` 右抽屉 + FAB。TOC 内容高度不得影响 document.scrollHeight。
  */
 document.addEventListener('DOMContentLoaded', () => {
   const aside = document.querySelector('.js-article-aside');

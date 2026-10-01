@@ -58,6 +58,8 @@ exclude:
   - test-results
   - test
   - Rakefile
+  - scripts
+  - TESTING.md
   - .npmrc
   - .sass-cache/
   - .jekyll-cache/

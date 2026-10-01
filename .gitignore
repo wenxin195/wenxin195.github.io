@@ -20,6 +20,7 @@ Thumbs.db
 .stylelintrc
 
 # Local tests (not published)
+/TESTING.md
 /e2e/
 /test/
 /playwright.config.js
@@ -52,3 +53,7 @@ _site/
 _drifts/
 docs/
 _cite/
+
+# Local Cursor skills (not published)
+.cursor/skills/
+paper-search-results/

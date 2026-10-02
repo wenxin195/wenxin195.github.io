@@ -44,7 +44,7 @@
 
       {%- if page.excerpt -%}
         <p class="article-hero__excerpt">
-          {{- page.excerpt | strip_html | strip_newlines | strip | truncate: _excerpt_truncate -}}
+          {{- page.excerpt | excerpt_text | truncate: _excerpt_truncate -}}
         </p>
       {%- endif -%}
 

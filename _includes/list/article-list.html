@@ -42,7 +42,7 @@
           <div class="article-list__description">
             {%- if _article.excerpt and include.show_excerpt -%}
               <div class="article-list__excerpt" itemprop="description">
-                <span>{{- _article.excerpt | strip_html | strip_newlines | strip | truncate: _excerpt_truncate -}}</span>
+                <span>{{- _article.excerpt | excerpt_text | truncate: _excerpt_truncate -}}</span>
               </div>
             {%- endif -%}
 

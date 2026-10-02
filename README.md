@@ -384,6 +384,35 @@ flowchart LR
 
 正文里用 `{% tabref id %}` 代替手写的「表 1」。caption 里可以写公式。未包 `{% table %}` 的表仍会加上横向滚动容器，但不编号。
 
+#### 参考文献
+
+文献集中写在 `_bibliography/references.bib`。正文用引用键指向条目，文末用 `{% bibliography %}` 生成参考文献列表。
+
+```markdown
+项目集的定义取自 {% cite han2011 "Chapter 6" %}。
+{% citet agrawal1993 %} 将购物篮写成项目集与事务集。
+
+{% nocite han2011 %}
+{% bibliography %}
+```
+
+| 标签 | 说明 |
+|------|------|
+| `{% cite key %}` | 括注式引用。`{% cite han2011 %}` 渲染为 **(Han et al., 2011)**。引号内可写引文页码，如 `{% cite han2011 "Chapter 6" %}`，页码以上标排在括号外 |
+| `{% citet key %}` | 叙述式引用。`{% citet agrawal1993 %}` 渲染为 **Agrawal et al.(1993)**。正文已经写出责任者时，用 `{% citeyear key %}`，只保留出版年 |
+| `{% nocite key %}` | 将该条目收入文末列表，正文不出现引用。可以一次写多个键 |
+| `{% bibliography %}` | 在文末生成参考文献 |
+
+英文作者写作 `{Han, Jiawei and Kamber, Micheline}`，中文作者写作 `{茆诗松 and 程依明}`，机构责任者整体再包一层花括号。中文条目另写 `language = {zh}`。一位作者只写姓氏。两位及以上只标第一责任者，英文用 **et al.**，中文在姓氏与 **等** 之间空一格。中文括注用全角括号和全角逗号。同一责任者在同一年有多篇文献时，出版年后依次加 a、b、c。
+
+文末条目按 GB/T 7714-2025 的著者-出版年制排版。出版年紧接责任者，中间用逗号。参考文献先按文种集中，次序为中文、日文、西文、俄文和其他文种，同一文种内再按责任者与出版年排列。文献类型标识用方括号，例如图书 **[M]**、期刊 **[J]**、报纸 **[N]**、会议录 **[C]**、学位论文 **[D]**、报告 **[R]**、标准 **[S]**、专利 **[P]**、网站和网页 **[EB]**、档案 **[A]**、地图 **[CM]**、数据集 **[DS]**、预印本 **[PP]**、汇编 **[G]**、计算机程序 **[CP]**、数据库 **[DB]**。电子资源在类型标识后加载体代码，例如 **[J/OL]**。析出文献和会议论文在类型标识之后用 **//** 引出出处或会议名称。
+
+Han J, Kamber M, Pei J, 2011. Data Mining: Concepts and Techniques[M]. 3rd ed. Waltham: Morgan Kaufmann.
+
+Agrawal R, Imielinski T, Swami A, 1993. Mining Association Rules between Sets of Items in Large Databases[C]//Proceedings of the 1993 ACM SIGMOD International Conference on Management of Data. New York: ACM, 207-216.
+
+茆诗松, 程依明, 濮晓龙, 2019. 概率论与数理统计教程[M]. 3 版. 北京: 高等教育出版社.
+
 #### 代码块
 
 围栏代码块由 Rouge 高亮。默认会显示语言标签、从 1 开始的行号和复制按钮：

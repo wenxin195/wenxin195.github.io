@@ -8,6 +8,7 @@ require_relative "transforms/images"
 require_relative "transforms/tables"
 require_relative "transforms/task_lists"
 require_relative "transforms/code_blocks"
+require_relative "transforms/bibliography"
 require_relative "icons"
 
 module Jekyll
@@ -34,6 +35,9 @@ module Jekyll
         Transforms::Images.apply!(frag) if html.include?("<img")
         Transforms::Tables.apply!(frag) if html.include?("<table") || html.include?("data-table") || html.include?("data-tab-ref")
         Transforms::TaskLists.apply!(frag, @site) if html.include?("task-list")
+        if html.include?("data-cite") || html.include?("data-nocite") || html.include?("data-bibliography")
+          Transforms::Bibliography.apply!(frag, Jekyll::Bibliography::Library.for(@site))
+        end
         yield frag if block_given?
         frag.to_html
       end

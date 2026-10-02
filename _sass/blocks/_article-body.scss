@@ -101,6 +101,39 @@
     }
   }
 
+  .bibliography {
+    margin-top: map.get(variables.$spacers, 5);
+
+    @media print {
+      margin-top: map.get(variables.$spacers, 2) * 2;
+    }
+
+    ol {
+      margin-left: 0;
+      padding-left: 0;
+      list-style: none;
+      counter-reset: bibliography;
+    }
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      column-gap: 1em;
+      padding-left: 0;
+      text-indent: 0;
+
+      &::before {
+        content: "[" counter(bibliography) "]";
+        counter-increment: bibliography;
+        flex: none;
+      }
+    }
+
+    .bibliography-text {
+      min-width: 0;
+    }
+  }
+
   pre {
     @include overflow.overflow(auto);
 

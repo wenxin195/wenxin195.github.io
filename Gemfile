@@ -4,6 +4,7 @@ source "https://rubygems.org"
 gem 'jekyll'
 gem 'faraday-retry'
 gem 'nokogiri'
+gem 'bibtex-ruby'
 gem "wdm", "~> 0.2.0", platforms: %i[mingw mswin x64_mingw windows]
 
 # jekyll插件

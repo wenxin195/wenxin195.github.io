@@ -32,6 +32,7 @@ Feature: true
 markdown: kramdown
 kramdown:
   input: GFM
+  smart_quotes: apos,apos,quot,quot
   math_engine: mathjax
   footnote_backlink: "&#8617;&#xfe0e;"
   syntax_highlighter: rouge
@@ -60,6 +61,7 @@ exclude:
   - Rakefile
   - scripts
   - TESTING.md
+  - AGENTS.md
   - .npmrc
   - .sass-cache/
   - .jekyll-cache/

@@ -50,10 +50,11 @@ _site/
 .codegraph/
 
 # Local content
-_drifts/
+_drafts/
 docs/
 _cite/
 
 # Local Cursor skills (not published)
+AGENTS.md
 .cursor/skills/
 paper-search-results/

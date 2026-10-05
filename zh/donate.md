@@ -1,6 +1,8 @@
 ---
 layout: page
 key: page-donate
+lang: zh-CN
+permalink: /zh/donate
 title: 捐赠支持
 ---
 
@@ -31,4 +33,4 @@ title: 捐赠支持
 
 ---
 
-*如果有任何问题或其他支持方式的建议，欢迎[联系我](/contact.html)。*
+*如果有任何问题或其他支持方式的建议，欢迎[联系我](/zh/contact/)。*

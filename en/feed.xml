@@ -1,0 +1,7 @@
+---
+layout: null
+permalink: /en/feed.xml
+lang: en
+sitemap: false
+---
+{% include feed/atom.xml lang="en" home="/en/" subtitle="Models and the World" %}

@@ -1,7 +1,11 @@
 ---
 key: component-of-powerbi
 title: "Power BI 基础(1) Power 组件"
-permalink: "/component-of-powerbi"
+lang: zh-CN
+permalink: "/zh/component-of-powerbi"
+redirect_from:
+  - /component-of-powerbi
+  - /component-of-powerbi/
 tags:
   - Power BI
 author: Wenxin Zhong

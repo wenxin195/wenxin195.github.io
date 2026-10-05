@@ -2,8 +2,8 @@
   <div class="search search--dark">
     <div class="search__inner">
       <div class="search__header">
-        <span>{{- _t.SEARCH -}}</span>
-        <button type="button" class="button button--theme-dark button--pill search__cancel js-search-toggle">
+        <span data-i18n="SEARCH">{{- _t.SEARCH -}}</span>
+        <button type="button" class="button button--theme-dark button--pill search__cancel js-search-toggle" data-i18n="CANCEL">
           {{- _t.CANCEL -}}
         </button>
       </div>
@@ -12,10 +12,12 @@
           <input
             type="search"
             class="pagefind-ui__search-input"
-            placeholder="搜索文章标题和内容..."
+            placeholder="{{ _t.SEARCH_PLACEHOLDER }}"
             autocomplete="off"
             enterkeyhint="search"
-            aria-label="搜索"
+            aria-label="{{ _t.SEARCH }}"
+            data-i18n-placeholder="SEARCH_PLACEHOLDER"
+            data-i18n-aria="SEARCH"
           />
         </div>
         <div id="pagefind-search-summary"></div>

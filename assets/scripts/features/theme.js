@@ -1,16 +1,10 @@
+import { t } from '@/utils/i18n.js';
+
 /** @const {!Array<string>} */
 const THEMES = Object.freeze(['default', 'dark']);
 
 /** @const {string} */
 const DEFAULT_STORAGE_KEY = 'site-theme';
-
-/**
- * @const {!Object<string, string>}
- */
-const LABELS = Object.freeze({
-  default: '切换为暗色主题',
-  dark: '切换为亮色主题',
-});
 
 /**
  * @param {*} value
@@ -50,7 +44,10 @@ function writeStoredTheme(storageKey, theme) {
  * @param {string} theme
  */
 function syncToggleUi(toggleEl, theme) {
-  toggleEl.setAttribute('aria-label', LABELS[theme]);
+  toggleEl.setAttribute(
+    'aria-label',
+    theme === 'dark' ? t('THEME_TO_LIGHT', 'Switch to light theme') : t('THEME_TO_DARK', 'Switch to dark theme'),
+  );
   toggleEl.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
 }
 

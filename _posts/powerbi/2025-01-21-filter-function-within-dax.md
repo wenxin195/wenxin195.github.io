@@ -1,7 +1,11 @@
 ---
 key: filter-function-within-dax
 title: "Power BI 基础(3) 筛选函数"
-permalink: "/filter-function-within-dax"
+lang: zh-CN
+permalink: "/zh/filter-function-within-dax"
+redirect_from:
+  - /filter-function-within-dax
+  - /filter-function-within-dax/
 tags:
   - Power BI
 author: Wenxin Zhong

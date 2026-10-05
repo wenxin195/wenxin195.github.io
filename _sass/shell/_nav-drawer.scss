@@ -61,6 +61,11 @@
   color: variables.$text-color-d;
 }
 
+.nav-drawer__lang {
+  flex-shrink: 0;
+  padding-top: map.get(variables.$spacers, 3);
+}
+
 .nav-drawer__nav {
   flex: 1 1 auto;
   min-height: 0;
@@ -77,6 +82,14 @@
       variables.$main-color-1,
       $disabled-alpha: 0.2
     );
+  }
+
+  a.navigation__item--active {
+    --clickable-fg: #{variables.$main-color-1};
+    --clickable-hover-fg: #{variables.$main-color-1};
+    --clickable-active-fg: #{variables.$main-color-1};
+    --clickable-focus-fg: #{variables.$main-color-1};
+    font-weight: map.get(variables.$base, font-weight-bold);
   }
 
   & > ul {
@@ -99,21 +112,13 @@
   .navigation__item {
     flex: 1;
     font-size: map.get(variables.$base, font-size);
-
-    &::after {
-      display: none;
-    }
-  }
-
-  .navigation__item--active {
-    color: variables.$main-color-1;
-    font-weight: map.get(variables.$base, font-weight-bold);
+    align-self: auto;
   }
 
   .navigation__icon {
     width: 1.5rem;
     height: 1.5rem;
     flex-shrink: 0;
-    color: inherit;
+    color: variables.$text-color;
   }
 }

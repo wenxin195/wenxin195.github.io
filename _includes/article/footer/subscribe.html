@@ -1,6 +1,7 @@
+{%- assign _rss_href = site.data.path.urls.rss[_locale_key] | default: site.data.path.urls.rss['zh-CN'] | default: '/zh/feed.xml' -%}
 <div class="subscribe">
   {% include utils/icon.html name="rss" %}
-  <a type="application/rss+xml" href="{{ site.data.path.urls.rss | prepend: site.baseurl }}" target="_blank">
+  <a type="application/rss+xml" href="{{ _rss_href | relative_url }}" target="_blank">
     {{- _t.SUBSCRIBE -}}
   </a>
 </div>

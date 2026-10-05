@@ -14,7 +14,7 @@ module Jekyll
       def enhance!(doc)
         return unless Guard.enhancable?(doc)
 
-        doc.content = enhancer_for(doc.site).enhance(doc.content) do |frag|
+        doc.content = enhancer_for(doc.site).enhance(doc.content, doc: doc) do |frag|
           Toc.assign!(doc, frag)
         end
       end

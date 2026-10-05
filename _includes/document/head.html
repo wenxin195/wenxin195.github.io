@@ -13,7 +13,26 @@
 {% comment %} 基于 _config.yml 生成 SEO，高级用法：https://jekyll.github.io/jekyll-seo-tag/advanced-usage/ {% endcomment %}
 {% seo %}
 
-<link rel="alternate" type="application/rss+xml" title='{{ site.title }}' href='{{ site.baseurl | append: site.data.path.urls.rss }}' />
+{%- assign _hreflang_page = paginator.page | default: 1 -%}
+{%- if page.key and _hreflang_page == 1 -%}
+  {%- for _p in site.pages -%}
+    {%- if _p.key == page.key and _p.lang and _p.url contains '/page/' -%}
+    {%- elsif _p.key == page.key and _p.lang -%}
+      <link rel="alternate" hreflang="{{ _p.lang }}" href="{{ _p.url | absolute_url }}" />
+    {%- endif -%}
+  {%- endfor -%}
+  {%- for _p in site.posts -%}
+    {%- if _p.key == page.key and _p.lang -%}
+      <link rel="alternate" hreflang="{{ _p.lang }}" href="{{ _p.url | absolute_url }}" />
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if page.lang == 'zh-CN' -%}
+    <link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}" />
+  {%- endif -%}
+{%- endif -%}
+
+{%- assign _rss_href = site.data.path.urls.rss[_locale_key] | default: site.data.path.urls.rss['zh-CN'] | default: '/zh/feed.xml' -%}
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ _rss_href | relative_url }}" />
 
 {%- include document/favicon.html -%}
 

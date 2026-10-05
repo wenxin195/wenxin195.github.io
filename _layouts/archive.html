@@ -1,27 +1,19 @@
 ---
 layout: shell
-titles:
-  en      : &EN       Archive
-  en-GB   : *EN
-  en-US   : *EN
-  en-CA   : *EN
-  en-AU   : *EN
-  zh-Hans : &ZH_HANS  归档
-  zh      : *ZH_HANS
-  zh-CN   : *ZH_HANS
-  zh-SG   : *ZH_HANS
-  zh-Hant : &ZH_HANT  歸檔
-  zh-TW   : *ZH_HANT
-  zh-HK   : *ZH_HANT
 ---
 {%- include utils/locale.html -%}
+{%- assign _lang_posts = site.posts | where: 'lang', page.lang -%}
 <div class="layout-archive">
 
   <div class="layout-archive__inner">
     {%- include archive/filters.html -%}
 
     <div class="archive-result js-archive-result">
-      {%- include list/article-list.html articles=site.posts type='brief' show_info=true group_by='year' -%}
+      {%- if _lang_posts.size == 0 -%}
+        <p class="layout-archive__empty">{{- _t.NO_POSTS -}}</p>
+      {%- else -%}
+        {%- include list/article-list.html articles=_lang_posts type='brief' show_info=true group_by='year' -%}
+      {%- endif -%}
     </div>
   </div>
 </div>

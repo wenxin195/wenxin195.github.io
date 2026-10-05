@@ -1,7 +1,11 @@
 ---
 key: javascript-basic
 title: "JavaScript 教程(1) JS 基础"
-permalink: "/javascript-basic"
+lang: zh-CN
+permalink: "/zh/javascript-basic"
+redirect_from:
+  - /javascript-basic
+  - /javascript-basic/
 tags:
   - JavaScript
 author: Wenxin Zhong

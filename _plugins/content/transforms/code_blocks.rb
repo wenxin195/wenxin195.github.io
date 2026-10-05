@@ -19,6 +19,7 @@ module Jekyll
         SKIP_LANGS = %w[mermaid chart].freeze
 
         class Pipeline
+          attr_accessor :copy_label
           def initialize(site)
             @site = site
             %w[file-code code clipboard].each do |name|
@@ -189,7 +190,7 @@ module Jekyll
             button = Nokogiri::XML::Node.new("button", frag)
             button["type"] = "button"
             button["class"] = "code-block__copy"
-            button["aria-label"] = "复制代码"
+            button["aria-label"] = @copy_label || "复制代码"
             button["data-code-copy"] = ""
             Icons.append_span!(button, @site, "clipboard")
 

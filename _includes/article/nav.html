@@ -1,8 +1,23 @@
-{%- assign _previous = page.previous -%}
-{%- assign _next = page.next -%}
+{%- include utils/locale.html -%}
+{%- assign _previous = nil -%}
+{%- assign _next = nil -%}
+{%- assign _lang_posts = site.posts | where: 'lang', page.lang -%}
+{%- assign _found = false -%}
+{%- assign _last = nil -%}
+{%- for _p in _lang_posts -%}
+  {%- if _found -%}
+    {%- assign _previous = _p -%}
+    {%- break -%}
+  {%- endif -%}
+  {%- if _p.url == page.url -%}
+    {%- assign _found = true -%}
+    {%- assign _next = _last -%}
+  {%- endif -%}
+  {%- assign _last = _p -%}
+{%- endfor -%}
 
 {%- if _next or _previous -%}
-  <nav class="article-nav flow-root d-print-none" aria-label="上下篇">
+  <nav class="article-nav flow-root d-print-none" aria-label="{{ _t.PREVIOUS }} / {{ _t.NEXT }}">
     {%- if _previous -%}
       {%- assign _href = _previous.url | prepend: site.baseurl -%}
       <div class="article-nav__previous">

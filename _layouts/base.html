@@ -5,9 +5,35 @@
 {%- unless _site_theme == 'default' or _site_theme == 'dark' -%}
   {%- assign _site_theme = 'default' -%}
 {%- endunless -%}
-<html lang="{{ site.lang }}" data-theme="{{ _site_theme }}">
+<html lang="{{ page.lang | default: site.lang }}" data-theme="{{ _site_theme }}">
   <head>
     {%- comment -%} Theme sync before CSS — prevents FOUC; see docs/theme-architecture.md {%- endcomment -%}
+    <script type="application/json" id="site-i18n">{{ _t | jsonify }}</script>
+    {%- if page.key == 'page-not-found' -%}
+    <script type="application/json" id="site-i18n-en">{{ site.data.locale.en | jsonify }}</script>
+    {%- endif -%}
+    <script>
+      (function () {
+        try {
+          var el = document.getElementById('site-i18n');
+          window.__t = el ? JSON.parse(el.textContent) : {};
+        } catch (e) {
+          window.__t = {};
+        }
+        var enEl = document.getElementById('site-i18n-en');
+        if (enEl) {
+          var path = location.pathname || '';
+          var isEn = path === '/en' || path.indexOf('/en/') === 0;
+          if (isEn) {
+            try {
+              window.__t = JSON.parse(enEl.textContent);
+            } catch (e) {}
+            document.documentElement.lang = 'en';
+            document.documentElement.setAttribute('data-404-locale', 'en');
+          }
+        }
+      })();
+    </script>
     <script>
       (function () {
         var KEY = 'site-theme';

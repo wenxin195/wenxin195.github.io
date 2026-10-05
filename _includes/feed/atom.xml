@@ -1,0 +1,60 @@
+{%- comment -%}
+  Locale-scoped Atom feed.
+  Params: include.lang (e.g. zh-CN / en), include.home (e.g. /zh/ /en/),
+          include.subtitle (optional).
+{%- endcomment -%}
+{%- assign _feed_lang = include.lang | default: 'zh-CN' -%}
+{%- assign _feed_home = include.home | default: '/' -%}
+{%- assign _feed_title = site.title | default: site.name -%}
+{%- assign _feed_subtitle = include.subtitle | default: site.description -%}
+{%- assign _posts = site.posts | where: "lang", _feed_lang -%}
+{%- unless site.show_drafts -%}
+  {%- assign _posts = _posts | where_exp: "post", "post.draft != true" -%}
+{%- endunless -%}
+{%- assign _posts = _posts | sort: "date" | reverse -%}
+{%- assign _posts_limit = site.feed.post_limit | default: site.feed.posts_limit | default: 999 -%}
+{%- assign _author_name = site.author.name | default: site.author -%}
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{ _feed_lang }}">
+  <generator uri="https://jekyllrb.com/" version="{{ jekyll.version }}">Jekyll</generator>
+  <link href="{{ page.url | absolute_url }}" rel="self" type="application/atom+xml" />
+  <link href="{{ _feed_home | absolute_url }}" rel="alternate" type="text/html" hreflang="{{ _feed_lang }}" />
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <id>{{ page.url | absolute_url | xml_escape }}</id>
+  <title type="html">{{ _feed_title | smartify | xml_escape }}</title>
+  {%- if _feed_subtitle -%}
+  <subtitle>{{ _feed_subtitle | xml_escape }}</subtitle>
+  {%- endif -%}
+  <author>
+    <name>{{ _author_name | xml_escape }}</name>
+    {%- if site.author.email -%}
+    <email>{{ site.author.email | xml_escape }}</email>
+    {%- endif -%}
+  </author>
+  {%- for post in _posts limit: _posts_limit -%}
+  {%- assign _post_title = post.title | smartify | strip_html | normalize_whitespace | xml_escape -%}
+  <entry xml:lang="{{ post.lang | default: _feed_lang }}">
+    <title type="html">{{ _post_title }}</title>
+    <link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html" title="{{ _post_title }}" />
+    <published>{{ post.date | date_to_xmlschema }}</published>
+    <updated>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</updated>
+    <id>{{ post.id | absolute_url | xml_escape }}</id>
+    <author>
+      <name>{{ _author_name | xml_escape }}</name>
+      {%- if site.author.email -%}
+      <email>{{ site.author.email | xml_escape }}</email>
+      {%- endif -%}
+    </author>
+    {%- for category in post.categories -%}
+    <category term="{{ category | xml_escape }}" />
+    {%- endfor -%}
+    {%- for tag in post.tags -%}
+    <category term="{{ tag | xml_escape }}" />
+    {%- endfor -%}
+    {%- assign _post_summary = post.description | default: post.excerpt -%}
+    {%- if _post_summary and _post_summary != empty -%}
+    <summary type="html"><![CDATA[{{ _post_summary | strip_html | normalize_whitespace }}]]></summary>
+    {%- endif -%}
+  </entry>
+  {%- endfor -%}
+</feed>

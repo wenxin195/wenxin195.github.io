@@ -1,25 +1,46 @@
 {%- comment -%}
   顶栏与抽屉导航的链接列表（主题切换、搜索仍在 header actions）。
   依赖：_locale_key（utils/locale.html）。
+  当前页高亮：去掉 index.html 与空段落后比较；首页含 /zh/page/N、/en/page/N。
 {%- endcomment -%}
 {%- if site.data.navigation.header -%}
+  {%- assign _page_norm = '' -%}
+  {%- assign _page_parts = page.url | replace: 'index.html', '' | split: '/' -%}
+  {%- for _p in _page_parts -%}
+    {%- if _p != '' -%}
+      {%- assign _page_norm = _page_norm | append: '/' | append: _p -%}
+    {%- endif -%}
+  {%- endfor -%}
   {%- for _item in site.data.navigation.header -%}
-    <!-- 导航分组：图标 + 链接 -->
-    <li class="navigation__group navigation__group--{{ _item.icon }}">
+    {%- assign _item_href = _item.urls[_locale_key] | default: _item.urls['zh-CN'] -%}
+    {%- assign _item_norm = '' -%}
+    {%- assign _item_parts = _item_href | replace: 'index.html', '' | split: '/' -%}
+    {%- for _p in _item_parts -%}
+      {%- if _p != '' -%}
+        {%- assign _item_norm = _item_norm | append: '/' | append: _p -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- assign _is_active = false -%}
+    {%- assign _item_page_prefix = _item_norm | append: '/page/' -%}
+    {%- if _item_norm == '/zh' or _item_norm == '/en' -%}
+      {%- if _page_norm == _item_norm or _page_norm contains _item_page_prefix -%}
+        {%- assign _is_active = true -%}
+      {%- endif -%}
+    {%- elsif _page_norm == _item_norm -%}
+      {%- assign _is_active = true -%}
+    {%- endif -%}
+
+    {%- assign _group_class = 'navigation__group navigation__group--' | append: _item.icon -%}
+    {%- assign _active_class = 'navigation__item' -%}
+    {%- if _is_active -%}
+      {%- assign _active_class = _active_class | append: ' navigation__item--active' -%}
+    {%- endif -%}
+
+    <li class="{{ _group_class }}">
       {% include utils/icon.html name=_item.icon class="navigation__icon" icon_size="1.5rem" %}
 
-      {%- comment -%} 当前页高亮：规范化 URL 后做 contains 匹配 {%- endcomment -%}
-      {%- assign _active_class = 'navigation__item' -%}
-      {%- assign current_url = page.url | append: '/' | replace: '.html', '' -%}
-      {%- assign item_url = _item.url | append: '/' -%}
-
-      {%- if current_url contains item_url -%}
-        {%- assign _active_class = _active_class | append: ' navigation__item--active' -%}
-      {%- endif -%}
-
-      {%- comment -%} 标题按 locale 取值，缺省回退到 zh-CN {%- endcomment -%}
       {%- assign _nav_title = _item.titles[_locale_key] | default: _item.titles['zh-CN'] -%}
-      <a class="{{ _active_class }}" href="{{ _item.url }}">{{- _nav_title -}}</a>
+      <a class="{{ _active_class }}" href="{{ _item_href | relative_url }}" data-href-zh="{{ _item.urls['zh-CN'] | relative_url }}" data-href-en="{{ _item.urls.en | relative_url }}" data-title-zh="{{ _item.titles['zh-CN'] }}" data-title-en="{{ _item.titles.en }}">{{- _nav_title -}}</a>
     </li>
   {%- endfor -%}
 {%- endif -%}

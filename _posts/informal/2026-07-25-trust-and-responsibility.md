@@ -1,7 +1,11 @@
 ---
 key: trust-and-responsibility
 title: "AI 协作范式(2) 可信边界与人的责任"
-permalink: "/trust-and-responsibility"
+lang: zh-CN
+permalink: "/zh/trust-and-responsibility"
+redirect_from:
+  - /trust-and-responsibility
+  - /trust-and-responsibility/
 tags:
   - 人机协作
   - AI4S

@@ -1,0 +1,29 @@
+{%- include utils/locale.html -%}
+<form class="contact-form" action="https://formspree.io/f/mrbgzrdg" method="POST">
+  <div class="form-group">
+    <label class="form-label" for="name">
+      {% include utils/icon.html name="user" %}<span> {{ _t.CONTACT_NAME }}</span>
+    </label>
+    <input class="form-input" type="text" id="name" name="name" autocomplete="name" required>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="email">
+      {% include utils/icon.html name="mail" %}<span> {{ _t.CONTACT_EMAIL }}</span>
+    </label>
+    <input class="form-input" type="email" id="email" name="_replyto" autocomplete="email" required>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="message">
+      {% include utils/icon.html name="message-circle" %}<span> {{ _t.CONTACT_MESSAGE }}</span>
+    </label>
+    <textarea class="form-textarea" id="message" name="message" required></textarea>
+  </div>
+
+  <input type="hidden" name="_subject" value="{{ _t.CONTACT_SUBJECT }}">
+
+  <button class="form-button" type="submit">
+    {% include utils/icon.html name="send" %}<span> {{ _t.CONTACT_SEND }}</span>
+  </button>
+</form>

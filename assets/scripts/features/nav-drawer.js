@@ -2,6 +2,7 @@ import { Modal } from '@/lib/modal.js';
 import { SITE_EVENTS } from '@/features/events.js';
 import { matches, subscribe } from '@/utils/breakpoints.js';
 import { setIcon } from '@/lib/icons.js';
+import { t } from '@/utils/i18n.js';
 
 /**
  * 站点导航左抽屉（`< md`）。与 TOC / 搜索互斥。
@@ -40,7 +41,7 @@ export function init(options = {}) {
     toggleEls.forEach((el) => {
       el.setAttribute('aria-expanded', String(open));
       if (el.classList.contains('site-header__menu-toggle')) {
-        el.setAttribute('aria-label', open ? '关闭菜单' : '打开菜单');
+        el.setAttribute('aria-label', open ? t('CLOSE_MENU', 'Close menu') : t('OPEN_MENU', 'Open menu'));
         const icon = el.querySelector('[data-icon], .icon-lucide');
         if (icon) {
           setIcon(icon, open ? 'x' : 'menu');

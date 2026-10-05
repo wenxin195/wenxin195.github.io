@@ -1,7 +1,11 @@
 ---
 key: work-collaboration
 title: "AI 协作范式(3) 工作项目 AI 协作实操案例"
-permalink: "/work-collaboration"
+lang: zh-CN
+permalink: "/zh/work-collaboration"
+redirect_from:
+  - /work-collaboration
+  - /work-collaboration/
 tags:
   - 人机协作
   - AI4S

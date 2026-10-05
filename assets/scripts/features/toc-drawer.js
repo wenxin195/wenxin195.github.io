@@ -2,6 +2,7 @@ import { Modal } from '@/lib/modal.js';
 import { SITE_EVENTS } from '@/features/events.js';
 import { matches, subscribe } from '@/utils/breakpoints.js';
 import { iconEl } from '@/lib/icons.js';
+import { t } from '@/utils/i18n.js';
 
 /** Match `$animation.duration` (panel slide) so focus lands after motion. */
 const TOC_DRAWER_FOCUS_DELAY_MS = 400;
@@ -87,7 +88,7 @@ export function init(options = {}) {
   const tocButton = document.createElement('button');
   tocButton.type = 'button';
   tocButton.className = 'float-btn float-btn--toc js-toc-toggle visible';
-  tocButton.setAttribute('aria-label', '打开目录');
+  tocButton.setAttribute('aria-label', t('OPEN_TOC', 'Open table of contents'));
   tocButton.setAttribute('aria-controls', 'article-toc-panel');
   tocButton.setAttribute('aria-expanded', 'false');
   tocButton.appendChild(iconEl('list'));
@@ -100,7 +101,7 @@ export function init(options = {}) {
     document.querySelectorAll('.js-toc-toggle').forEach((el) => {
       el.setAttribute('aria-expanded', String(open));
     });
-    tocButton.setAttribute('aria-label', open ? '关闭目录' : '打开目录');
+    tocButton.setAttribute('aria-label', open ? t('CLOSE_TOC', 'Close table of contents') : t('OPEN_TOC', 'Open table of contents'));
   }
 
   /**

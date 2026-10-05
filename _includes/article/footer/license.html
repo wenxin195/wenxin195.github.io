@@ -1,15 +1,9 @@
-{% capture _license_name %}
-  <a itemprop="license" href="{{ include.license.url }}">
-    {{- include.license.name -}}
-  </a>
-{% endcapture %}
+{% capture _license_name -%}
+  <a itemprop="license" href="{{ include.license.url }}">{{- include.license.name -}}</a>
+{%- endcapture %}
 
 <div class="license">
-  {%- assign _announce = _t.LICENSE_ANNOUNCE | split: ' ' -%}
-  
   <p>
-    <span>{{- _announce[0] -}}</span>
-    {{- _announce[1] | replace: '[LICENSE]', _license_name -}}
-    <span>{{- _announce[2] -}}</span>
+    {{- _t.LICENSE_ANNOUNCE | replace: '[LICENSE]', _license_name -}}
   </p>
 </div>

@@ -8,15 +8,15 @@
 <aside
   class="modal article-aside js-article-aside js-toc-drawer modal--drawer-end d-print-none"
   id="article-toc-panel"
-  aria-label="文章目录"
+  aria-label="{{ _t.ARTICLE_TOC }}"
 >
   <div class="article-aside__panel">
     <div class="article-aside__header">
-      <p class="article-aside__title">目录</p>
+      <p class="article-aside__title">{{- _t.TOC -}}</p>
       <button
         type="button"
         class="button button--secondary button--circle article-aside__close js-toc-toggle"
-        aria-label="关闭目录"
+        aria-label="{{ _t.CLOSE_TOC }}"
         aria-controls="article-toc-panel"
       >
         {% include utils/icon.html name="x" %}

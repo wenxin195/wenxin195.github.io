@@ -1,5 +1,11 @@
 urls:
   root   : /
-  home   : /
-  archive: /archive
-  rss    : /feed.xml
+  home:
+    zh-CN: /zh/
+    en: /en/
+  archive:
+    zh-CN: /zh/archive
+    en: /en/archive
+  rss:
+    zh-CN: /zh/feed.xml
+    en: /en/feed.xml

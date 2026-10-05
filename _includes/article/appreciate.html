@@ -1,10 +1,10 @@
 <div class="appreciate">
-  <button type="button" class="appreciate-btn" title="打赏给我">
+  <button type="button" class="appreciate-btn" title="{{ _t.APPRECIATE }}">
     <img src="{{ 'assets/images/icon/ui/appreciate.svg' | relative_url }}" alt="appreciate">
   </button>
 
   <div class="flyout flyout--drop">
-    <p class="flyout__title">感谢支持！您的打赏是我继续创作的动力！</p>
+    <p class="flyout__title">{{- _t.APPRECIATE_THANKS -}}</p>
     {% include donate/domestic.html variant="flyout" %}
     {% include donate/overseas.html variant="flyout" %}
   </div>

@@ -1,6 +1,7 @@
 import { getBaseUrl } from '@/utils/baseUrl.js';
 import { throttle } from '@/utils/throttle.js';
 import { iconEl } from '@/lib/icons.js';
+import { t } from '@/utils/i18n.js';
 
 /**
  * 挂载回到顶部与微信二维码悬浮操作。
@@ -32,14 +33,14 @@ export function init(options = {}) {
   const qrcodeTrigger = document.createElement('button');
   qrcodeTrigger.type = 'button';
   qrcodeTrigger.className = 'float-btn qrcode__trigger';
-  qrcodeTrigger.setAttribute('aria-label', '微信二维码');
-  qrcodeTrigger.innerHTML = `<img class="float-btn__img" src="${baseUrl}/assets/images/icon/ui/qrcode.svg" alt="二维码" />`;
+  qrcodeTrigger.setAttribute('aria-label', t('WECHAT_QR', 'WeChat QR code'));
+  qrcodeTrigger.innerHTML = `<img class="float-btn__img" src="${baseUrl}/assets/images/icon/ui/qrcode.svg" alt="${t('QR_CODE', 'QR code')}" />`;
 
   const qrcodePopup = document.createElement('div');
   qrcodePopup.className = 'flyout flyout--rail';
   qrcodePopup.innerHTML = `
-    <p class="flyout__title">扫码关注公众号</p>
-    <img class="flyout__media" src="${baseUrl}/assets/images/site/wechat-oa.jpg" alt="微信二维码" />
+    <p class="flyout__title">${t('FOLLOW_OA', 'Scan to follow the WeChat account')}</p>
+    <img class="flyout__media" src="${baseUrl}/assets/images/site/wechat-oa.jpg" alt="${t('WECHAT_QR', 'WeChat QR code')}" />
   `;
 
   qrcode.appendChild(qrcodeTrigger);
@@ -49,7 +50,7 @@ export function init(options = {}) {
   scrollButton.type = 'button';
   scrollButton.className = 'float-btn float-btn--scroll-top';
   scrollButton.appendChild(iconEl('chevron-up'));
-  scrollButton.setAttribute('aria-label', '返回顶部');
+  scrollButton.setAttribute('aria-label', t('BACK_TO_TOP', 'Back to top'));
 
   floatingActions.appendChild(qrcode);
   floatingActions.appendChild(scrollButton);

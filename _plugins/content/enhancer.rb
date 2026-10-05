@@ -22,8 +22,10 @@ module Jekyll
         @code_blocks = Transforms::CodeBlocks::Pipeline.new(site)
       end
 
-      def enhance(html)
+      def enhance(html, doc: nil)
         return html if html.nil? || html.empty?
+
+        @code_blocks.copy_label = copy_label_for(doc)
 
         has_mermaid = html.include?("mermaid")
         has_rouge = html.include?("highlighter-rouge")
@@ -43,6 +45,14 @@ module Jekyll
       end
 
       private
+
+      def copy_label_for(doc)
+        lang = nil
+        lang = doc.data["lang"] if doc && doc.data
+        lang ||= @site.config["locale"] || @site.config["lang"] || "zh-CN"
+        dict = @site.data.dig("locale", lang) || @site.data.dig("locale", "zh-CN") || {}
+        dict["COPY_CODE"] || "复制代码"
+      end
 
       def apply_highlighter_fences!(frag, has_mermaid:)
         frag.css("div.highlighter-rouge").each do |shell|

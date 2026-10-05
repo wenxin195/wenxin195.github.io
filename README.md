@@ -14,9 +14,11 @@ Site: https://wenxin195.github.io
 
 ### About
 
-**StatSphere** is a personal Jekyll blog. It started from [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme): the code block UI and the `prompt-*` callouts are borrowed from [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy), and the titled `box-*` / `details-*` callouts and the Liquid-tag authoring style are borrowed from [huanyushi.github.io](https://github.com/huanyushi/huanyushi.github.io).
+**StatSphere** is Wenxin Zhong's personal blog — notes on statistics, data analysis, and related engineering.
 
-On top of that, the theme has been rebuilt quite a bit. The notes below describe how the site is put together today, and what you need to know to write content for it.
+Site: https://wenxin195.github.io
+
+The site is built on [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme): the code block UI and the `prompt-*` callouts are borrowed from [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy), and the titled `box-*` / `details-*` callouts and the Liquid-tag authoring style are borrowed from [huanyushi.github.io](https://github.com/huanyushi/huanyushi.github.io). On top of that, the theme has been rebuilt quite a bit. The site is bilingual (Chinese and English): Chinese is the default, English lives under `/en/`. The notes below describe how the site is put together today, and what you need to know to write content for it.
 
 ### How the site is built
 
@@ -31,6 +33,43 @@ flowchart TB
 ```
 
 The article header lives in its own `hero` layout instead of being buried inside the page shell.
+
+#### Languages
+
+Chinese content is served under `/zh/…`, English under `/en/…`. The site root `/` redirects to `/zh/`. Older root-level post URLs redirect to the corresponding `/zh/…` slugs via [jekyll-redirect-from](https://github.com/jekyll/jekyll-redirect-from).
+
+| Path | Role |
+|------|------|
+| `/` | redirect to `/zh/` |
+| `/zh/` | Chinese home (paginated) |
+| `/zh/page/:num/` | further Chinese home pages |
+| `/zh/<slug>/` | Chinese post |
+| `/zh/about` · `/zh/archive` · `/zh/donate` · `/zh/contact` | Chinese static pages |
+| `/zh/feed.xml` | Atom feed (Chinese posts) |
+| `/en/` | English home (paginated) |
+| `/en/page/:num/` | further English home pages |
+| `/en/<slug>/` | English post |
+| `/en/about` · `/en/archive` · `/en/donate` · `/en/contact` | English static pages |
+| `/en/feed.xml` | Atom feed (English posts) |
+
+Posts and pages carry a shared `key` so a Chinese page and its English counterpart can be paired. Front matter typically looks like this:
+
+```yaml
+key: association-rules
+lang: zh-CN                 # en for English
+locale: zh-CN               # used by pagination filtering; posts default to zh-CN
+permalink: /zh/association-rules
+redirect_from:              # optional; keep old root URLs working
+  - /association-rules
+  - /association-rules/
+```
+
+Static pages under `zh/` and `en/` follow the same `key` / `lang` / `permalink` pattern (for example `key: page-about`). A translation is optional: when no English post shares the `key`, the language switcher still offers English and falls back to `/en/`.
+
+UI chrome (navigation labels, search placeholder, copy-button feedback, aria-labels, and similar strings) comes from `_data/locale.yml`. The active dictionary is chosen from `page.lang`, injected as `window.__t`, and read by the front-end scripts. Navigation items in `_data/navigation.yml` expose both `titles` and `urls` for `zh-CN` and `en`.
+
+Home pagination uses [jekyll-paginate-v2](https://github.com/sverrirs/jekyll-paginate-v2), with a separate index for each language (`zh/index.html`, `en/index.html`). Lists, archive filters, previous/next links, and the feed are filtered by language so Chinese and English posts do not mix. GitHub Pages serves a single root `404.html` for missing URLs; when the requested path is under `/en/`, that page switches its chrome and tips to English in the browser.
+
 #### Ruby plugins
 
 ```
@@ -41,7 +80,7 @@ _plugins/
     enhancer.rb             # runs the whole parse/serialize pipeline once
     guard.rb                # skips non-article pages (e.g. assets/*.scss)
     toc.rb                  # build-time article TOC (hydrated client-side)
-    reading_time.rb         # reading time from HTML-stripped text (posts only)
+    reading_time.rb         # mixed CJK/English count after stripping HTML (posts only)
     language_name.rb        # maps Rouge language ids to display names
     icons.rb                # local Lucide icons (see _data/icons.yml)
     transforms/             # diagrams, figures, images, tables, task_lists, code_blocks
@@ -77,7 +116,7 @@ There are two callout systems with distinct roles — please don't mix them:
 > Short tip body.
 {: .prompt-tip}
 
-{% box danger "Independence caveat" %}
+{% box danger "Problem with the definition of independence" %}
 A longer, titled explanation…
 {% endbox %}
 ```
@@ -121,7 +160,7 @@ flowchart LR
 
 `cols` and `align` apply to image panels. A markdown body (typically one mermaid fence) cannot be mixed with `{% panel %}`. Unwrapped mermaid fences are not numbered.
 
-In prose, write `{% figref id %}` in place of a literal 「图 4」(the tag already includes 图 and the number). Math in a caption is written as in the body (`$A\subset B$`). `{% figref %}` may appear before the figure; numbering is assigned after Markdown convert.
+In prose, write `{% figref id %}` in place of a literal 「图 4」(the tag already includes 图 and the number). Math in a caption is written as in the body (`$A\subset B$`). `{% figref %}` may appear before the figure; numbering is filled in DOM order after Markdown is converted.
 
 #### Tables
 
@@ -143,9 +182,38 @@ See {% tabref sample-data %}.
 |-----------|--------|
 | `id` | required; unique among tables on the page (independent of figure ids) |
 | `caption` | required; becomes `表 N: …` |
-| `align` | optional `center` / `left`; omit to keep the existing table-wrapper cell styles |
+| `align` | optional `center` / `left`; omit to keep the existing `.table-wrapper` cell styles |
 
 In prose, write `{% tabref id %}` in place of a literal 「表 1」. Math in a caption is fine. Unwrapped tables still get the scroll wrapper, but they are not numbered.
+
+#### References
+
+References live in `_bibliography/references.bib`. Cite an entry from the body by its key, and generate the reference list at the end with `{% bibliography %}`.
+
+```markdown
+The definition of an itemset is taken from {% cite han2011 "Chapter 6" %}.
+{% citet agrawal1993 %} writes a market basket as an itemset and a set of transactions.
+
+{% nocite han2011 %}
+{% bibliography %}
+```
+
+| Tag | Notes |
+|-----|--------|
+| `{% cite key %}` | Parenthetical citation. `{% cite han2011 %}` renders as **(Han et al., 2011)**. A locator can go in quotes, as in `{% cite han2011 "Chapter 6" %}`; it is set as a superscript outside the parentheses |
+| `{% citet key %}` | Narrative citation. `{% citet agrawal1993 %}` renders as **Agrawal et al.(1993)**. When the creator is already named in the sentence, use `{% citeyear key %}` to keep only the year |
+| `{% nocite key %}` | Include the entry in the reference list without a citation in the body. Several keys can be listed at once |
+| `{% bibliography %}` | Generate the reference list at the end |
+
+Write English authors as `{Han, Jiawei and Kamber, Micheline}`, Chinese authors as `{茆诗松 and 程依明}`, and wrap a corporate author in an extra pair of braces. Chinese entries also set `language = {zh}`. A single author is cited by surname only. Two or more authors are cited by the first only: English uses **et al.**, and Chinese puts a space between the surname and **等**. Chinese parenthetical citations use fullwidth parentheses and a fullwidth comma. When the same creator has more than one work in the same year, a, b, c are appended to the year in order.
+
+End entries follow the author–date style of GB/T 7714-2025. The year follows the creator, separated by a comma. References are grouped by script — Chinese, Japanese, Western, Russian, then other languages — and within a script they are ordered by creator and year. Document types are marked in brackets: books **[M]**, journals **[J]**, newspapers **[N]**, conference proceedings **[C]**, dissertations **[D]**, reports **[R]**, standards **[S]**, patents **[P]**, websites and web pages **[EB]**, archives **[A]**, maps **[CM]**, datasets **[DS]**, preprints **[PP]**, collections **[G]**, computer programs **[CP]**, and databases **[DB]**. Electronic resources add a medium code after the type, for example **[J/OL]**. Analytic entries and conference papers use **//** after the type mark to introduce the source or the conference name.
+
+Han J, Kamber M, Pei J, 2011. Data Mining: Concepts and Techniques[M]. 3rd ed. Waltham: Morgan Kaufmann.
+
+Agrawal R, Imielinski T, Swami A, 1993. Mining Association Rules between Sets of Items in Large Databases[C]//Proceedings of the 1993 ACM SIGMOD International Conference on Management of Data. New York: ACM, 207-216.
+
+茆诗松, 程依明, 濮晓龙, 2019. 概率论与数理统计教程[M]. 3 版. 北京: 高等教育出版社.
 
 #### Code blocks
 
@@ -161,7 +229,7 @@ You can tweak a block with a Kramdown IAL on the line after the closing fence:
 
 | IAL | Effect |
 |-----|--------|
-| `{: file="app.js"}` | the header shows the filename instead of the language name |
+| `{: file="app.js"}` | the header shows the filename, which takes priority over the language name |
 | `{: .nolineno }` | no line numbers (the line-number markup isn't generated) |
 
 `chart` fences are rendered by a client-side provider, so they get no code-block wrapper. `mermaid` fences are turned into `<div class="mermaid">` at build time.
@@ -204,8 +272,9 @@ Keep node labels short, and split very deep flows into several diagrams rather t
 
 #### Configuration
 
-- `_config.yml` stays lean.
+- `_config.yml` stays lean. Site defaults remain `lang` / `locale: zh-CN`; pagination (`per_page`, paths) and the Chinese feed path (`/zh/feed.xml`) are configured there as well. The English feed is generated separately at `/en/feed.xml`.
 - Presentation defaults live in `_data/layout.yml`.
+- UI strings live in `_data/locale.yml`; language-prefixed navigation and path helpers live in `_data/navigation.yml` and `_data/path.yml`.
 - Public third-party ids live in `_data/integrations.yml` (no secrets in a static site).
 
 #### Responsive behavior
@@ -213,6 +282,7 @@ Keep node labels short, and split very deep flows into several diagrams rather t
 - Breakpoints: `sm` / `md` / `lg` / `xl`.
 - On narrow screens the nav collapses into a hamburger drawer, and the article TOC becomes a drawer with a floating action button; the TOC list itself is rendered at build time, so it is visible before any JS runs.
 - Drawers share the same modal primitive and are mutually exclusive with search.
+- The language switcher appears in the header actions and again at the bottom of the nav drawer.
 
 ### Local development
 
@@ -252,7 +322,7 @@ If you redistribute substantial portions of the code, please keep the copyright 
 
 站点：https://wenxin195.github.io
 
-站点基于 [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme) 搭建：代码块界面和 `prompt-*` 短提示参考了 [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy)，带标题的 `box-*` / `details-*` 提示块和 Liquid 标签的写法参考了 [huanyushi.github.io](https://github.com/huanyushi/huanyushi.github.io)。在此之上，我对主题做了不少改造，下面记录的是站点目前的结构，以及写内容时需要遵循的约定。
+站点基于 [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme) 搭建：代码块界面和 `prompt-*` 短提示参考了 [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy)，带标题的 `box-*` / `details-*` 提示块和 Liquid 标签的写法参考了 [huanyushi.github.io](https://github.com/huanyushi/huanyushi.github.io)。在此之上，我对主题做了不少改造。站点支持中英双语：默认语言为中文，英文内容位于 `/en/`。下面记录的是站点目前的结构，以及写内容时需要遵循的约定。
 
 ### 站点是怎么搭起来的
 
@@ -267,6 +337,42 @@ flowchart TB
 ```
 
 文章页头单独抽成了 `hero` 布局，不再放在页面外壳中。
+
+#### 语言
+
+中文内容位于 `/zh/…`，英文位于 `/en/…`。站点根路径 `/` 会跳转到 `/zh/`。旧的根路径文章地址通过 [jekyll-redirect-from](https://github.com/jekyll/jekyll-redirect-from) 重定向到对应的 `/zh/…` slug。
+
+| 路径 | 作用 |
+|------|------|
+| `/` | 跳转到 `/zh/` |
+| `/zh/` | 中文首页（分页） |
+| `/zh/page/:num/` | 中文首页后续页 |
+| `/zh/<slug>/` | 中文文章 |
+| `/zh/about` · `/zh/archive` · `/zh/donate` · `/zh/contact` | 中文静态页 |
+| `/zh/feed.xml` | Atom 订阅（中文文章） |
+| `/en/` | 英文首页（分页） |
+| `/en/page/:num/` | 英文首页后续页 |
+| `/en/<slug>/` | 英文文章 |
+| `/en/about` · `/en/archive` · `/en/donate` · `/en/contact` | 英文静态页 |
+| `/en/feed.xml` | Atom 订阅（英文文章） |
+
+文章与页面通过共用的 `key` 配对中英版本。典型 front matter 如下：
+
+```yaml
+key: association-rules
+lang: zh-CN                 # 英文写 en
+locale: zh-CN               # 供分页筛选；posts 默认 zh-CN
+permalink: /zh/association-rules
+redirect_from:              # 可选；保留旧的根路径
+  - /association-rules
+  - /association-rules/
+```
+
+`zh/` 与 `en/` 下的静态页同样使用 `key` / `lang` / `permalink`（例如 `key: page-about`）。译文不是必须的：若尚无同 `key` 的英文文章，语言切换仍提供英文入口，并回退到 `/en/`。
+
+界面文案（导航标题、搜索占位、复制反馈、aria-label 等）集中在 `_data/locale.yml`。当前字典由 `page.lang` 决定，注入为 `window.__t`，供前端脚本读取。`_data/navigation.yml` 中的导航项同时提供 `zh-CN` 与 `en` 的 `titles` 与 `urls`。
+
+首页分页使用 [jekyll-paginate-v2](https://github.com/sverrirs/jekyll-paginate-v2)，中英各有独立索引（`zh/index.html`、`en/index.html`）。列表、归档筛选、上下篇与订阅源均按语言过滤，避免中英文章混排。GitHub Pages 对缺失地址统一返回根目录的 `404.html`；当请求路径位于 `/en/` 下时，该页会在浏览器中将界面与提示切换为英文。
 
 #### Ruby 插件
 
@@ -470,8 +576,9 @@ let score = 100;
 
 #### 配置
 
-- `_config.yml` 保持精简。
+- `_config.yml` 保持精简。站点默认仍为 `lang` / `locale: zh-CN`；分页（每页篇数、路径）与中文订阅源路径（`/zh/feed.xml`）也在此配置。英文订阅源单独生成，地址为 `/en/feed.xml`。
 - 展示相关的默认值放在 `_data/layout.yml`。
+- 界面文案在 `_data/locale.yml`；带语言前缀的导航与路径辅助在 `_data/navigation.yml`、`_data/path.yml`。
 - 第三方的公开参数放在 `_data/integrations.yml`（静态站点中不存放机密信息）。
 
 #### 响应式
@@ -479,6 +586,7 @@ let score = 100;
 - 断点：`sm` / `md` / `lg` / `xl`。
 - 窄屏下导航折叠为汉堡抽屉，文章 TOC 以抽屉加悬浮按钮的形式提供；TOC 列表由构建期生成，JS 加载前即可见。
 - 各抽屉复用同一个 modal 基础组件，且和搜索互斥。
+- 语言切换位于顶栏操作区，窄屏抽屉底部也会再提供一份。
 
 ### 本地开发
 

@@ -1,2 +1,7 @@
-{%- assign _locale_key = site.locale | default: site.lang | default: 'zh-CN' -%}
+{%- assign _locale_key = page.lang | default: site.locale | default: site.lang | default: 'zh-CN' -%}
 {%- assign _t = site.data.locale[_locale_key] | default: site.data.locale['zh-CN'] -%}
+{%- if _locale_key == 'en' -%}
+  {%- assign _lang_prefix = '/en' -%}
+{%- else -%}
+  {%- assign _lang_prefix = '/zh' -%}
+{%- endif -%}

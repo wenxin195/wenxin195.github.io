@@ -1,6 +1,8 @@
 ---
 layout: page
 key: page-about
+lang: zh-CN
+permalink: /zh/about
 title: 关于我
 ---
 

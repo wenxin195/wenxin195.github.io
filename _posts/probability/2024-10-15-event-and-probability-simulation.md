@@ -1,7 +1,11 @@
 ---
 key: event-and-probability-simulation
 title: "概率论基础(1) 事件与概率的计算机模拟"
-permalink: "/event-and-probability-simulation"
+lang: zh-CN
+permalink: "/zh/event-and-probability-simulation"
+redirect_from:
+  - /event-and-probability-simulation
+  - /event-and-probability-simulation/
 tags:
   - 概率论
   - 统计计算

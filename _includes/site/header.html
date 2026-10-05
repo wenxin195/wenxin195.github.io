@@ -16,9 +16,9 @@
   {%- assign _site_theme = 'default' -%}
 {%- endunless -%}
 {%- if _site_theme == 'dark' -%}
-  {%- assign _theme_toggle_label = '切换为亮色主题' -%}
+  {%- assign _theme_toggle_label = _t.THEME_TO_LIGHT -%}
 {%- else -%}
-  {%- assign _theme_toggle_label = '切换为暗色主题' -%}
+  {%- assign _theme_toggle_label = _t.THEME_TO_DARK -%}
 {%- endif -%}
 
 <header class="{{ _header_class }}" {% if include.background %} style="background: {{ include.background }};" {% endif %}>
@@ -26,12 +26,12 @@
     <!-- 品牌区：logo + 站点标题 -->
     <div class="site-header__brand">
       <img class="site-header__logo" src="{{ '/assets/images/icon/logo.svg' | relative_url }}" alt="" width="128" height="128" fetchpriority="high" decoding="async" />
-      <a title="{{ site.description | strip_newlines }}" href="{{ site.data.path.urls.root }}">{{- site.title -}}</a>
+      <a class="js-site-brand" title="{{ site.description | strip_newlines }}" href="{{ site.data.path.urls.home[_locale_key] | default: '/zh/' | relative_url }}" data-href-zh="{{ '/zh/' | relative_url }}" data-href-en="{{ '/en/' | relative_url }}">{{- site.title -}}</a>
     </div>
 
     {%- comment -%} 宽屏主导航：复用 nav-links.html {%- endcomment -%}
     <!-- 顶栏导航链接 -->
-    <nav class="navigation js-site-nav" aria-label="主导航">
+    <nav class="navigation js-site-nav" aria-label="{{ _t.MAIN_NAV }}" data-i18n-aria="MAIN_NAV">
       <ul>
         {%- include site/nav-links.html -%}
       </ul>
@@ -39,14 +39,15 @@
 
     <!-- 操作区：主题切换、搜索 -->
     <div class="site-header__actions">
-      <button type="button" class="button button--secondary button--circle theme-toggle js-theme-toggle" aria-label="{{ _theme_toggle_label }}">
+      {%- include site/lang-switch.html -%}
+      <button type="button" class="button button--secondary button--circle theme-toggle js-theme-toggle" aria-label="{{ _theme_toggle_label }}" data-i18n-aria="{% if _site_theme == 'dark' %}THEME_TO_LIGHT{% else %}THEME_TO_DARK{% endif %}">
         {% include utils/icon.html name="moon" class="theme-toggle__icon theme-toggle__icon--moon" %}
         {% include utils/icon.html name="sun" class="theme-toggle__icon theme-toggle__icon--sun" %}
       </button>
 
       {%- comment -%} 搜索按钮：仅 site.search 开启时渲染 {%- endcomment -%}
       {%- if site.search -%}
-        <button type="button" class="button button--secondary button--circle search-button js-search-toggle" aria-label="搜索">
+        <button type="button" class="button button--secondary button--circle search-button js-search-toggle" aria-label="{{ _t.SEARCH }}" data-i18n-aria="SEARCH">
           {% include utils/icon.html name="search" %}
         </button>
       {%- endif -%}
@@ -57,7 +58,8 @@
     <button
       type="button"
       class="button button--secondary button--circle site-header__menu-toggle js-nav-toggle"
-      aria-label="打开菜单"
+      aria-label="{{ _t.OPEN_MENU }}"
+      data-i18n-aria="OPEN_MENU"
       aria-controls="site-nav-drawer"
       aria-expanded="false"
     >

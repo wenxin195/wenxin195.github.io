@@ -1,0 +1,44 @@
+{%- comment -%}
+  GitHub Pages 只会对缺失 URL 返回根 /404.html。
+  英文路径（/en/...）在客户端切到英文 chrome 与提示文案。
+{%- endcomment -%}
+<script>
+  (function () {
+    var isEn = document.documentElement.getAttribute('data-404-locale') === 'en';
+    var t = window.__t || {};
+    if (!isEn) return;
+
+    function text(el, key) {
+      if (el && t[key]) el.textContent = t[key];
+    }
+
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      text(el, el.getAttribute('data-i18n'));
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-aria');
+      if (t[key]) el.setAttribute('aria-label', t[key]);
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-placeholder');
+      if (t[key]) el.setAttribute('placeholder', t[key]);
+    });
+    document.querySelectorAll('[data-href-en]').forEach(function (el) {
+      el.setAttribute('href', el.getAttribute('data-href-en'));
+    });
+    document.querySelectorAll('[data-title-en]').forEach(function (el) {
+      var title = el.getAttribute('data-title-en');
+      if (title) el.textContent = title;
+    });
+
+    document.querySelectorAll('.lang-switch a[lang="zh-CN"]').forEach(function (el) {
+      el.removeAttribute('aria-current');
+    });
+    document.querySelectorAll('.lang-switch a[lang="en"]').forEach(function (el) {
+      el.setAttribute('aria-current', 'page');
+    });
+    document.querySelectorAll('.lang-switch').forEach(function (el) {
+      if (t.LANGUAGE) el.setAttribute('aria-label', t.LANGUAGE);
+    });
+  })();
+</script>

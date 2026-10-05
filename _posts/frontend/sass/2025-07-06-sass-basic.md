@@ -1,7 +1,11 @@
 ---
 key: sass-tutorial
 title: "Sass 教程"
-permalink: "/sass-basic" 
+lang: zh-CN
+permalink: "/zh/sass-basic"
+redirect_from:
+  - /sass-basic
+  - /sass-basic/
 tags:
   - CSS
 author: Wenxin Zhong

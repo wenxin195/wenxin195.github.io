@@ -1,7 +1,11 @@
 ---
 key: experience-to-collaboration
 title: "AI 协作范式(1) 从经验驱动到智能协作"
-permalink: "/experience-to-collaboration"
+lang: zh-CN
+permalink: "/zh/experience-to-collaboration"
+redirect_from:
+  - /experience-to-collaboration
+  - /experience-to-collaboration/
 tags:
   - 人机协作
   - AI4S

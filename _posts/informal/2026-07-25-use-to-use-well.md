@@ -1,7 +1,11 @@
 ---
 key: use-to-use-well
 title: "AI 协作范式(5) 从会用到用得好"
-permalink: "/use-to-use-well"
+lang: zh-CN
+permalink: "/zh/use-to-use-well"
+redirect_from:
+  - /use-to-use-well
+  - /use-to-use-well/
 tags:
   - 人机协作
   - AI4S

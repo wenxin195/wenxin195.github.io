@@ -1,7 +1,11 @@
 ---
 key: research-collaboration
 title: "AI 协作范式(4) AI 辅助科研实操案例"
-permalink: "/research-collaboration"
+lang: zh-CN
+permalink: "/zh/research-collaboration"
+redirect_from:
+  - /research-collaboration
+  - /research-collaboration/
 tags:
   - 人机协作
   - AI4S

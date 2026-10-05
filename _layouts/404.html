@@ -15,8 +15,14 @@ show_title: false
 
       <div class="not-found__tip">
         <p><strong>Error Code: 404</strong></p>
-        <p>看起来您访问的内容不存在，请检查您输入的地址是否正确。</p>
-        <p>您可以 <a href="{{ '/' | relative_url }}">返回首页</a> 或 <a href="{{ site.data.path.urls.archive | prepend: site.baseurl }}">查看文章列表</a>。</p>
+        <p data-i18n="NOT_FOUND_TIP">{{- _t.NOT_FOUND_TIP -}}</p>
+        <p>
+          {%- assign _home_href = site.data.path.urls.home[_locale_key] | default: '/zh/' -%}
+          {%- assign _archive_href = site.data.path.urls.archive[_locale_key] | default: '/zh/archive' -%}
+          <a href="{{ _home_href | relative_url }}" data-href-zh="{{ '/zh/' | relative_url }}" data-href-en="{{ '/en/' | relative_url }}" data-i18n="BACK_HOME">{{- _t.BACK_HOME -}}</a>
+          ·
+          <a href="{{ _archive_href | relative_url }}" data-href-zh="{{ '/zh/archive' | relative_url }}" data-href-en="{{ '/en/archive' | relative_url }}" data-i18n="VIEW_ARCHIVE">{{- _t.VIEW_ARCHIVE -}}</a>
+        </p>
       </div>
     </div>
 
@@ -27,3 +33,5 @@ show_title: false
 </div>
 
 {{ content }}
+
+{%- include site/not-found-locale.html -%}

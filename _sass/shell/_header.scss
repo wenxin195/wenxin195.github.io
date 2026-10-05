@@ -3,9 +3,7 @@
 @use "foundations/utilities/link" as link;
 @use "foundations/utilities/media" as media;
 @use "foundations/utilities/text";
-@use "foundations/utilities/split-line" as split;
 @use "primitives/menu" as menu;
-@use "foundations/utilities/overflow" as overflow;
 
 // Single-row header: brand | nav (≥md) | actions | menu-toggle (<md).
 // Mobile nav lives in shell/nav-drawer — not a column stack.
@@ -25,6 +23,14 @@
       $disabled-alpha: 0.2
     );
   }
+
+  // Beat `.site-header a` (same clickable vars). Icon is a sibling, stays header fg.
+  a.navigation__item--active {
+    --clickable-fg: #{variables.$main-color-1};
+    --clickable-hover-fg: #{variables.$main-color-1};
+    --clickable-active-fg: #{variables.$main-color-1};
+    --clickable-focus-fg: #{variables.$main-color-1};
+  }
 }
 
 .site-header__inner {
@@ -43,24 +49,12 @@
   background: rgba(#000, 0.15);
 
   @extend .text--dark;
-
-  .navigation__item--active {
-    &::after {
-      @include split.split-line(bottom, 4px, variables.$text-color-theme-dark);
-    }
-  }
 }
 
 .site-header--light {
   background: rgba(#fff, 0.15);
 
   @extend .text--light;
-
-  .navigation__item--active {
-    &::after {
-      @include split.split-line(bottom, 4px, variables.$text-color-theme-light);
-    }
-  }
 }
 
 .site-header__brand {
@@ -102,6 +96,10 @@
   flex-shrink: 0;
   align-items: center;
   gap: map.get(variables.$spacers, 1);
+
+  .lang-switch {
+    margin-right: map.get(variables.$spacers, 1);
+  }
 
   .button.button--secondary {
     transition: box-shadow map.get(variables.$animation, duration-md) ease;
@@ -150,10 +148,40 @@ html[data-theme="dark"] .theme-toggle {
   }
 }
 
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  font-size: map.get(variables.$base, font-size-sm);
+  white-space: nowrap;
+
+  a {
+    @include link.link-colors(
+      variables.$text-color-l,
+      variables.$main-color-1,
+      variables.$main-color-1,
+      variables.$main-color-1
+    );
+  }
+
+  a[aria-current="page"] {
+    color: variables.$main-color-1;
+    font-weight: map.get(variables.$base, font-weight-bold);
+    pointer-events: none;
+    text-decoration: none;
+  }
+
+  .lang-switch__sep {
+    color: variables.$text-color-l;
+    opacity: 0.55;
+  }
+}
+
 .navigation {
+  display: flex;
   flex: 0 1 auto;
+  align-items: center;
   min-width: 0;
-  @include overflow.overflow(auto, "x");
 
   @include media.media-breakpoint-down(md) {
     display: none;
@@ -162,7 +190,6 @@ html[data-theme="dark"] .theme-toggle {
   & > ul {
     display: flex;
     align-items: center;
-    height: map.get(variables.$layout, header-height);
     padding: 0;
     margin: 0;
     list-style: none;
@@ -173,13 +200,16 @@ html[data-theme="dark"] .theme-toggle {
 .navigation__icon {
   width: 1.5rem;
   height: 1.5rem;
-  color: inherit;
+  color: variables.$header-text-color;
 }
 
 .navigation__group {
+  position: relative;
   display: flex;
   align-items: center;
   gap: map.get(variables.$spacers, 1);
+  margin-top: 0;
+  margin-bottom: 0;
   margin-right: map.get(variables.$spacers, 2);
 
   &:last-child {
@@ -187,29 +217,18 @@ html[data-theme="dark"] .theme-toggle {
   }
 }
 
+.navigation .navigation__group:has(.navigation__item--active)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: calc(100% + #{map.get(variables.$spacers, 2)});
+  height: 4px;
+  pointer-events: none;
+  background: variables.$main-color-1;
+}
+
 .navigation__item {
   display: flex;
   align-items: center;
-
-  &::after {
-    display: block;
-    margin-bottom: -4px;
-    content: "";
-
-    @include split.split-line(bottom, 4px, transparent);
-  }
-}
-
-.navigation__item--active {
-  @include link.link-colors(
-    variables.$main-color-1,
-    variables.$main-color-1,
-    variables.$main-color-1,
-    variables.$main-color-1,
-    $disabled-alpha: 0.2
-  );
-
-  &::after {
-    @include split.split-line(bottom, 4px, variables.$main-color-1);
-  }
 }

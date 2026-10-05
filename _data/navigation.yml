@@ -3,29 +3,39 @@ header:
   - titles:
       en      : Home
       zh-CN   : 首页
-    url : /
+    urls:
+      en      : /en/
+      zh-CN   : /zh/
     icon: home
 
   - titles:
       en      : About
       zh-CN   : 关于我
-    url   : /about
+    urls:
+      en      : /en/about
+      zh-CN   : /zh/about
     icon  : about
 
   - titles:
       en      : Archive
       zh-CN   : 归档
-    url   : /archive
+    urls:
+      en      : /en/archive
+      zh-CN   : /zh/archive
     icon  : article
-  
+
   - titles:
       en      : Donate
       zh-CN   : 捐赠
-    url   : /donate
+    urls:
+      en      : /en/donate
+      zh-CN   : /zh/donate
     icon  : donate
-  
+
   - titles:
       en      : Contact
       zh-CN   : 联系我
-    url   : /contact
+    urls:
+      en      : /en/contact
+      zh-CN   : /zh/contact
     icon  : contact

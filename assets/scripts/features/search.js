@@ -3,9 +3,9 @@ import { getBaseUrl } from '@/utils/baseUrl.js';
 import { isFormElement } from '@/utils/dom.js';
 import { getLazyload } from '@/utils/lazyload.js';
 import { SITE_EVENTS } from '@/features/events.js';
+import { t } from '@/utils/i18n.js';
 
 const SEARCH_HOTKEYS = new Set(['s', 'S', '/']);
-const SEARCH_PLACEHOLDER = '搜索文章标题和内容...';
 
 /**
  * 站点搜索弹层（Pagefind Modular UI）。库仅在打开/悬停/快捷键时加载，不空闲预拉。
@@ -72,7 +72,7 @@ export function init(options = {}) {
 
     pagefindInstance.add(new PagefindModularUI.Input({
       containerElement: '#pagefind-search-input',
-      placeholder: SEARCH_PLACEHOLDER,
+      placeholder: t('SEARCH_PLACEHOLDER', 'Search titles and content...'),
     }));
 
     pagefindInstance.add(new PagefindModularUI.Summary({

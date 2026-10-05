@@ -1,0 +1,27 @@
+{%- comment -%}
+  ZH | EN 切换：按 page.key 找兄弟页，没有对译则回语言首页。
+  跳过分页页（/page/N/），避免覆盖真正的 /zh/、/en/。
+{%- endcomment -%}
+{%- assign _href_zh = '/zh/' -%}
+{%- assign _href_en = '/en/' -%}
+{%- if page.key -%}
+  {%- for _p in site.pages -%}
+    {%- if _p.key == page.key and _p.url contains '/page/' -%}
+    {%- elsif _p.key == page.key -%}
+      {%- if _p.lang == 'zh-CN' -%}{%- assign _href_zh = _p.url -%}{%- endif -%}
+      {%- if _p.lang == 'en' -%}{%- assign _href_en = _p.url -%}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- for _p in site.posts -%}
+    {%- if _p.key == page.key and _p.url contains '/page/' -%}
+    {%- elsif _p.key == page.key -%}
+      {%- if _p.lang == 'zh-CN' -%}{%- assign _href_zh = _p.url -%}{%- endif -%}
+      {%- if _p.lang == 'en' -%}{%- assign _href_en = _p.url -%}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+<nav class="lang-switch" aria-label="{{ _t.LANGUAGE }}">
+  <a href="{{ _href_zh | relative_url }}" lang="zh-CN" hreflang="zh-CN"{% if _locale_key == 'zh-CN' %} aria-current="page"{% endif %}>{{- _t.LANG_ZH -}}</a>
+  <span class="lang-switch__sep" aria-hidden="true">|</span>
+  <a href="{{ _href_en | relative_url }}" lang="en" hreflang="en"{% if _locale_key == 'en' %} aria-current="page"{% endif %}>{{- _t.LANG_EN -}}</a>
+</nav>

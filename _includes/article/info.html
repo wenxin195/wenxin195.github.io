@@ -13,7 +13,8 @@
       {%- endif -%}
 
       {%- for _tag in include.article.tags -%}
-        {%- assign _tag_path = site.data.path.urls.archive | append: '?tag=' -%}
+        {%- assign _archive_base = site.data.path.urls.archive[_locale_key] | default: '/zh/archive' -%}
+        {%- assign _tag_path = _archive_base | append: '?tag=' -%}
         {%- assign _tag_encode = _tag | strip | url_encode | url_encode -%}
 
         <li>

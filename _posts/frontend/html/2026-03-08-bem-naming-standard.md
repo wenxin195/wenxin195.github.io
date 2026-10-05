@@ -1,7 +1,11 @@
 ---
 key: bem-naming-standard
 title: "BEM 命名规范"
-permalink: "/bem-naming-standard"
+lang: zh-CN
+permalink: "/zh/bem-naming-standard"
+redirect_from:
+  - /bem-naming-standard
+  - /bem-naming-standard/
 tags:
   - HTML
   - CSS

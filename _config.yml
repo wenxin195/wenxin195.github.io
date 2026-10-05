@@ -24,8 +24,6 @@ excerpt_type: html # text | html
 toc:
   selectors: h1,h2,h3
 
-paginate: 8
-paginate_path: /page:num
 LSI: false
 Feature: true
 
@@ -79,23 +77,48 @@ defaults:
       layout: article
       aside:
         toc: true
+      lang: zh-CN
+      locale: zh-CN
   - scope:
       path: ""
       type: pages
     values:
       layout: page
+  - scope:
+      path: "zh"
+    values:
+      lang: zh-CN
+  - scope:
+      path: "en"
+    values:
+      lang: en
 
 sass:
   style: compressed
   sass_dir: _sass
 
 feed:
-  path: /feed.xml
+  path: /zh/feed.xml
   excerpt_only: true
   post_limit: 999
 
+pagination:
+  enabled: true
+  per_page: 8
+  permalink: '/page/:num/'
+  title: ':title'
+  sort_field: 'date'
+  sort_reverse: true
+  trail:
+    before: 2
+    after: 2
+
+autopages:
+  enabled: false
+
 plugins:
-  - jekyll-paginate
+  - jekyll-redirect-from
+  - jekyll-paginate-v2
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-feed

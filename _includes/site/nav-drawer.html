@@ -6,17 +6,19 @@
 <div
   class="modal nav-drawer modal--drawer-start js-nav-drawer d-print-none"
   id="site-nav-drawer"
-  aria-label="站点导航"
+  aria-label="{{ _t.SITE_NAV }}"
+  data-i18n-aria="SITE_NAV"
 >
   <div class="nav-drawer__panel">
     {%- comment -%} 标题栏 + 关闭按钮（js-nav-toggle 切换开合） {%- endcomment -%}
     <!-- 抽屉标题栏 -->
     <div class="nav-drawer__header">
-      <p class="nav-drawer__title">菜单</p>
+      <p class="nav-drawer__title" data-i18n="MENU">{{- _t.MENU -}}</p>
       <button
         type="button"
         class="button button--secondary button--circle nav-drawer__close js-nav-toggle"
-        aria-label="关闭菜单"
+        aria-label="{{ _t.CLOSE_MENU }}"
+        data-i18n-aria="CLOSE_MENU"
         aria-controls="site-nav-drawer"
       >
         {% include utils/icon.html name="x" %}
@@ -25,10 +27,13 @@
 
     {%- comment -%} 主导航列表：复用 nav-links.html {%- endcomment -%}
     <!-- 抽屉导航链接 -->
-    <nav class="nav-drawer__nav" aria-label="主导航">
+    <nav class="nav-drawer__nav" aria-label="{{ _t.MAIN_NAV }}" data-i18n-aria="MAIN_NAV">
       <ul>
         {%- include site/nav-links.html -%}
       </ul>
     </nav>
+    <div class="nav-drawer__lang">
+      {%- include site/lang-switch.html -%}
+    </div>
   </div>
 </div>

@@ -1,8 +1,9 @@
 {%- if paginator.total_pages > 1 -%}
-  <nav class="pagination" aria-label="文章分页导航">
+  <nav class="pagination" aria-label="{{ _t.PAGINATION }}">
     {%- assign locale_stats = _t.STATISTICS -%}
-    {%- assign post_count = site.posts | size -%}
+    {%- assign post_count = paginator.total_posts -%}
     {%- assign page_count = paginator.total_pages -%}
+    {%- assign _home_path = paginator.first_page_path | default: site.data.path.urls.home[_locale_key] | default: '/zh/' | split: 'index.html' | first -%}
 
     <p>{{- locale_stats | replace: '[POST_COUNT]', post_count | replace: '[PAGE_COUNT]', page_count -}}</p>
 
@@ -15,9 +16,9 @@
         <!-- 上一页 -->
         <li>
           {%- if paginator.previous_page -%}
-            {%- assign prev_href = paginator.previous_page_path | prepend: site.baseurl -%}
+            {%- assign prev_href = paginator.previous_page_path | relative_url -%}
 
-            <a class="button button--secondary button--circle" href="{{ prev_href }}" rel="prev" aria-label="上一页">
+            <a class="button button--secondary button--circle" href="{{ prev_href }}" rel="prev" aria-label="{{ _t.PREV_PAGE }}">
               {% include utils/icon.html name="chevron-left" %}
             </a>
           {%- else -%}
@@ -29,8 +30,13 @@
 
         <!-- 页码部分 -->
         {%- for page_num in (1..total) -%}
+          {%- if page_num == 1 -%}
+            {%- assign href = _home_path | relative_url -%}
+          {%- else -%}
+            {%- assign href = _home_path | append: 'page/' | append: page_num | append: '/' | relative_url -%}
+          {%- endif -%}
+
           {%- if page_num == current -%}
-            <!-- 当前页 -->
             <li>
               <div class="button button--primary button--circle focus" aria-current="page">
                 <span>{{- page_num -}}</span>
@@ -38,19 +44,11 @@
             </li>
 
           {%- elsif page_num == 1 or page_num == total -%}
-            <!-- 首页和末页始终显示 -->
-            {%- if page_num == 1 -%}
-              {%- assign href = site.data.path.urls.home | prepend: site.baseurl -%}
-            {%- else -%}
-              {%- assign href = site.paginate_path | prepend: site.baseurl | replace: ':num', page_num -%}
-            {%- endif -%}
-
             <li>
               <a class="button button--secondary button--circle" href="{{ href }}">{{- page_num -}}</a>
             </li>
 
           {%- else -%}
-            <!-- 中间页：决定是否显示或显示省略号 -->
             {%- assign show_page = false -%}
 
             {%- if total <= max_show -%}
@@ -64,13 +62,10 @@
             {%- endif -%}
 
             {%- if show_page -%}
-              {%- assign href = site.paginate_path | prepend: site.baseurl | replace: ':num', page_num -%}
-
               <li>
                 <a class="button button--secondary button--circle" href="{{ href }}">{{- page_num -}}</a>
               </li>
             {%- elsif page_num == 2 or page_num == total - 1 -%}
-              <!-- 只在省略号位置显示一次 ... -->
               <li><span class="pagination__omit" aria-hidden="true">{% include utils/icon.html name="ellipsis" %}</span></li>
             {%- endif -%}
           {%- endif -%}
@@ -79,9 +74,9 @@
         <!-- 下一页 -->
         <li>
           {%- if paginator.next_page -%}
-            {%- assign next_href = paginator.next_page_path | prepend: site.baseurl -%}
+            {%- assign next_href = paginator.next_page_path | relative_url -%}
 
-            <a class="button button--secondary button--circle" href="{{ next_href }}" rel="next" aria-label="下一页">
+            <a class="button button--secondary button--circle" href="{{ next_href }}" rel="next" aria-label="{{ _t.NEXT_PAGE }}">
               {% include utils/icon.html name="chevron-right" %}
             </a>
           {%- else -%}

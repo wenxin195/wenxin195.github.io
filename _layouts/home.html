@@ -12,7 +12,11 @@ articles:
 <div class="layout-home">
 
   <div class="layout-home__inner">
-    {%- include list/articles-section.html show_paginator=true -%}
+    {%- if paginator.posts.size == 0 -%}
+      <p class="layout-home__empty">{{- _t.NO_POSTS -}}</p>
+    {%- else -%}
+      {%- include list/articles-section.html show_paginator=true -%}
+    {%- endif -%}
   </div>
 </div>
 

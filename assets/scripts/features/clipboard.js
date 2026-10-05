@@ -1,4 +1,5 @@
 import { setIcon } from '@/lib/icons.js';
+import { t } from '@/utils/i18n.js';
 
 /**
  * @param {string} text
@@ -28,7 +29,7 @@ async function copyToClipboard(text) {
     document.body.removeChild(textarea);
     return ok;
   } catch (err) {
-    console.error('复制失败:', err);
+    console.error('copy failed:', err);
     return false;
   }
 }
@@ -40,7 +41,7 @@ async function copyToClipboard(text) {
 function showFeedback(btn, success) {
   const icon = btn.querySelector('[data-icon], .icon-lucide, svg.icon-lucide');
   const feedbackClass = success ? 'copy-success' : 'copy-error';
-  const feedbackText = success ? '已复制！' : '复制失败';
+  const feedbackText = success ? t('SUCCEED', 'Copied!') : t('COPY_FAIL', 'Copy failed');
 
   if (!icon) {
     btn.disabled = false;
@@ -54,7 +55,7 @@ function showFeedback(btn, success) {
   setTimeout(() => {
     setIcon(icon, 'clipboard');
     btn.classList.remove(feedbackClass);
-    btn.setAttribute('aria-label', '复制代码');
+    btn.setAttribute('aria-label', t('COPY_CODE', 'Copy code'));
     btn.disabled = false;
   }, 2000);
 }

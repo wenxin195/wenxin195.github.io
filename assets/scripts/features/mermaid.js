@@ -13,12 +13,44 @@ const SOURCE_ATTR = 'data-mermaid-source';
 const SELECTOR = '.mermaid';
 
 /** @const {!Object<string, string>} */
-const DARK_TEXT_VARIABLES = Object.freeze({
-  primaryTextColor: '#ffffff',
-  secondaryTextColor: '#ffffff',
-  tertiaryTextColor: '#ffffff',
-  textColor: '#ffffff',
-  nodeTextColor: '#ffffff',
+const SHARED_THEME_VARIABLES = Object.freeze({
+  primaryBorderColor: '#8a70b4',
+  secondaryBorderColor: '#4f879d',
+  tertiaryBorderColor: '#4e8565',
+  lineColor: '#747080',
+  clusterBorder: '#8a70b4',
+});
+
+/** @const {!Object<string, string>} */
+const DARK_THEME_VARIABLES = Object.freeze({
+  background: '#2a2a2a',
+  primaryColor: '#34264f',
+  secondaryColor: '#203747',
+  tertiaryColor: '#233a32',
+  primaryTextColor: '#f7f2ff',
+  secondaryTextColor: '#e8f7ff',
+  tertiaryTextColor: '#e7fff1',
+  textColor: '#e9e7ef',
+  nodeTextColor: '#f7f2ff',
+  clusterBkg: '#211d2b',
+  edgeLabelBackground: '#302a3d',
+  titleColor: '#f7f2ff',
+});
+
+/** @const {!Object<string, string>} */
+const LIGHT_THEME_VARIABLES = Object.freeze({
+  background: '#ffffff',
+  primaryColor: '#eee5ff',
+  secondaryColor: '#e3f3fb',
+  tertiaryColor: '#e4f4e9',
+  primaryTextColor: '#30233f',
+  secondaryTextColor: '#1e3541',
+  tertiaryTextColor: '#213b2b',
+  textColor: '#292536',
+  nodeTextColor: '#30233f',
+  clusterBkg: '#f7f5fb',
+  edgeLabelBackground: '#ffffff',
+  titleColor: '#30233f',
 });
 
 /**
@@ -122,7 +154,8 @@ function readDiagramTokens(el) {
  */
 function themeVariables(fontSize, fontFamily) {
   const base = { fontFamily, fontSize };
-  return isDarkTheme() ? { ...base, ...DARK_TEXT_VARIABLES } : base;
+  const palette = isDarkTheme() ? DARK_THEME_VARIABLES : LIGHT_THEME_VARIABLES;
+  return { ...base, ...SHARED_THEME_VARIABLES, ...palette };
 }
 
 /**
@@ -248,7 +281,7 @@ function prepareAll(nodes, paddingPx) {
 }
 
 /**
- * 等两帧，让 handDrawn / foreignObject 布局完成后再量 bbox。
+ * 等两帧，让 Mermaid 布局完成后再量 bbox。
  * @return {!Promise<undefined>}
  */
 function afterPaint() {
@@ -312,8 +345,9 @@ export async function init(options) {
 
         mermaid.initialize({
           startOnLoad: false,
-          look: 'handDrawn',
-          theme: 'default',
+          look: 'classic',
+          // Mermaid only applies custom themeVariables with the customizable base theme.
+          theme: 'base',
           themeVariables: themeVariables(tokens.fontSize, tokens.fontFamily),
           ...DIAGRAM_LAYOUT,
         });

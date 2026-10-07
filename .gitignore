@@ -56,5 +56,5 @@ _cite/
 
 # Local Cursor skills (not published)
 AGENTS.md
-.cursor/skills/
-paper-search-results/
+.cursor/
+.codex/

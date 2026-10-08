@@ -107,20 +107,39 @@ module Jekyll
 
             code.children.each(&:unlink)
             doc = code.document
+            content = Nokogiri::XML::Node.new("span", doc)
+            content["class"] = "code-block__content"
+
+            gutter = Nokogiri::XML::Node.new("span", doc)
+            gutter["class"] = "code-block__gutter"
+            gutter["aria-hidden"] = "true"
+
+            source = Nokogiri::XML::Node.new("span", doc)
+            source["class"] = "code-block__source"
+
             last = lines.length - 1
             lines.each_with_index do |kids, index|
               line = Nokogiri::XML::Node.new("span", doc)
               line["class"] = "code-block__line"
               line["data-line"] = (index + 1).to_s
 
+              number = Nokogiri::XML::Node.new("span", doc)
+              number["class"] = "code-block__line-number"
+              number["data-line"] = (index + 1).to_s
+              gutter.add_child(number)
+
               inner = Nokogiri::XML::Node.new("span", doc)
               inner["class"] = "code-block__code"
               kids.each { |kid| inner.add_child(kid) }
 
               line.add_child(inner)
-              code.add_child(line)
-              code.add_child(Nokogiri::XML::Text.new("\n", doc)) unless index == last
+              source.add_child(line)
+              source.add_child(Nokogiri::XML::Text.new("\n", doc)) unless index == last
             end
+
+            content.add_child(gutter)
+            content.add_child(source)
+            code.add_child(content)
           end
 
           def split_into_lines(nodes)

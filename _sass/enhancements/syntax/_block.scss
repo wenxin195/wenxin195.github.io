@@ -9,7 +9,7 @@
   border-radius: map.get(tokens.$popup, radius);
   background-color: var(--syntax-bg);
   box-shadow: var(--syntax-chrome-border) 0 0 0 1px;
-  overflow: hidden;
+  overflow: clip;
 
   .article-body & {
     max-width: 100%;
@@ -142,39 +142,62 @@
     white-space: normal;
   }
 
-  // Stack one source line per row; each row keeps gutter + code in a horizontal flex.
+  // Keep the gutter as one sticky column so every line shares the same scroll boundary.
   .code-block__body code {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    display: block;
+    width: max-content;
   }
 
-  .code-block__line {
+  .code-block__content {
     display: flex;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    min-width: 100%;
+    align-items: stretch;
     width: max-content;
+  }
+
+  .code-block__gutter {
+    display: flex;
+    flex: 0 0 4rem;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 4rem;
+    padding: 0 1rem 0 0.75rem;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: var(--syntax-bg);
+    color: var(--syntax-gray);
+    text-align: right;
+    user-select: none;
+  }
+
+  .code-block__line-number {
+    display: block;
+    flex: 0 0 1.4rem;
+    height: 1.4rem;
+    line-height: 1.4rem;
 
     &::before {
       content: attr(data-line);
-      flex: 0 0 auto;
-      box-sizing: content-box;
-      width: 2.25rem;
-      margin-right: 1rem;
-      padding-left: 0.75rem;
-      text-align: right;
-      color: var(--syntax-gray);
-      user-select: none;
-      position: sticky;
-      left: 0;
-      z-index: 1;
-      background-color: var(--syntax-bg);
     }
   }
 
+  .code-block__source {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: stretch;
+    width: max-content;
+  }
+
+  .code-block__line {
+    display: block;
+    height: 1.4rem;
+    line-height: 1.4rem;
+    white-space: pre;
+  }
+
   .code-block__code {
-    flex: 1 0 auto;
+    display: block;
     white-space: pre;
     padding-right: 1.5rem;
   }

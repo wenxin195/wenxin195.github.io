@@ -83,10 +83,11 @@ _plugins/
     reading_time.rb         # mixed CJK/English count after stripping HTML (posts only)
     language_name.rb        # maps Rouge language ids to display names
     icons.rb                # local Lucide icons (see _data/icons.yml)
-    transforms/             # diagrams, figures, images, tables, task_lists, code_blocks
+    transforms/             # diagrams, figures, images, swiper, tables, task_lists, code_blocks
     markup_attrs.rb         # shared Liquid keyword attrs / ids
   callouts/tags.rb          # {% box %} / {% details %}
   figures/tags.rb           # {% figures %} / {% panel %} / {% figref %}
+  swiper/tags.rb            # {% swiper %}
   tables/tags.rb            # {% table %} / {% tabref %}
 ```
 
@@ -95,6 +96,7 @@ _plugins/
 - Code blocks are highlighted with Rouge at build time and rendered as a uniform `<figure class="code-block">` with a header, line numbers, and a copy button.
 - `{% box TYPE "Title" %}` requires a title; `{% details … %}` fails the build on unknown types.
 - `{% figures %}` groups one or more `{% panel %}` images, or wraps a mermaid fence as the figure body; `{% figref id %}` is filled with 图 N in document order at build time.
+- `{% swiper %}` turns each Markdown image paragraph into a slide in an inline carousel; those images are excluded from the article LightBox.
 - `{% table %}` wraps a Markdown or HTML table; `{% tabref id %}` is filled with 表 N the same way. Figure and table counters are independent.
 - Language display names come from `_data/language_aliases.yml`.
 - Reading time (`reading_time`, `char_count`) is computed for posts only, from the HTML-stripped text after enhancement, using mixed CJK/English statistics.
@@ -161,6 +163,38 @@ flowchart LR
 `cols` and `align` apply to image panels. A markdown body (typically one mermaid fence) cannot be mixed with `{% panel %}`. Unwrapped mermaid fences are not numbered.
 
 In prose, write `{% figref id %}` in place of a literal 「图 4」(the tag already includes 图 and the number). Math in a caption is written as in the body (`$A\subset B$`). `{% figref %}` may appear before the figure; numbering is filled in DOM order after Markdown is converted.
+
+#### Swipers
+
+Use `{% swiper %}` for an inline image carousel. Put one Markdown image in each paragraph; the images become slides with navigation arrows and touch or mouse dragging.
+
+```markdown
+{% swiper %}
+![Messi](/assets/images/posts/efootball/messi.jpg)
+
+![Barcelona squad](/assets/images/posts/efootball/barcelona.jpg)
+{% endswiper %}
+```
+
+Each paragraph must contain exactly one Markdown image. Add descriptive alt text to each image.
+
+#### Image LightBox
+
+Article images open in a gallery overlay by default. Use the navigation arrows or keyboard to move between images; swipe or drag to navigate, and zoom with the mouse wheel or touch gestures. A zoomed image can be panned. Close the gallery with its close button, `Esc`, or by clicking the blank area around the image.
+
+Disable the LightBox for an article in its front matter:
+
+```yaml
+lightbox: false
+```
+
+To exclude an individual image, add the `lightbox-ignore` class:
+
+```markdown
+![Diagram](/assets/images/diagram.png){: .lightbox-ignore}
+```
+
+Images inside `{% swiper %}` are excluded automatically. The image alt text is used as the gallery caption.
 
 #### Tables
 
@@ -260,7 +294,7 @@ Keep node labels short, and split very deep flows into several diagrams rather t
 
 - Pure ES modules under `assets/scripts/`, organized as `entries` / `features` / `lib` / `utils` / `boot`.
 - No bundler, no jQuery, no large global configuration object.
-- Features are split by responsibility: TOC, drawers, search, clipboard, archive filters, link prefetching, deferred flyout images, and so on.
+- Features are split by responsibility: TOC, drawers, search, clipboard, archive filters, link prefetching, deferred flyout images, and the article image LightBox.
 - Entry module graphs are preloaded via `modulepreload`, selected per page.
 
 #### Search and third-party services
@@ -387,10 +421,11 @@ _plugins/
     reading_time.rb         # 去掉 HTML 后统计中英文（仅 posts）
     language_name.rb        # Rouge 语言 id 转显示名
     icons.rb                # 本地 Lucide 图标（见 _data/icons.yml）
-    transforms/             # diagrams、figures、images、tables、task_lists、code_blocks
+    transforms/             # diagrams、figures、images、swiper、tables、task_lists、code_blocks
     markup_attrs.rb         # Liquid 关键字参数 / id 共用解析
   callouts/tags.rb          # {% box %} / {% details %}
   figures/tags.rb           # {% figures %} / {% panel %} / {% figref %}
+  swiper/tags.rb            # {% swiper %}
   tables/tags.rb            # {% table %} / {% tabref %}
 ```
 
@@ -399,6 +434,7 @@ _plugins/
 - 代码块在构建期用 Rouge 高亮，统一渲染成 `<figure class="code-block">`，带标题栏、行号和复制按钮。
 - `{% box TYPE "标题" %}` 的标题是必填的；`{% details … %}` 遇到未知类型会使构建失败。
 - `{% figures %}` 将一组 `{% panel %}` 组合为一张编号图，也可以直接包一层 mermaid 围栏；`{% figref id %}` 在构建期按文中顺序填成「图 N」。
+- `{% swiper %}` 将每段 Markdown 图片转换为正文内轮播图；轮播图不会触发文章 LightBox。
 - `{% table %}` 包裹 Markdown 或 HTML 表格；`{% tabref id %}` 同样填成「表 N」。图和表各自从 1 编号。
 - 语言显示名来自 `_data/language_aliases.yml`。
 - 阅读时间（`reading_time`、`char_count`）只在 **posts** 上计算：增强完成后去掉 HTML，再按中英文混合的方式统计。
@@ -465,6 +501,38 @@ flowchart LR
 `cols` 和 `align` 只作用于图片 panel。markdown 图体（通常是一块 mermaid 围栏）不能和 `{% panel %}` 混用。未包 `{% figures %}` 的 mermaid 不编号。
 
 正文里用 `{% figref id %}` 代替手写的「图 4」（标签本身已包含「图」和序号）。caption 里的公式按正文那样写即可（`$A\subset B$`）。引用可以写在图前面，编号在 Markdown 转换之后按 DOM 顺序填写。
+
+#### 轮播图
+
+使用 `{% swiper %}` 插入正文内图片轮播。标签块中每个段落写一张 Markdown 图片，构建后会成为一张轮播页；可使用箭头、鼠标拖动或触摸滑动。
+
+```markdown
+{% swiper %}
+![Messi](/assets/images/posts/efootball/messi.jpg)
+
+![Barcelona squad](/assets/images/posts/efootball/barcelona.jpg)
+{% endswiper %}
+```
+
+每个段落只能包含一张 Markdown 图片，并为图片填写描述性替代文本。
+
+#### 图片灯箱
+
+文章正文中的图片默认可以点击打开灯箱。可用左右箭头或键盘切换图片，也可以拖动或触摸滑动；鼠标滚轮、双指手势和移动端双击可缩放图片，放大后可平移。点击关闭按钮、按 `Esc`，或点击图片周围的空白区域即可退出。
+
+可在文章的 front matter 中关闭灯箱：
+
+```yaml
+lightbox: false
+```
+
+如需排除单张图片，可添加 `lightbox-ignore` 类：
+
+```markdown
+![流程图](/assets/images/diagram.png){: .lightbox-ignore}
+```
+
+`{% swiper %}` 中的图片会自动排除。图片的替代文本会用作灯箱说明文字。
 
 #### 表格
 
@@ -564,7 +632,7 @@ let score = 100;
 
 - `assets/scripts/` 下均为原生 ES 模块，按 `entries` / `features` / `lib` / `utils` / `boot` 分目录。
 - 没有打包工具，没有 jQuery，也没有集中维护的全局配置对象。
-- TOC、抽屉、搜索、复制、归档筛选、链接预取、弹层图片延迟加载等功能各自独立，按职责拆分。
+- TOC、抽屉、搜索、复制、归档筛选、链接预取、延迟加载图片和文章图片灯箱等功能各自独立，按职责拆分。
 - 入口模块图通过 `modulepreload` 提前声明，按页面条件选择。
 
 #### 搜索与第三方服务

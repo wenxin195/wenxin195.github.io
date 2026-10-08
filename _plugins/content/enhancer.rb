@@ -5,6 +5,7 @@ require_relative "transforms/tree"
 require_relative "transforms/diagrams"
 require_relative "transforms/figures"
 require_relative "transforms/images"
+require_relative "transforms/swiper"
 require_relative "transforms/tables"
 require_relative "transforms/task_lists"
 require_relative "transforms/code_blocks"
@@ -33,9 +34,11 @@ module Jekyll
 
         apply_highlighter_fences!(frag, has_mermaid: has_mermaid) if has_rouge
         Transforms::Diagrams.unwrap_remaining_fences!(frag) if has_mermaid
-        Transforms::Figures.apply!(frag) if html.include?("data-figure") || html.include?("data-fig-ref")
+        locale = locale_for(doc)
+        Transforms::Figures.apply!(frag, label: locale["FIGURE_LABEL"] || "图") if html.include?("data-figure") || html.include?("data-fig-ref")
+        Transforms::Swiper.apply!(frag) if html.include?("data-swiper-slides")
         Transforms::Images.apply!(frag) if html.include?("<img")
-        Transforms::Tables.apply!(frag) if html.include?("<table") || html.include?("data-table") || html.include?("data-tab-ref")
+        Transforms::Tables.apply!(frag, label: locale["TABLE_LABEL"] || "表") if html.include?("<table") || html.include?("data-table") || html.include?("data-tab-ref")
         Transforms::TaskLists.apply!(frag, @site) if html.include?("task-list")
         if html.include?("data-cite") || html.include?("data-nocite") || html.include?("data-bibliography")
           Transforms::Bibliography.apply!(frag, Jekyll::Bibliography::Library.for(@site))
@@ -47,11 +50,14 @@ module Jekyll
       private
 
       def copy_label_for(doc)
-        lang = nil
+        dict = locale_for(doc)
+        dict["COPY_CODE"] || "复制代码"
+      end
+
+      def locale_for(doc)
         lang = doc.data["lang"] if doc && doc.data
         lang ||= @site.config["locale"] || @site.config["lang"] || "zh-CN"
-        dict = @site.data.dig("locale", lang) || @site.data.dig("locale", "zh-CN") || {}
-        dict["COPY_CODE"] || "复制代码"
+        @site.data.dig("locale", lang) || @site.data.dig("locale", "zh-CN") || {}
       end
 
       def apply_highlighter_fences!(frag, has_mermaid:)

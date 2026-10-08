@@ -517,7 +517,7 @@ export class Swiper {
 
     this._on(this._wrapper, 'mouseleave', () => {
       if (!pressing) return;
-      
+
       pressing = false;
       handleEnd();
     });

@@ -2,6 +2,7 @@ import { init as initArticleAnchors } from '@/features/article-anchors.js';
 import { init as initClipboard } from '@/features/clipboard.js';
 import { init as initFloatingActions } from '@/features/floating-actions.js';
 import { init as initFlyoutImages } from '@/features/flyout-images.js';
+import { init as initSwipers } from '@/features/swiper.js';
 
 /**
  * @fileoverview 文章页入口——编排锚点、剪贴板、悬浮操作。
@@ -14,4 +15,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initClipboard({ root: articleBody || document });
   initFloatingActions({ mountRoot: shellMain });
   initFlyoutImages({ root: document.querySelector('.article-toolbar') ?? document });
+  initSwipers({ root: articleBody || document });
 });

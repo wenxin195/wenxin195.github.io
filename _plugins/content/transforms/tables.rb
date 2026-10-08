@@ -10,9 +10,9 @@ module Jekyll
       module Tables
         module_function
 
-        def apply!(frag)
+        def apply!(frag, label: "表")
           wrap!(frag)
-          number!(frag)
+          number!(frag, label: label)
         end
 
         def wrap!(frag)
@@ -27,7 +27,7 @@ module Jekyll
           end
         end
 
-        def number!(frag)
+        def number!(frag, label: "表")
           index = {}
           n = 0
 
@@ -42,8 +42,8 @@ module Jekyll
 
             n += 1
             index[id] = n
-            label = node.at_css(".post-table__label")
-            label.content = "表 #{n}: " if label
+            label_node = node.at_css(".post-table__label")
+            label_node.content = "#{label} #{n}: " if label_node
           end
 
           frag.css("[data-tab-ref]").each do |anchor|
@@ -55,7 +55,7 @@ module Jekyll
               raise ArgumentError, "Unknown table id #{id.inspect} in tabref"
             end
 
-            anchor.content = "表 #{num}"
+            anchor.content = "#{label} #{num}"
           end
         end
       end

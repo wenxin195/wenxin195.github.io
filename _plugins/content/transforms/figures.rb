@@ -10,7 +10,7 @@ module Jekyll
       module Figures
         module_function
 
-        def apply!(frag)
+        def apply!(frag, label: "图")
           index = {}
           n = 0
 
@@ -25,8 +25,8 @@ module Jekyll
 
             n += 1
             index[id] = n
-            label = node.at_css(".post-figure__label")
-            label.content = "图 #{n}: " if label
+            label_node = node.at_css(".post-figure__label")
+            label_node.content = "#{label} #{n}: " if label_node
           end
 
           frag.css("[data-fig-ref]").each do |anchor|
@@ -38,7 +38,7 @@ module Jekyll
               raise ArgumentError, "Unknown figure id #{id.inspect} in figref"
             end
 
-            anchor.content = "图 #{num}"
+            anchor.content = "#{label} #{num}"
           end
         end
       end

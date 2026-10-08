@@ -2,6 +2,7 @@
 @use "tokens" as variables;
 @use "foundations/utilities/pseudo" as pseudo;
 @use "foundations/utilities/shadow" as shadow;
+@use "foundations/utilities/clickable" as clickable;
 
 // .lightbox-modal uses primitives/modal; gallery lives in primitives/gallery.
 
@@ -9,6 +10,28 @@
   // Prefer dynamic viewport on mobile browser chrome.
   height: 100dvh;
   max-height: 100dvh;
+}
+
+.lightbox-modal__close {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0px) + #{map.get(variables.$spacers, 3)});
+  right: calc(env(safe-area-inset-right, 0px) + #{map.get(variables.$spacers, 3)});
+  z-index: 2;
+}
+
+.lightbox-modal__close,
+.lightbox-modal .swiper__button,
+.swiper--lightbox-controls .swiper__button {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  @include clickable.paint(
+    #fff,
+    rgba(20, 22, 26, 0.64),
+    $hover-fg: #fff,
+    $hover-bg: rgba(20, 22, 26, 0.82),
+    $active-bg: rgba(20, 22, 26, 0.9),
+    $focus-bg: rgba(20, 22, 26, 0.82),
+    $disabled-alpha: 0.4
+  );
 }
 
 .popup-image {

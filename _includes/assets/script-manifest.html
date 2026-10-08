@@ -18,6 +18,6 @@
   <script type="module" src="{{ 'assets/scripts/entries/archive.js' | relative_url }}"></script>
 {%- endif -%}
 
-{%- if page.lightbox == true -%}
+{%- if page.layout == 'article' and page.lightbox != false -%}
   <script type="module" src="{{ 'assets/scripts/entries/lightbox.js' | relative_url }}"></script>
 {%- endif -%}

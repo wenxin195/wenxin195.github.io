@@ -1,8 +1,5 @@
 import { Modal } from '@/lib/modal.js';
 import { Gallery } from '@/lib/gallery.js';
-import { imagesLoad } from '@/utils/imagesLoad.js';
-
-const MIN_IMAGE_WIDTH = 800;
 
 /**
  * 正文灯箱 / 图库。
@@ -22,85 +19,100 @@ export function init(options = {}) {
 
   if (!modalEl || !contentEl) return null;
 
+  const closeEl = modalEl.querySelector('.js-lightbox-close');
+
   const rawImages = Array.from(
-    contentEl.querySelectorAll('img:not([data-lightbox-ignore]):not(.lightbox-ignore)'),
+    contentEl.querySelectorAll('img:not(.emoji):not([data-lightbox-ignore]):not(.lightbox-ignore)'),
   );
 
   if (rawImages.length === 0) return null;
 
-  let destroyed = false;
   let modal = null;
   let gallery = null;
+  let galleryRoot = null;
   let onContentClick = null;
+  let onGalleryBlankClick = null;
 
-  imagesLoad(rawImages).then(() => {
-    if (destroyed) return;
+  const items = rawImages.map((img) => ({
+    src: img.currentSrc || img.src,
+    w: img.naturalWidth,
+    h: img.naturalHeight,
+    el: img,
+    title: img.alt || '',
+  }));
 
-    const items = rawImages
-      .filter((img) => img.naturalWidth > MIN_IMAGE_WIDTH)
-      .map((img) => ({
-        src: img.src,
-        w: img.naturalWidth,
-        h: img.naturalHeight,
-        el: img,
-        title: img.alt || '',
-      }));
+  galleryRoot = modalEl.querySelector('.gallery');
+  if (!galleryRoot) {
+    console.warn('[lightbox] .gallery not found inside modal');
+    return null;
+  }
 
-    if (items.length === 0) return;
-
-    const galleryRoot = modalEl.querySelector('.gallery');
-    if (!galleryRoot) {
-      console.warn('[lightbox] .gallery not found inside modal');
-      return;
-    }
-
-    gallery = new Gallery(galleryRoot, items, {
-      disabled: true,
-      swiperOptions: {
-        animation: true,
-        keyboard: true,
-      },
-    });
-
-    modal = new Modal(modalEl, {
-      closeOnBackdropClick: true,
-      lockRoot: options.lockRoot ?? document.querySelector('.js-shell'),
-      scrollElement: options.scrollElement ?? document.querySelector('.js-shell-main'),
-      onChange: (visible) => {
-        gallery?.setOptions({ disabled: !visible });
-        document.body.classList.toggle('overflow-hidden', visible);
-      },
-    });
-
-    const imgToIndex = new Map();
-    for (let i = 0; i < items.length; i++) {
-      const img = items[i].el;
-      img.classList.add('popup-image');
-      img.dataset.galleryIndex = String(i);
-      imgToIndex.set(img, i);
-    }
-
-    onContentClick = (e) => {
-      const img = e.target.closest('img.popup-image');
-      if (!img || !imgToIndex.has(img)) return;
-
-      const index = imgToIndex.get(img);
-      modal.show();
-      gallery.slideTo(index, false);
-    };
-
-    contentEl.addEventListener('click', onContentClick);
+  gallery = new Gallery(galleryRoot, items, {
+    disabled: true,
+    swiperOptions: {
+      animation: true,
+      keyboard: true,
+    },
   });
+
+  const imgToIndex = new Map();
+  for (let i = 0; i < items.length; i++) {
+    const img = items[i].el;
+    img.classList.add('popup-image');
+    imgToIndex.set(img, i);
+  }
+
+  modal = new Modal(modalEl, {
+    closeOnBackdropClick: true,
+    lockRoot: options.lockRoot ?? document.querySelector('.js-shell'),
+    scrollElement: options.scrollElement ?? document.querySelector('.js-shell-main'),
+    onChange: (visible) => {
+      gallery?.setOptions({ disabled: !visible });
+      document.body.classList.toggle('overflow-hidden', visible);
+    },
+  });
+
+  onGalleryBlankClick = (e) => {
+    const target = e.target;
+    if (!(target instanceof Element) || !modal?.visible) return;
+    if (target.closest('img, .swiper__button, .gallery__counter, .gallery__caption')) return;
+    modal.hide();
+  };
+  galleryRoot.addEventListener('click', onGalleryBlankClick);
+
+  const onCloseClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    modal?.hide();
+  };
+  closeEl?.addEventListener('click', onCloseClick);
+
+  onContentClick = (e) => {
+    const target = e.target;
+    if (!(target instanceof Element)) return;
+    const img = target.closest('img.popup-image');
+    if (!img || !imgToIndex.has(img)) return;
+
+    gallery.slideTo(imgToIndex.get(img), false);
+    modal.show();
+  };
+
+  contentEl.addEventListener('click', onContentClick);
 
   return {
     destroy() {
-      destroyed = true;
+      closeEl?.removeEventListener('click', onCloseClick);
       if (onContentClick) {
         contentEl.removeEventListener('click', onContentClick);
         onContentClick = null;
       }
+      if (onGalleryBlankClick) {
+        galleryRoot?.removeEventListener('click', onGalleryBlankClick);
+        onGalleryBlankClick = null;
+      }
       gallery?.destroy?.();
       gallery = null;
+      galleryRoot = null;
       modal?.destroy();
       modal = null;
       document.body.classList.remove('overflow-hidden');

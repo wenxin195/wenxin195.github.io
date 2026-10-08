@@ -12,6 +12,6 @@
 {%- elsif page.layout == 'archive' -%}
   <link rel="modulepreload" href="{{ 'assets/scripts/entries/archive.js' | relative_url }}" />
 {%- endif -%}
-{%- if page.lightbox == true -%}
+{%- if page.layout == 'article' and page.lightbox != false -%}
   <link rel="modulepreload" href="{{ 'assets/scripts/entries/lightbox.js' | relative_url }}" />
 {%- endif -%}

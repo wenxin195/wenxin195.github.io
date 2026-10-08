@@ -46,7 +46,7 @@ layout: base
 
   {%- include site/nav-drawer.html -%}
 
-  {%- if page.lightbox == true -%}
+  {%- if page.layout == 'article' and page.lightbox != false -%}
     {%- include site/lightbox-modal.html -%}
   {%- endif -%}
 

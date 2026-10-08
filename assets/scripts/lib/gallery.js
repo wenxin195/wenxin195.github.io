@@ -107,6 +107,7 @@ export class Gallery {
   setOptions(options = {}) {
     if (options.disabled !== undefined) {
       this._disabled = options.disabled;
+      if (!this._disabled) this._loadImage(this._curIndex);
     }
     if (options.swiperOptions) {
       this._swiper?.setOptions(options.swiperOptions);
@@ -173,7 +174,7 @@ export class Gallery {
     this._counterEl = this._createElement('div', 'gallery__counter');
     this._captionEl = this._createElement('div', 'gallery__caption');
 
-    this._root.append(this._swiperEl, this._counterEl, this._captionEl);
+    this._root.append(this._swiperEl, this._captionEl, this._counterEl);
   }
 
   // 创建单个 slide(含 loading / error 状态)
@@ -189,14 +190,14 @@ export class Gallery {
     img.addEventListener('load', () => {
       galleryItem.classList.remove('gallery-item--loading');
       galleryItem.classList.add('gallery-item--loaded');
+      item.w = img.naturalWidth;
+      item.h = img.naturalHeight;
+      this._resizeImage(index);
     });
     img.addEventListener('error', () => {
       galleryItem.classList.remove('gallery-item--loading');
       galleryItem.classList.add('gallery-item--error');
     });
-
-    // 先绑监听再设 src，保证捕获事件
-    img.src = item.src;
 
     content.appendChild(img);
     galleryItem.appendChild(content);
@@ -223,8 +224,8 @@ export class Gallery {
 
     if (this._contentWidth > 0 && this._contentHeight > 0 && w > 0 && h > 0) {
       scale = Math.min(
-        Math.min(w, this._contentWidth) / w,
-        Math.min(h, this._contentHeight) / h
+        this._contentWidth / w,
+        this._contentHeight / h
       );
     }
     return {
@@ -235,14 +236,30 @@ export class Gallery {
 
   _resizeImages() {
     this._measureContent();
-    for (let i = 0; i < this._items.length; i++) {
-      const item = this._items[i];
-      const size = this._calculateImageSize(item.w, item.h);
-      const img = this._imgEls[i];
-      if (img) {
-        img.style.width = `${size.w}px`;
-        img.style.height = `${size.h}px`;
-      }
+    for (let i = 0; i < this._items.length; i++) this._resizeImage(i);
+  }
+
+  _resizeImage(index) {
+    const item = this._items[index];
+    const img = this._imgEls[index];
+    if (!item || !img || item.w <= 0 || item.h <= 0) return;
+
+    const size = this._calculateImageSize(item.w, item.h);
+    img.style.width = `${size.w}px`;
+    img.style.height = `${size.h}px`;
+  }
+
+  _loadImage(index) {
+    const item = this._items[index];
+    const img = this._imgEls[index];
+    if (!item || !img || img.hasAttribute('src')) return;
+
+    // 灯箱隐藏时不请求图片；显示后只加载当前 slide。
+    img.src = item.src;
+    if (img.complete && img.naturalWidth > 0) {
+      item.w = img.naturalWidth;
+      item.h = img.naturalHeight;
+      this._resizeImage(index);
     }
   }
 
@@ -266,6 +283,7 @@ export class Gallery {
     this._curIndex = currentIndex;
     this._updateCounter();
     this._updateCaption();
+    if (!this._disabled) this._loadImage(currentIndex);
   }
 
   // 修复 zoomRect 重复赋值,适配新回调签名,slide 过渡结束后重置缩放状态
@@ -419,6 +437,7 @@ export class Gallery {
   _bindZoomEvents() {
     let startFingerCount = 0;
     let singleFingerMoved = false; // 标记单指是否有移动(用于区分 tap 与 pan)
+    let pointerStart = null;
 
     const getRect = (t0, t1) => ({
       o: { x: (t0.pageX + t1.pageX) / 2, y: (t0.pageY + t1.pageY) / 2 },
@@ -492,5 +511,53 @@ export class Gallery {
       this._lastTranslate = this._translate ? { ...this._translate } : null;
       startFingerCount = 0;
     });
+
+    // 桌面滚轮缩放与拖动平移。缩放状态下拦截 Swiper 的鼠标拖动，
+    // 避免浏览放大图片时误切换到上一张或下一张。
+    this._on(this._wrapper, 'wheel', (e) => {
+      if (this._disabled || !this._activeContent) return;
+      e.preventDefault();
+
+      const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+      const nextZoom = this._clampZoom(this._zoom * factor);
+      if (nextZoom === this._zoom) return;
+
+      this._zoom = nextZoom;
+      this._lastZoom = nextZoom;
+      this._activeContent.classList.toggle('zoom', nextZoom > Gallery.DEFAULT_ZOOM);
+      if (nextZoom === Gallery.DEFAULT_ZOOM) {
+        this._translate = { ...Gallery.DEFAULT_TRANSLATE };
+        this._lastTranslate = null;
+      }
+      this._applyTransform(this._activeContent, this._zoom, this._translate);
+    }, { passive: false });
+
+    this._on(this._wrapper, 'mousedown', (e) => {
+      if (this._disabled || this._zoom <= Gallery.DEFAULT_ZOOM || e.button !== 0) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      pointerStart = { x: e.pageX, y: e.pageY };
+      this._wrapper.classList.add('gallery__swiper--panning');
+    }, true);
+
+    this._on(this._wrapper, 'mousemove', (e) => {
+      if (!pointerStart || this._disabled) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      this._translate = {
+        x: this._translate.x + (e.pageX - pointerStart.x) / this._zoom,
+        y: this._translate.y + (e.pageY - pointerStart.y) / this._zoom,
+      };
+      pointerStart = { x: e.pageX, y: e.pageY };
+      this._lastTranslate = { ...this._translate };
+      this._applyTransform(this._activeContent, this._zoom, this._translate);
+    }, true);
+
+    const stopPanning = () => {
+      pointerStart = null;
+      this._wrapper.classList.remove('gallery__swiper--panning');
+    };
+    this._on(this._wrapper, 'mouseup', stopPanning, true);
+    this._on(this._wrapper, 'mouseleave', stopPanning, true);
   }
 }

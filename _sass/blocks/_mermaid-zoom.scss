@@ -1,6 +1,7 @@
 @use "sass:map";
 @use "tokens" as variables;
 @use "foundations/utilities/overflow" as overflow;
+@use "foundations/utilities/clickable" as clickable;
 
 .mermaid-zoom-modal.modal {
   height: 100dvh;
@@ -13,9 +14,22 @@
 
 .mermaid-zoom-modal__close {
   position: absolute;
-  top: map.get(variables.$spacers, 3);
-  right: map.get(variables.$spacers, 3);
-  z-index: 1;
+  top: calc(env(safe-area-inset-top, 0px) + #{map.get(variables.$spacers, 3)});
+  right: calc(env(safe-area-inset-right, 0px) + #{map.get(variables.$spacers, 3)});
+  z-index: 2;
+}
+
+.mermaid-zoom-modal__close {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  @include clickable.paint(
+    #fff,
+    rgba(20, 22, 26, 0.64),
+    $hover-fg: #fff,
+    $hover-bg: rgba(20, 22, 26, 0.82),
+    $active-bg: rgba(20, 22, 26, 0.9),
+    $focus-bg: rgba(20, 22, 26, 0.82),
+    $disabled-alpha: 0.4
+  );
 }
 
 .mermaid-zoom-modal__stage {

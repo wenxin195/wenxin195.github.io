@@ -24,4 +24,15 @@ module Jekyll
       path <=> other.path
     end
   end
+
+  Hooks.register :site, :pre_render do |site, _payload|
+    ordered_posts = site.posts.docs.sort { |left, right| right <=> left }
+    post_order = ordered_posts.each_with_index.to_h { |post, index| [post.object_id, index] }
+
+    site.pages.each do |page|
+      next unless page.respond_to?(:pager) && page.pager
+
+      page.pager.posts.sort_by! { |post| post_order.fetch(post.object_id, post_order.size) }
+    end
+  end
 end

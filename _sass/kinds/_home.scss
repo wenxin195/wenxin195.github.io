@@ -1,1 +1,11 @@
 // .layout-home — page-type slot; header→main inset lives in shell/main.
+@use "sass:map";
+@use "tokens" as variables;
+
+.layout-home {
+  padding-bottom: map.get(variables.$spacers, 4);
+
+  .pagination {
+    margin-bottom: 0;
+  }
+}

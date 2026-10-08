@@ -5,7 +5,7 @@ lang: en
 locale: en
 permalink: "/en/use-to-use-well"
 tags:
-  - 人机协作
+  - Human–AI collaboration
   - AI4S
 author: Wenxin Zhong
 layout: article

@@ -5,7 +5,7 @@ lang: en
 locale: en
 permalink: "/en/experience-to-collaboration"
 tags:
-  - 人机协作
+  - Human–AI collaboration
   - AI4S
 author: Wenxin Zhong
 layout: article

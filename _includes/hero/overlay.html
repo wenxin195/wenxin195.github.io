@@ -1,6 +1,5 @@
 {%- assign _align = page.hero.align | default: site.data.layout.article.hero.align -%}
 {%- assign _theme = page.hero.theme | default: site.data.layout.article.hero.theme -%}
-{%- assign _excerpt_truncate = 200 -%}
 
 {%- if page.hero.background_image.src -%}
   {%- assign _bg_src = page.hero.background_image.src -%}
@@ -44,7 +43,7 @@
 
       {%- if page.excerpt -%}
         <p class="article-hero__excerpt">
-          {{- page.excerpt | excerpt_text | truncate: _excerpt_truncate -}}
+          {{- page.excerpt | excerpt_text -}}
         </p>
       {%- endif -%}
 

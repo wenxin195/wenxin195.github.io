@@ -17,5 +17,14 @@
   >
     {% include utils/icon.html name="x" %}
   </button>
-  <div class="mermaid-zoom-modal__stage js-mermaid-zoom-stage"></div>
+  <div class="swiper swiper--lightbox-controls mermaid-zoom-modal__stage js-mermaid-zoom-stage">
+    <div class="swiper__wrapper js-mermaid-zoom-wrapper"></div>
+    <button type="button" class="swiper__button swiper__button--prev" aria-label="{{ _t.PREVIOUS }}">
+      {% include utils/icon.html name="chevron-left" %}
+    </button>
+    <button type="button" class="swiper__button swiper__button--next" aria-label="{{ _t.NEXT }}">
+      {% include utils/icon.html name="chevron-right" %}
+    </button>
+  </div>
+  <div class="mermaid-zoom-modal__counter js-mermaid-zoom-counter" aria-live="polite"></div>
 </div>

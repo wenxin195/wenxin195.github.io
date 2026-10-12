@@ -1,7 +1,8 @@
 import { Modal } from '@/lib/modal.js';
+import { Swiper } from '@/lib/swiper.js';
 
 /**
- * 正文 Mermaid 图点击放大：克隆 SVG 到独立全屏层（不走图片 Gallery）。
+ * 正文 Mermaid 图点击放大，并在同一篇文章的图之间切换。
  * @param {{
  *   root: (?ParentNode|undefined),
  *   modalEl: (?Element|undefined),
@@ -24,11 +25,16 @@ export function init(options = {}) {
   const closeEl = options.closeEl
     ?? modalEl?.querySelector('.js-mermaid-zoom-close')
     ?? null;
+  const wrapperEl = stageEl?.querySelector('.js-mermaid-zoom-wrapper');
+  const counterEl = modalEl?.querySelector('.js-mermaid-zoom-counter');
 
-  if (!modalEl || !stageEl || !(root instanceof Node)) return null;
+  if (!modalEl || !stageEl || !wrapperEl || !counterEl || !(root instanceof Node)) return null;
 
-  /** @type {?Element} */
-  let sourceHost = null;
+  /** @type {!Element[]} */
+  let hosts = [];
+  /** @type {?Swiper} */
+  let swiper = null;
+  let currentIndex = 0;
   let cloneSerial = 0;
 
   const modal = new Modal(modalEl, {
@@ -39,8 +45,11 @@ export function init(options = {}) {
     onChange: (visible) => {
       document.body.classList.toggle('overflow-hidden', visible);
       if (!visible) {
-        stageEl.replaceChildren();
-        sourceHost = null;
+        swiper?.destroy();
+        swiper = null;
+        wrapperEl.replaceChildren();
+        hosts = [];
+        counterEl.textContent = '';
       }
     },
   });
@@ -93,21 +102,26 @@ export function init(options = {}) {
   }
 
   /**
-   * @param {?Element} host
+   * @param {number} index
    * @return {undefined}
    */
-  function fillStage(host) {
-    const svg = host?.querySelector('svg');
-    if (!svg) {
-      stageEl.replaceChildren();
-      return;
-    }
+  function fillSlide(index) {
+    const slide = wrapperEl.children[index];
+    const svg = hosts[index]?.querySelector('svg');
+    if (!slide || !svg || slide.firstChild) return;
 
     cloneSerial += 1;
     const clone = /** @type {!SVGSVGElement} */ (svg.cloneNode(true));
     retargetSvgIds(clone, `mz${cloneSerial}-`);
     clone.removeAttribute('style');
-    stageEl.replaceChildren(clone);
+    slide.appendChild(clone);
+  }
+
+  /** @param {number} index */
+  function showSlide(index) {
+    currentIndex = index;
+    fillSlide(index);
+    counterEl.textContent = `${index + 1} / ${hosts.length}`;
   }
 
   /**
@@ -115,10 +129,29 @@ export function init(options = {}) {
    * @return {undefined}
    */
   function open(host) {
-    sourceHost = host;
-    fillStage(host);
-    if (!stageEl.querySelector('svg')) return;
+    const scope = root instanceof Element ? root : document;
+    hosts = [...scope.querySelectorAll('.mermaid[data-processed]')]
+      .filter((el) => el.querySelector('svg'));
+    const index = hosts.indexOf(host);
+    if (index < 0) return;
+
+    wrapperEl.replaceChildren(...hosts.map(() => {
+      const slide = document.createElement('div');
+      slide.className = 'swiper__slide';
+      return slide;
+    }));
+    stageEl.querySelectorAll('.swiper__button').forEach((button) => {
+      button.classList.remove('d-none');
+    });
+    showSlide(index);
+    swiper = new Swiper(stageEl, {
+      initialSlide: index,
+      keyboard: false,
+      onChange: ({ currentIndex: nextIndex }) => showSlide(nextIndex),
+    });
+    counterEl.classList.toggle('d-none', hosts.length < 2);
     modal.show();
+    swiper.refresh();
   }
 
   function markHosts() {
@@ -130,12 +163,22 @@ export function init(options = {}) {
 
   function refresh() {
     markHosts();
-    if (!modal.visible || !sourceHost) return;
-    if (!root.contains(sourceHost)) {
+    if (!modal.visible) return;
+    if (hosts.some((host) => !root.contains(host))) {
       modal.hide();
       return;
     }
-    fillStage(sourceHost);
+    [...wrapperEl.children].forEach((slide) => slide.replaceChildren());
+    fillSlide(currentIndex);
+  }
+
+  /** @param {!KeyboardEvent} event */
+  function onArrowKey(event) {
+    if (!modal.visible || (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.key === 'ArrowLeft') swiper?.previous();
+    else swiper?.next();
   }
 
   /**
@@ -169,15 +212,19 @@ export function init(options = {}) {
   const contentRoot = root instanceof Element ? root : document;
   contentRoot.addEventListener('click', onRootClick);
   closeEl?.addEventListener('click', onCloseClick);
+  window.addEventListener('keydown', onArrowKey, true);
 
   return {
     refresh,
     destroy() {
       contentRoot.removeEventListener('click', onRootClick);
       closeEl?.removeEventListener('click', onCloseClick);
+      window.removeEventListener('keydown', onArrowKey, true);
       modal.destroy();
-      stageEl.replaceChildren();
-      sourceHost = null;
+      swiper?.destroy();
+      swiper = null;
+      wrapperEl.replaceChildren();
+      hosts = [];
       document.body.classList.remove('overflow-hidden');
     },
   };

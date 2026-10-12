@@ -15,6 +15,5 @@ exclude_selectors:
   - ".layout--home"
   - ".layout--articles"
 
-force_language: "zh"
 keep_index_url: false
 verbose: true

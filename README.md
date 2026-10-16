@@ -283,6 +283,41 @@ Sizing works like this: at build time the only markup is a single `div.mermaid`.
 
 Keep node labels short, and split very deep flows into several diagrams rather than relying on endless page height.
 
+#### Interactive components
+
+Set `components: true` in an article's front matter to enable interactive components. Add a `data-component` container to the article body and put its versioned JSON configuration in a direct `script[type="application/json"]` child:
+
+```html
+<div class="interactive-component" data-component="parameter-explorer">
+  <script type="application/json">
+  {
+    "version": 1,
+    "type": "parameter-explorer",
+    "model": "buffon-needle",
+    "title": "Estimate π with Buffon's needle",
+    "description": "Change the needle length and number of tosses.",
+    "parameters": {
+      "lengthRatio": { "min": 0.1, "max": 0.95, "value": 0.5 },
+      "tosses": { "min": 100, "max": 5000, "value": 1000 }
+    }
+  }
+  </script>
+  <p>Keep a short explanation here for readers without JavaScript.</p>
+</div>
+```
+
+If the component markup contains Liquid syntax, wrap it with the `raw` and `endraw` tags so Liquid leaves it untouched.
+
+The framework provides three component types:
+
+| Type | Purpose | Available models |
+|------|---------|------------------|
+| `chart` | Present a data chart using Chart.js `type`, `data`, and optional `options` | Chart.js chart types |
+| `parameter-explorer` | Change parameters and observe the resulting values or visualization | `buffon-needle`, `sensitivity-survey` |
+| `process-simulation` | Step through a random process and compare repeated outcomes | `monty-hall` |
+
+The `chart` code fence remains available for existing charts. The sensitivity survey component generates fictional responses locally and does not collect or store personal input. Keep the article's explanation and formulas in normal Markdown so they remain readable if scripts are unavailable. See [the component guide](docs/interactive-components.md) for configuration examples.
+
 #### Styles
 
 - The Sass toolchain was moved to Dart Sass with `@use` / `@forward` (TeXt still uses the older `@import` stack).
@@ -620,6 +655,41 @@ let score = 100;
 | `{: data-mermaid-fit="none"}` | 保持原始尺寸（过宽可横向滚动） |
 
 节点文案尽量简短；过深的流程建议拆成几张图，不要依赖页面无限向下延伸。
+
+#### 交互组件
+
+在文章 front matter 中设置 `components: true`，即可启用交互组件。在正文中加入带 `data-component` 属性的容器，并将带版本号的 JSON 配置放入其直接子元素 `script[type="application/json"]` 中：
+
+```html
+<div class="interactive-component" data-component="parameter-explorer">
+  <script type="application/json">
+  {
+    "version": 1,
+    "type": "parameter-explorer",
+    "model": "buffon-needle",
+    "title": "用 Buffon 投针估计 π",
+    "description": "调整针长和投掷次数。",
+    "parameters": {
+      "lengthRatio": { "min": 0.1, "max": 0.95, "value": 0.5 },
+      "tosses": { "min": 100, "max": 5000, "value": 1000 }
+    }
+  }
+  </script>
+  <p>可在此保留简短说明，供无法运行 JavaScript 的读者阅读。</p>
+</div>
+```
+
+如果组件 HTML 中包含 Liquid 语法，请用 `{{ "{% raw %}" }}` 和 `{{ "{% endraw %}" }}` 包住组件内容，避免 Liquid 将其作为模板处理。
+
+组件框架提供三种类型：
+
+| 类型 | 用途 | 当前支持的模型 |
+|------|------|----------------|
+| `chart` | 使用 Chart.js 的 `type`、`data` 和可选的 `options` 展示数据图表 | Chart.js 支持的图表类型 |
+| `parameter-explorer` | 调整参数并观察结果或图形变化 | `buffon-needle`、`sensitivity-survey` |
+| `process-simulation` | 逐步体验随机过程并比较多次试验结果 | `monty-hall` |
+
+已有文章仍可使用 `chart` 代码围栏。敏感性调查组件只在本地生成虚构回答，不会收集或保存个人输入。文章说明和公式应保留在普通 Markdown 中，以便脚本不可用时仍可阅读。配置示例见[交互组件指南](docs/interactive-components.md)。
 
 #### 样式
 

@@ -11,6 +11,13 @@
 {%- if page.layout == 'article' -%}
   <script type="module" src="{{ 'assets/scripts/entries/article.js' | relative_url }}"></script>
 
+  {%- assign _components = page.components | default: false -%}
+  {%- assign _chart = page.chart | default: site.data.layout.enhancements.chart -%}
+  {%- assign _sources = site.data.resources.sources -%}
+  {%- if _components or _chart == true -%}
+    <script type="module" src="{{ 'assets/scripts/entries/components.js' | relative_url }}" data-component-runtime data-chart-src="{{ _sources.chart | escape }}"></script>
+  {%- endif -%}
+
   {%- if page.aside.toc == true -%}
     <script type="module" src="{{ 'assets/scripts/entries/article-aside.js' | relative_url }}"></script>
   {%- endif -%}

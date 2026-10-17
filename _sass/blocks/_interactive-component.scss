@@ -34,7 +34,13 @@
   &__batch { display: grid; }
   &__error { color: var(--color-prompt-danger-color); }
 
-  &[data-component-ready="true"] { min-height: 0; }
+  // Keep the same minimum before and after mount; never collapse on completion.
+  &[data-model="buffon-needle"] { min-height: 710px; }
+  &[data-model="monty-hall"] { min-height: 555px; }
+  &[data-model="sensitivity-survey"] { min-height: 505px; }
+  &[data-component="chart"] { min-height: 360px; }
+  &[data-component-state="loading"] { cursor: progress; }
+  &__simulation-canvas { height: 220px; }
 }
 
 @media (max-width: 540px) {
@@ -42,4 +48,7 @@
   .interactive-component__stats { grid-template-columns: 1fr; gap: 0.2rem; }
   .interactive-component__stats dd { margin-bottom: 0.55rem; }
   .interactive-component__door { min-height: 4.5rem; }
+  .interactive-component[data-model="buffon-needle"] { min-height: 905px; }
+  .interactive-component[data-model="monty-hall"] { min-height: 575px; }
+  .interactive-component[data-model="sensitivity-survey"] { min-height: 835px; }
 }

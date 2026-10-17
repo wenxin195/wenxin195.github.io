@@ -23,14 +23,13 @@
     background: transparent;
     overflow: visible;
 
-    // Keep a 1px box so IntersectionObserver can see below-fold diagrams.
-    // display:none has no intersection rect and deadlocks lazy load.
+    // Stable fallback remains readable without JavaScript and in print.
     &:not([data-processed]) {
-      height: 1px;
-      margin: 0;
-      overflow: hidden;
-      opacity: 0;
-      pointer-events: none;
+      min-height: 12rem;
+      max-height: 18rem;
+      overflow: auto;
+      white-space: pre-wrap;
+      font-size: 0.8em;
     }
 
     &[data-processed] {

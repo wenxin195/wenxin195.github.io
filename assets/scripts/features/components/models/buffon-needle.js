@@ -15,54 +15,41 @@ function validateRange(range, name) {
   }
 }
 
-function simulate(canvas, lengthRatio, tosses) {
-  const context = canvas.getContext('2d');
-  const width = Math.max(320, Math.round(canvas.clientWidth || 640));
-  const height = 220;
-  const spacing = 44;
-  const drawLimit = Math.min(tosses, 700);
+function simulate(lengthRatio, tosses) {
   const needles = [];
   let hits = 0;
-
-  canvas.width = width * devicePixelRatio;
-  canvas.height = height * devicePixelRatio;
-  canvas.style.height = `${height}px`;
-  context.scale(devicePixelRatio, devicePixelRatio);
-  context.clearRect(0, 0, width, height);
-  context.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--color-border');
-  context.lineWidth = 1;
-  for (let y = 0; y <= height; y += spacing) {
-    context.beginPath();
-    context.moveTo(0, y);
-    context.lineTo(width, y);
-    context.stroke();
-  }
-
   for (let i = 0; i < tosses; i += 1) {
-    const x = Math.random() * width;
-    const baseLine = Math.floor(Math.random() * (height / spacing)) * spacing;
-    const distance = Math.random() * (spacing / 2);
+    const x = Math.random();
+    const baseLine = Math.floor(Math.random() * 5) * 44;
+    const distance = Math.random() * 22;
     const centerY = baseLine + (Math.random() < 0.5 ? distance : -distance);
     const angle = Math.random() * Math.PI;
-    const hit = distance <= (lengthRatio * spacing / 2) * Math.sin(angle);
-    if (hit) hits += 1;
-    if (i < drawLimit) needles.push({
-      x1: x - (lengthRatio * spacing / 2) * Math.cos(angle),
-      y1: centerY - (lengthRatio * spacing / 2) * Math.sin(angle),
-      x2: x + (lengthRatio * spacing / 2) * Math.cos(angle),
-      y2: centerY + (lengthRatio * spacing / 2) * Math.sin(angle),
-      hit,
-    });
+    const hit = distance <= lengthRatio * 22 * Math.sin(angle);
+    if (hit) hits++;
+    if (i < 700) needles.push({ x, centerY, angle, hit });
   }
-
-  for (const needle of needles) {
+  return { needles, hits, lengthRatio };
+}
+function draw(canvas, result) {
+  if (!result) return;
+  const context = canvas.getContext('2d');
+  if (!context) return;
+  const width = Math.max(1, Math.round(canvas.clientWidth || 640));
+  const ratio = Math.min(devicePixelRatio || 1, 2);
+  canvas.width = Math.round(width * ratio); canvas.height = Math.round(220 * ratio);
+  context.scale(ratio, ratio);
+  context.clearRect(0, 0, width, 220);
+  context.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--color-border');
+  for (let y = 0; y <= 220; y += 44) {
+    context.beginPath(); context.moveTo(0, y); context.lineTo(width, y); context.stroke();
+  }
+  for (const needle of result.needles) {
+    const dx = result.lengthRatio * 22 * Math.cos(needle.angle);
+    const dy = result.lengthRatio * 22 * Math.sin(needle.angle);
     context.strokeStyle = needle.hit ? '#d9485f' : '#2878b5';
-    context.beginPath();
-    context.moveTo(needle.x1, needle.y1);
-    context.lineTo(needle.x2, needle.y2);
-    context.stroke();
+    context.beginPath(); context.moveTo(needle.x * width - dx, needle.centerY - dy);
+    context.lineTo(needle.x * width + dx, needle.centerY + dy); context.stroke();
   }
-  return hits;
 }
 
 export const buffonNeedleModel = {
@@ -109,18 +96,33 @@ export const buffonNeedleModel = {
     const note = element('p', 'interactive-component__note', '画面最多显示 700 枚针；统计值按完整投掷次数计算。');
     content.append(controls, canvas, stats, note);
 
+    let result;
     function update() {
       const n = Number(tosses.input.value);
       const ratio = Number(length.input.value);
-      const hits = simulate(canvas, ratio, n);
+      result = simulate(ratio, n);
+      const { hits } = result;
+      draw(canvas, result);
       probabilityValue.textContent = formatPercent((2 * ratio) / Math.PI);
       hitValue.textContent = `${hits} / ${n}`;
       piValue.textContent = hits > 0 ? formatNumber((2 * ratio * n) / hits) : '本次没有命中';
     }
 
-    run.addEventListener('click', update);
-    length.input.addEventListener('input', update);
-    tosses.input.addEventListener('input', update);
+    let frame = 0;
+    const schedule = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(update); };
+    run.addEventListener('click', schedule);
+    length.input.addEventListener('input', schedule);
+    tosses.input.addEventListener('input', schedule);
+    const observer = new ResizeObserver(() => draw(canvas, result));
+    observer.observe(canvas);
+    const theme = new MutationObserver(() => draw(canvas, result));
+    theme.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     update();
+    return () => {
+      cancelAnimationFrame(frame); observer.disconnect(); theme.disconnect();
+      run.removeEventListener('click', schedule);
+      length.input.removeEventListener('input', schedule);
+      tosses.input.removeEventListener('input', schedule);
+    };
   },
 };

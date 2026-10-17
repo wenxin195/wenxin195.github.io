@@ -1,3 +1,5 @@
+import { importModule } from '@/utils/import-module.js';
+let renderQueue = Promise.resolve();
 /**
  * Mermaid 图：按正文 rem 字号渲染；把 SVG 收成内容 viewBox；尺寸交给 CSS contain。
  *
@@ -163,7 +165,7 @@ function themeVariables(fontSize, fontFamily) {
  * @return {!Array<!Element>}
  */
 function collectNodes(root) {
-  return [...root.querySelectorAll(SELECTOR)];
+  return root instanceof Element && root.matches(SELECTOR) ? [root] : [...root.querySelectorAll(SELECTOR)];
 }
 
 /**
@@ -316,7 +318,7 @@ export async function init(options) {
       ? root
       : document.querySelector('.js-article-body') ?? document.documentElement;
 
-  const { default: mermaid } = await import(src);
+  const { default: mermaid } = await importModule(src);
 
   let rendering = false;
   let queued = false;
@@ -340,6 +342,8 @@ export async function init(options) {
         nodes.forEach(ensureSource);
         nodes.forEach(restoreSource);
 
+        // Mermaid is a singleton; serialize per-diagram initialization/rendering.
+        const job = renderQueue.catch(() => {}).then(async () => {
         const tokens = readDiagramTokens(tokenRoot);
         lastFontSize = tokens.fontSize;
 
@@ -356,11 +360,17 @@ export async function init(options) {
         await afterPaint();
         prepareAll(nodes, tokens.viewboxPaddingPx);
         onRendered?.();
+        });
+        renderQueue = job;
+        await job;
       } while (queued);
     } finally {
       rendering = false;
     }
   }
+
+  // Do not leave observers alive when the initial render fails and is retried.
+  await render();
 
   /** CSS 负责适配；只在 rem 解析出的字号变了时重渲染。 */
   function onLayoutChange() {
@@ -395,8 +405,6 @@ export async function init(options) {
   } else {
     window.addEventListener('resize', onLayoutChange);
   }
-
-  await render();
 
   return {
     render,

@@ -37,35 +37,4 @@
     },
   };
 </script>
-<script>
-  (function () {
-    var src = '{{ _sources.mathjax }}';
-
-    function loadMathJax() {
-      if (document.getElementById('MathJax-script')) return;
-      var el = document.createElement('script');
-      el.id = 'MathJax-script';
-      el.src = src;
-      el.async = true;
-      document.head.appendChild(el);
-    }
-
-    function whenIdle(callback) {
-      if (typeof requestIdleCallback === 'function') {
-        requestIdleCallback(callback, { timeout: 4000 });
-      } else {
-        setTimeout(callback, 1);
-      }
-    }
-
-    function start() {
-      whenIdle(loadMathJax);
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', start);
-    } else {
-      start();
-    }
-  })();
-</script>
+<script type="module" src="{{ site.data.script_base | append: 'entries/mathjax.js' | relative_url }}" data-mathjax-src="{{ _sources.mathjax | escape }}"></script>

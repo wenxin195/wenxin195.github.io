@@ -100,6 +100,11 @@ export function init(options = {}) {
   contentEl.addEventListener('click', onContentClick);
 
   return {
+    openImage(img) {
+      if (!imgToIndex.has(img)) return;
+      gallery.slideTo(imgToIndex.get(img), false);
+      modal.show();
+    },
     destroy() {
       closeEl?.removeEventListener('click', onCloseClick);
       if (onContentClick) {

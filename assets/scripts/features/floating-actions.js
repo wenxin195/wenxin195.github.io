@@ -40,7 +40,7 @@ export function init(options = {}) {
   qrcodePopup.className = 'flyout flyout--rail';
   qrcodePopup.innerHTML = `
     <p class="flyout__title">${t('FOLLOW_OA', 'Scan to follow the WeChat account')}</p>
-    <img class="flyout__media" src="${baseUrl}/assets/images/site/wechat-oa.jpg" alt="${t('WECHAT_QR', 'WeChat QR code')}" />
+    <img class="flyout__media" width="200" height="200" fetchpriority="low" data-src="${baseUrl}/assets/images/site/wechat-oa.jpg" alt="${t('WECHAT_QR', 'WeChat QR code')}" />
   `;
 
   qrcode.appendChild(qrcodeTrigger);

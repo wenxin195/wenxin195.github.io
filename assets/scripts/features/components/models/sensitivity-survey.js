@@ -79,8 +79,15 @@ export const sensitivitySurveyModel = {
       values.truth.textContent = formatPercent(trueRate);
     }
 
-    for (const control of [sample, proportion, truth]) control.input.addEventListener('input', update);
-    run.addEventListener('click', update);
+    let frame = 0;
+    const schedule = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(update); };
+    for (const control of [sample, proportion, truth]) control.input.addEventListener('input', schedule);
+    run.addEventListener('click', schedule);
     update();
+    return () => {
+      cancelAnimationFrame(frame);
+      for (const control of [sample, proportion, truth]) control.input.removeEventListener('input', schedule);
+      run.removeEventListener('click', schedule);
+    };
   },
 };

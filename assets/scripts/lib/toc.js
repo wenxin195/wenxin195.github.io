@@ -139,6 +139,12 @@ export class Toc {
     this._inited = false;
   }
 
+  /** Re-measure existing headings without rebuilding links or losing focus. */
+  measure() {
+    this._calcPositions();
+    this._updateActiveByScroll();
+  }
+
   /** 重新扫描标题并渲染（适用于动态内容）。 */
   refresh() {
     const wasInited = this._inited;

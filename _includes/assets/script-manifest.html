@@ -1,30 +1,30 @@
 {%- comment -%} App script manifest — only included from shell; only entries/* plus Lazyload boot for Pagefind. {%- endcomment -%}
-<script defer src="{{ 'assets/scripts/boot/lazyload.js' | relative_url }}"></script>
-<script type="module" src="{{ 'assets/scripts/entries/shell.js' | relative_url }}"></script>
-<script type="module" src="{{ 'assets/scripts/entries/theme.js' | relative_url }}"></script>
+<script defer src="{{ site.data.script_base | append: 'boot/lazyload.js' | relative_url }}"></script>
+<script type="module" src="{{ site.data.script_base | append: 'entries/shell.js' | relative_url }}"></script>
+<script type="module" src="{{ site.data.script_base | append: 'entries/theme.js' | relative_url }}"></script>
 
 {%- if site.search -%}
-  <script type="module" src="{{ 'assets/scripts/entries/search.js' | relative_url }}"></script>
+  <script type="module" src="{{ site.data.script_base | append: 'entries/search.js' | relative_url }}"></script>
 {%- endif -%}
 
 
 {%- if page.layout == 'article' -%}
-  <script type="module" src="{{ 'assets/scripts/entries/article.js' | relative_url }}"></script>
+  <script type="module" src="{{ site.data.script_base | append: 'entries/article.js' | relative_url }}"></script>
 
   {%- assign _components = page.components | default: false -%}
   {%- assign _chart = page.chart | default: site.data.layout.enhancements.chart -%}
   {%- assign _sources = site.data.resources.sources -%}
   {%- if _components or _chart == true -%}
-    <script type="module" src="{{ 'assets/scripts/entries/components.js' | relative_url }}" data-component-runtime data-chart-src="{{ _sources.chart | escape }}"></script>
+    <script type="module" src="{{ site.data.script_base | append: 'entries/components.js' | relative_url }}" data-component-runtime data-chart-src="{{ _sources.chart | escape }}"></script>
   {%- endif -%}
 
   {%- if page.aside.toc == true -%}
-    <script type="module" src="{{ 'assets/scripts/entries/article-aside.js' | relative_url }}"></script>
+    <script type="module" src="{{ site.data.script_base | append: 'entries/article-aside.js' | relative_url }}"></script>
   {%- endif -%}
 {%- elsif page.layout == 'archive' -%}
-  <script type="module" src="{{ 'assets/scripts/entries/archive.js' | relative_url }}"></script>
+  <script type="module" src="{{ site.data.script_base | append: 'entries/archive.js' | relative_url }}"></script>
 {%- endif -%}
 
 {%- if page.layout == 'article' and page.lightbox != false -%}
-  <script type="module" src="{{ 'assets/scripts/entries/lightbox.js' | relative_url }}"></script>
+  <script type="module" src="{{ site.data.script_base | append: 'entries/lightbox.js' | relative_url }}"></script>
 {%- endif -%}

@@ -1,72 +1,59 @@
-/**
- * @fileoverview Mermaid 入口——首屏空闲后再拉 CDN，避免挡住进页。
- */
-import { init as initMermaid } from '@/features/mermaid.js';
-import { init as initMermaidZoom } from '@/features/mermaid-zoom.js';
-
-const entryScript = document.querySelector('script[data-mermaid-src]');
-const mermaidSrc = entryScript?.getAttribute('data-mermaid-src');
-
-/**
- * @param {function(): undefined} callback
- */
-function whenIdle(callback) {
-  if (typeof requestIdleCallback === 'function') {
-    requestIdleCallback(callback, { timeout: 2000 });
-  } else {
-    setTimeout(callback, 1);
-  }
-}
-
-if (mermaidSrc) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const root = document.querySelector('.js-article-body') ?? document;
-    let started = false;
-
-    const run = () => {
-      if (started) return;
-      started = true;
-
-      const zoom = initMermaidZoom({
-        root,
-        modalEl: document.querySelector('.js-mermaid-zoom-modal'),
-        stageEl: document.querySelector('.js-mermaid-zoom-stage'),
-        closeEl: document.querySelector('.js-mermaid-zoom-close'),
-        lockRoot: document.querySelector('.js-shell'),
-        scrollElement: document.querySelector('.js-shell-main'),
-      });
-
-      initMermaid({
-        src: mermaidSrc,
-        root,
-        onRendered: () => zoom?.refresh(),
-      }).catch((error) => {
-        console.error('[mermaid] failed to render', error);
-      });
-    };
-
-    if (typeof IntersectionObserver === 'function') {
-      const diagrams = root.querySelectorAll('.mermaid');
-      if (!diagrams.length) return;
-
-      /** @type {number} */
-      let fallback = 0;
-      const observer = new IntersectionObserver((entries, obs) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        obs.disconnect();
-        window.clearTimeout(fallback);
-        whenIdle(run);
-      }, { rootMargin: '200px 0px' });
-
-      fallback = window.setTimeout(() => {
-        observer.disconnect();
-        whenIdle(run);
-      }, 2500);
-
-      diagrams.forEach((el) => observer.observe(el));
-      return;
+import { observeNear } from '@/utils/near-viewport.js';
+import { importModule } from '@/utils/import-module.js';
+const src = document.querySelector('script[data-mermaid-src]')?.dataset.mermaidSrc;
+const root = document.querySelector('.js-article-body');
+if (src && root) {
+  const cleanups = [];
+  let zoom, zoomPromise;
+  const nodes = [...root.querySelectorAll('.mermaid')];
+  const sources = new Map(nodes.map((el) => [el, el.textContent]));
+  const observer = observeNear(nodes, async (el) => {
+    el.setAttribute('aria-busy', 'true');
+    try {
+      const { init } = await importModule(new URL('../features/mermaid.js', import.meta.url));
+      const instance = await init({ src, root: el, onRendered() {
+        el.removeAttribute('aria-busy');
+        zoom?.refresh();
+        document.dispatchEvent(new CustomEvent('site:layout-change'));
+      } });
+      cleanups.push(() => instance?.destroy());
+      el.tabIndex = 0;
+    } catch (error) {
+      el.removeAttribute('aria-busy');
+      el.dataset.loadError = 'true';
+      el.textContent = sources.get(el);
+      const button = document.createElement('button');
+      button.type = 'button'; button.textContent = '图表加载失败，点击重试';
+      button.className = 'resource-error';
+      button.addEventListener('click', () => {
+        button.remove(); delete el.dataset.loadError;
+        el.removeAttribute('data-processed'); el.textContent = sources.get(el);
+        observer.retry(el);
+      }, { once: true });
+      el.after(button);
+      throw error;
     }
-
-    whenIdle(run);
+  });
+  root.addEventListener('click', async (event) => {
+    const diagram = event.target.closest?.('.mermaid[data-processed]');
+    if (!diagram || zoom) return;
+    if (event.target.closest('a, button')) return;
+    event.preventDefault(); event.stopImmediatePropagation();
+    if (!zoomPromise) zoomPromise = importModule(new URL('../features/mermaid-zoom.js', import.meta.url)).then(({ init }) => {
+      zoom = init({ root, modalEl: document.querySelector('.js-mermaid-zoom-modal'),
+        stageEl: document.querySelector('.js-mermaid-zoom-stage'), closeEl: document.querySelector('.js-mermaid-zoom-close'),
+        lockRoot: document.querySelector('.js-shell'), scrollElement: document.querySelector('.js-shell-main') });
+      return zoom;
+    }).catch((error) => { zoomPromise = null; throw error; });
+    try { await zoomPromise; if (zoom) diagram.click(); } catch { /* A later click retries. */ }
+  }, true);
+  root.addEventListener('keydown', (event) => {
+    if (event.target.matches?.('.mermaid[data-processed]') && ['Enter', ' '].includes(event.key)) {
+      event.preventDefault(); event.target.click();
+    }
+  });
+  window.addEventListener('pagehide', (event) => {
+    if (event.persisted) return;
+    observer.destroy(); cleanups.forEach((destroy) => destroy()); zoom?.destroy();
   });
 }

@@ -49,9 +49,20 @@ export function init(options = {}) {
     container: articleContent,
     disabled: false,
   });
+  let frame = 0;
+  const update = () => {
+    if (frame) return;
+    frame = requestAnimationFrame(() => { frame = 0; toc.measure(); });
+  };
+  document.addEventListener('site:layout-change', update);
+  const observer = new ResizeObserver(update);
+  observer.observe(articleContent);
 
   return {
     destroy() {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      document.removeEventListener('site:layout-change', update);
       toc.destroy();
     },
   };

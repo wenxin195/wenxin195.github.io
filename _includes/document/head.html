@@ -5,7 +5,7 @@
 <script type="importmap">
 {
   "imports": {
-    "@/": "{{ '/assets/scripts/' | relative_url }}"
+    "@/": "{{ site.data.script_base | relative_url }}"
   }
 }
 </script>
@@ -37,5 +37,5 @@
 {%- include document/favicon.html -%}
 
 {% comment %} TODO: 重新写 {% endcomment %}
-<link rel="stylesheet" href='{{ site.baseurl | append: "/assets/css/main.css" }}' />
+<link rel="stylesheet" href='{{ "/assets/css/main.css" | relative_url | append: "?v=" | append: site.data.asset_version }}' />
 {%- include assets/modulepreload.html -%}

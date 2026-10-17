@@ -5,6 +5,7 @@ require_relative "transforms/tree"
 require_relative "transforms/diagrams"
 require_relative "transforms/figures"
 require_relative "transforms/images"
+require_relative "transforms/loading"
 require_relative "transforms/swiper"
 require_relative "transforms/tables"
 require_relative "transforms/task_lists"
@@ -37,12 +38,14 @@ module Jekyll
         locale = locale_for(doc)
         Transforms::Figures.apply!(frag, label: locale["FIGURE_LABEL"] || "图") if html.include?("data-figure") || html.include?("data-fig-ref")
         Transforms::Swiper.apply!(frag) if html.include?("data-swiper-slides")
-        Transforms::Images.apply!(frag) if html.include?("<img")
+        Transforms::Images.apply!(frag, site: @site) if html.include?("<img")
         Transforms::Tables.apply!(frag, label: locale["TABLE_LABEL"] || "表") if html.include?("<table") || html.include?("data-table") || html.include?("data-tab-ref")
         Transforms::TaskLists.apply!(frag, @site) if html.include?("task-list")
         if html.include?("data-cite") || html.include?("data-nocite") || html.include?("data-bibliography")
           Transforms::Bibliography.apply!(frag, Jekyll::Bibliography::Library.for(@site))
         end
+        math = doc && doc.data.fetch("mathjax", @site.data.dig("layout", "enhancements", "mathjax")) == true
+        Transforms::Loading.apply!(frag, math: math)
         yield frag if block_given?
         frag.to_html
       end

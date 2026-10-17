@@ -40,35 +40,23 @@ export function init(options = {}) {
   }
 
   /**
-   * @return {undefined}
-   */
-  function onLoad() {
-    scheduleIdle();
-  }
-
-  /**
    * If the user opens the flyout before idle runs, start the request then.
    * @param {!Event} event
    */
   function onIntent(event) {
     const target = event.target;
     if (!(target instanceof Element)) return;
-    if (!target.closest('.share__wechat, .appreciate')) return;
+    if (!target.closest('.share__wechat, .appreciate, .floating-actions')) return;
     hydrate();
   }
 
-  if (document.readyState === 'complete') {
-    scheduleIdle();
-  } else {
-    window.addEventListener('load', onLoad);
-  }
-
-  root.addEventListener('pointerdown', onIntent, true);
+  // Start after first paint/DOM readiness, not window.load (which waits on unrelated assets).
+  requestAnimationFrame(() => requestAnimationFrame(scheduleIdle));
+  for (const type of ['pointerover', 'pointerdown', 'focusin']) root.addEventListener(type, onIntent, true);
 
   return {
     destroy() {
-      window.removeEventListener('load', onLoad);
-      root.removeEventListener('pointerdown', onIntent, true);
+      for (const type of ['pointerover', 'pointerdown', 'focusin']) root.removeEventListener(type, onIntent, true);
       if (idleId && typeof cancelIdleCallback === 'function') {
         cancelIdleCallback(idleId);
       }

@@ -7,6 +7,61 @@ import { t } from '@/utils/i18n.js';
 
 const SEARCH_HOTKEYS = new Set(['s', 'S', '/']);
 
+class StableResultList {
+  constructor(containerElement) {
+    this.container = document.querySelector(containerElement);
+    this.renderVersion = 0;
+  }
+
+  register(instance) {
+    instance.on('loading', () => {
+      this.renderVersion += 1;
+      this.container?.setAttribute('aria-busy', 'true');
+    });
+
+    instance.on('results', (searchResult) => {
+      const renderVersion = ++this.renderVersion;
+      const results = searchResult?.results ?? [];
+
+      Promise.all(results.map((result) => result.data()))
+        .then((loadedResults) => {
+          if (renderVersion !== this.renderVersion || !this.container) return;
+
+          const fragment = document.createDocumentFragment();
+          loadedResults.forEach((result) => {
+            const item = document.createElement('li');
+            item.className = 'pagefind-modular-list-result';
+
+            const inner = document.createElement('div');
+            inner.className = 'pagefind-modular-list-inner';
+            const title = document.createElement('p');
+            title.className = 'pagefind-modular-list-title';
+            const link = document.createElement('a');
+            link.className = 'pagefind-modular-list-link';
+            link.textContent = result.meta?.title ?? '';
+            link.href = result.meta?.url || result.url;
+            title.append(link);
+
+            const excerpt = document.createElement('p');
+            excerpt.className = 'pagefind-modular-list-excerpt';
+            excerpt.innerHTML = result.excerpt ?? '';
+            inner.append(title, excerpt);
+            item.append(inner);
+            fragment.append(item);
+          });
+
+          this.container.replaceChildren(fragment);
+          this.container.setAttribute('aria-busy', 'false');
+        })
+        .catch((error) => {
+          if (renderVersion !== this.renderVersion) return;
+          this.container?.setAttribute('aria-busy', 'false');
+          console.error('Pagefind 搜索结果加载失败:', error);
+        });
+    });
+  }
+}
+
 /**
  * 站点搜索弹层（Pagefind Modular UI）。库仅在打开/悬停/快捷键时加载，不空闲预拉。
  * @param {{
@@ -130,10 +185,7 @@ export function init(options = {}) {
       containerElement: '#pagefind-search-summary',
     }));
 
-    pagefindInstance.add(new PagefindModularUI.ResultList({
-      containerElement: '#pagefind-search-results',
-      showImages: false,
-    }));
+    pagefindInstance.add(new StableResultList('#pagefind-search-results'));
 
     if (pendingValue) {
       const input = getPagefindInput();

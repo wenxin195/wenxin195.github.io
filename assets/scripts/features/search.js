@@ -38,6 +38,55 @@ export function init(options = {}) {
 
   /** @type {?Promise<undefined>} */
   let pagefindLoadPromise = null;
+  /** @type {?HTMLInputElement} */
+  let compositionInput = null;
+  /** @type {?Element} */
+  let compositionRoot = null;
+  let isComposingSearchInput = false;
+
+  function handleSearchInputDuringComposition(event) {
+    if (isComposingSearchInput || event.isComposing) {
+      event.stopImmediatePropagation();
+    }
+  }
+
+  function handleSearchCompositionStart() {
+    isComposingSearchInput = true;
+  }
+
+  function handleSearchCompositionEnd() {
+    isComposingSearchInput = false;
+    // Search once the IME commits its final text, rather than searching each
+    // intermediate pinyin value. The final native input event, if any, is
+    // coalesced by Pagefind's debounce.
+    compositionInput?.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function bindSearchInputComposition(input) {
+    if (!input || input === compositionInput) return;
+    unbindSearchInputComposition();
+    const root = input.closest('#pagefind-search-input');
+    if (!root) return;
+    compositionInput = input;
+    compositionRoot = root;
+    // Capture on the stable parent so we can stop Pagefind's input listener
+    // before it sees intermediate IME text, including browsers that omit
+    // InputEvent.isComposing.
+    compositionRoot.addEventListener('compositionstart', handleSearchCompositionStart, true);
+    compositionRoot.addEventListener('compositionend', handleSearchCompositionEnd, true);
+    compositionRoot.addEventListener('input', handleSearchInputDuringComposition, true);
+  }
+
+  function unbindSearchInputComposition() {
+    if (compositionRoot) {
+      compositionRoot.removeEventListener('compositionstart', handleSearchCompositionStart, true);
+      compositionRoot.removeEventListener('compositionend', handleSearchCompositionEnd, true);
+      compositionRoot.removeEventListener('input', handleSearchInputDuringComposition, true);
+    }
+    compositionInput = null;
+    compositionRoot = null;
+    isComposingSearchInput = false;
+  }
 
   function getPagefindInput() {
     return document.querySelector('#pagefind-search-input input');
@@ -73,7 +122,9 @@ export function init(options = {}) {
     pagefindInstance.add(new PagefindModularUI.Input({
       containerElement: '#pagefind-search-input',
       placeholder: t('SEARCH_PLACEHOLDER', 'Search titles and content...'),
+      debounceTimeoutMs: 400,
     }));
+    bindSearchInputComposition(getPagefindInput());
 
     pagefindInstance.add(new PagefindModularUI.Summary({
       containerElement: '#pagefind-search-summary',
@@ -175,6 +226,7 @@ export function init(options = {}) {
       searchModal.off('afterShow', onAfterShow);
       searchModal.off('afterHide', onAfterHide);
       searchModal.destroy();
+      unbindSearchInputComposition();
       window.removeEventListener('keydown', handleGlobalKeydown);
       window.removeEventListener('keyup', handleGlobalKeyup);
       searchToggleEls.forEach((el) => {

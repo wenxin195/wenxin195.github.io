@@ -1,7 +1,7 @@
 import { loadScript } from '@/utils/load-script.js';
 import { observeNear } from '@/utils/near-viewport.js';
 
-/** Keep MathJax's SVG lazy output, while reserving the source blocks' geometry. */
+/** Keep MathJax's SVG lazy output, while reserving space for pending display math. */
 export function init({ root, src }) {
   if (!root || !src) return;
   const blocks = [...root.querySelectorAll('[data-math-block], p, li, td, th, figcaption')].filter((el) =>
@@ -10,21 +10,38 @@ export function init({ root, src }) {
   if (!blocks.length) return;
   const labels = new Map();
   for (const block of blocks) for (const match of block.textContent.matchAll(/\\label\{([^}]+)\}/g)) labels.set(match[1], block);
+  const displayMath = /\$\$|\\\[|\\begin\{(?:equation|align|aligned|gather|multline|flalign)\}/;
+  const pendingDisplay = new Set(blocks.filter((el) => el.matches('[data-math-block]') || displayMath.test(el.textContent)));
   const config = window.MathJax;
   if (!config || config.startup?.document) return;
-  let key = `math-sizes:${location.pathname}:${innerWidth}`;
-  let sizes = {};
-  try { sizes = JSON.parse(sessionStorage.getItem(key)) || {}; } catch { /* optional */ }
-  for (const el of blocks) {
+  let width = innerWidth;
+  let key = `math-sizes-v2:${location.pathname}:${width}`;
+  const readSizes = () => {
+    try { return JSON.parse(sessionStorage.getItem(key)) || {}; } catch { return {}; }
+  };
+  let sizes = readSizes();
+  for (const el of pendingDisplay) {
     const id = el.dataset.readingId;
-    const height = Math.max(el.getBoundingClientRect().height, sizes[id] || 0);
-    el.style.minHeight = `${Math.ceil(height)}px`;
+    const height = sizes[id];
+    if (Number.isFinite(height) && height > 0) el.style.minHeight = `${Math.ceil(height)}px`;
     el.dataset.mathReserved = 'true';
   }
+  const rendered = new MutationObserver(() => {
+    for (const el of pendingDisplay) {
+      if (!el.querySelector('mjx-container[display="true"] svg')) continue;
+      el.style.removeProperty('min-height');
+      el.dataset.mathRendered = 'true';
+      pendingDisplay.delete(el);
+    }
+    if (!pendingDisplay.size) rendered.disconnect();
+  });
+  if (pendingDisplay.size) rendered.observe(root, { childList: true, subtree: true });
   let saveTimer;
   const resize = new ResizeObserver((entries) => {
     for (const { target } of entries) {
-      if (target.dataset.readingId) sizes[target.dataset.readingId] = Math.ceil(target.getBoundingClientRect().height);
+      if (target.dataset.readingId && target.dataset.mathRendered) {
+        sizes[target.dataset.readingId] = Math.ceil(target.getBoundingClientRect().height);
+      }
     }
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
@@ -99,12 +116,14 @@ export function init({ root, src }) {
     if (block) { event.preventDefault(); block.scrollIntoView({ behavior: 'instant', block: 'center' }); }
   });
   window.addEventListener('resize', () => {
-    key = `math-sizes:${location.pathname}:${innerWidth}`;
-    sizes = {};
-    // A different width invalidates measured line wrapping. Let CSS reflow first.
-    for (const el of blocks) el.style.minHeight = '';
-    requestAnimationFrame(() => {
-      for (const el of blocks) el.style.minHeight = `${Math.ceil(el.getBoundingClientRect().height)}px`;
-    });
+    if (innerWidth === width) return;
+    width = innerWidth;
+    key = `math-sizes-v2:${location.pathname}:${width}`;
+    sizes = readSizes();
+    for (const el of pendingDisplay) {
+      const height = sizes[el.dataset.readingId];
+      if (Number.isFinite(height) && height > 0) el.style.minHeight = `${Math.ceil(height)}px`;
+      else el.style.removeProperty('min-height');
+    }
   });
 }

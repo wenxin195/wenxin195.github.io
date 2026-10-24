@@ -1,9 +1,10 @@
 .math-block {
   display: block;
-  min-height: 3em;
   margin: 1em 0;
   overflow-x: auto;
 }
+.math-block:not([data-math-rendered]) { min-height: 3em; }
+.math-block[data-math-rendered] > mjx-container[display="true"] { margin-block: 0; }
 .resource-error { padding: 0.75rem; border: 1px solid currentColor; }
 @media print {
   [data-math-reserved] { min-height: 0 !important; }

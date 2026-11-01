@@ -19,6 +19,7 @@ module Jekyll
               config = JSON.parse(source.text)
               next unless config.is_a?(Hash)
               host["data-model"] = config["model"].to_s
+              host["data-aspect"] = config["aspect"] if %w[wide square portrait].include?(config["aspect"])
               host["data-component-state"] = "pending"
               header = Nokogiri::XML::Node.new("header", frag)
               header["class"] = "interactive-component__header"
@@ -36,8 +37,8 @@ module Jekyll
           end
           if math
             frag.xpath(".//text()").to_a.each do |node|
-              next if Tree.verbatim?(node) || node.ancestors.any? { |p| %w[script style textarea].include?(p.name) }
               next unless node.text.include?('\\[')
+              next if Tree.verbatim?(node) || inside_tag?(node, %w[script style textarea])
               pieces = node.text.split(/(\\\[.*?\\\])/m)
               next if pieces.length == 1
               pieces.each do |piece|
@@ -55,9 +56,27 @@ module Jekyll
             end
           end
           frag.css("p, h1, h2, h3, h4, figure, table, [data-component], [data-math-block], .mermaid").each_with_index do |node, index|
-            next if Tree.verbatim?(node) || node.ancestors("[data-component]").any?
+            next if Tree.verbatim?(node) || inside_component?(node)
             node["data-reading-id"] = "r-#{index}-#{Digest::SHA256.hexdigest(node.text)[0, 10]}"
           end
+        end
+
+        def inside_tag?(node, names)
+          current = node.parent
+          while current
+            return true if names.include?(current.name)
+            current = current.parent
+          end
+          false
+        end
+
+        def inside_component?(node)
+          current = node.parent
+          while current
+            return true if current.attribute("data-component")
+            current = current.parent
+          end
+          false
         end
       end
     end

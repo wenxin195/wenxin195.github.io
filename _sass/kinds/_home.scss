@@ -3,9 +3,15 @@
 @use "tokens" as variables;
 
 .layout-home {
-  padding-bottom: map.get(variables.$spacers, 4);
-
   .pagination {
     margin-bottom: 0;
   }
+}
+
+.layout-home__inner > :last-child {
+  margin-bottom: 0;
+}
+
+.article-list--item .article-list__item:first-child .article-list__title {
+  margin-top: 0;
 }

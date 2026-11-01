@@ -12,6 +12,15 @@
   }
 }
 
+// Keep a consistent footer clearance on the standard content pages.
+.shell-main:has(.layout-home, .layout-page, .layout-archive, .layout-articles) {
+  padding-bottom: map.get(variables.$spacers, 4);
+
+  @media print {
+    padding-bottom: 0;
+  }
+}
+
 // Header → main inset: sole assembly point (kinds/blocks must not redeclare).
 .shell-main:not(.shell-main--immersive) {
   padding-top: map.get(variables.$layout, main-inset-top);

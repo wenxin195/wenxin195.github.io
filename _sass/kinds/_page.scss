@@ -1,1 +1,9 @@
 // .layout-page — page-type slot; header→main inset lives in shell/main.
+.page-content__header > :first-child,
+.page-content__body > :first-child {
+  margin-top: 0;
+}
+
+.page-content__body > :last-child {
+  margin-bottom: 0;
+}

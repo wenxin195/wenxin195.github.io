@@ -308,15 +308,18 @@ Set `components: true` in an article's front matter to enable interactive compon
 
 If the component markup contains Liquid syntax, wrap it with the `raw` and `endraw` tags so Liquid leaves it untouched.
 
-The framework provides three component types:
+The framework provides these component types:
 
 | Type | Purpose | Available models |
 |------|---------|------------------|
 | `chart` | Present a data chart using Chart.js `type`, `data`, and optional `options` | Chart.js chart types |
 | `parameter-explorer` | Change parameters and observe the resulting values or visualization | `buffon-needle`, `sensitivity-survey` |
 | `process-simulation` | Step through a random process and compare repeated outcomes | `monty-hall` |
+| `plotly` | Render an interactive Plotly figure from `data`, `layout`, and `plotlyConfig` | Plotly.js |
+| `observable-plot` | Render `bar`, `line`, or `dot` marks from `data`, `x`, and `y` | Observable Plot |
+| `media` | Show video with optional poster and captions, or play a `.riv` / `.lottie` asset | `video`, `rive`, `dotLottie` |
 
-The `chart` code fence remains available for existing charts. The sensitivity survey component generates fictional responses locally and does not collect or store personal input. Keep the article's explanation and formulas in normal Markdown so they remain readable if scripts are unavailable. See [the component guide](docs/interactive-components.md) for configuration examples.
+The `chart` code fence remains available for existing charts. D3, PixiJS, SVG/Canvas, and GSAP can be used inside a post-specific model; optional libraries load only when that model is mounted. Video files rendered offline with Manim, Remotion, Blender, or FFmpeg use the `media` component. A component may return `{ pause, resume, destroy }` so the runtime can pause it when the page is hidden and clean up on unload. Set `aspect` to `wide`, `square`, or `portrait` to reserve a visual area. Keep a meaningful paragraph or static figure inside each component as a fallback, and keep the article's explanation and formulas in normal Markdown. The author chooses which posts use demos, where each demo appears, and what it illustrates. The sensitivity survey generates fictional responses locally and does not collect or store personal input.
 
 #### Styles
 
@@ -681,15 +684,18 @@ let score = 100;
 
 如果组件 HTML 中包含 Liquid 语法，请用 `{{ "{% raw %}" }}` 和 `{{ "{% endraw %}" }}` 包住组件内容，避免 Liquid 将其作为模板处理。
 
-组件框架提供三种类型：
+组件框架提供以下类型：
 
 | 类型 | 用途 | 当前支持的模型 |
 |------|------|----------------|
 | `chart` | 使用 Chart.js 的 `type`、`data` 和可选的 `options` 展示数据图表 | Chart.js 支持的图表类型 |
 | `parameter-explorer` | 调整参数并观察结果或图形变化 | `buffon-needle`、`sensitivity-survey` |
 | `process-simulation` | 逐步体验随机过程并比较多次试验结果 | `monty-hall` |
+| `plotly` | 用 `data`、`layout` 和 `plotlyConfig` 绘制交互图 | Plotly.js |
+| `observable-plot` | 用 `data`、`x`、`y` 绘制 `bar`、`line` 或 `dot` 图形 | Observable Plot |
+| `media` | 播放带可选封面、字幕的视频或 `.riv` / `.lottie` 动画 | `video`、`rive`、`dotLottie` |
 
-已有文章仍可使用 `chart` 代码围栏。敏感性调查组件只在本地生成虚构回答，不会收集或保存个人输入。文章说明和公式应保留在普通 Markdown 中，以便脚本不可用时仍可阅读。配置示例见[交互组件指南](docs/interactive-components.md)。
+已有文章仍可使用 `chart` 代码围栏。D3、PixiJS、SVG/Canvas 与 GSAP 可在文章专属模型里使用；可选库只在对应演示挂载时加载。Manim、Remotion、Blender 或 FFmpeg 离线生成的视频由 `media` 组件呈现。组件可返回 `{ pause, resume, destroy }`，页面隐藏时暂停，卸载时清理。设置 `aspect` 为 `wide`、`square` 或 `portrait` 可预留画面比例。每个演示应保留有意义的文字或静态图作为后备，正文说明和公式仍写在普通 Markdown 中。由作者决定哪些文章需要演示、演示放在哪里、说明什么。敏感性调查组件只在本地生成虚构回答，不会收集或保存个人输入。
 
 #### 样式
 

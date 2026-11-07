@@ -50,9 +50,20 @@ try {
       assert(!requests.some((s) => /models\/(monty-hall|sensitivity-survey)\.js/.test(s)), 'offscreen models fetched');
       assert(!requests.some((s) => /lib\/(gallery|swiper)\.js/.test(s)), 'lightbox dependencies fetched before intent');
       const values = await first.locator('dd').allTextContents();
+      const length = first.locator('input[type="range"]').first();
+      await length.fill('0.65');
+      await page.waitForFunction(() => document.querySelector('[data-model="buffon-needle"] dd:nth-of-type(2)')?.textContent === '41.38%');
+      await length.fill('0.5');
+      await page.waitForFunction(() => document.querySelector('[data-model="buffon-needle"] dd:nth-of-type(2)')?.textContent === '31.83%');
+      assert.deepEqual(await first.locator('dd').allTextContents(), values, 'restoring parameters changed the frozen random sample');
+      await first.locator('button', { hasText: '再投 1 针' }).click();
+      await page.waitForFunction(() => document.querySelector('[data-model="buffon-needle"] dd')?.textContent.includes('/ 1001'));
+      assert.match(await first.locator('dd').first().textContent(), /\/ 1001/);
+      if (!mobile) { fs.mkdirSync('test-results/loading', { recursive: true }); await first.screenshot({ path: 'test-results/loading/buffon.png' }); }
+      const valuesAfterOne = await first.locator('dd').allTextContents();
       await page.setViewportSize(mobile ? { width: 844, height: 390 } : { width: 1000, height: 800 });
       await page.waitForTimeout(250);
-      assert.deepEqual(await first.locator('dd').allTextContents(), values, 'resize reran random simulation');
+      assert.deepEqual(await first.locator('dd').allTextContents(), valuesAfterOne, 'resize reran random simulation');
       await page.setViewportSize(mobile ? { width: 390, height: 844 } : { width: 1440, height: 900 });
       await page.waitForFunction(() => [...document.querySelectorAll('.flyout__media')].every((el) => !!el.getAttribute('src')));
       const survey = page.locator('[data-model="sensitivity-survey"]');
@@ -61,9 +72,27 @@ try {
       failSurvey = false;
       await survey.locator('button', { hasText: '重新加载' }).click();
       await page.waitForFunction(() => document.querySelector('[data-model="sensitivity-survey"]')?.dataset.componentMounted === 'true');
+      const surveyValues = await survey.locator('dd').allTextContents();
+      const share = survey.locator('input[type="range"]').nth(1);
+      await share.fill('0.7');
+      await page.waitForTimeout(100);
+      await share.fill('0.6');
+      await page.waitForTimeout(100);
+      assert.deepEqual(await survey.locator('dd').allTextContents(), surveyValues, 'restoring survey parameters changed the frozen sample');
+      await survey.locator('button', { hasText: '查看一份虚构回答' }).click();
+      assert.match(await survey.locator('.interactive-component__status').textContent(), /第 1 份/);
+      if (!mobile) await survey.screenshot({ path: 'test-results/loading/survey.png' });
       const heading = page.locator('.js-article-body h2[id]').nth(1);
       await heading.evaluate((el) => window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - 100, behavior: 'instant' }));
       await page.waitForFunction(() => document.querySelector('[data-model="monty-hall"]')?.dataset.componentMounted === 'true');
+      const monty = page.locator('[data-model="monty-hall"]');
+      await monty.locator('.interactive-component__door').first().click();
+      assert(await monty.locator('button', { hasText: '坚持原选' }).isDisabled());
+      await monty.locator('button', { hasText: '请主持人开门' }).click();
+      assert(await monty.locator('button', { hasText: '坚持原选' }).isEnabled());
+      await monty.locator('button', { hasText: '改选另一扇门' }).click();
+      assert.match(await monty.locator('.interactive-component__note').first().textContent(), /初选/);
+      if (!mobile) await monty.screenshot({ path: 'test-results/loading/monty.png' });
       await page.waitForTimeout(250);
       const before = await heading.evaluate((el) => el.getBoundingClientRect().top);
       await page.reload({ waitUntil: 'domcontentloaded' });
@@ -86,6 +115,7 @@ try {
     try {
       const page = await ctx.newPage(); await page.goto(url);
       assert.equal(await page.locator('[data-component] .interactive-component__title').count(), 3);
+      assert.equal(await page.locator('[data-model="buffon-needle"] .interactive-component__fallback img').count(), 1);
       assert(await page.locator('.js-article-body img').evaluateAll((els) => els.every((e) => e.width > 0 && e.getAttribute('height'))));
       await page.emulateMedia({ media: 'print' });
       assert(await page.locator('[data-component]').first().isVisible());

@@ -9,19 +9,39 @@
   background: var(--color-text-bg);
   color: var(--color-text);
 
-  &__header { margin-bottom: 1rem; }
+  &__header { margin-bottom: 1rem; padding-left: 0.8rem; border-left: 3px solid var(--color-main-1); }
   &__title { margin: 0 0 0.35rem; font-size: 1.15rem; }
   &__description,
   &__note { margin: 0.35rem 0; color: var(--color-text-l); }
   &__content { display: grid; gap: 1rem; }
+  &__stage { width: 100%; min-height: 12rem; position: relative; overflow: hidden; border-radius: 0.75rem; background: var(--color-bg); }
+  &[data-aspect="wide"] &__stage { aspect-ratio: 16 / 9; }
+  &[data-aspect="square"] &__stage { aspect-ratio: 1; }
+  &[data-aspect="portrait"] &__stage { aspect-ratio: 4 / 5; }
+  &__stage > canvas, &__stage > svg, &__stage > figure, &__stage > video { display: block; max-width: 100%; }
+  &__stage > canvas, &__stage > video { width: 100%; height: 100%; }
+  &__fallback { margin: 0; }
+  &__fallback img, &__fallback svg { display: block; max-width: 100%; height: auto; margin-inline: auto; }
+  &__fallback figcaption { margin-top: 0.4rem; color: var(--color-text-l); font-size: 0.9rem; }
   &__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; align-items: end; }
   &__control { display: grid; gap: 0.35rem; }
   &__control-label { font-size: 0.9rem; }
   &__control-value { font-variant-numeric: tabular-nums; font-weight: 600; }
   &__range { width: 100%; accent-color: var(--color-main-1); }
+  &__select { width: 100%; min-height: 2.5rem; border: 1px solid var(--color-border); border-radius: 0.5rem; background: var(--color-bg); color: var(--color-text); }
+  &__toggle { display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; }
   &__chart,
-  &__simulation-canvas { display: block; width: 100%; max-width: 100%; }
-  &__stats { display: grid; grid-template-columns: minmax(9rem, 1fr) 1fr; gap: 0.5rem 1rem; margin: 0; }
+  &__simulation-canvas,
+  &__convergence { display: block; width: 100%; max-width: 100%; }
+  &__convergence { height: 160px; }
+  &__survey-bars, &__comparison { display: flex; width: 100%; height: 1.25rem; overflow: hidden; border-radius: 0.5rem; background: var(--color-bg); }
+  &__survey-bar--birthday { background: #8f83c7; }
+  &__survey-bar--sensitive { background: #d9485f; }
+  &__comparison { display: grid; gap: 0.25rem; height: auto; background: none; }
+  &__comparison-bar { width: 0; min-height: 0.65rem; border-radius: 999px; transition: width 200ms ease; }
+  &__comparison-bar--stay { background: #2878b5; }
+  &__comparison-bar--switch { background: #d9485f; }
+  &__stats { display: grid; grid-template-columns: minmax(9rem, 1fr) 1fr; gap: 0.5rem 1rem; margin: 0; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: 0.65rem; background: var(--color-bg); }
   &__stats dt { color: var(--color-text-l); }
   &__stats dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: 600; }
   &__doors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
@@ -35,12 +55,19 @@
   &__error { color: var(--color-prompt-danger-color); }
 
   // Keep the same minimum before and after mount; never collapse on completion.
-  &[data-model="buffon-needle"] { min-height: 710px; }
-  &[data-model="monty-hall"] { min-height: 555px; }
-  &[data-model="sensitivity-survey"] { min-height: 505px; }
+  &[data-model="buffon-needle"] { min-height: 830px; }
+  &[data-model="monty-hall"] { min-height: 610px; }
+  &[data-model="sensitivity-survey"] { min-height: 570px; }
   &[data-component="chart"] { min-height: 360px; }
   &[data-component-state="loading"] { cursor: progress; }
   &__simulation-canvas { height: 220px; }
+  &__plot { min-height: 19rem; }
+  &__animation { min-height: 12rem; }
+  &__video { background: #111; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive-component__comparison-bar { transition: none; }
 }
 
 @media (max-width: 540px) {
@@ -48,7 +75,7 @@
   .interactive-component__stats { grid-template-columns: 1fr; gap: 0.2rem; }
   .interactive-component__stats dd { margin-bottom: 0.55rem; }
   .interactive-component__door { min-height: 4.5rem; }
-  .interactive-component[data-model="buffon-needle"] { min-height: 905px; }
-  .interactive-component[data-model="monty-hall"] { min-height: 575px; }
-  .interactive-component[data-model="sensitivity-survey"] { min-height: 835px; }
+  .interactive-component[data-model="buffon-needle"] { min-height: 1030px; }
+  .interactive-component[data-model="monty-hall"] { min-height: 660px; }
+  .interactive-component[data-model="sensitivity-survey"] { min-height: 895px; }
 }

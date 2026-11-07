@@ -103,6 +103,9 @@ export function init({ root, src }) {
     }
   }
   observeNear(blocks, start);
+  // Begin loading while the reader is above the first formula; nearby math still starts immediately.
+  if ('requestIdleCallback' in window) requestIdleCallback(() => { void start(); }, { timeout: 1500 });
+  else setTimeout(() => { void start(); }, 1500);
   // Forward equation links can point to output that has not entered the viewport.
   root.addEventListener('click', (event) => {
     const link = event.target.closest?.('a');

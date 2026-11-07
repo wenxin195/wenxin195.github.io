@@ -13,6 +13,7 @@ tags:
 author: Wenxin Zhong
 layout: article
 mathjax: true
+components: true
 modify_date: "2025-06-19 23:55:00"
 ---
 
@@ -51,6 +52,29 @@ $$
 $$
 
 其中 $n$ 为针与任一平行线相交的次数。
+
+{% raw %}
+<div class="interactive-component" data-component="parameter-explorer">
+  <script type="application/json">
+  {
+    "version": 1,
+    "type": "parameter-explorer",
+    "model": "buffon-needle",
+    "title": "交互演示：用投针估计 π",
+    "description": "调整针长和投掷次数，观察同一组随机投针的相交变化与 π 估计轨迹；也可以重新抽取一组。",
+    "parameters": {
+      "lengthRatio": { "min": 0.1, "max": 0.95, "value": 0.5 },
+      "tosses": { "min": 100, "max": 5000, "value": 1000 }
+    }
+  }
+  </script>
+  <p>投针相交的条件是 x ≤ (l/2)sin φ；相交频率可用于估计 π。开启 JavaScript 后可操作模拟。</p>
+  <figure class="interactive-component__fallback">
+    <img src="../assets/images/posts/probability/needle.png" alt="等距平行线之间的一枚投针" width="750" height="351">
+    <figcaption>静态示意：投针位置和夹角共同决定是否与平行线相交。</figcaption>
+  </figure>
+</div>
+{% endraw %}
 
 {% figures id="buffon-needle" caption="比丰投针" cols=2 %}
 {% panel src="/assets/images/posts/probability/needle.png" caption="Buffon 投针问题" width=300 %}
@@ -159,6 +183,22 @@ print(f"置信区间：({conf_lower}, {conf_upper})")
 
 我们已经知道若采取第 1 种策略，那么赢得奖品的概率为 $\frac{1}{3}$；若采取第 2 种策略，那么赢得奖品的概率为 $\frac{2}{3}$。因此当主持人在打开没有奖品的门后，改选另一扇没有被打开的门是一个最优策略。
 
+{% raw %}
+<div class="interactive-component" data-component="process-simulation">
+  <script type="application/json">
+  {
+    "version": 1,
+    "type": "process-simulation",
+    "model": "monty-hall",
+    "title": "交互演示：坚持还是换门？",
+    "description": "依次选门、让主持人开空门、决定坚持或换门，再用批量实验比较两种策略。",
+    "trials": 10000
+  }
+  </script>
+  <p>标准规则下，初选命中奖品的概率是 1/3；初选未命中的概率是 2/3。主持人排除一扇空门后，换门利用了后者。开启 JavaScript 后可逐步操作。</p>
+</div>
+{% endraw %}
+
 三门问题的 R 语言模拟示例如下：
 
 ```R
@@ -261,6 +301,26 @@ $$
   p=\frac{k/n-0.5(1-\pi)}{\pi}
 \end{equation}
 $$
+
+{% raw %}
+<div class="interactive-component" data-component="parameter-explorer">
+  <script type="application/json">
+  {
+    "version": 1,
+    "type": "parameter-explorer",
+    "model": "sensitivity-survey",
+    "title": "交互演示：敏感性调查的比例估计",
+    "description": "逐份查看虚构回答，或调整样本量、敏感题抽取比例和设定的真实比例，观察匿名回答如何形成估计。",
+    "parameters": {
+      "sampleSize": { "min": 100, "max": 5000, "value": 1000 },
+      "questionShare": { "min": 0.1, "max": 0.9, "value": 0.6 },
+      "trueRate": { "min": 0.01, "max": 0.5, "value": 0.2 }
+    }
+  }
+  </script>
+  <p>调查者只看到匿名的“是/否”，再利用已知的抽题比例估计敏感问题的总体比例。开启 JavaScript 后可查看虚构回答；演示不收集真实个人信息。</p>
+</div>
+{% endraw %}
 
 下面我们用 R 语言来模拟这一调查过程。{% tabref sensitivity-survey %} 为我们模拟的调查数据表：
 

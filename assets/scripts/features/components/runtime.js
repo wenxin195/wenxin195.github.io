@@ -24,7 +24,7 @@ function showError(root, error) {
 }
 
 export function init({ registry, root = document }) {
-  const cleanups = [];
+  const lifecycles = [];
   let destroyed = false;
   const hosts = [...root.querySelectorAll('[data-component], .language-chart')].filter((el) => !el.parentElement.closest('.language-chart'));
   const originals = new Map(hosts.map((el) => [el, el.innerHTML]));
@@ -44,16 +44,14 @@ export function init({ registry, root = document }) {
       const implementation = await load();
       if (destroyed) return;
       implementation.validate(config);
-      const cleanup = await implementation.mount(host, config);
-      if (destroyed) { cleanup?.(); return; }
+      const mounted = await implementation.mount(host, config);
+      const lifecycle = typeof mounted === 'function' ? { destroy: mounted } : mounted || {};
+      if (destroyed) { lifecycle.destroy?.(); return; }
       host.dataset.componentMounted = 'true';
       host.dataset.componentState = 'ready';
       host.dataset.componentReady = 'true';
-      cleanups.push(() => {
-        if (typeof cleanup === 'function') cleanup();
-        delete host.dataset.componentMounted;
-        delete host.dataset.componentReady;
-      });
+      lifecycles.push({ host, lifecycle });
+      if (document.hidden) lifecycle.pause?.();
     } catch (error) {
       host.innerHTML = originals.get(host);
       host.dataset.componentState = 'error';
@@ -78,9 +76,22 @@ export function init({ registry, root = document }) {
     }
   });
 
+  const onVisibilityChange = () => {
+    for (const { lifecycle } of lifecycles) {
+      if (document.hidden) lifecycle.pause?.();
+      else lifecycle.resume?.();
+    }
+  };
+  document.addEventListener('visibilitychange', onVisibilityChange);
+
   return () => {
     destroyed = true;
     observer.destroy();
-    for (const cleanup of cleanups.reverse()) cleanup();
+    document.removeEventListener('visibilitychange', onVisibilityChange);
+    for (const { host, lifecycle } of lifecycles.reverse()) {
+      lifecycle.destroy?.();
+      delete host.dataset.componentMounted;
+      delete host.dataset.componentReady;
+    }
   };
 }

@@ -32,7 +32,7 @@ jobs:
         # https://github.com/ruby/setup-ruby/releases/tag/v1.254.0
         uses: ruby/setup-ruby@2a7b30092b0caf9c046252510f9273b4875f3db9
         with:
-          ruby-version: ruby
+          ruby-version: "3.3"
           bundler-cache: true
           cache-version: 0
 

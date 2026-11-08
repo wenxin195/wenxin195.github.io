@@ -4,8 +4,8 @@ import { observeNear } from '@/utils/near-viewport.js';
 /** Keep MathJax's SVG lazy output, while reserving space for pending display math. */
 export function init({ root, src }) {
   if (!root || !src) return;
-  const blocks = [...root.querySelectorAll('[data-math-block], p, li, td, th, figcaption')].filter((el) =>
-    !el.closest('pre, code, [data-component]') && !el.querySelector('[data-math-block], p, li')
+  const blocks = [...root.querySelectorAll('[data-math-block], [data-component-math], p, li, td, th, figcaption')].filter((el) =>
+    !el.closest('pre, code') && (el.matches('[data-component-math]') || !el.closest('[data-component]')) && !el.querySelector('[data-math-block], [data-component-math], p, li')
     && /\$|\\\[|\\\(|\\(?:eq)?ref\{/.test(el.textContent));
   if (!blocks.length) return;
   const labels = new Map();
@@ -87,6 +87,14 @@ export function init({ root, src }) {
     try {
       await loadScript(src);
       await window.MathJax.startup.promise;
+      // Components can add TeX after the article's initial MathJax pass.
+      window.siteMathJax = {
+        typeset: async (target) => {
+          if (!target) return;
+          await window.MathJax.typesetPromise([target]);
+          document.dispatchEvent(new CustomEvent('site:layout-change'));
+        },
+      };
       root.dataset.mathReady = 'true';
       document.dispatchEvent(new CustomEvent('site:layout-change'));
     } catch (error) {
@@ -103,6 +111,11 @@ export function init({ root, src }) {
     }
   }
   observeNear(blocks, start);
+  root.addEventListener('site:component-math', async (event) => {
+    if (!event.detail?.target) return;
+    await start();
+    await window.siteMathJax?.typeset(event.detail.target);
+  });
   // Begin loading while the reader is above the first formula; nearby math still starts immediately.
   if ('requestIdleCallback' in window) requestIdleCallback(() => { void start(); }, { timeout: 1500 });
   else setTimeout(() => { void start(); }, 1500);

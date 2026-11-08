@@ -8,6 +8,10 @@ const registry = new Map([
   ['media', () => importModule(new URL('../features/components/media.js', import.meta.url)).then((m) => m.mediaComponent)],
   ['parameter-explorer:buffon-needle', () => importModule(new URL('../features/components/models/buffon-needle.js', import.meta.url)).then((m) => m.buffonNeedleModel)],
   ['parameter-explorer:sensitivity-survey', () => importModule(new URL('../features/components/models/sensitivity-survey.js', import.meta.url)).then((m) => m.sensitivitySurveyModel)],
+  ['parameter-explorer:channel-composition', () => importModule(new URL('../features/components/models/channel-composition.js', import.meta.url)).then((m) => m.channelCompositionModel)],
+  ['parameter-explorer:randomization-demo', () => importModule(new URL('../features/components/models/randomization-demo.js', import.meta.url)).then((m) => m.randomizationDemoModel)],
+  ['parameter-explorer:precision-demo', () => importModule(new URL('../features/components/models/precision-demo.js', import.meta.url)).then((m) => m.precisionDemoModel)],
+  ['parameter-explorer:decision-demo', () => importModule(new URL('../features/components/models/decision-demo.js', import.meta.url)).then((m) => m.decisionDemoModel)],
   ['process-simulation:monty-hall', () => importModule(new URL('../features/components/models/monty-hall.js', import.meta.url)).then((m) => m.montyHallModel)],
 ]);
 

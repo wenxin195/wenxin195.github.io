@@ -50,6 +50,7 @@ export function init({ registry, root = document }) {
       host.dataset.componentMounted = 'true';
       host.dataset.componentState = 'ready';
       host.dataset.componentReady = 'true';
+      host.dispatchEvent(new CustomEvent('site:component-math', { detail: { target: host } }));
       lifecycles.push({ host, lifecycle });
       if (document.hidden) lifecycle.pause?.();
     } catch (error) {

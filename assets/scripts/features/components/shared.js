@@ -98,3 +98,4 @@ export function formatPercent(value, digits = 2) {
 export function formatNumber(value, digits = 4) {
   return Number.isFinite(value) ? value.toFixed(digits) : '—';
 }
+

@@ -4,6 +4,7 @@ import { loadVisualLibrary } from '@/features/components/libraries.js';
 // A small declarative entry for article data. More complex Plot compositions
 // can live in an article model and call loadVisualLibrary directly.
 export const observablePlotComponent = {
+  preload: () => loadVisualLibrary('observablePlot'),
   validate(config) {
     if (!Array.isArray(config.data) || !['bar', 'line', 'dot'].includes(config.mark)) {
       throw new Error('Observable Plot 需要 data 数组和 bar、line 或 dot 标记。');

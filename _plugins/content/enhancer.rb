@@ -45,7 +45,7 @@ module Jekyll
           Transforms::Bibliography.apply!(frag, Jekyll::Bibliography::Library.for(@site))
         end
         math = doc && doc.data.fetch("mathjax", @site.data.dig("layout", "enhancements", "mathjax")) == true
-        Transforms::Loading.apply!(frag, math: math)
+        Transforms::Loading.apply!(frag, math: math, locale: locale)
         yield frag if block_given?
         frag.to_html
       end

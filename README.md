@@ -313,13 +313,44 @@ The framework provides these component types:
 | Type | Purpose | Available models |
 |------|---------|------------------|
 | `chart` | Present a data chart using Chart.js `type`, `data`, and optional `options` | Chart.js chart types |
-| `parameter-explorer` | Change parameters and observe the resulting values or visualization | `buffon-needle`, `sensitivity-survey` |
+| `parameter-explorer` | Change parameters and observe the resulting values or visualization | `buffon-needle`, `sensitivity-survey`, `channel-composition`, `potential-outcomes`, `population-effects`, `two-randomness`, `compliance-effects`, `randomization-demo`, `precision-demo`, `decision-demo` |
 | `process-simulation` | Step through a random process and compare repeated outcomes | `monty-hall` |
 | `plotly` | Render an interactive Plotly figure from `data`, `layout`, and `plotlyConfig` | Plotly.js |
 | `observable-plot` | Render `bar`, `line`, or `dot` marks from `data`, `x`, and `y` | Observable Plot |
 | `media` | Show video with optional poster and captions, or play a `.riv` / `.lottie` asset | `video`, `rive`, `dotLottie` |
 
-The `chart` code fence remains available for existing charts. D3, PixiJS, SVG/Canvas, and GSAP can be used inside a post-specific model; optional libraries load only when that model is mounted. Video files rendered offline with Manim, Remotion, Blender, or FFmpeg use the `media` component. A component may return `{ pause, resume, destroy }` so the runtime can pause it when the page is hidden and clean up on unload. Set `aspect` to `wide`, `square`, or `portrait` to reserve a visual area. Keep a meaningful paragraph or static figure inside each component as a fallback, and keep the article's explanation and formulas in normal Markdown. The author chooses which posts use demos, where each demo appears, and what it illustrates. The sensitivity survey generates fictional responses locally and does not collect or store personal input.
+The `chart` code fence remains available for existing charts. D3, PixiJS, SVG/Canvas, and GSAP can be used inside a post-specific model; optional libraries load on demand or during disclosure preloading. Video files rendered offline with Manim, Remotion, Blender, or FFmpeg use the `media` component. A component may return `{ pause, resume, resize, destroy }` so the runtime can pause it when the page is hidden or its disclosure closes, update its dimensions when reopened, and clean up on unload. Set `aspect` to `wide`, `square`, or `portrait` to reserve a visual area. Keep a meaningful paragraph or static figure inside each component as a fallback, and keep the article's explanation and formulas in normal Markdown. The author chooses which posts use demos, where each demo appears, and what it illustrates. The sensitivity survey generates fictional responses locally and does not collect or store personal input.
+
+##### Collapsible demos
+
+All `data-component` types share an optional `presentation` configuration. Add it alongside `type`, `model`, and `parameters` in the existing JSON:
+
+```json
+{
+  "presentation": {
+    "mode": "disclosure",
+    "initial": "collapsed",
+    "summary": "Explore: can the same average effect hide different individual effects?"
+  }
+}
+```
+
+| Field | Values and defaults |
+|-------|---------------------|
+| `mode` | `inline` or `disclosure`; omitting `presentation` keeps the existing inline display |
+| `initial` | `collapsed` (default) or `expanded`; applies to disclosure mode |
+| `summary` | Optional plain-text exploration question; defaults to the component `title`. The existing `description` appears below it |
+
+Jekyll validates the configuration and generates the native `details/summary` wrapper outside the component root. Do not hand-wrap each demo or change model code just to enable folding. Unknown presentation fields or invalid values fail the build with the component name.
+
+- Nearby disclosure titles trigger low-priority module and optional library preloading, with at most two background preparation tasks. Pointer, touch, and keyboard intent raise priority; save-data and 2G connections skip speculative loading. Preparation never draws a chart, starts a simulation, or plays media.
+- The first expansion mounts the demo after the container becomes visible and is near the viewport. A preparation message appears after 180ms if needed. Background failures stay silent; a click retries preparation, while mount failures preserve the fallback and provide a retry button.
+- Closing keeps the instance, controls, random sample, and results. Reopening reuses it and calls optional `resize` and `resume` hooks. Page visibility and disclosure state are coordinated, so returning to the tab does not resume a closed demo. A bottom collapse button returns focus and reading position to the title.
+- The current session remembers open/closed state before restoring reading position; refreshing recreates the model and does not persist experiment results. MathJax typesets newly added content without reprocessing the whole article on every expansion.
+- Give a component root an author-defined `id` for durable links. `#component-id` reveals it, and `#component-id/child-id` waits for mount before locating a generated child. Generated wrapper IDs can change when configuration changes.
+- Without JavaScript, native expansion and fallback content remain readable. Printing temporarily opens wrappers and pauses mounted demos without mounting new ones; it prints ready output or a preserved fallback, then restores the screen state. Unrendered formulas may remain as source when printing offline.
+
+Renderer authors may add an optional `preload(config)` hook to load dependencies before `mount`. Reuse the existing request caches; keep preparation free of DOM changes, random sampling, timers, and playback. `resume` must restore previous activity rather than starting a new experiment. The shared implementation is in [`loading.rb`](_plugins/content/transforms/loading.rb), [`runtime.js`](assets/scripts/features/components/runtime.js), and [`disclosure.js`](assets/scripts/features/components/disclosure.js).
 
 #### Styles
 
@@ -689,13 +720,44 @@ let score = 100;
 | 类型 | 用途 | 当前支持的模型 |
 |------|------|----------------|
 | `chart` | 使用 Chart.js 的 `type`、`data` 和可选的 `options` 展示数据图表 | Chart.js 支持的图表类型 |
-| `parameter-explorer` | 调整参数并观察结果或图形变化 | `buffon-needle`、`sensitivity-survey` |
+| `parameter-explorer` | 调整参数并观察结果或图形变化 | `buffon-needle`、`sensitivity-survey`、`channel-composition`、`potential-outcomes`、`population-effects`、`two-randomness`、`compliance-effects`、`randomization-demo`、`precision-demo`、`decision-demo` |
 | `process-simulation` | 逐步体验随机过程并比较多次试验结果 | `monty-hall` |
 | `plotly` | 用 `data`、`layout` 和 `plotlyConfig` 绘制交互图 | Plotly.js |
 | `observable-plot` | 用 `data`、`x`、`y` 绘制 `bar`、`line` 或 `dot` 图形 | Observable Plot |
 | `media` | 播放带可选封面、字幕的视频或 `.riv` / `.lottie` 动画 | `video`、`rive`、`dotLottie` |
 
-已有文章仍可使用 `chart` 代码围栏。D3、PixiJS、SVG/Canvas 与 GSAP 可在文章专属模型里使用；可选库只在对应演示挂载时加载。Manim、Remotion、Blender 或 FFmpeg 离线生成的视频由 `media` 组件呈现。组件可返回 `{ pause, resume, destroy }`，页面隐藏时暂停，卸载时清理。设置 `aspect` 为 `wide`、`square` 或 `portrait` 可预留画面比例。每个演示应保留有意义的文字或静态图作为后备，正文说明和公式仍写在普通 Markdown 中。由作者决定哪些文章需要演示、演示放在哪里、说明什么。敏感性调查组件只在本地生成虚构回答，不会收集或保存个人输入。
+已有文章仍可使用 `chart` 代码围栏。D3、PixiJS、SVG/Canvas 与 GSAP 可在文章专属模型里使用；可选库按需加载，也可在折叠演示展开前预加载。Manim、Remotion、Blender 或 FFmpeg 离线生成的视频由 `media` 组件呈现。组件可返回 `{ pause, resume, resize, destroy }`，页面隐藏或演示收起时暂停，再次展开时更新尺寸，卸载时清理。设置 `aspect` 为 `wide`、`square` 或 `portrait` 可预留画面比例。每个演示应保留有意义的文字或静态图作为后备，正文说明和公式仍写在普通 Markdown 中。由作者决定哪些文章需要演示、演示放在哪里、说明什么。敏感性调查组件只在本地生成虚构回答，不会收集或保存个人输入。
+
+##### 折叠演示
+
+所有 `data-component` 类型共用可选的 `presentation` 配置。在原 JSON 中，与 `type`、`model`、`parameters` 同级添加：
+
+```json
+{
+  "presentation": {
+    "mode": "disclosure",
+    "initial": "collapsed",
+    "summary": "探索：平均效应相同，个体影响也相同吗？"
+  }
+}
+```
+
+| 字段 | 取值与默认行为 |
+|------|----------------|
+| `mode` | `inline` 或 `disclosure`；不填写 `presentation` 时保持现有直接展示行为 |
+| `initial` | `collapsed`（默认）或 `expanded`，用于折叠模式 |
+| `summary` | 可选的纯文本探索问题，默认使用组件 `title`；已有的 `description` 显示在下方 |
+
+Jekyll 校验配置并在组件根元素之外生成原生 `details/summary` 外壳。启用折叠无需逐个手写外壳，也无需修改模型代码。未知展示字段或非法取值会报告组件名称并中止构建。
+
+- 折叠标题接近视口时，低优先级预加载模块与可选依赖，后台准备任务最多两个。鼠标移入、触摸与键盘聚焦提升准备优先级；省流量或 2G 连接跳过主动预取。准备阶段不绘图、不运行模拟、不播放媒体。
+- 首次展开且接近视口时，等待容器可见后挂载。等待超过 180ms 才显示准备提示。后台失败不打扰阅读，点击时重新尝试；挂载失败保留后备说明并提供重试入口。
+- 收起后保留实例、控件参数、随机样本与结果；再次展开复用实例，并调用可选的 `resize`、`resume`。页面可见性与折叠状态共同决定是否暂停，切回标签页不会恢复仍收起的演示。演示底部的收起按钮会将焦点和阅读位置带回标题。
+- 当前会话记忆展开状态，并在恢复阅读位置前应用；刷新会重新创建模型，不持久化实验结果。MathJax 对新增内容增量排版，不在每次展开时重新处理整篇文章。
+- 需要长期分享时，为组件根元素设置作者定义的 `id`。`#组件id` 自动展开并定位，`#组件id/内部id` 等待挂载后定位动态生成的元素。自动生成的外壳 ID 可能随配置变化而改变。
+- 无 JavaScript 时仍可原生展开并阅读后备内容。打印时临时展开外壳、暂停已挂载演示且不挂载新演示，打印已就绪结果或保留的后备说明，结束后恢复原状态。离线打印时，尚未排版的公式可能保持源码。
+
+渲染器可添加可选的 `preload(config)`，在 `mount` 前加载依赖，复用已有请求缓存；准备阶段不得操作 DOM、随机抽样、启动计时器或播放媒体。`resume` 应恢复此前的工作，而不是开始新的实验。公共实现位于 [`loading.rb`](_plugins/content/transforms/loading.rb)、[`runtime.js`](assets/scripts/features/components/runtime.js) 和 [`disclosure.js`](assets/scripts/features/components/disclosure.js)。
 
 #### 样式
 

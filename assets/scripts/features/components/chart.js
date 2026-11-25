@@ -19,6 +19,7 @@ function loadChartLibrary() {
 }
 
 export const chartComponent = {
+  preload: () => loadChartLibrary(),
   validate(config) {
     if (!config.chart || typeof config.chart !== 'object') {
       throw new Error('Chart 组件需要 chart 配置对象。');
@@ -42,6 +43,6 @@ export const chartComponent = {
         options: { responsive: true, maintainAspectRatio: true, ...config.chart.options, animation: matchMedia('(prefers-reduced-motion: reduce)').matches ? false : config.chart.options?.animation },
       });
       root.dataset.componentReady = 'true';
-    return () => instance?.destroy();
+    return { resize: () => instance.resize(), destroy: () => instance.destroy() };
   },
 };

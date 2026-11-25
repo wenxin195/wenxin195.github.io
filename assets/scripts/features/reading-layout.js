@@ -1,6 +1,9 @@
+import { isDisclosed, openAncestors, restoreDisclosures } from '@/features/components/disclosure.js';
+
 /** Bounded content-anchor restoration. User input always wins. */
 export function init(root) {
   if (!root) return;
+  restoreDisclosures(root);
   const nodes = [...root.querySelectorAll('[data-reading-id]')];
   const key = `reading:${location.pathname}`;
   const signature = nodes.map((el) => el.dataset.readingId).join('|');
@@ -15,6 +18,7 @@ export function init(root) {
     offset = saved.offset;
   }
   let active = !!target, frame = 0;
+  if (target) openAncestors(target);
   const deadline = setTimeout(() => { active = false; }, 60000);
   function cancel() { active = false; }
   function correct() {
@@ -28,7 +32,7 @@ export function init(root) {
   function schedule() { if (!frame) frame = requestAnimationFrame(correct); }
   function remember() {
     if (active) return;
-    const visible = nodes.filter((el) => { const r = el.getBoundingClientRect(); return r.height && r.bottom > 0 && r.top < innerHeight; });
+    const visible = nodes.filter((el) => { const r = el.getBoundingClientRect(); return isDisclosed(el) && r.height && r.bottom > 0 && r.top < innerHeight; });
     const el = visible.find((n) => n.getBoundingClientRect().top >= 0) || visible[0];
     if (!el) return;
     try { sessionStorage.setItem(key, JSON.stringify({ signature, width: innerWidth, id: el.dataset.readingId, offset: el.getBoundingClientRect().top })); } catch { /* quota/private mode */ }

@@ -109,8 +109,11 @@ async function animated(root, config) {
     if (player.isPlaying) { player.pause(); play.textContent = '播放'; }
     else { player.play(); play.textContent = '暂停'; }
   });
+  let resumePlaying = false;
   return {
-    pause: () => { player.pause(); play.textContent = '播放'; },
+    resize,
+    pause: () => { resumePlaying = !!player.isPlaying; player.pause(); play.textContent = '播放'; },
+    resume: () => { if (resumePlaying) { player.play(); play.textContent = '暂停'; } },
     destroy: () => {
       resizeObserver.disconnect();
       if (typeof player.cleanup === 'function') player.cleanup();
@@ -120,6 +123,7 @@ async function animated(root, config) {
 }
 
 export const mediaComponent = {
+  preload: (config) => config.engine === 'video' ? undefined : loadVisualLibrary(config.engine),
   validate(config) {
     if (!['video', 'rive', 'dotLottie'].includes(config.engine)) throw new Error('不支持的媒体类型。');
     if (config.engine === 'video' ? !validAsset(config.src) && !validAsset(config.webm) : !validAsset(config.src)) {

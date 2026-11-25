@@ -1,13 +1,14 @@
 import { loadScript } from '@/utils/load-script.js';
 import { observeNear } from '@/utils/near-viewport.js';
+import { openAncestors } from '@/features/components/disclosure.js';
 
 /** Keep MathJax's SVG lazy output, while reserving space for pending display math. */
 export function init({ root, src }) {
   if (!root || !src) return;
   const blocks = [...root.querySelectorAll('[data-math-block], [data-component-math], p, li, td, th, figcaption')].filter((el) =>
-    !el.closest('pre, code') && (el.matches('[data-component-math]') || !el.closest('[data-component]')) && !el.querySelector('[data-math-block], [data-component-math], p, li')
+    !el.closest('pre, code, .interactive-disclosure__print') && (el.matches('[data-component-math]') || !el.closest('[data-component]')) && !el.querySelector('[data-math-block], [data-component-math], p, li')
     && /\$|\\\[|\\\(|\\(?:eq)?ref\{/.test(el.textContent));
-  if (!blocks.length) return;
+  if (!blocks.length && !root.querySelector('[data-component]')) return;
   const labels = new Map();
   for (const block of blocks) for (const match of block.textContent.matchAll(/\\label\{([^}]+)\}/g)) labels.set(match[1], block);
   const displayMath = /\$\$|\\\[|\\begin\{(?:equation|align|aligned|gather|multline|flalign)\}/;
@@ -80,35 +81,52 @@ export function init({ root, src }) {
     },
   };
   config.startup = { ...config.startup, elements: [root] };
-  let started = false;
-  async function start() {
-    if (started) return;
+  let started = false, startPromise;
+  function start() {
+    if (started) return startPromise;
     started = true;
-    try {
-      await loadScript(src);
-      await window.MathJax.startup.promise;
-      // Components can add TeX after the article's initial MathJax pass.
-      window.siteMathJax = {
-        typeset: async (target) => {
-          if (!target) return;
-          await window.MathJax.typesetPromise([target]);
-          document.dispatchEvent(new CustomEvent('site:layout-change'));
-        },
-      };
-      root.dataset.mathReady = 'true';
-      document.dispatchEvent(new CustomEvent('site:layout-change'));
-    } catch (error) {
-      // Keep the failed attempt latched: several nearby blocks must not each
-      // start a request and insert a new notice. Only explicit retry resets it.
-      const notice = document.createElement('p');
-      notice.className = 'resource-error';
-      notice.setAttribute('role', 'status');
-      notice.append('公式暂时无法排版，原文仍可阅读。');
-      const retry = document.createElement('button');
-      retry.type = 'button'; retry.textContent = '重试';
-      retry.addEventListener('click', () => { started = false; notice.remove(); void start(); }, { once: true });
-      notice.append(retry); root.prepend(notice);
-    }
+    startPromise = (async () => {
+      try {
+        await loadScript(src);
+        await window.MathJax.startup.promise;
+        // Components can add TeX after the article's initial MathJax pass.
+        let typesetQueue = Promise.resolve();
+        const hasSource = (target) => {
+          const walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT);
+          while (walker.nextNode()) {
+            const node = walker.currentNode;
+            if (!node.parentElement?.closest('mjx-container, script, style, pre, code, .tex2jax_ignore') && /\$|\\\[|\\\(|\\(?:eq)?ref\{/.test(node.textContent)) return true;
+          }
+          return false;
+        };
+        window.siteMathJax = {
+          typeset: async (target) => {
+            if (!target) return;
+            const work = typesetQueue.then(async () => {
+              if (!target.isConnected || target.closest('details:not([open])') || !hasSource(target)) return;
+              await window.MathJax.typesetPromise([target]);
+              document.dispatchEvent(new CustomEvent('site:layout-change'));
+            });
+            typesetQueue = work.catch(() => {});
+            return work;
+          },
+        };
+        root.dataset.mathReady = 'true';
+        document.dispatchEvent(new CustomEvent('site:layout-change'));
+      } catch (error) {
+        // Keep the failed attempt latched: several nearby blocks must not each
+        // start a request and insert a new notice. Only explicit retry resets it.
+        const notice = document.createElement('p');
+        notice.className = 'resource-error';
+        notice.setAttribute('role', 'status');
+        notice.append('公式暂时无法排版，原文仍可阅读。');
+        const retry = document.createElement('button');
+        retry.type = 'button'; retry.textContent = '重试';
+        retry.addEventListener('click', () => { started = false; notice.remove(); void start(); }, { once: true });
+        notice.append(retry); root.prepend(notice);
+      }
+    })();
+    return startPromise;
   }
   observeNear(blocks, start);
   root.addEventListener('site:component-math', async (event) => {
@@ -116,6 +134,11 @@ export function init({ root, src }) {
     await start();
     await window.siteMathJax?.typeset(event.detail.target);
   });
+  root.addEventListener('toggle', (event) => {
+    if (event.target.matches('details[open][data-component-disclosure]')) {
+      void window.siteMathJax?.typeset(event.target);
+    }
+  }, true);
   // Begin loading while the reader is above the first formula; nearby math still starts immediately.
   if ('requestIdleCallback' in window) requestIdleCallback(() => { void start(); }, { timeout: 1500 });
   else setTimeout(() => { void start(); }, 1500);
@@ -129,7 +152,7 @@ export function init({ root, src }) {
     if (document.getElementById(id)) return;
     const label = id.replace(/^mjx-eqn:/, '');
     const block = labels.get(label);
-    if (block) { event.preventDefault(); block.scrollIntoView({ behavior: 'instant', block: 'center' }); }
+    if (block) { event.preventDefault(); openAncestors(block); block.scrollIntoView({ behavior: 'instant', block: 'center' }); }
   });
   window.addEventListener('resize', () => {
     if (innerWidth === width) return;

@@ -54,7 +54,6 @@ _drafts/
 docs/
 _cite/
 
-# Local Cursor skills (not published)
+# Local agent skills (not published)
 AGENTS.md
-.cursor/
-.codex/
+.agents/
